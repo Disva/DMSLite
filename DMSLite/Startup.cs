@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(DMSLite.Startup))]
-
+[assembly: OwinStartupAttribute(typeof(DMSLite.Startup))]
 namespace DMSLite
 {
     public partial class Startup
