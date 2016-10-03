@@ -47,7 +47,7 @@ namespace DMSLite.Commands
             if (commandType == null) return;
 
             //Cast and execute the command
-            iCommand command = Activator.CreateInstance(commandType) as iCommand;
+            ICommand command = Activator.CreateInstance(commandType) as ICommand;
 
             try
             {
