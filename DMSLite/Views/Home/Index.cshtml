@@ -2,6 +2,28 @@
     ViewBag.Title = "Home Page";
 }
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div class="row">
+    <div class="col-md-12" id="outputContainer"></div>
+</div>
+
+@using (Ajax.BeginForm("TestInput", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.InsertAfter,
+    UpdateTargetId = "outputContainer"
+}))
+{
+    <div class="row">
+        <div class="col-md-10">
+            @Html.TextBox("mainInput")
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Send" />
+        </div>
+    </div>
+}
 <!--<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
