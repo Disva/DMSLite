@@ -25,5 +25,7 @@ namespace DMSLite.Entities
 
         [StringLength(255)]
         public string ReceiptFrequency { get; set; }
+
+        public Organization DonorOrganization { get; set; }
     }
 }

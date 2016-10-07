@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201610071820097_a1.Designer.cs">
       <DependentUpon>201610071820097_a1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610071848205_b.cs" />
+    <Compile Include="Migrations\201610071848205_b.Designer.cs">
+      <DependentUpon>201610071848205_b.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -321,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610071820097_a1.resx">
       <DependentUpon>201610071820097_a1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610071848205_b.resx">
+      <DependentUpon>201610071848205_b.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
