@@ -10,13 +10,13 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
+        private const string CommandsLocation = ".Commands.";
 
         private static ApiAi apiAi;
 
         public Dispatcher()
         {
             InitAPIAI();
-
         }
 
         static void InitAPIAI()
@@ -27,6 +27,8 @@ namespace DMSLite.Commands
 
         public string Dispatch(string request)
         {
+            if (String.IsNullOrWhiteSpace(request))
+                return "Please enter a command";
             var response = apiAi.TextRequest(request);
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
@@ -38,7 +40,7 @@ namespace DMSLite.Commands
             string action = response.Result.Action;
 
             //Join strings to create classLocation
-            string classLocation = project + ".Commands." + action;
+            string classLocation = project + CommandsLocation + action;
 
             //Find the class as a Type
             Type commandType = Type.GetType(classLocation);
