@@ -15,6 +15,12 @@ namespace DMSLite.DataContexts
             Database.SetInitializer(new MySqlInitializer());
         }
 
+        public static OrganizationDb Create()
+        {
+            return new OrganizationDb();
+        }
+
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Donor> Donors { get; set; }
     }
 }
