@@ -13,6 +13,11 @@ namespace DMSLite.Controllers
             return View();
         }
 
+        public ActionResult TestInput()
+        {
+            return Json("Thanks", JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
