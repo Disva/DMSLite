@@ -7,7 +7,7 @@ namespace DMSLite.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            /*DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -16,7 +16,7 @@ namespace DMSLite.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });*/
             CreateTable(
                 "dbo.Organizations",
                 c => new
@@ -26,16 +26,16 @@ namespace DMSLite.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            DropTable("dbo.AspNetRoles");
+            /*DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserClaims");
-            DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.AspNetUserLogins");*/
         }
         
         public override void Down()
         {
-            CreateTable(
+           /* CreateTable(
                 "dbo.AspNetUserLogins",
                 c => new
                     {
@@ -92,8 +92,8 @@ namespace DMSLite.Migrations
                         Name = c.String(nullable: false, maxLength: 256, storeType: "nvarchar"),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            DropTable("dbo.Organizations");
+            */
+            /*DropTable("dbo.Organizations");
             CreateIndex("dbo.AspNetUserLogins", "UserId");
             CreateIndex("dbo.AspNetUserClaims", "UserId");
             CreateIndex("dbo.AspNetUsers", "UserName", unique: true, name: "UserNameIndex");
@@ -103,7 +103,7 @@ namespace DMSLite.Migrations
             AddForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers", "Id", cascadeDelete: true);
             AddForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers", "Id", cascadeDelete: true);
             AddForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers", "Id", cascadeDelete: true);
-            AddForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles", "Id", cascadeDelete: true);*/
         }
     }
 }
