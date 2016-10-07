@@ -1,24 +1,21 @@
 namespace DMSLite.Migrations
 {
-    using MySql.Data.Entity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DMSLite.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DMSLite.DataContexts.OrganizationDb>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
 
             // register mysql code generator
             SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
-
-            SetHistoryContextFactory("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema));
         }
 
-        protected override void Seed(DMSLite.Models.ApplicationDbContext context)
+        protected override void Seed(DMSLite.DataContexts.OrganizationDb context)
         {
             //  This method will be called after migrating to the latest version.
 
