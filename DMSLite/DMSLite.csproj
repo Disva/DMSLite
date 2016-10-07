@@ -205,7 +205,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="DataContexts\OrganizationDb.cs" />
-    <Compile Include="DonorsController.cs" />
+    <Compile Include="Controllers\DonorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
