@@ -10,6 +10,9 @@ namespace DMSLite.Commands
     {
         public View Execute(Dictionary<string, object> parameters)
         {
+            //SELECT * FROM Donors WHERE DonorOrganization_Id = _MY_ID_
+            //put it in an object
+            //return it to the controller
             throw new NotImplementedException();
         }
     }
