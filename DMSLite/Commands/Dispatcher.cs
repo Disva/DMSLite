@@ -25,7 +25,7 @@ namespace DMSLite.Commands
             apiAi = new ApiAi(config);
         }
 
-        public void Dispatch(string request)
+        public string Dispatch(string request)
         {
             var response = apiAi.TextRequest(request);
 
@@ -38,13 +38,13 @@ namespace DMSLite.Commands
             string action = response.Result.Action;
 
             //Join strings to create classLocation
-            string classLocation = project + "." + action;
+            string classLocation = project + ".Commands." + action;
 
             //Find the class as a Type
             Type commandType = Type.GetType(classLocation);
 
             //Check if null, if null return message to the UI
-            if (commandType == null) return;
+            if (commandType == null) return "no command found";
 
             //Cast and execute the command
             ICommand command = Activator.CreateInstance(commandType) as ICommand;
@@ -53,11 +53,12 @@ namespace DMSLite.Commands
             {
                 //NOTE this returns a view
                 command.Execute(response.Result.Parameters);
+                return response.Result.Fulfillment.Speech;
             }
             catch (Exception e)
             {
                 // Send Error message to the UI
-                return;
+                return e.ToString();
             }
         }
     }
