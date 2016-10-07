@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace DMSLite.Commands
 {
-    public interface iCommand
+    public interface ICommand
     {
        View Execute(Dictionary<String, Object> parameters);
     }
