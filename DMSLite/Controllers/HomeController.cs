@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMSLite.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,22 @@ namespace DMSLite.Controllers
 {
     public class HomeController : Controller
     {
+        public Dispatcher dispatcher;
+        public HomeController()
+        {
+            dispatcher = new Dispatcher();
+        }
+
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult SendInput(FormCollection fc)
+        {
+            string inputText = fc["mainInput"];
+            string returnedText = dispatcher.Dispatch(inputText);
+            return Json(returnedText, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult TestInput()
