@@ -20,6 +20,12 @@ namespace DMSLite.DataContexts
             return new OrganizationDb();
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<OrganizationDb>(null);
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Donor> Donors { get; set; }
     }
