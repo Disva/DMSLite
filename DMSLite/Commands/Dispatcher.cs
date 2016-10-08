@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ApiAiSDK;
 using System.Web.Mvc;
+using DMSLite.Controllers;
 
 namespace DMSLite.Commands
 {
@@ -29,23 +30,30 @@ namespace DMSLite.Commands
         {
             try
             {
-                if (String.IsNullOrWhiteSpace(request)) throw new Exception("please enter a command");
-                var response = apiAi.TextRequest(request);
+                if (String.IsNullOrWhiteSpace(request)) throw new EmptyRequestException();
+            }
+            catch (EmptyRequestException)
+            {
+                return new ErrorController().ErrorMessage("please enter a command");
+            }
 
-                Console.WriteLine(response.Result.Fulfillment.Speech);
+            var response = apiAi.TextRequest(request);
 
-                // Get Client's Project Name
-                string project = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            Console.WriteLine(response.Result.Fulfillment.Speech);
 
-                // Taken from API.ai returned JSON object
-                string action = response.Result.Action;
+            // Get Client's Project Name
+            string project = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
 
-                //Join strings to create classLocation
-                string classLocation = project + ".Commands." + action;
+            // Taken from API.ai returned JSON object
+            string action = response.Result.Action;
+
+            //Join strings to create classLocation
+            string classLocation = project + ".Commands." + action;
             
-                //Find the class as a Type
-                Type commandType = Type.GetType(classLocation);
-
+            //Find the class as a Type
+            Type commandType = Type.GetType(classLocation);
+            try
+            {
                 //Check if null, if null return message to the UI
                 if (commandType == null) throw new Exception("no command found");
             
@@ -57,7 +65,6 @@ namespace DMSLite.Commands
                 //return response.Result.Fulfillment.Speech;
                 return command.Execute(response.Result.Parameters);
             }
-            
             catch (Exception e)
             {
                 // Send Error message to the UI
@@ -67,4 +74,10 @@ namespace DMSLite.Commands
         }
     }
 
+    internal class EmptyRequestException : Exception
+    {
+        public EmptyRequestException()
+        {
+        }
+    }
 }
