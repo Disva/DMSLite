@@ -10,13 +10,13 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
+        private const string CommandsLocation = ".Commands.";
 
         private static ApiAi apiAi;
 
         public Dispatcher()
         {
             InitAPIAI();
-
         }
 
         static void InitAPIAI()
@@ -27,25 +27,27 @@ namespace DMSLite.Commands
 
         public ActionResult Dispatch(string request)
         {
-            var response = apiAi.TextRequest(request);
-
-            Console.WriteLine(response.Result.Fulfillment.Speech);
-
-            // Get Client's Project Name
-            string project = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-
-            // Taken from API.ai returned JSON object
-            string action = response.Result.Action;
-
-            //Join strings to create classLocation
-            string classLocation = project + ".Commands." + action;
             try
             {
+                if (String.IsNullOrWhiteSpace(request)) throw new Exception("please enter a command");
+                var response = apiAi.TextRequest(request);
+
+                Console.WriteLine(response.Result.Fulfillment.Speech);
+
+                // Get Client's Project Name
+                string project = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
+                // Taken from API.ai returned JSON object
+                string action = response.Result.Action;
+
+                //Join strings to create classLocation
+                string classLocation = project + ".Commands." + action;
+            
                 //Find the class as a Type
                 Type commandType = Type.GetType(classLocation);
 
                 //Check if null, if null return message to the UI
-                if (commandType == null) throw new NoCommandFoundException();
+                if (commandType == null) throw new Exception("no command found");
             
                 //Cast and execute the command
                 ICommand command = Activator.CreateInstance(commandType) as ICommand;
@@ -55,23 +57,14 @@ namespace DMSLite.Commands
                 //return response.Result.Fulfillment.Speech;
                 return command.Execute(response.Result.Parameters);
             }
-            catch (NoCommandFoundException)
-            {
-                return new ShowErrorCommand("no command found").Execute(response.Result.Parameters);
-            }
+            
             catch (Exception e)
             {
                 // Send Error message to the UI
                 //return e.ToString();
-                return new ShowErrorCommand(e.ToString()).Execute(response.Result.Parameters);
+                return new ShowErrorCommand(e.Message).Execute(response.Result.Parameters);
             }
         }
     }
-    
-    internal class NoCommandFoundException : Exception
-    {
-        public NoCommandFoundException()
-        {
-        }
-    }
+
 }
