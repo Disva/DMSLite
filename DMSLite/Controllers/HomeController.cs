@@ -23,8 +23,9 @@ namespace DMSLite.Controllers
         public ActionResult SendInput(FormCollection fc)
         {
             string inputText = fc["mainInput"];
-            string returnedText = dispatcher.Dispatch(inputText);
-            return Json(returnedText, JsonRequestBehavior.AllowGet);
+            //string returnedText = dispatcher.Dispatch(inputText);
+            //return Json(returnedText, JsonRequestBehavior.AllowGet);
+            return dispatcher.Dispatch(inputText);
         }
 
         public ActionResult TestInput()

@@ -36,6 +36,11 @@ namespace DMSLite
             return View(donor);
         }
 
+        public ActionResult FetchIndex()
+        {
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", db.Donors.ToList());
+        }
+
         // GET: Donors/Create
         public ActionResult Create()
         {

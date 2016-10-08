@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using ApiAiSDK;
+using System.Web.Mvc;
 
 namespace DMSLite.Commands
 {
@@ -25,7 +25,7 @@ namespace DMSLite.Commands
             apiAi = new ApiAi(config);
         }
 
-        public string Dispatch(string request)
+        public ActionResult Dispatch(string request)
         {
             var response = apiAi.TextRequest(request);
 
@@ -39,27 +39,39 @@ namespace DMSLite.Commands
 
             //Join strings to create classLocation
             string classLocation = project + ".Commands." + action;
-
-            //Find the class as a Type
-            Type commandType = Type.GetType(classLocation);
-
-            //Check if null, if null return message to the UI
-            if (commandType == null) return "no command found";
-
-            //Cast and execute the command
-            ICommand command = Activator.CreateInstance(commandType) as ICommand;
-
             try
             {
+                //Find the class as a Type
+                Type commandType = Type.GetType(classLocation);
+
+                //Check if null, if null return message to the UI
+                if (commandType == null) throw new NoCommandFoundException();
+            
+                //Cast and execute the command
+                ICommand command = Activator.CreateInstance(commandType) as ICommand;
+
                 //NOTE this returns a view
-                command.Execute(response.Result.Parameters);
-                return response.Result.Fulfillment.Speech;
+                //command.Execute(response.Result.Parameters);
+                //return response.Result.Fulfillment.Speech;
+                return command.Execute(response.Result.Parameters);
+            }
+            catch (NoCommandFoundException)
+            {
+                return new ShowErrorCommand("no command found").Execute(response.Result.Parameters);
             }
             catch (Exception e)
             {
                 // Send Error message to the UI
-                return e.ToString();
+                //return e.ToString();
+                return new ShowErrorCommand(e.ToString()).Execute(response.Result.Parameters);
             }
+        }
+    }
+    
+    internal class NoCommandFoundException : Exception
+    {
+        public NoCommandFoundException()
+        {
         }
     }
 }

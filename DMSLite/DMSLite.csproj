@@ -199,8 +199,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ShowErrorCommand.cs" />
     <Compile Include="Commands\ViewDonors.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -295,6 +297,9 @@
     <Content Include="Views\Donors\Details.cshtml" />
     <Content Include="Views\Donors\Edit.cshtml" />
     <Content Include="Views\Donors\Index.cshtml" />
+    <Content Include="Views\Donors\_Fetch.cshtml" />
+    <Content Include="Views\Donors\_FetchIndex.cshtml" />
+    <Content Include="Views\Shared\_ErrorMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
