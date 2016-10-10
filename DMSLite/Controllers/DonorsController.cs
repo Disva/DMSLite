@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DMSLite.DataContexts;
 using DMSLite.Entities;
+using DMSLite.Controllers;
 
 namespace DMSLite
 {
@@ -44,26 +45,29 @@ namespace DMSLite
             {                
                 foreach (var parameter in parameters)
                 {
-                    if(parameter.Key == "given-name")
-                    {
-                        currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
-                    }
-                    /*else if (parameter.Key == "last-name")
-                    {
-                        currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
-                    }*/
-                    else if (parameter.Key == "phone-number")
-                    {
-                        currentDonors = currentDonors.Where(x => x.PhoneNumber == parameter.Value.ToString()).ToList();
-                    }
-                    else if (parameter.Key == "email-address")
-                    {
-                        currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                    if (parameter.Value.ToString() != "")
+                    { 
+                        if(parameter.Key == "given-name")
+                        {
+                            currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
+                        }
+                        /*else if (parameter.Key == "last-name")
+                        {
+                            currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
+                        }*/
+                        else if (parameter.Key == "phone-number")
+                        {
+                            currentDonors = currentDonors.Where(x => x.PhoneNumber.Replace("-","") == parameter.Value.ToString()).ToList();
+                        }
+                        else if (parameter.Key == "email-address")
+                        {
+                            currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                        }
                     }
                 }
                 if (currentDonors.Count == 0)
                 {
-                    return HttpNotFound();
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);            
