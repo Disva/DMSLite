@@ -37,18 +37,36 @@ namespace DMSLite
         }
 
 
-        public ActionResult FetchDonor(string name)
+        public ActionResult FetchDonor(Dictionary<string, object> parameters)
         {
-            if (name == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            List<Donor> currentDonors = db.Donors.ToList();
+            if (parameters.Count > 0)
+            {                
+                foreach (var parameter in parameters)
+                {
+                    if(parameter.Key == "given-name")
+                    {
+                        currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
+                    }
+                    /*else if (parameter.Key == "last-name")
+                    {
+                        currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
+                    }*/
+                    else if (parameter.Key == "phone-number")
+                    {
+                        currentDonors = currentDonors.Where(x => x.PhoneNumber == parameter.Value.ToString()).ToList();
+                    }
+                    else if (parameter.Key == "email-address")
+                    {
+                        currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                    }
+                }
+                if (currentDonors.Count == 0)
+                {
+                    return HttpNotFound();
+                }
             }
-            Donor donor = db.Donors.Where(x => x.Name == name).FirstOrDefault();
-            if (donor == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView("~/Views/Donors/_Fetch.cshtml", donor);
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);            
         }
 
         public ActionResult FetchIndex()
