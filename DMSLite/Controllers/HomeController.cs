@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public Dispatcher dispatcher;
