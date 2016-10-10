@@ -43,17 +43,7 @@ namespace DMSLite
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Donor donor = (from d in db.Donors
-                          where d.Name == name
-                          select new Donor
-                          {
-                              Name = d.Name,
-                              Email = d.Email,
-                              Id = d.Id,
-                              PhoneNumber = d.PhoneNumber,
-                              ReceiptFrequency = d.ReceiptFrequency,
-                              Type = d.Type
-                          }).FirstOrDefault();
+            Donor donor = db.Donors.Where(x => x.Name == name).FirstOrDefault();
             if (donor == null)
             {
                 return HttpNotFound();
