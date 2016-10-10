@@ -13,9 +13,7 @@ namespace DMSLite.Commands
     {
         public ActionResult Execute(Dictionary<string, object> parameters)
         {
-            if(parameters.ContainsKey("given-name"))
-                return new DonorsController().FetchDonor(parameters["given-name"].ToString());
-            return new DonorsController().FetchIndex();
+             return new DonorsController().FetchDonor(parameters);
         }
     }
 }
