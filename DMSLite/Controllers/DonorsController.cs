@@ -36,6 +36,31 @@ namespace DMSLite
             return View(donor);
         }
 
+
+        public ActionResult FetchDonor(string name)
+        {
+            if (name == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Donor donor = (from d in db.Donors
+                          where d.Name == name
+                          select new Donor
+                          {
+                              Name = d.Name,
+                              Email = d.Email,
+                              Id = d.Id,
+                              PhoneNumber = d.PhoneNumber,
+                              ReceiptFrequency = d.ReceiptFrequency,
+                              Type = d.Type
+                          }).FirstOrDefault();
+            if (donor == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("~/Views/Donors/_Fetch.cshtml", donor);
+        }
+
         public ActionResult FetchIndex()
         {
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", db.Donors.ToList());
