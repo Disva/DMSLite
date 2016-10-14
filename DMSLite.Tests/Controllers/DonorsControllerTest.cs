@@ -107,5 +107,21 @@ namespace DMSLite.Tests.Controllers
             Assert.AreEqual(squidward[0].FirstName, returnedModel[0].FirstName);
             Assert.AreEqual(squidward[0].LastName, returnedModel[0].LastName);
         }
+
+        [TestMethod]
+        //tests a searching for a specific donor by lowercase
+        public void TestViewSpecificDonorsByLowerCase()
+        {
+            HomeController hc = new HomeController();
+            FormCollection fc = new FormCollection();
+            fc.Add("mainInput", "Show me squidward");
+            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
+            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
+
+            List<Donor> squids = db.Donors.Where(x => x.FirstName == "Squidward").ToList();
+
+            Assert.AreEqual(squids.Count(), returnedModel.Count());
+            Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
+        }
     }
 }
