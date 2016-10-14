@@ -16,7 +16,9 @@ namespace DMSLite.Tests.Controllers
     {
         private OrganizationDb db = new OrganizationDb();
 
+        //VALIDITY TESTS
         [TestMethod]
+        //Tests that viewing all donors returns the list of all donors.
         public void TestViewDonors()
         {
             HomeController hc = new HomeController();
@@ -32,6 +34,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests that requesting a specific valid donor returns that valid donor.
         public void TestViewSpecificDonor()
         {
             HomeController hc = new HomeController();
@@ -47,6 +50,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests requesting a donor by name where all donors with the same name are returned.
         public void TestViewMultipleDonors()
         {
             HomeController hc = new HomeController();
@@ -62,6 +66,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests searching for a donor by phone number.
         public void TestViewByPhoneNumber()
         {
             HomeController hc = new HomeController();
@@ -77,6 +82,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests searching for a donor by Email.
         public void TestViewByEmail()
         {
             HomeController hc = new HomeController();
@@ -92,7 +98,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //tests a case where a donor with a duplicate first name is searched for with their unique last name and only one proper donor is returned
+        //Tests a case where a donor with a duplicate first name is searched for with their unique last name and only one proper donor is returned
         public void TestViewSpecificDonorWithDuplicateName()
         {
             HomeController hc = new HomeController();
@@ -109,7 +115,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //tests a searching for a specific donor by lowercase
+        //Tests searching for a specific donor by lowercase
         public void TestViewSpecificDonorsByLowerCase()
         {
             HomeController hc = new HomeController();
@@ -123,5 +129,32 @@ namespace DMSLite.Tests.Controllers
             Assert.AreEqual(squids.Count(), returnedModel.Count());
             Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
         }
+
+
+        //INVALIDITY TESTS
+        [TestMethod]
+        //Tests that an invalid command returns an error.
+        public void TestInvalidCommand()
+        {
+            HomeController hc = new HomeController();
+            FormCollection fc = new FormCollection();
+            fc.Add("mainInput", "Order a pizza. This is not a real command.");
+            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
+            var returnedModel = returnedView.ViewData.Model;
+            Assert.IsTrue(returnedModel.Equals("no command found"));
+        }
+
+        [TestMethod]
+        //Tests that searching for a donor with invalid criteria returns an error.
+        public void TestViewInvalidDonor()
+        {
+            HomeController hc = new HomeController();
+            FormCollection fc = new FormCollection();
+            fc.Add("mainInput", "Show me TestViewInvalidDonor");
+            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
+            var returnedModel = returnedView.ViewData.Model;
+            Assert.IsTrue(returnedModel.Equals("no donors were found"));
+        }
+
     }
 }
