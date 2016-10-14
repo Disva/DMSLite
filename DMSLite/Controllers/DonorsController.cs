@@ -45,15 +45,17 @@ namespace DMSLite
             {                
                 foreach (var parameter in parameters)
                 {
+                    //TODO: Search for more efficient way of cleaning this code smell -- pmiri
+
                     if (parameter.Value.ToString() != "")
                     { 
                         if(parameter.Key == "given-name")
                         {
-                            currentDonors = currentDonors.Where(x => x.FirstName == parameter.Value.ToString()).ToList();
+                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
                         }
                         else if (parameter.Key == "last-name")
                         {
-                            currentDonors = currentDonors.Where(x => x.LastName == parameter.Value.ToString()).ToList();
+                            currentDonors = currentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
                         }
                         else if (parameter.Key == "phone-number")
                         {
