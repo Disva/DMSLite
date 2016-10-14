@@ -47,7 +47,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        public void ViewMultipleDonors()
+        public void TestViewMultipleDonors()
         {
             HomeController hc = new HomeController();
             FormCollection fc = new FormCollection();
@@ -62,7 +62,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        public void ViewByPhoneNumber()
+        public void TestViewByPhoneNumber()
         {
             HomeController hc = new HomeController();
             FormCollection fc = new FormCollection();
@@ -77,7 +77,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        public void ViewByEmail()
+        public void TestViewByEmail()
         {
             HomeController hc = new HomeController();
             FormCollection fc = new FormCollection();
