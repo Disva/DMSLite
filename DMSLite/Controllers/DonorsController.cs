@@ -49,12 +49,12 @@ namespace DMSLite
                     { 
                         if(parameter.Key == "given-name")
                         {
-                            currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
+                            currentDonors = currentDonors.Where(x => x.FirstName == parameter.Value.ToString()).ToList();
                         }
-                        /*else if (parameter.Key == "last-name")
+                        else if (parameter.Key == "last-name")
                         {
-                            currentDonors = currentDonors.Where(x => x.Name == parameter.Value.ToString()).ToList();
-                        }*/
+                            currentDonors = currentDonors.Where(x => x.LastName == parameter.Value.ToString()).ToList();
+                        }
                         else if (parameter.Key == "phone-number")
                         {
                             currentDonors = currentDonors.Where(x => x.PhoneNumber.Replace("-","") == parameter.Value.ToString()).ToList();

@@ -12,7 +12,10 @@ namespace DMSLite.Entities
         public int Id { get; set; }
 
         [StringLength(255)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        [StringLength(255)]
+        public string LastName { get; set; }
 
         [StringLength(255)]
         public string Email { get; set; }
