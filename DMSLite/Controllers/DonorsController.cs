@@ -38,20 +38,20 @@ namespace DMSLite
         }
 
 
-        public ActionResult FetchDonor(Dictionary<string, object> parameters)
+        public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> currentDonors = db.Donors.ToList();
-            if (parameters.Count > 0)
+            List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
+            if (parameters.Count > 0) //Checks if searching for specific donor or all donors
             {                
-                foreach (var parameter in parameters)
+                foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
                 {
                     //TODO: Search for more efficient way of cleaning this code smell -- pmiri
 
-                    if (parameter.Value.ToString() != "")
+                    if (parameter.Value.ToString() != "") //Ignores empty parameters
                     { 
                         if(parameter.Key == "given-name")
                         {
-                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
                         }
                         else if (parameter.Key == "last-name")
                         {
@@ -72,13 +72,9 @@ namespace DMSLite
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);            
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);       
         }
 
-        public ActionResult FetchIndex()
-        {
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", db.Donors.ToList());
-        }
 
         // GET: Donors/Create
         public ActionResult Create()
