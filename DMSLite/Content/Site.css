@@ -1,4 +1,5 @@
 ﻿body {
+    height:100%;
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +22,15 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.sticky-footer {
+    position:fixed;
+    bottom: 0;
+    height: 50px;
+}
+
+.content-box {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
 }
