@@ -28,7 +28,7 @@ namespace DMSLite.Tests.Controllers
             List<Donor> allDonors = db.Donors.ToList();
 
             Assert.AreEqual(allDonors.Count(), returnedModel.Count());
-            Assert.AreEqual(allDonors[0].Name, returnedModel[0].Name);
+            Assert.AreEqual(allDonors[0].FirstName, returnedModel[0].FirstName);
         }
 
         [TestMethod]
@@ -40,10 +40,10 @@ namespace DMSLite.Tests.Controllers
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
             var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
 
-            List<Donor> denis = db.Donors.Where(x => x.Name == "Denis").ToList();
+            List<Donor> denis = db.Donors.Where(x => x.FirstName == "Denis").ToList();
             
             Assert.AreEqual(denis.Count(), returnedModel.Count());
-            Assert.AreEqual(denis[0].Name, returnedModel[0].Name);
+            Assert.AreEqual(denis[0].FirstName, returnedModel[0].FirstName);
         }
     }
 }
