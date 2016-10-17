@@ -19,6 +19,8 @@ namespace DMSLite
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
             List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
+            int count = 0;
+            int size = parameters.Count;
             if (parameters.Count > 0) //Checks if searching for specific donor or all donors
             {
                 foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
@@ -44,13 +46,18 @@ namespace DMSLite
                             currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
                         }
                     }
+                    else
+                        count++;
                 }
                 if (currentDonors.Count == 0)
                 {
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);
+            if(size > count)
+                return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
