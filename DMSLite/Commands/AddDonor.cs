@@ -13,7 +13,7 @@ namespace DMSLite.Commands
     {
         public ActionResult Execute(Dictionary<string, object> parameters)
         {
-            return new DonorsController().Add(parameters);
+            return new DonorsController().AddForm(parameters);
         }
     }
 }
