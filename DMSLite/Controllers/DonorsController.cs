@@ -55,12 +55,6 @@ namespace DMSLite
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
-            /*Donor newDonor = new Donor() {
-                FirstName = parameters["given-name"].ToString(),
-                LastName = parameters["last-name"].ToString(),
-                PhoneNumber = parameters["phone-number"].ToString(),
-                Email = parameters["email"].ToString()
-            };*/
             Donor newDonor = new Donor();
             if (parameters.ContainsKey("given-name"))
                 newDonor.FirstName = parameters["given-name"].ToString();
