@@ -167,13 +167,85 @@ namespace DMSLite.Tests.Controllers
             {
                 FirstName = "fName_TestAddNewValidDonor",
                 LastName = "lName_TestAddNewValidDonor",
-                Email = "email_fName_TestAddNewValidDonor",
+                Email = "email_TestAddNewValidDonor",
                 PhoneNumber = "111-111-1111",
             };
             ContentResult coReturned = (ContentResult)dc.Add(d);
-            dc.Remove(d);
-            //TEMPORARY
-            Assert.IsTrue(coReturned.Content.ToString().Equals("Thanks"));
+            try
+            {
+                dc.Remove(d);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+                //TEMPORARY
+                Assert.IsTrue(coReturned.Content.ToString().Equals("Thanks"));
+        }
+
+        [TestMethod]
+        //Tests that creating an invalid new donor fails
+        public void TestAddNewInvalidDonor()
+        {
+            DonorsController dc = new DonorsController();
+            //an invalid donor (has no firstName or lastName)
+            Donor d = new Donor
+            {
+                FirstName = "",
+                LastName = "",
+                Email = "TestAddNewInvalidDonor",
+                PhoneNumber = "-24",
+            };
+            ContentResult coReturned = new ContentResult();
+            try//try adding it and removing it
+            {
+                coReturned = (ContentResult)dc.Add(d);//the invalid donor should not be added to the db
+                dc.Remove(d);//if the test passes, the test should not reach this point. Just a cleanup precaution
+            }
+            catch (Exception e)
+            {
+                //This assertion should be enough
+                //a better way would be to check assert that Donors does not contain d, but this was causing issues and is very inefficient
+                Assert.IsTrue(true);
+                return;
+            }
+            Assert.IsTrue(false);//reaches here if the invalid donor WAS actually added to the db
+        }
+
+        [TestMethod]
+        //Tests that creating a duplicate donor does not work
+        //WILL EVENTUALLY NEED TO BE RELATIVE TO ORGANIZATION
+        public void TestAddDuplicateDonor()
+        {
+            DonorsController dc = new DonorsController();
+            //creating two of the same donor
+            Donor d1 = new Donor
+            {
+                FirstName = "fName_TestAdDuplicateDonor",
+                LastName = "lName_TestAdDuplicateDonor",
+                Email = "email_TestAdDuplicateDonor",
+                PhoneNumber = "111-111-1111",
+            };
+            Donor d1Duplicate = new Donor
+            {
+                FirstName = d1.FirstName,
+                LastName = d1.LastName,
+                Email = d1.Email,
+                PhoneNumber = d1.PhoneNumber,
+            };
+            dc.Add(d1);
+            try
+            {
+                dc.Add(d1Duplicate);
+                dc.Remove(d1Duplicate);
+            }
+            catch(Exception e)
+            {
+                //The duplicate was not added which passes the test
+                Assert.IsTrue(true);
+            }
+            dc.Remove(d1);
+            Assert.Fail();//the duplicate was added which fails the test
         }
 
     }
