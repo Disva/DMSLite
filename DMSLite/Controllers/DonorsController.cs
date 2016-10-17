@@ -102,7 +102,7 @@ namespace DMSLite
         public ActionResult Add(Dictionary<string, object> parameters)
         {
             int id;
-            String firstName, lastName, email, phoneNumber, type, recieptFrequency;
+            String firstName, lastName, email, phoneNumber, type, receiptFrequency;
             foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
             {
                 //TODO: Search for more efficient way of cleaning this code smell -- pmiri
@@ -133,9 +133,9 @@ namespace DMSLite
                     {
                         type = parameter.Value.ToString();
                     }
-                    else if (parameter.Key == "reciept-frequency")
+                    else if (parameter.Key == "receipt-frequency")
                     {
-                        recieptFrequency = parameter.Value.ToString();
+                        receiptFrequency = parameter.Value.ToString();
                     }
                 }
             }
