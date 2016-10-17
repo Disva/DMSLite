@@ -19,7 +19,7 @@ namespace DMSLite
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
             List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
-            int count = 0;
+            int numOfBlankValues = 0; //Number of empty parameters
             int size = parameters.Count;
             if (parameters.Count > 0) //Checks if searching for specific donor or all donors
             {
@@ -47,16 +47,16 @@ namespace DMSLite
                         }
                     }
                     else
-                        count++;
+                        numOfBlankValues++; //triggered when value is empty
                 }
                 if (currentDonors.Count == 0)
                 {
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
-            if(size > count)
+            if(size > numOfBlankValues) //If at least one parameter's value was non-empty
                 return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);
-            else
+            else //if no parameters were recognized
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
 
