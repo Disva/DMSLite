@@ -156,5 +156,25 @@ namespace DMSLite.Tests.Controllers
             Assert.IsTrue(returnedModel.Equals("no donors were found"));
         }
 
+        //CREATING DONORS TESTS
+        [TestMethod]
+        //Tests that creating a valid new donor
+        public void TestAddNewValidDonor()
+        {
+            DonorsController dc = new DonorsController();
+            //a valid donor is donor
+            Donor d = new Donor
+            {
+                FirstName = "fName_TestAddNewValidDonor",
+                LastName = "lName_TestAddNewValidDonor",
+                Email = "email_fName_TestAddNewValidDonor",
+                PhoneNumber = "111-111-1111",
+            };
+            ContentResult coReturned = (ContentResult)dc.Add(d);
+            dc.Remove(d);
+            //TEMPORARY
+            Assert.IsTrue(coReturned.Content.ToString().Equals("Thanks"));
+        }
+
     }
 }
