@@ -16,6 +16,75 @@ namespace DMSLite
     {
         private OrganizationDb db = new OrganizationDb();
 
+        public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
+        {
+            List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
+            if (parameters.Count > 0) //Checks if searching for specific donor or all donors
+            {
+                foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
+                {
+                    //TODO: Search for more efficient way of cleaning this code smell -- pmiri
+
+                    if (parameter.Value.ToString() != "") //Ignores empty parameters
+                    {
+                        if (parameter.Key == "given-name")
+                        {
+                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
+                        }
+                        else if (parameter.Key == "last-name")
+                        {
+                            currentDonors = currentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+                        }
+                        else if (parameter.Key == "phone-number")
+                        {
+                            currentDonors = currentDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameter.Value.ToString()).ToList();
+                        }
+                        else if (parameter.Key == "email-address")
+                        {
+                            currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                        }
+                    }
+                }
+                if (currentDonors.Count == 0)
+                {
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
+                }
+            }
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);
+        }
+
+        public ActionResult AddForm(Dictionary<string, object> parameters)
+        {
+            /*Donor newDonor = new Donor() {
+                FirstName = parameters["given-name"].ToString(),
+                LastName = parameters["last-name"].ToString(),
+                PhoneNumber = parameters["phone-number"].ToString(),
+                Email = parameters["email"].ToString()
+            };*/
+            Donor newDonor = new Donor();
+            if (parameters.ContainsKey("given-name"))
+                newDonor.FirstName = parameters["given-name"].ToString();
+            if (parameters.ContainsKey("last-name"))
+                newDonor.LastName = parameters["last-name"].ToString();
+            if (parameters.ContainsKey("phone-number"))
+                newDonor.PhoneNumber = parameters["phone-number"].ToString();
+            if (parameters.ContainsKey("email"))
+                newDonor.Email = parameters["email"].ToString();
+            return PartialView("~/Views/Donors/_Add.cshtml", newDonor);
+        }
+
+        public ActionResult Add(Donor donor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Donors.Add(donor);
+                db.SaveChanges();
+                return Content("Thanks","text/html");
+            }
+            return PartialView("~/Views/Donors/_Add.cshtml", donor);
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
+
         // GET: Donors
         public ActionResult Index()
         {
@@ -36,45 +105,6 @@ namespace DMSLite
             }
             return View(donor);
         }
-
-
-        public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
-        {
-            List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
-            if (parameters.Count > 0) //Checks if searching for specific donor or all donors
-            {                
-                foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
-                {
-                    //TODO: Search for more efficient way of cleaning this code smell -- pmiri
-
-                    if (parameter.Value.ToString() != "") //Ignores empty parameters
-                    { 
-                        if(parameter.Key == "given-name")
-                        {
-                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
-                        }
-                        else if (parameter.Key == "last-name")
-                        {
-                            currentDonors = currentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
-                        }
-                        else if (parameter.Key == "phone-number")
-                        {
-                            currentDonors = currentDonors.Where(x => x.PhoneNumber.Replace("-","") == parameter.Value.ToString()).ToList();
-                        }
-                        else if (parameter.Key == "email-address")
-                        {
-                            currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
-                        }
-                    }
-                }
-                if (currentDonors.Count == 0)
-                {
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
-                }
-            }
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);       
-        }
-
 
         // GET: Donors/Create
         public ActionResult Create()
@@ -97,49 +127,6 @@ namespace DMSLite
             }
 
             return View(donor);
-        }
-
-        public ActionResult Add(Dictionary<string, object> parameters)
-        {
-            int id;
-            String firstName, lastName, email, phoneNumber, type, recieptFrequency;
-            foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
-            {
-                //TODO: Search for more efficient way of cleaning this code smell -- pmiri
-
-                if (parameter.Value.ToString() != "") //Ignores empty parameters
-                {
-                    if (parameter.Key == "id")
-                    {
-                        id= (int)parameter.Value;
-                    }
-                    else if (parameter.Key == "given-name")
-                    {
-                        firstName = parameter.Value.ToString();
-                    }
-                    else if (parameter.Key == "last-name")
-                    {
-                        lastName = parameter.Value.ToString();
-                    }
-                    else if (parameter.Key == "phone-number")
-                    {
-                        phoneNumber = parameter.Value.ToString();
-                    }
-                    else if (parameter.Key == "email-address")
-                    {
-                        email = parameter.Value.ToString();
-                    }
-                    else if (parameter.Key == "type")
-                    {
-                        type = parameter.Value.ToString();
-                    }
-                    else if (parameter.Key == "reciept-frequency")
-                    {
-                        recieptFrequency = parameter.Value.ToString();
-                    }
-                }
-            }
-            return View();
         }
 
         // GET: Donors/Edit/5

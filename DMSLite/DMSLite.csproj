@@ -305,6 +305,7 @@
     <Content Include="Views\Donors\_Fetch.cshtml" />
     <Content Include="Views\Donors\_FetchIndex.cshtml" />
     <Content Include="Views\Shared\_ErrorMessage.cshtml" />
+    <Content Include="Views\Donors\_Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
