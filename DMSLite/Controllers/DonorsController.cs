@@ -87,7 +87,7 @@ namespace DMSLite
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,PhoneNumber,Type,ReceiptFrequency")] Donor donor)
+        public ActionResult Create([Bind(Include = "Id,Firstame,LastName,Email,PhoneNumber,Type,ReceiptFrequency")] Donor donor)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +97,49 @@ namespace DMSLite
             }
 
             return View(donor);
+        }
+
+        public ActionResult Add(Dictionary<string, object> parameters)
+        {
+            int id;
+            String firstName, lastName, email, phoneNumber, type, recieptFrequency;
+            foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
+            {
+                //TODO: Search for more efficient way of cleaning this code smell -- pmiri
+
+                if (parameter.Value.ToString() != "") //Ignores empty parameters
+                {
+                    if (parameter.Key == "id")
+                    {
+                        id= (int)parameter.Value;
+                    }
+                    else if (parameter.Key == "given-name")
+                    {
+                        firstName = parameter.Value.ToString();
+                    }
+                    else if (parameter.Key == "last-name")
+                    {
+                        lastName = parameter.Value.ToString();
+                    }
+                    else if (parameter.Key == "phone-number")
+                    {
+                        phoneNumber = parameter.Value.ToString();
+                    }
+                    else if (parameter.Key == "email-address")
+                    {
+                        email = parameter.Value.ToString();
+                    }
+                    else if (parameter.Key == "type")
+                    {
+                        type = parameter.Value.ToString();
+                    }
+                    else if (parameter.Key == "reciept-frequency")
+                    {
+                        recieptFrequency = parameter.Value.ToString();
+                    }
+                }
+            }
+            return View();
         }
 
         // GET: Donors/Edit/5
