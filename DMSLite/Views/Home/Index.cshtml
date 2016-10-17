@@ -4,15 +4,23 @@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
-<div class="row content-box">
+<script>
+    // Scroll the output container to the bottom
+    function updateContainer() {
+        $("#outputOuter").animate({
+            scrollTop: $("#outputOuter").prop("scrollHeight")
+        }, 350);
+    }
+</script>
+<div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"></div>
 </div>
 
 @using (Ajax.BeginForm("SendInput", new AjaxOptions()
 {
     InsertionMode = InsertionMode.InsertAfter,
-    UpdateTargetId = "outputContainer"
+    UpdateTargetId = "outputContainer",
+    OnSuccess = "updateContainer"
 }))
 {
     <div class="row sticky-footer">
