@@ -79,6 +79,18 @@ namespace DMSLite
             //TODO: make sure the name field is recognized as valid by api.ai
         }
 
+        public ActionResult Remove(Donor donor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Donors.Remove(donor);
+                db.SaveChanges();
+                return Content("Removed", "text/html");
+            }
+            return PartialView("~/Views/Donors/_Add.cshtml", donor);
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
+
         // GET: Donors
         public ActionResult Index()
         {
