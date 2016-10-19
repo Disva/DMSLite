@@ -23,12 +23,21 @@
     OnSuccess = "updateContainer"
 }))
 {
-    <div class="row sticky-footer">
-        <div class="col-md-10">
-            @Html.TextBox("mainInput")
-        </div>
-        <div class="col-md-2">
-            <input type="submit" value="Send" />
+    <div class="sticky-footer">
+        <div class="container">
+            <div class="row">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                        </span>
+                        @Html.TextBox("mainInput", null, new { @class = "form-control" })
+                        <span class="input-group-btn">
+                            <input class="btn btn-default" type="submit" value="Send" />
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
