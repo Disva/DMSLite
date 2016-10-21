@@ -11,6 +11,12 @@
             scrollTop: $("#outputOuter").prop("scrollHeight")
         }, 350);
     }
+
+    function addText() {
+        var div = document.getElementById('outputContainer');
+        var searchTerm = document.getElementById('mainInput').value;
+        div.innerHTML = div.innerHTML + searchTerm;
+    }
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"></div>
@@ -28,7 +34,13 @@
             @Html.TextBox("mainInput")
         </div>
         <div class="col-md-2">
-            <input type="submit" value="Send" />
+            <input id="searchButton" type="submit" value="Send" />
         </div>
     </div>
 }
+
+<script>
+    document.getElementById("searchButton").addEventListener("click", function () {
+        addText();
+    });
+</script>
