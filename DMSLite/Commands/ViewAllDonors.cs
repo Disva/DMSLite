@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace DMSLite.Commands
 {
-    public class ViewAllDonors
+    public class ViewAllDonors : ICommand
     {
         public ActionResult Execute(Dictionary<string, object> parameters)
         {
