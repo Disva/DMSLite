@@ -146,14 +146,19 @@ namespace DMSLite.Tests.Controllers
 
         [TestMethod]
         //Tests that searching for a donor with invalid criteria returns an error.
-        public void TestViewInvalidDonor()
+        public void TestViewInvalidDonorAndParameter()
         {
             HomeController hc = new HomeController();
             FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me TestViewInvalidDonor");
+            fc.Add("mainInput", "Show me Tom Sawyer");//a user who does not exist in the db
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
             var returnedModel = returnedView.ViewData.Model;
             Assert.IsTrue(returnedModel.Equals("no donors were found"));
+
+            fc.Add("mainInput", "Show me AnInvalidParameter");//a user who does not exist in the db
+            returnedView = (PartialViewResult)hc.SendInput(fc);
+            returnedModel = returnedView.ViewData.Model;
+            Assert.IsTrue(returnedModel.Equals("no parameters were recognized"));
         }
 
         //CREATING DONORS TESTS
