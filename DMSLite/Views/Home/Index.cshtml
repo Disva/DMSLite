@@ -15,23 +15,28 @@
             { opacity: 0 }, 300);*/
         //$("#mainInput::-webkit-input-placeholder").css("opacity", 0);
 
-        $("#mainInput").addClass("input_hide_placeholder");
-        $("#mainInput").removeClass("input_show_placeholder");
+        //$("#mainInput").addClass("input_hide_placeholder");
+        //$("#mainInput").removeClass("input_show_placeholder");
         
 
-        $(".loading-addon").fadeOut();
+        $("#mainInput").toggleClass("loading-background input_show_placeholder");
+        $("#mainInput").prop("disabled", false)
+        //$("#mainInput").toggleClass("input_show_placeholder");
+
     }
 
     function startLoading() {
+        $("#mainInput").prop("disabled", true)
         $("#mainInput").val("");
-        $("#mainInput").attr("placeholder", "Thinking...");
-        $("#mainInput").addClass("input_show_placeholder");
-        $("#mainInput").removeClass("input_hide_placeholder");
+        //$("#mainInput").attr("placeholder", "Thinking...");
+        //$("#mainInput").toggleClass("input_show_placeholder");
+        //$("#mainInput").addClass("input_show_placeholder");
+        //$("#mainInput").removeClass("input_hide_placeholder");
         //$("#mainInput::-webkit-input-placeholder").css("opacity", 100);
         /*$("#mainInput::-webkit-input-placeholder").animate(
             { opacity: 100 }, 300);*/
 
-        $(".loading-addon").fadeIn();
+        $("#mainInput").toggleClass("loading-background input_show_placeholder");
     }
 
     $(function() {
@@ -55,10 +60,7 @@
             <div class="row">
                 <div class="form-group">
                     <div class="input-group has-feedback">
-                        <span class="input-group-addon loading-addon">
-                            <span class="default-loading"></span>
-                        </span>
-                        @Html.TextBox("mainInput", null, new { @class = "form-control input_hide_placeholder" })
+                        @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
                         <span class="input-group-btn">
                             <input class="btn btn-default" type="submit" value="Send" />
                         </span>

@@ -34,6 +34,8 @@ textarea {
 
 #mainInput {
     max-width:none;
+    transition: background-image 0.3s linear;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='5' fill='white'/></svg>") no-repeat left center;
 }
 
 .content-box {
@@ -41,71 +43,40 @@ textarea {
     overflow-y: auto;
 }
 
-.glyphicon-refresh-animate {
-    -animation: spin .7s infinite linear;
-    -webkit-animation: spin2 .7s infinite linear;
-}
-
-@-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg);}
-    to { -webkit-transform: rotate(360deg);}
-}
-
-@keyframes spin {
-    from { transform: scale(1) rotate(0deg);}
-    to { transform: scale(1) rotate(360deg);}
-}
-
-.has-feedback label~.form-control-feedback {
-    top: 25px;
-}
-
-.has-error .form-control-feedback {
-    color: #a94442;
-}
-.form-control-feedback {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    display: block;
-    width: 34px;
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    pointer-events: none;
-}
-
-.default-loading {
-    background-image:url("ring-alt.svg");
-    width:30px;
-    height:30px;
-    display:block;
-}
-
-.loading-addon {
-    padding: 0px 6px;
-    /*visibility:collapse;*/
-    /*display:none;*/
-}
-
 #mainInput::-webkit-input-placeholder  {
-  -webkit-transition: opacity 1.0s linear; 
+  -webkit-transition: opacity 0.3s linear; 
   color: gray;
-}
-
-#mainInput {
-    -webkit-transition: width 1.0s linear;
-}
-
-.input_hide_placeholder::-webkit-input-placeholder  {
   opacity: 0;
 }
 
-.input_show_placeholder::-webkit-input-placeholder  {
-  opacity: 100;
+.input_hide_placeholder::-webkit-input-placeholder  {
+  
 }
 
-.loading-background {
-     background:url("ring-alt.svg") no-repeat left center;
+.input_show_placeholder::-webkit-input-placeholder  {
+  opacity: 1;
 }
+
+
+.loading-background {
+     background-image:url("ring-alt.svg") !important;
+     background-repeat:no-repeat;
+     background-position:left center;
+     padding-left:34px;
+}
+
+/*
+.loading-background:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+    background-image: url('http://placekitten.com/1500/1000');
+    background-repeat: no-repeat;
+    background-position: left center;
+}*/
