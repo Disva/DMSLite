@@ -94,6 +94,20 @@ namespace DMSLite
         {
             if (ModelState.IsValid)
             {
+                //check if db already contains this identical donor
+                try
+                {
+                    foreach (Donor d in db.Donors)//TEMPORARY, will need to eventually have db.Donors only return those donors visible to the current user's organization
+                    {
+                        if (d.isEqualTo(donor))
+                            throw new Exception();
+                    }
+                }
+                catch (Exception e)
+                {
+                    //TODO show the user an error message explaining that this user is a duplicate
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donor is a duplicate! It has not been added.");
+                }
                 db.Donors.Add(donor);
                 db.SaveChanges();
                 return Content("Thanks","text/html");
