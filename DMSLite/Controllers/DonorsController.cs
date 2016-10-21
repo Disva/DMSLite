@@ -30,13 +30,12 @@ namespace DMSLite
 
                     if (parameter.Value.ToString() != "") //Ignores empty parameters
                     {
-                        if (parameter.Key == "given-name")
+                        if (parameter.Key == "name")
                         {
+                            //TODO: handle first-last name combos; some first names might even have spaces!
                             filteredDonors = allCurrentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
-                        }
-                        else if (parameter.Key == "last-name")
-                        {
-                            filteredDonors = allCurrentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+                            filteredDonors.AddRange(allCurrentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList());
+                    
                         }
                         else if (parameter.Key == "phone-number")
                         {
@@ -44,7 +43,7 @@ namespace DMSLite
                         }
                         else if (parameter.Key == "email-address")
                         {
-                            filteredDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                            filteredDonors = allCurrentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
                         }
                     }
                     else
