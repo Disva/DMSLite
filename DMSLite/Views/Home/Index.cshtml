@@ -5,43 +5,42 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script>
-    // Scroll the output container to the bottom
+    // Scroll the output container to the bottom and remove loading styling
     function updateContainer() {
+        // Scroll to the bottom
         $("#outputOuter").animate({
             scrollTop: $("#outputOuter").prop("scrollHeight")
-        }, 350);
+        }, 350);        
 
-        /*$("#mainInput::-webkit-input-placeholder").animate(
-            { opacity: 0 }, 300);*/
-        //$("#mainInput::-webkit-input-placeholder").css("opacity", 0);
-
-        //$("#mainInput").addClass("input_hide_placeholder");
-        //$("#mainInput").removeClass("input_show_placeholder");
-        
-
-        $("#mainInput").toggleClass("loading-background input_show_placeholder");
+        // Remove the loading style and re-enable the inputs
+        $("#mainInput").toggleClass("loading-background");
         $("#mainInput").prop("disabled", false)
-        //$("#mainInput").toggleClass("input_show_placeholder");
-
+        $("#submitBtn").prop("disabled", false);        
     }
 
+    // Show loading styling (loading circle, disabled box)
     function startLoading() {
-        $("#mainInput").prop("disabled", true)
-        $("#mainInput").val("");
-        //$("#mainInput").attr("placeholder", "Thinking...");
-        //$("#mainInput").toggleClass("input_show_placeholder");
-        //$("#mainInput").addClass("input_show_placeholder");
-        //$("#mainInput").removeClass("input_hide_placeholder");
-        //$("#mainInput::-webkit-input-placeholder").css("opacity", 100);
-        /*$("#mainInput::-webkit-input-placeholder").animate(
-            { opacity: 100 }, 300);*/
+        // Remove error states
+        $("#mainInputGroup").removeClass("has-error");
+        $("#submitBtn").removeClass("btn-danger");
 
-        $("#mainInput").toggleClass("loading-background input_show_placeholder");
+        // Disable the inputs
+        $("#mainInput").prop("disabled", true);
+        $("#submitBtn").prop("disabled", true);
+
+        // Clear the textbox
+        $("#mainInput").val("");
+
+        // Format the textbox
+        $("#mainInput").toggleClass("loading-background");
     }
 
-    $(function() {
-        $(".loading-addon").hide();
-    });
+    // Show style for an error state
+    function ajaxFailure() {
+        $("#mainInputGroup").addClass("has-error");
+        $("#submitBtn").addClass("btn-danger");
+    }
+
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"></div>
@@ -59,10 +58,10 @@
         <div class="container">
             <div class="row">
                 <div class="form-group">
-                    <div class="input-group has-feedback">
+                    <div id="mainInputGroup" class="input-group">
                         @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
                         <span class="input-group-btn">
-                            <input class="btn btn-default" type="submit" value="Send" />
+                            <input id="submitBtn" class="btn btn-default" type="submit" value="Send" />
                         </span>
                     </div>
                 </div>
