@@ -34,11 +34,8 @@ textarea {
 
 #mainInput {
     max-width:none;
-    transition: background-image 1s linear;
-    /*transition: background-color 1s linear;*/
+    transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, end);
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='5' fill='white'/></svg>");
-        
-    /*background-image: url('http://placekitten.com/1500/1000');*/
     background-repeat:no-repeat;
     background-position: left center;
 }
@@ -54,34 +51,17 @@ textarea {
   opacity: 0;
 }
 
-.input_hide_placeholder::-webkit-input-placeholder  {
-  
+.loading-background::-webkit-input-placeholder  {
+  opacity: 1 !important;
 }
-
-.input_show_placeholder::-webkit-input-placeholder  {
-  opacity: 1;
-}
-
 
 .loading-background {
      background-image:url("ring-alt.svg") !important;
-     background-repeat:no-repeat;
-     background-position:left center;
+     transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, start) !important;
+     cursor:default !important;
      padding-left:34px;
 }
 
-/*
-.loading-background:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0.6;
-    background-image: url('http://placekitten.com/1500/1000');
-    background-repeat: no-repeat;
-    background-position: left center;
-}*/
+#submitBtn {
+    -webkit-transition: opacity 0.3s linear;
+}
