@@ -91,7 +91,7 @@ namespace DMSLite.Tests.Controllers
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
             var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
 
-            List<Donor> steve = db.Donors.Where(x => x.FirstName == "Steve").ToList();
+            List<Donor> steve = db.Donors.Where(x => x.Email == "steve@stevemail.com").ToList();
             
             Assert.AreEqual(steve.Count(), returnedModel.Count());
             Assert.AreEqual(steve[0].FirstName, returnedModel[0].FirstName);
