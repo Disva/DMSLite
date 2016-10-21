@@ -16,9 +16,8 @@ namespace DMSLite
     {
         private OrganizationDb db = new OrganizationDb();
 
-        public ActionResult FetchDonor(ApiAiSDK.Model.Result result) //Main method to search for donors, parameters may or may not be used
+        public ActionResult FetchDonor(Dictionary<String,Object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            Dictionary<String,Object > parameters = result.Parameters;
             List<Donor> allCurrentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
             List<Donor> filteredDonors = new List<Donor>();
             int numOfBlankValues = 0; //Number of empty parameters
