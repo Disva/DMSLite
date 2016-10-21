@@ -16,7 +16,7 @@ namespace DMSLite.Commands
             errorMessage = error;
         }
 
-        public ActionResult Execute(ApiAiSDK.Model.Result result)
+        public ActionResult Execute(Dictionary<string, object> parameters, String speechLine)
         {
             return new ErrorController().ErrorMessage(errorMessage);
         }

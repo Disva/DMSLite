@@ -63,13 +63,13 @@ namespace DMSLite.Commands
                 //NOTE this returns a view
                 //command.Execute(response.Result.Parameters);
                 //return response.Result.Fulfillment.Speech;
-                return command.Execute(response.Result);
+                return command.Execute(response.Result.Parameters,response.Result.Fulfillment.Speech);
             }
             catch (Exception e)
             {
                 // Send Error message to the UI
                 //return e.ToString();
-                return new ShowErrorCommand(e.Message).Execute(response.Result);
+                return new ShowErrorCommand(e.Message).Execute(response.Result.Parameters, response.Result.Fulfillment.Speech);
             }
         }
     }
