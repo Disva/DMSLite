@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DMSLite.DataContexts;
 using DMSLite.Entities;
 using DMSLite.Controllers;
+using DMSLite.Models;
 
 namespace DMSLite
 {
@@ -67,16 +68,43 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_Add.cshtml", newDonor);
         }
 
-        public ActionResult Add(Donor donor)
+        public ActionResult AddX(Donor donor)
         {
             if (ModelState.IsValid)
             {
-                db.Donors.Add(donor);
-                db.SaveChanges();
-                return Content("Thanks","text/html");
+                //confirm with the person submitting the form whether a similar donor already exists
+
+                //fetch a list of similar donors
+                List<Donor> sd = db.Donors.Where(x =>
+                (x.FirstName == donor.FirstName && x.LastName == donor.LastName) ||
+                (x.Email == donor.Email) ||
+                (x.PhoneNumber == donor.PhoneNumber)).ToList();
+
+                if(sd.Count() > 0)
+                {
+                    //return a view showing similar donors
+                    SimilarDonorModel sdm = new SimilarDonorModel() { newDonor = donor, similarDonors = sd };
+                    return PartialView("~/Views/Donors/_Similar.cshtml", sdm);
+                }
+                else
+                { 
+                    db.Donors.Add(donor);
+                    db.SaveChanges();
+                    return Content("Thanks","text/html");
+                }
             }
+
+            //an invalid submission should just return the form
             return PartialView("~/Views/Donors/_Add.cshtml", donor);
-            //TODO: make sure the name field is recognized as valid by api.ai
+        }
+
+        //this method should only fire after the user has confirmed thy want to add a similar donor
+        //(same phone number, email, or first name/ last name combo)
+        public ActionResult AddSimilar(SimilarDonorModel sdm)
+        {
+            db.Donors.Add(sdm.newDonor);
+            db.SaveChanges();
+            return Content("Thanks", "text/html");
         }
 
         // GET: Donors
