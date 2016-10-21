@@ -60,6 +60,12 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
 
+        public ActionResult viewAllDonors()
+        {
+            List<Donor> allDonors = db.Donors.ToList();
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+        }
+
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
             Donor newDonor = new Donor();
