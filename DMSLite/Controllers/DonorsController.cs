@@ -44,7 +44,7 @@ namespace DMSLite
                         }
                         else if (parameter.Key == "email-address")
                         {
-                            filteredDonors = allCurrentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                            filteredDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
                         }
                     }
                     else
