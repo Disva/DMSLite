@@ -10,7 +10,33 @@
         $("#outputOuter").animate({
             scrollTop: $("#outputOuter").prop("scrollHeight")
         }, 350);
+
+        /*$("#mainInput::-webkit-input-placeholder").animate(
+            { opacity: 0 }, 300);*/
+        //$("#mainInput::-webkit-input-placeholder").css("opacity", 0);
+
+        $("#mainInput").addClass("input_hide_placeholder");
+        $("#mainInput").removeClass("input_show_placeholder");
+        
+
+        $(".loading-addon").fadeOut();
     }
+
+    function startLoading() {
+        $("#mainInput").val("");
+        $("#mainInput").attr("placeholder", "Thinking...");
+        $("#mainInput").addClass("input_show_placeholder");
+        $("#mainInput").removeClass("input_hide_placeholder");
+        //$("#mainInput::-webkit-input-placeholder").css("opacity", 100);
+        /*$("#mainInput::-webkit-input-placeholder").animate(
+            { opacity: 100 }, 300);*/
+
+        $(".loading-addon").fadeIn();
+    }
+
+    $(function() {
+        $(".loading-addon").hide();
+    });
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"></div>
@@ -20,18 +46,19 @@
 {
     InsertionMode = InsertionMode.InsertAfter,
     UpdateTargetId = "outputContainer",
-    OnSuccess = "updateContainer"
+    OnSuccess = "updateContainer",
+    OnBegin = "startLoading"
 }))
 {
     <div class="sticky-footer">
         <div class="container">
             <div class="row">
                 <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    <div class="input-group has-feedback">
+                        <span class="input-group-addon loading-addon">
+                            <span class="default-loading"></span>
                         </span>
-                        @Html.TextBox("mainInput", null, new { @class = "form-control" })
+                        @Html.TextBox("mainInput", null, new { @class = "form-control input_hide_placeholder" })
                         <span class="input-group-btn">
                             <input class="btn btn-default" type="submit" value="Send" />
                         </span>
