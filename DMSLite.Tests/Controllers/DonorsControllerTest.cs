@@ -226,9 +226,9 @@ namespace DMSLite.Tests.Controllers
             //creating two of the same donor
             Donor d1 = new Donor
             {
-                FirstName = "fName_TestAdDuplicateDonor",
-                LastName = "lName_TestAdDuplicateDonor",
-                Email = "email_TestAdDuplicateDonor",
+                FirstName = "fName_TestAddDuplicateDonor",
+                LastName = "lName_TestAddDuplicateDonor",
+                Email = "email_TestAddDuplicateDonor",
                 PhoneNumber = "111-111-1111",
             };
             Donor d1Duplicate = new Donor
@@ -248,6 +248,7 @@ namespace DMSLite.Tests.Controllers
             {
                 //The duplicate was not added which passes the test
                 Assert.IsTrue(true);
+                return;
             }
             dc.Remove(d1);
             Assert.Fail();//the duplicate was added which fails the test
