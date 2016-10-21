@@ -11,9 +11,9 @@ namespace DMSLite.Commands
 {
     public class ViewDonors : ICommand
     {
-        public ActionResult Execute(Dictionary<string, object> parameters)
+        public ActionResult Execute(ApiAiSDK.Model.Result result)
         {
-             return new DonorsController().FetchDonor(parameters);
+             return new DonorsController().FetchDonor(result);
         }
     }
 }

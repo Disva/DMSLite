@@ -10,6 +10,6 @@ namespace DMSLite.Commands
 {
     public interface ICommand
     {
-       ActionResult Execute(Dictionary<String, Object> parameters);
+       ActionResult Execute(ApiAiSDK.Model.Result result);
     }
 }

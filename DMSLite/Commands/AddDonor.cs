@@ -11,9 +11,9 @@ namespace DMSLite.Commands
 {
     public class AddDonor : ICommand
     {
-        public ActionResult Execute(Dictionary<string, object> parameters)
+        public ActionResult Execute(ApiAiSDK.Model.Result result)
         {
-            return new DonorsController().AddForm(parameters);
+            return new DonorsController().AddForm(result.Parameters);
         }
     }
 }
