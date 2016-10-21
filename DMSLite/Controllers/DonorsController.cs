@@ -18,7 +18,8 @@ namespace DMSLite
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> currentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
+            List<Donor> allCurrentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
+            List<Donor> filteredDonors = new List<Donor>();
             int numOfBlankValues = 0; //Number of empty parameters
             int size = parameters.Count;
             if (parameters.Count > 0) //Checks if searching for specific donor or all donors
@@ -31,31 +32,31 @@ namespace DMSLite
                     {
                         if (parameter.Key == "given-name")
                         {
-                            currentDonors = currentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
+                            filteredDonors = allCurrentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
                         }
                         else if (parameter.Key == "last-name")
                         {
-                            currentDonors = currentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+                            filteredDonors = allCurrentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
                         }
                         else if (parameter.Key == "phone-number")
                         {
-                            currentDonors = currentDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameter.Value.ToString()).ToList();
+                            filteredDonors = allCurrentDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameter.Value.ToString()).ToList();
                         }
                         else if (parameter.Key == "email-address")
                         {
-                            currentDonors = currentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                            filteredDonors = allCurrentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
                         }
                     }
                     else
                         numOfBlankValues++; //triggered when value is empty
                 }
-                if (currentDonors.Count == 0)
+                if (filteredDonors.Count == 0)
                 {
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
-            if(size > numOfBlankValues) //If at least one parameter's value was non-empty
-                return PartialView("~/Views/Donors/_FetchIndex.cshtml", currentDonors);
+            if (size > numOfBlankValues) //If at least one parameter's value was non-empty
+                return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
             else //if no parameters were recognized
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
