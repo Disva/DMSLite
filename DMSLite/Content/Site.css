@@ -27,10 +27,41 @@ textarea {
 .sticky-footer {
     position:fixed;
     bottom: 0;
+    left:0;
     height: 50px;
+    width:100%;
+}
+
+#mainInput {
+    max-width:none;
+    transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, end);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='5' fill='white'/></svg>");
+    background-repeat:no-repeat;
+    background-position: left center;
 }
 
 .content-box {
     height: calc(100vh - 100px);
     overflow-y: auto;
+}
+
+#mainInput::-webkit-input-placeholder  {
+  -webkit-transition: opacity 0.3s linear; 
+  color: gray;
+  opacity: 0;
+}
+
+.loading-background::-webkit-input-placeholder  {
+  opacity: 1 !important;
+}
+
+.loading-background {
+     background-image:url("ring-alt.svg") !important;
+     transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, start) !important;
+     cursor:default !important;
+     padding-left:34px;
+}
+
+#submitBtn {
+    -webkit-transition: opacity 0.3s linear;
 }
