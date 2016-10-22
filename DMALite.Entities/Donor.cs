@@ -30,5 +30,17 @@ namespace DMSLite.Entities
 
         [StringLength(255)]
         public string ReceiptFrequency { get; set; }
+
+        public bool isEqualTo(Donor otherDonor)
+        {
+            if (FirstName.Equals(otherDonor.FirstName) &&
+                LastName.Equals(otherDonor.LastName) &&
+                Email.Equals(otherDonor.Email) &&
+                PhoneNumber.Equals(otherDonor.PhoneNumber))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }

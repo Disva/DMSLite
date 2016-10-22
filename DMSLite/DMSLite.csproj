@@ -201,6 +201,7 @@
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ShowErrorCommand.cs" />
+    <Compile Include="Commands\ViewAllDonors.cs" />
     <Compile Include="Commands\ViewDonors.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
