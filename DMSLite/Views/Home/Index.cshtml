@@ -17,8 +17,13 @@
         $("#mainInput").prop("disabled", false)
         $("#submitBtn").prop("disabled", false);        
     }
+function addText() {
+        var div = document.getElementById('outputContainer');
+        var searchTerm = document.getElementById('mainInput').value;
+        div.innerHTML = div.innerHTML + searchTerm;
+    }
 
-    // Show loading styling (loading circle, disabled box)
+// Show loading styling (loading circle, disabled box)
     function startLoading() {
         // Remove error states
         $("#mainInputGroup").removeClass("has-error");
@@ -40,7 +45,6 @@
         $("#mainInputGroup").addClass("has-error");
         $("#submitBtn").addClass("btn-danger");
     }
-
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"></div>
@@ -70,3 +74,9 @@
         </div>
     </div>
 }
+
+<script>
+    document.getElementById("searchButton").addEventListener("click", function () {
+        addText();
+    });
+</script>

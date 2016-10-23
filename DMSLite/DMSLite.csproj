@@ -231,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -309,6 +310,7 @@
     <Content Include="Views\Shared\_ErrorMessage.cshtml" />
     <Content Include="Views\Donors\_Add.cshtml" />
     <Content Include="Views\Donors\_Similar.cshtml" />
+    <Content Include="Views\Home\_Response.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

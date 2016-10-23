@@ -11,9 +11,9 @@ namespace DMSLite.Commands
 {
     public class ViewAllDonors : ICommand
     {
-        public ActionResult Execute(Dictionary<string, object> parameters)
+        public Tuple<string, string> Execute()
         {
-            return new DonorsController().viewAllDonors();
+            return new Tuple<string, string>("Donors", "FetchDonor");
         }
     }
 }
