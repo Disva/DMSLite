@@ -11,9 +11,9 @@ namespace DMSLite.Commands
 {
     public class AddDonor : ICommand
     {
-        public ActionResult Execute(Dictionary<string, object> parameters, String speechLine)
+        public Tuple<string, string> Execute()
         {
-            return new DonorsController().AddForm(parameters);
+            return new Tuple<string, string>("Donors", "AddForm");
         }
     }
 }
