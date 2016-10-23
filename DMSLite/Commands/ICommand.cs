@@ -10,6 +10,6 @@ namespace DMSLite.Commands
 {
     public interface ICommand
     {
-       ActionResult Execute(Dictionary<string, object> parameters, String speechLine);
+       Tuple<string, string> Execute();
     }
 }

@@ -1,0 +1,9 @@
+﻿@model DMSLite.Models.ResponseModel
+
+<p>@Model.Speech</p>
+
+@if(Model.Instructions != null)
+{
+    //Switched from regular tuple: Method, Controller
+    @Html.Action(Model.Instructions.Item2, Model.Instructions.Item1, Model.Parameters)
+}

@@ -9,16 +9,9 @@ namespace DMSLite.Commands
 {
     public class ShowErrorCommand : ICommand
     {
-        public string errorMessage;
-
-        public ShowErrorCommand(string error)
+        public Tuple<string, string> Execute()
         {
-            errorMessage = error;
-        }
-
-        public ActionResult Execute(Dictionary<string, object> parameters, String speechLine)
-        {
-            return new ErrorController().ErrorMessage(errorMessage);
+            return new Tuple<string, string>("Error", "ErrorMessage");
         }
     }
 }
