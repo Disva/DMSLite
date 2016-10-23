@@ -5,9 +5,11 @@ using System.Web;
 using ApiAiSDK;
 using System.Web.Mvc;
 using DMSLite.Controllers;
+using DMSLite.Models;
 
 namespace DMSLite.Commands
-{
+{ 
+
     public class Dispatcher
     {
         private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
@@ -26,7 +28,7 @@ namespace DMSLite.Commands
             apiAi = new ApiAi(config);
         }
 
-        public ActionResult Dispatch(string request)
+        public ResponseModel Dispatch(string request)
         {
             try
             {
@@ -34,7 +36,14 @@ namespace DMSLite.Commands
             }
             catch (EmptyRequestException)
             {
-                return new ErrorController().ErrorMessage("please enter a command");
+                ResponseModel responseModel = new ResponseModel()
+                {
+                    Speech = "Please enter a command.",
+                    Instructions = null,
+                    Parameters = null
+                };
+
+                return responseModel;
             }
 
             var response = apiAi.TextRequest(request);
@@ -63,13 +72,27 @@ namespace DMSLite.Commands
                 //NOTE this returns a view
                 //command.Execute(response.Result.Parameters);
                 //return response.Result.Fulfillment.Speech;
-                return command.Execute(response.Result.Parameters);
+                ResponseModel responseModel = new ResponseModel()
+                {
+                    Speech = response.Result.Fulfillment.Speech,
+                    Instructions = command.Execute(),
+                    Parameters = response.Result.Parameters
+                };
+
+                return responseModel;
             }
             catch (Exception e)
             {
                 // Send Error message to the UI
                 //return e.ToString();
-                return new ShowErrorCommand(e.Message).Execute(response.Result.Parameters);
+                ResponseModel responseModel = new ResponseModel()
+                {
+                    Speech = "It seems we ran into an error: " + e.Message,
+                    Instructions = null,
+                    Parameters =  null
+                };
+
+                return responseModel;
             }
         }
     }

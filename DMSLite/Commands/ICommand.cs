@@ -10,6 +10,6 @@ namespace DMSLite.Commands
 {
     public interface ICommand
     {
-       ActionResult Execute(Dictionary<String, Object> parameters);
+       Tuple<string, string> Execute();
     }
 }
