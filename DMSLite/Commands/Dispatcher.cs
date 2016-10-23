@@ -69,9 +69,6 @@ namespace DMSLite.Commands
                 //Cast and execute the command
                 ICommand command = Activator.CreateInstance(commandType) as ICommand;
 
-                //NOTE this returns a view
-                //command.Execute(response.Result.Parameters);
-                //return response.Result.Fulfillment.Speech;
                 ResponseModel responseModel = new ResponseModel()
                 {
                     Speech = response.Result.Fulfillment.Speech,
