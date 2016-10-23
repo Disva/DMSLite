@@ -18,6 +18,7 @@ namespace DMSLite
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
+            List<Donor> allCurrentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
             List<Donor> filteredDonors = new List<Donor>();
             List<Donor> allDonors = new List<Donor>();
             allDonors = db.Donors.ToList<Donor>();//Not an ideal solution, unless we find a way to make dv.Donors to only return the donors visible by the organization of the current user - dk
