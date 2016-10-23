@@ -16,9 +16,8 @@ namespace DMSLite
     {
         private OrganizationDb db = new OrganizationDb();
 
-        public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
+        public ActionResult FetchDonor(Dictionary<String,Object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> allCurrentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
             List<Donor> filteredDonors = new List<Donor>();
             List<Donor> allDonors = new List<Donor>();
             allDonors = db.Donors.ToList<Donor>();//Not an ideal solution, unless we find a way to make dv.Donors to only return the donors visible by the organization of the current user - dk
@@ -61,17 +60,23 @@ namespace DMSLite
                     paramsExist = true;
                 }
             }
+<<<<<<< HEAD
             if (filteredDonors.Count == 0 && paramsExist)
             {
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
             }
             if (paramsExist) //If at least one parameter's value was non-empty
+=======
+            if (size > numOfBlankValues)
+            { //If at least one parameter's value was non-empty
+>>>>>>> Issue3-DisplayingTheQuery
                 return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
+            }
             else //if no parameters were recognized
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
 
-        public ActionResult ViewAllDonors()
+        public ActionResult viewAllDonors()
         {
             List<Donor> allDonors = db.Donors.ToList();
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
