@@ -16,65 +16,50 @@ namespace DMSLite
     {
         private OrganizationDb db = new OrganizationDb();
 
-        public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
+        public ActionResult FetchDonor(Dictionary<String,Object> parameters) //Main method to search for donors, parameters may or may not be used
         {
             List<Donor> allCurrentDonors = db.Donors.ToList(); //Takes all donors from database (may not scale well, research)
             List<Donor> filteredDonors = new List<Donor>();
-            List<Donor> allDonors = new List<Donor>();
-            allDonors = db.Donors.ToList<Donor>();//Not an ideal solution, unless we find a way to make dv.Donors to only return the donors visible by the organization of the current user - dk
-            bool paramsExist = false;
+            int numOfBlankValues = 0; //Number of empty parameters
             int size = parameters.Count;
             if (parameters.Count > 0) //Checks if searching for specific donor or all donors
             {
-                if (!String.IsNullOrEmpty(parameters["name"].ToString()))
+                foreach (var parameter in parameters) //Iterates through each paremter (given name, last name, ect) to filter list iteratively
                 {
-                    string name = parameters["name"].ToString();
-                    if(name.Contains(" "))//split up by first and last
+                    //TODO: Search for more efficient way of cleaning this code smell -- pmiri
+
+                    if (parameter.Value.ToString() != "") //Ignores empty parameters
                     {
-                        string[] names = name.Split(new char[] { ' ' });
-                        filteredDonors.AddRange(allDonors.Where(x=> String.Equals(names[0], x.FirstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        String.Equals(names[1], x.LastName, StringComparison.InvariantCultureIgnoreCase)));
-                        filteredDonors.AddRange(allDonors.Where(x => String.Equals(names[1], x.FirstName, StringComparison.InvariantCultureIgnoreCase) &&
-                        String.Equals(names[0], x.LastName, StringComparison.InvariantCultureIgnoreCase)));
+                        if (parameter.Key == "name")
+                        {
+                            //TODO: handle first-last name combos; some first names might even have spaces!
+                            filteredDonors = allCurrentDonors.Where(x => String.Equals(x.FirstName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList(); //Note that this is now case-insensitive, use this in all string comparisons
+                            filteredDonors.AddRange(allCurrentDonors.Where(x => String.Equals(x.LastName, parameter.Value.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList());
+                    
+                        }
+                        else if (parameter.Key == "phone-number")
+                        {
+                            filteredDonors = allCurrentDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameter.Value.ToString()).ToList();
+                        }
+                        else if (parameter.Key == "email-address")
+                        {
+                            filteredDonors = allCurrentDonors.Where(x => x.Email == parameter.Value.ToString()).ToList();
+                        }
                     }
                     else
-                    {
-                        filteredDonors.AddRange(allDonors.Where(x => String.Equals(x.FirstName, name, StringComparison.InvariantCultureIgnoreCase) ||
-                        String.Equals(x.LastName, name, StringComparison.InvariantCultureIgnoreCase)));
-                    }
-                    paramsExist = true;
+                        numOfBlankValues++; //triggered when value is empty
                 }
-                if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
+                if (filteredDonors.Count == 0)
                 {
-                    if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                        filteredDonors.AddRange(allDonors.Where(x => x.Email == parameters["email-address"].ToString()));
-                    else if(filteredDonors.Count == 0 && paramsExist)//to filter
-                        filteredDonors = filteredDonors.Where(x => x.Email == parameters["email-address"].ToString()).ToList();
-                    paramsExist = true;
-                }
-                if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
-                {
-                    if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                        filteredDonors.AddRange(allDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameters["phone-number"].ToString().Replace("-", "")));
-                    else if (filteredDonors.Count == 0 && paramsExist)//to filter
-                        filteredDonors = filteredDonors.Where(x => x.PhoneNumber.Replace("-", "") == parameters["phone-number"].ToString().Replace("-", "")).ToList();
-                    paramsExist = true;
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
                 }
             }
-            if (filteredDonors.Count == 0 && paramsExist)
-            {
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
-            }
-            if (paramsExist) //If at least one parameter's value was non-empty
+            if (size > numOfBlankValues)
+            { //If at least one parameter's value was non-empty
                 return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
+            }
             else //if no parameters were recognized
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
-        }
-
-        public ActionResult ViewAllDonors()
-        {
-            List<Donor> allDonors = db.Donors.ToList();
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
@@ -95,20 +80,6 @@ namespace DMSLite
         {
             if (ModelState.IsValid)
             {
-                //check if db already contains this identical donor
-                try
-                {
-                    foreach (Donor d in db.Donors)//TEMPORARY, will need to eventually have db.Donors only return those donors visible to the current user's organization
-                    {
-                        if (d.isEqualTo(donor))
-                            throw new Exception();
-                    }
-                }
-                catch (Exception e)
-                {
-                    //TODO show the user an error message explaining that this user is a duplicate
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donor is a duplicate! It has not been added.");
-                }
                 db.Donors.Add(donor);
                 db.SaveChanges();
                 return Content("Thanks","text/html");
