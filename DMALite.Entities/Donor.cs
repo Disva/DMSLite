@@ -31,6 +31,8 @@ namespace DMSLite.Entities
         [StringLength(255)]
         public string ReceiptFrequency { get; set; }
 
+        //ASSUMPTION
+        //no users with NULL firstname, lastname, email or phone number can exist
         public bool isEqualTo(Donor otherDonor)
         {
             if (FirstName.Equals(otherDonor.FirstName) &&
