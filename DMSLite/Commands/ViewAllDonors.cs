@@ -9,11 +9,11 @@ using System.Web.UI.WebControls;
 
 namespace DMSLite.Commands
 {
-    public class ViewDonors : ICommand
+    public class ViewAllDonors : ICommand
     {
         public Tuple<string, string> Execute()
         {
-            return new Tuple<string, string>("Donors", "FetchDonor");
+            return new Tuple<string, string>("Donors", "ViewAllDonors");
         }
     }
 }

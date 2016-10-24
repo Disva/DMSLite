@@ -11,9 +11,11 @@ namespace DMSLite.Entities
     {
         public int Id { get; set; }
 
+        [Required]
         [StringLength(255)]
         public string FirstName { get; set; }
 
+        [Required]
         [StringLength(255)]
         public string LastName { get; set; }
 
@@ -28,5 +30,19 @@ namespace DMSLite.Entities
 
         [StringLength(255)]
         public string ReceiptFrequency { get; set; }
+
+        //ASSUMPTION
+        //no users with NULL firstname, lastname, email or phone number can exist
+        public bool isEqualTo(Donor otherDonor)
+        {
+            if (FirstName.Equals(otherDonor.FirstName) &&
+                LastName.Equals(otherDonor.LastName) &&
+                Email.Equals(otherDonor.Email) &&
+                PhoneNumber.Equals(otherDonor.PhoneNumber))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }

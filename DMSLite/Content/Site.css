@@ -27,10 +27,64 @@ textarea {
 .sticky-footer {
     position:fixed;
     bottom: 0;
+    left:0;
     height: 50px;
+    width:100%;
+}
+
+#mainInput {
+    max-width:none;
+    transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, end);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='5' fill='white'/></svg>");
+    background-repeat:no-repeat;
+    background-position: left center;
 }
 
 .content-box {
     height: calc(100vh - 100px);
     overflow-y: auto;
+}
+
+#mainInput::-webkit-input-placeholder  {
+  -webkit-transition: opacity 0.3s linear; 
+  color: gray;
+  opacity: 0;
+}
+
+.loading-background::-webkit-input-placeholder  {
+  opacity: 1 !important;
+}
+
+.loading-background {
+     background-image:url("ring-alt.svg") !important;
+     transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, start) !important;
+     cursor:default !important;
+     padding-left:34px;
+}
+
+#submitBtn {
+    -webkit-transition: opacity 0.3s linear;
+}
+
+/* The css for the beautiful chat interface*/
+.bubble {
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+.bubble p {
+    margin: 0px;
+}
+.leftBubble {
+    background-color: #96af50;
+    border-top-left-radius: 0px;
+}
+.rightBubble {
+    background-color: #c2cec6;
+    border-top-right-radius: 0px;
+    float: right;
+}
+.bubbleLine {
+    overflow: hidden;
 }
