@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using DMSLite.Entities;
 using DMSLite.DataContexts;
+using DMSLite.Models;
 
 namespace DMSLite.Tests.Controllers
 {
@@ -21,16 +22,15 @@ namespace DMSLite.Tests.Controllers
         //Tests that viewing all donors returns the list of all donors.
         public void TestViewDonors()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show donors");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController ds = new DonorsController();
+            PartialViewResult pvr = (PartialViewResult)ds.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> allDonors = db.Donors.ToList();
-
             Assert.AreEqual(allDonors.Count(), returnedModel.Count());
-            Assert.AreEqual(allDonors[0].FirstName, returnedModel[0].FirstName);
+            for(int i = 0; i < allDonors.Count(); i ++)
+            {
+                Assert.IsTrue(allDonors[i].isEqualTo(returnedModel[i]));
+            }
         }
 
         [TestMethod]
