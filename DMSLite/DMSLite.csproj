@@ -200,6 +200,7 @@
     <Compile Include="Commands\AddDonor.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ModifyDonor.cs" />
     <Compile Include="Commands\ShowErrorCommand.cs" />
     <Compile Include="Commands\ViewAllDonors.cs" />
     <Compile Include="Commands\ViewDonors.cs" />
@@ -311,6 +312,7 @@
     <Content Include="Views\Donors\_Add.cshtml" />
     <Content Include="Views\Donors\_Similar.cshtml" />
     <Content Include="Views\Home\_Response.cshtml" />
+    <Content Include="Views\Donors\_Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
