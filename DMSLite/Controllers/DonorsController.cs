@@ -82,6 +82,12 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
 
+        public ActionResult ModifyDonor(Dictionary<string, object> parameters)
+        {
+            Donor d = db.Donors.First();
+            return PartialView("~/Views/Donors/_Edit.cshtml", d);
+        }
+
         public ActionResult ViewAllDonors()
         {
             List<Donor> allDonors = db.Donors.ToList();
