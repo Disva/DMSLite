@@ -5,12 +5,17 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script>
-    // Scroll the output container to the bottom and remove loading styling
-    function updateContainer() {
-        // Scroll to the bottom
+
+    function scrollToBottom(){
+        // Scroll the output container to the bottom
         $("#outputOuter").animate({
             scrollTop: $("#outputOuter").prop("scrollHeight")
-        }, 350);        
+        }, 350);   
+    }
+    // Remove loading styling
+    function updateContainer() {     
+
+        scrollToBottom();
 
         // Remove the loading style and re-enable the inputs
         $("#mainInput").toggleClass("loading-background");
@@ -24,6 +29,7 @@ function addText() {
         var searchTerm = document.getElementById('mainInput').value;
         var htmlCode = '<div class="bubbleLine"><div class="bubble rightBubble">'+searchTerm+'</div></div>';
         div.innerHTML = div.innerHTML + htmlCode;
+        scrollToBottom();
     }
 
 // Show loading styling (loading circle, disabled box)
