@@ -150,7 +150,9 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if(matchingDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
-            return PartialView("~/Views/Donors/_Edit.cshtml", matchingDonors);
+            else if (matchingDonors.Count > 1)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+            return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
         }
 
         public ActionResult ViewAllDonors()
