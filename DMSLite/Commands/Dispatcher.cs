@@ -64,7 +64,7 @@ namespace DMSLite.Commands
             try
             {
                 //Check if null, if null return message to the UI
-                if (commandType == null) throw new Exception("no command found");
+                if (commandType == null) throw new Exception("No command found.");
             
                 //Cast and execute the command
                 ICommand command = Activator.CreateInstance(commandType) as ICommand;
