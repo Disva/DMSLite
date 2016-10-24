@@ -26,7 +26,9 @@ namespace DMSLite.Controllers
             string inputText = fc["mainInput"];
             //string returnedText = dispatcher.Dispatch(inputText);
             //return Json(returnedText, JsonRequestBehavior.AllowGet);
-            return dispatcher.Dispatch(inputText);
+            var responseModel = dispatcher.Dispatch(inputText);
+
+            return PartialView("~/Views/Home/_Response.cshtml", responseModel);
         }
 
         public ActionResult TestInput()
