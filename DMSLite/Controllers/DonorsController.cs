@@ -143,16 +143,30 @@ namespace DMSLite
                 return null;
         }
 
-        public ActionResult ModifyDonor(Dictionary<string, object> parameters)
+        public ActionResult ModifyForm(Dictionary<string, object> parameters)
         {
             List<Donor> matchingDonors = findDonors(parameters);
-            if(matchingDonors == null)
+            if (matchingDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
-            else if(matchingDonors.Count == 0)
+            else if (matchingDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
             else if (matchingDonors.Count > 1)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
-            return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
+            else
+                return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
+        }
+
+        public ActionResult Modify(Donor donor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(donor).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content("Thanks", "text/html");
+            }
+
+            //an invalid submission should just return the form
+            return PartialView("~/Views/Donors/_Modify.cshtml", donor);
         }
 
         public ActionResult ViewAllDonors()
