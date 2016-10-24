@@ -81,11 +81,76 @@ namespace DMSLite
             else //if no parameters were recognized
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
+        
+        public List<Donor> findDonors(Dictionary<string, object> parameters)
+        {
+            List<Donor> filteredDonors = new List<Donor>();
+
+            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
+            bool paramsExist = false;
+
+            if (parameters.ContainsKey("name") && !String.IsNullOrEmpty(parameters["name"].ToString()))
+            {
+                string name = parameters["name"].ToString();
+
+                //for now, a name parameter containing a space is presumed to be a first name and last name
+                if (name.Contains(" "))
+                {
+                    string[] names = name.Split(new char[] { ' ' });
+                    //searching through the db uses LINQ, which is picky about what variables can be passed.
+                    //For instance, LINQ does not accept ArrayIndex variables in queries,
+                    //so they are individual string variables in this query instead.
+                    string name1 = names[0];
+                    string name2 = names[1];
+                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
+
+                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
+                }
+                //a name without a space is presumed to either be a first or last name
+                else
+                {
+                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+                }
+                //confirm that a parameter was used to create a list for later filtering
+                paramsExist = true;
+            }
+
+            if (parameters.ContainsKey("email-address") && !String.IsNullOrEmpty(parameters["email-address"].ToString()))
+            {
+                string email = parameters["email-address"].ToString();
+                if (filteredDonors.Count == 0 && !paramsExist)//to add new
+                    filteredDonors.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
+                else if (filteredDonors.Count != 0 && paramsExist)//to filter
+                    filteredDonors = filteredDonors.Where(x => x.Email.Equals(email)).ToList();
+                paramsExist = true;
+            }
+
+            if (parameters.ContainsKey("phone-number") && !String.IsNullOrEmpty(parameters["phone-number"].ToString()))
+            {
+                string phone = parameters["phone-number"].ToString();
+                if (filteredDonors.Count == 0 && !paramsExist)//to add new
+                    filteredDonors.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
+                else if (filteredDonors.Count != 0 && paramsExist)//to filter
+                    filteredDonors = filteredDonors.Where(x => x.PhoneNumber.Equals(phone)).ToList();
+                paramsExist = true;
+            }
+            if (paramsExist)
+                return filteredDonors;
+            else
+                return null;
+        }
 
         public ActionResult ModifyDonor(Dictionary<string, object> parameters)
         {
-            Donor d = db.Donors.First();
-            return PartialView("~/Views/Donors/_Edit.cshtml", d);
+            List<Donor> matchingDonors = findDonors(parameters);
+            if(matchingDonors == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+            else if(matchingDonors.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
+            return PartialView("~/Views/Donors/_Edit.cshtml", matchingDonors);
         }
 
         public ActionResult ViewAllDonors()
