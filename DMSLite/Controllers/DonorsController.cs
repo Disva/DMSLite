@@ -91,10 +91,26 @@ namespace DMSLite
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
             Donor newDonor = new Donor();
-            if (parameters.ContainsKey("given-name"))
-                newDonor.FirstName = parameters["given-name"].ToString();
-            if (parameters.ContainsKey("last-name"))
-                newDonor.LastName = parameters["last-name"].ToString();
+
+            // Split off the last word in the full name as the last name
+            // If only one word is present, set the first name
+            if (parameters.ContainsKey("name"))
+            {
+                string name = parameters["name"].ToString();
+
+                int lastSpace = name.Trim().LastIndexOf(" ");
+
+                if(lastSpace < 0 || lastSpace + 1 > name.Length)
+                {
+                    newDonor.FirstName = name;
+                }
+                else
+                {
+                    newDonor.FirstName = name.Substring(0, lastSpace).Trim();
+                    newDonor.LastName = name.Substring(lastSpace + 1);
+                }
+            }
+
             if (parameters.ContainsKey("phone-number"))
                 newDonor.PhoneNumber = parameters["phone-number"].ToString();
             if (parameters.ContainsKey("email"))
