@@ -65,3 +65,26 @@ textarea {
 #submitBtn {
     -webkit-transition: opacity 0.3s linear;
 }
+
+/* The css for the beautiful chat interface*/
+.bubble {
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+.bubble p {
+    margin: 0px;
+}
+.leftBubble {
+    background-color: #96af50;
+    border-top-left-radius: 0px;
+}
+.rightBubble {
+    background-color: #c2cec6;
+    border-top-right-radius: 0px;
+    float: right;
+}
+.bubbleLine {
+    overflow: hidden;
+}
