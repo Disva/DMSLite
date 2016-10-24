@@ -1,4 +1,11 @@
 ﻿body {
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #3b3b3b;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
     height:100%;
     padding-top: 50px;
     padding-bottom: 20px;
@@ -72,19 +79,69 @@ textarea {
     margin: 5px;
     display: inline-block;
     border-radius: 5px;
+    color:white;
 }
 .bubble p {
     margin: 0px;
 }
 .leftBubble {
-    background-color: #96af50;
+    background-color: #27ae60;
     border-top-left-radius: 0px;
 }
 .rightBubble {
-    background-color: #c2cec6;
+    background-color: #3b3b3b;
     border-top-right-radius: 0px;
     float: right;
 }
 .bubbleLine {
     overflow: hidden;
+}
+
+/*Format of the div tables*/
+.divTableWrapper {
+    padding: 5px;
+}
+.divTable {
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: table;
+}
+@media screen and (max-width: 580px) {
+  .divTable {
+    display: block;
+  }
+}
+
+.tableRow {
+  display: table-row;
+  background: #f6f6f6;
+}
+.tableRow:nth-of-type(odd) {
+  background: #e9e9e9;
+}
+.tableRow.header {
+  color: #ffffff;
+  background: #ea6153;
+}
+.tableRow.green {
+  background: #27ae60;
+}
+
+@media screen and (max-width: 580px) {
+  .tableRow {
+    padding: 8px 0;
+    display: block;
+  }
+}
+
+.cell {
+  padding: 6px 12px;
+  display: table-cell;
+}
+@media screen and (max-width: 580px) {
+  .cell {
+    padding: 2px 12px;
+    display: block;
+  }
 }
