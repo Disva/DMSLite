@@ -312,6 +312,7 @@
     <Content Include="Views\Donors\_Add.cshtml" />
     <Content Include="Views\Donors\_Similar.cshtml" />
     <Content Include="Views\Home\_Response.cshtml" />
+    <Content Include="Views\Donors\_Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
