@@ -14,8 +14,9 @@
 
         // Remove the loading style and re-enable the inputs
         $("#mainInput").toggleClass("loading-background");
-        $("#mainInput").prop("disabled", false)
-        $("#submitBtn").prop("disabled", false);        
+        $("#mainInput").prop("disabled", false);
+        $("#submitBtn").prop("disabled", false);
+        setFocusToTextBox();
     }
     // pop the searchbar text up into the feed
 function addText() {
@@ -81,4 +82,9 @@ function addText() {
     document.getElementById("submitBtn").addEventListener("click", function () {
         addText();
     });
+
+    function setFocusToTextBox() {
+        document.getElementById("mainInput").focus();
+    }
+    setFocusToTextBox();
 </script>
