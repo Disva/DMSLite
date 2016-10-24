@@ -17,10 +17,12 @@
         $("#mainInput").prop("disabled", false)
         $("#submitBtn").prop("disabled", false);        
     }
+    // pop the searchbar text up into the feed
 function addText() {
         var div = document.getElementById('outputContainer');
         var searchTerm = document.getElementById('mainInput').value;
-        div.innerHTML = div.innerHTML + searchTerm;
+        var htmlCode = '<div class="bubbleLine"><div class="bubble rightBubble">'+searchTerm+'</div></div>';
+        div.innerHTML = div.innerHTML + htmlCode;
     }
 
 // Show loading styling (loading circle, disabled box)
@@ -76,7 +78,7 @@ function addText() {
 }
 
 <script>
-    document.getElementById("searchButton").addEventListener("click", function () {
+    document.getElementById("submitBtn").addEventListener("click", function () {
         addText();
     });
 </script>
