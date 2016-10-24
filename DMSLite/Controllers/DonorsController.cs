@@ -156,6 +156,11 @@ namespace DMSLite
                 return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
         }
 
+        public ActionResult ModifyFromDonor(Donor donor)
+        {
+            return PartialView("~/Views/Donors/_Modify.cshtml", donor);
+        }
+
         public ActionResult Modify(Donor donor)
         {
             if (ModelState.IsValid)
