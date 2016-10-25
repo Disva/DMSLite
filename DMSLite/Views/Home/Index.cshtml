@@ -93,4 +93,12 @@ function addText() {
         document.getElementById("mainInput").focus();
     }
     setFocusToTextBox();
+
+    $(function () {
+        $("body").on("load", "#myModal", function () {
+            this.modal();
+            console.log("Foo bear!");
+        });
+        console.log("fgoo");
+    })
 </script>
