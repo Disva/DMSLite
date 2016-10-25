@@ -95,10 +95,31 @@ function addText() {
     setFocusToTextBox();
 
     $(function () {
-        $("body").on("load", "#myModal", function () {
-            this.modal();
-            console.log("Foo bear!");
+        // select the target node
+        var target = document.getElementById('outputContainer');
+
+        // create an observer instance
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if ($(node).hasClass("showModal"))
+                    {
+                        $(node).find(".modal").modal();
+                        $(node).removeClass("showModal");
+                    }
+                });
+            });
         });
-        console.log("fgoo");
+
+        // configuration of the observer:
+        var config = { attributes: false, childList: true, characterData: false };
+
+        // pass in the target node, as well as the observer options
+        observer.observe(target, config);
     })
+
+    function showAddModal(button)
+    {
+        $(button).parents(".modalSibling").next().modal('show');
+    }
 </script>
