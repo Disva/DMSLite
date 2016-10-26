@@ -118,6 +118,7 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_Add.cshtml", newDonor);
         }
 
+        // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
             if (ModelState.IsValid)
@@ -140,12 +141,12 @@ namespace DMSLite
                 { 
                     db.Donors.Add(donor);
                     db.SaveChanges();
-                    return Content("Thanks","text/html");
+                    return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
 
             //an invalid submission should just return the form
-            return PartialView("~/Views/Donors/_Add.cshtml", donor);
+            return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
         }
 
         //this method should only fire after the user has confirmed thy want to add a similar donor

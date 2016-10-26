@@ -102,9 +102,24 @@ function addText() {
         var observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
                 mutation.addedNodes.forEach(function (node) {
+
+                    // If a new modal has been added, add the object and an event
                     if ($(node).hasClass("showModal"))
                     {
-                        $(node).find(".modal").modal();
+                        var theModal = $(node).find(".modal");
+
+                        // Show the modal
+                        theModal.modal();
+
+                        // If the modal has been closed add it has a success view, modify the bubble text
+                        $(theModal).on('hide.bs.modal', function (e) {
+                            if ($(node).find(".addSuccess").length > 0)
+                            {
+                                $(node).find(".bubble").html("Donor added");
+                            }
+                        })
+
+                        // Remove the auto-show class
                         $(node).removeClass("showModal");
                     }
                 });
