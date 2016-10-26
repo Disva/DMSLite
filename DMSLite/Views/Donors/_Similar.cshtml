@@ -2,51 +2,66 @@
 
 <p>Found some similar donors:</p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newDonor.ReceiptFrequency)
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model.similarDonors)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReceiptFrequency)
-            </td>
-        </tr>
-    }
-</table>
+<div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.FirstName)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.LastName)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.Email)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.PhoneNumber)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.Type)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.newDonor.ReceiptFrequency)
+            </div>
+            <div class="cell"></div>
+        </div>
+        @foreach (var item in Model.similarDonors)
+        {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Type)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.ReceiptFrequency)
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 <p>Are you sure you want to add your donor?</p>
+
+@using (Ajax.BeginForm("AddSimilar", "Donors", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "addForm"
+}))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" id="createButton">
+            <input type="submit" value="Add" class="btn btn-default" />
+        </div>
+    </div>
+}
