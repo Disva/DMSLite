@@ -1,57 +1,20 @@
 ﻿@model DMSLite.Entities.Donor
 
-<div id="addForm">
-
-    @using (Ajax.BeginForm("Add", "Donors", new AjaxOptions()
-    {
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "addForm"
-    }))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Add a New Donor</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10" id="createButton">
-                    <input type="submit" value="Add" class="btn btn-default" />
-                </div>
+<div class="showModal addContainer">
+    <div class="bubbleLine modalSibling">
+        <div class="bubble leftBubble">
+            <div class="btn btn-default" onclick="showAddModal(this)">
+                Pending donor add <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </div>
         </div>
-    }
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                        @Html.Partial("_AddForm", Model)
+            </div>
+        </div>
+    </div>
+   
 </div>
 

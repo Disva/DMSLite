@@ -22,6 +22,9 @@
         $("#mainInput").prop("disabled", false);
         $("#submitBtn").prop("disabled", false);
         setFocusToTextBox();
+
+        // Check if there any modals that need to be shown
+        checkShowModal()
     }
     // pop the searchbar text up into the feed
 function addText() {
@@ -93,4 +96,34 @@ function addText() {
         document.getElementById("mainInput").focus();
     }
     setFocusToTextBox();
+
+    // Check if a class want's to be "modal'ed" and turn it into a modal
+    function checkShowModal()
+    {
+        var node = $("#outputContainer").find(".showModal");
+        if (node.length > 0)
+        {
+            $(node).find(".modal").modal();
+            $(node).removeClass("showModal");
+        }            
+    }
+
+    // Check if a modal has a success form and close it
+    // Also change the message in the associated bubble
+    function checkHideModal()
+    {
+        var node = $("#outputContainer").find(".addSuccess");
+
+        if(node.length > 0)
+        {
+            node.parents(".addContainer").find(".bubble").html("Donor added");
+            node.parents(".modal").modal('hide');
+            node.removeClass("addSuccess");
+        }
+    }
+
+    function showAddModal(button)
+    {
+        $(button).parents(".modalSibling").next().modal('show');
+    }
 </script>
