@@ -259,5 +259,55 @@ namespace DMSLite.Tests.Controllers
             Assert.Fail();//the duplicate was added which fails the test
         }
 
+        //Modifying Donors
+        [TestMethod]
+        //Create a donor, persist it, change it, compare two versions.
+        public void TestModifyDonor()
+        {
+            DonorsController dc = new DonorsController();
+
+            string oldName = "fName_TestModifyDonor";
+
+            //Create a donor
+            Donor d1 = new Donor
+            {
+                FirstName = "fName_TestModifyDonor",
+                LastName = "lName_TestModifyDonor",
+                Email = "email_TestModifyDonor",
+                PhoneNumber = "000-111-9191",
+            };
+
+            //Add the donor to the db
+            dc.Add(d1);
+            //Fetch the donor
+            Dictionary<string, object> fetchParameters = new Dictionary<string, object>();
+            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor lName_TestModifyDonor" });
+            fetchParameters.Add("email-address", "");
+            fetchParameters.Add("name", "fName_TestModifyDonor lName_TestModifyDonor");
+            fetchParameters.Add("phone-number", "");
+
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+            Donor fetched = ((List<Donor>)pvr.ViewData.Model).ToList().First();
+
+            //Modify it
+            fetched.FirstName = "fName_TestModifyDonor_MODIFIED";
+            //Indicate change and Save it
+            dc.Modify(fetched);
+            //Fetch it and compare it to the previous version
+            fetchParameters = new Dictionary<string, object>();
+            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor_MODIFIED" });
+            fetchParameters.Add("email-address", "");
+            fetchParameters.Add("name", "fName_TestModifyDonor_MODIFIED");
+            fetchParameters.Add("phone-number", "");
+
+            pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+            Donor fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
+
+            Assert.IsNotNull(fetchedAgain);
+            Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
+            //delete test users
+            dc.Remove(fetchedAgain);
+        }
+
     }
 }
