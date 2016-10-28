@@ -51,17 +51,19 @@
     </div>
 </div>
 
-<p>Are you sure you want to add your donor?</p>
-
 @using (Ajax.BeginForm("AddSimilar", "Donors", new AjaxOptions()
 {
     InsertionMode = InsertionMode.Replace,
     UpdateTargetId = "addForm"
 }))
 {
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10" id="createButton">
-            <input type="submit" value="Add" class="btn btn-default" />
+    <div class="modal-footer">
+        <p>Are you sure you want to add your donor?</p>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" id="createButton">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
         </div>
     </div>
 }
