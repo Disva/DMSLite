@@ -1,8 +1,9 @@
 ﻿@model DMSLite.Models.SimilarDonorModel
 
-<p>Found some similar donors:</p>
-
-<div class="divTableWrapper">
+<div class="modal-header">
+    <p>Found some similar donors:</p>
+</div>
+<div class="divTableWrapper modal-body">
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
@@ -17,13 +18,6 @@
             <div class="cell">
                 @Html.DisplayNameFor(model => model.newDonor.PhoneNumber)
             </div>
-            <div class="cell">
-                @Html.DisplayNameFor(model => model.newDonor.Type)
-            </div>
-            <div class="cell">
-                @Html.DisplayNameFor(model => model.newDonor.ReceiptFrequency)
-            </div>
-            <div class="cell"></div>
         </div>
         @foreach (var item in Model.similarDonors)
         {
@@ -39,12 +33,6 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => item.Type)
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => item.ReceiptFrequency)
                 </div>
             </div>
         }
