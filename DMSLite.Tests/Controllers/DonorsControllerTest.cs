@@ -22,6 +22,8 @@ namespace DMSLite.Tests.Controllers
         //Tests that viewing all donors returns the list of all donors.
         public void TestViewDonors()
         {
+            //works under the assumption that no donors with with null values for names, phonenumber, or email exist
+            //if this test ever fails, remove your invalidly inserted donors from the db
             DonorsController ds = new DonorsController();
             PartialViewResult pvr = (PartialViewResult)ds.ViewAllDonors();
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
@@ -154,17 +156,24 @@ namespace DMSLite.Tests.Controllers
         //Tests that searching for a donor with invalid criteria returns an error.
         public void TestViewInvalidDonorAndParameter()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me Tom Sawyer");//a user who does not exist in the db
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = returnedView.ViewData.Model;
-            Assert.IsTrue(returnedModel.Equals("no donors were found"));
+            //fetching a donor that doesn't exist
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> invalidDonorParameters = new Dictionary<string, object>();
+            invalidDonorParameters.Add("donor-search", new List<String> { "name", "Tom Sawyer" });
+            invalidDonorParameters.Add("email-address", "");
+            invalidDonorParameters.Add("name", "Tom Sawyer");
+            invalidDonorParameters.Add("phone-number", "");
+            PartialViewResult pvrInvalidDonor = (PartialViewResult)dc.FetchDonor(invalidDonorParameters);
+            Assert.IsTrue(pvrInvalidDonor.Model.ToString().Equals("no donors were found"));
 
-            fc.Add("mainInput", "Show me AnInvalidParameter");//a user who does not exist in the db
-            returnedView = (PartialViewResult)hc.SendInput(fc);
-            returnedModel = returnedView.ViewData.Model;
-            Assert.IsTrue(returnedModel.Equals("no parameters were recognized"));
+            //fetching with invalid parameters
+            Dictionary<string, object> invalidParameters = new Dictionary<string, object>();
+            invalidParameters.Add("donor-search", new List<String> { "name", "" });
+            invalidParameters.Add("email-address", "");
+            invalidParameters.Add("name", "");
+            invalidParameters.Add("phone-number", "");
+            PartialViewResult pvrInvalid = (PartialViewResult)dc.FetchDonor(invalidParameters);
+            Assert.IsTrue(pvrInvalid.Model.ToString().Equals("no parameters were recognized"));
         }
 
         //CREATING DONORS TESTS
@@ -173,7 +182,6 @@ namespace DMSLite.Tests.Controllers
         public void TestAddNewValidDonor()
         {
             DonorsController dc = new DonorsController();
-            //a valid donor is donor
             Donor d = new Donor
             {
                 FirstName = "fName_TestAddNewValidDonor",
@@ -181,17 +189,19 @@ namespace DMSLite.Tests.Controllers
                 Email = "email_TestAddNewValidDonor",
                 PhoneNumber = "111-111-1111",
             };
-            ActionResult arReturned = dc.Add(d);
-            try
+            var arReturned = dc.Add(d);
+            if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Similar.cshtml")))
             {
-                dc.Remove(d);
+                Assert.IsTrue(true);
+                return;
             }
-            catch (Exception e)
+            if (arReturned.GetType().ToString().Equals("System.Web.Mvc.ContentResult")
+                && (((ContentResult)arReturned).Content.Equals("Thanks")))
             {
-                Assert.Fail();
+                Assert.IsTrue(true);
             }
-                //TEMPORARY
-                Assert.IsTrue(arReturned.ToString().Equals("Thanks"));
+            dc.Remove(d);
         }
 
         [TestMethod]
@@ -199,28 +209,17 @@ namespace DMSLite.Tests.Controllers
         public void TestAddNewInvalidDonor()
         {
             DonorsController dc = new DonorsController();
-            //an invalid donor (has no firstName or lastName)
             Donor d = new Donor
             {
-                FirstName = "",
-                LastName = "",
-                Email = "TestAddNewInvalidDonor",
+                FirstName = "TestAddNewInvalidDonor",
                 PhoneNumber = "-24",
             };
-            ContentResult coReturned = new ContentResult();
-            try//try adding it and removing it
+            var arReturned = dc.Add(d);
+            if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Add.cshtml")))
             {
-                coReturned = (ContentResult)dc.Add(d);//the invalid donor should not be added to the db
-                dc.Remove(d);//if the test passes, the test should not reach this point. Just a cleanup precaution
-            }
-            catch (Exception e)
-            {
-                //This assertion should be enough
-                //a better way would be to check assert that Donors does not contain d, but this was causing issues and is very inefficient
                 Assert.IsTrue(true);
-                return;
             }
-            Assert.IsTrue(false);//reaches here if the invalid donor WAS actually added to the db
         }
 
         [TestMethod]
