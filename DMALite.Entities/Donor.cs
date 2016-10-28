@@ -44,5 +44,15 @@ namespace DMSLite.Entities
             }
             else return false;
         }
+
+        public bool isValid()
+        {
+            return (
+                (!String.IsNullOrWhiteSpace(FirstName))
+                && (!String.IsNullOrWhiteSpace(LastName))
+                && (!String.IsNullOrWhiteSpace(PhoneNumber))
+                && (!String.IsNullOrWhiteSpace(Email)));
+        }
+
     }
 }
