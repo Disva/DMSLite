@@ -82,7 +82,7 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
         
-        public List<Donor> findDonors(Dictionary<string, object> parameters)
+        public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
             List<Donor> filteredDonors = new List<Donor>();
 
@@ -145,7 +145,7 @@ namespace DMSLite
 
         public ActionResult ModifyForm(Dictionary<string, object> parameters)
         {
-            List<Donor> matchingDonors = findDonors(parameters);
+            List<Donor> matchingDonors = FindDonors(parameters);
             if (matchingDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if (matchingDonors.Count == 0)
