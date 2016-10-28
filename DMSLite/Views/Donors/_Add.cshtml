@@ -11,18 +11,7 @@
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                @{ var id = Guid.NewGuid().ToString(); }
-
-                @using (Ajax.BeginForm("Add", "Donors", new AjaxOptions()
-                {
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = id
-                }))
-                {
-                    <div id="@id">
                         @Html.Partial("_AddForm", Model)
-                    </div>                    
-                }
             </div>
         </div>
     </div>

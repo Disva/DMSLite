@@ -22,6 +22,9 @@
         $("#mainInput").prop("disabled", false);
         $("#submitBtn").prop("disabled", false);
         setFocusToTextBox();
+
+        // Check if there any modals that need to be shown
+        checkShowModal()
     }
     // pop the searchbar text up into the feed
 function addText() {
@@ -94,44 +97,30 @@ function addText() {
     }
     setFocusToTextBox();
 
-    $(function () {
-        // select the target node
-        var target = document.getElementById('outputContainer');
+    // Check if a class want's to be "modal'ed" and turn it into a modal
+    function checkShowModal()
+    {
+        var node = $("#outputContainer").find(".showModal");
+        if (node.length > 0)
+        {
+            $(node).find(".modal").modal();
+            $(node).removeClass("showModal");
+        }            
+    }
 
-        // create an observer instance
-        var observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                mutation.addedNodes.forEach(function (node) {
+    // Check if a modal has a success form and close it
+    // Also change the message in the associated bubble
+    function checkHideModal()
+    {
+        var node = $("#outputContainer").find(".addSuccess");
 
-                    // If a new modal has been added, add the object and an event
-                    if ($(node).hasClass("showModal"))
-                    {
-                        var theModal = $(node).find(".modal");
-
-                        // Show the modal
-                        theModal.modal();
-
-                        // If the modal has been closed add it has a success view, modify the bubble text
-                        $(theModal).on('hide.bs.modal', function (e) {
-                            if ($(node).find(".addSuccess").length > 0)
-                            {
-                                $(node).find(".bubble").html("Donor added");
-                            }
-                        })
-
-                        // Remove the auto-show class
-                        $(node).removeClass("showModal");
-                    }
-                });
-            });
-        });
-
-        // configuration of the observer:
-        var config = { attributes: false, childList: true, characterData: false };
-
-        // pass in the target node, as well as the observer options
-        observer.observe(target, config);
-    })
+        if(node.length > 0)
+        {
+            node.parents(".addContainer").find(".bubble").html("Donor added");
+            node.parents(".modal").modal('hide');
+            node.removeClass("addSuccess");
+        }
+    }
 
     function showAddModal(button)
     {
