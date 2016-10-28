@@ -22,6 +22,8 @@ namespace DMSLite.Tests.Controllers
         //Tests that viewing all donors returns the list of all donors.
         public void TestViewDonors()
         {
+            //works under the assumption that no donors with with null values for names, phonenumber, or email exist
+            //if this test ever fails, remove your invalidly inserted donors from the db
             DonorsController ds = new DonorsController();
             PartialViewResult pvr = (PartialViewResult)ds.ViewAllDonors();
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
@@ -37,95 +39,101 @@ namespace DMSLite.Tests.Controllers
         //Tests that requesting a specific valid donor returns that valid donor.
         public void TestViewSpecificDonor()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me Steve");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "name", "Steve" });
+            parameters.Add("email-address", "");
+            parameters.Add("name", "Steve");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> steve = db.Donors.Where(x => x.FirstName == "Steve").ToList();
-            
             Assert.AreEqual(steve.Count(), returnedModel.Count());
-            Assert.AreEqual(steve[0].FirstName, returnedModel[0].FirstName);
+            Assert.IsTrue(steve[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
         //Tests requesting a donor by name where all donors with the same name are returned.
         public void TestViewMultipleDonors()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me Squidward");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "name", "Squidward" });
+            parameters.Add("email-address", "");
+            parameters.Add("name", "Squidward");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> squids = db.Donors.Where(x => x.FirstName == "Squidward").ToList();
-
             Assert.AreEqual(squids.Count(), returnedModel.Count());
-            Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
+            Assert.IsTrue(squids[0].isEqualTo(returnedModel[0]));
+            Assert.IsTrue(squids[1].isEqualTo(returnedModel[1]));
         }
 
         [TestMethod]
         //Tests searching for a donor by phone number.
         public void TestViewByPhoneNumber()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me 555-555-5555");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
-            List<Donor> phone = db.Donors.Where(x => x.PhoneNumber == "555-555-5555").ToList();
-
-            Assert.AreEqual(phone.Count(), returnedModel.Count());
-            Assert.AreEqual(phone[0].PhoneNumber, returnedModel[0].PhoneNumber);
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "phone-number", "555-555-5555" });
+            parameters.Add("email-address", "");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "555-555-5555");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> steve = db.Donors.Where(x => x.PhoneNumber == "555-555-5555").ToList();
+            Assert.AreEqual(steve.Count(), returnedModel.Count());
+            Assert.IsTrue(steve[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
         //Tests searching for a donor by Email.
         public void TestViewByEmail()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me steve@stevemail.com");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "email-address", "steve@stevemail.com"});
+            parameters.Add("email-address" ,"steve@stevemail.com");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> steve = db.Donors.Where(x => x.Email == "steve@stevemail.com").ToList();
-            
             Assert.AreEqual(steve.Count(), returnedModel.Count());
-            Assert.AreEqual(steve[0].FirstName, returnedModel[0].FirstName);
+            Assert.IsTrue(steve[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
         //Tests a case where a donor with a duplicate first name is searched for with their unique last name and only one proper donor is returned
         public void TestViewSpecificDonorWithDuplicateName()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me Squidward Tentacles");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "name", "Squidward Tentacles" });
+            parameters.Add("email-address", "");
+            parameters.Add("name", "Squidward Tentacles");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> squidward = db.Donors.Where(x => x.FirstName == "Squidward" && x.LastName == "Tentacles").ToList();
-
             Assert.AreEqual(squidward.Count(), 1);
-            Assert.AreEqual(squidward[0].FirstName, returnedModel[0].FirstName);
-            Assert.AreEqual(squidward[0].LastName, returnedModel[0].LastName);
+            Assert.IsTrue(squidward[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
         //Tests searching for a specific donor by lowercase
         public void TestViewSpecificDonorsByLowerCase()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me squidward");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = ((IList<Donor>)returnedView.ViewData.Model).ToList();
-
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-search", new List<String> { "name", "squidward" });
+            parameters.Add("email-address", "");
+            parameters.Add("name", "squidward");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> squids = db.Donors.Where(x => x.FirstName == "Squidward").ToList();
-
             Assert.AreEqual(squids.Count(), returnedModel.Count());
             Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
         }
@@ -140,25 +148,32 @@ namespace DMSLite.Tests.Controllers
             FormCollection fc = new FormCollection();
             fc.Add("mainInput", "Order a pizza. This is not a real command.");
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = returnedView.ViewData.Model;
-            Assert.IsTrue(returnedModel.Equals("no command found"));
+            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech ;
+            Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
         }
 
         [TestMethod]
         //Tests that searching for a donor with invalid criteria returns an error.
         public void TestViewInvalidDonorAndParameter()
         {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "Show me Tom Sawyer");//a user who does not exist in the db
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            var returnedModel = returnedView.ViewData.Model;
-            Assert.IsTrue(returnedModel.Equals("no donors were found"));
+            //fetching a donor that doesn't exist
+            DonorsController dc = new DonorsController();
+            Dictionary<string, object> invalidDonorParameters = new Dictionary<string, object>();
+            invalidDonorParameters.Add("donor-search", new List<String> { "name", "Tom Sawyer" });
+            invalidDonorParameters.Add("email-address", "");
+            invalidDonorParameters.Add("name", "Tom Sawyer");
+            invalidDonorParameters.Add("phone-number", "");
+            PartialViewResult pvrInvalidDonor = (PartialViewResult)dc.FetchDonor(invalidDonorParameters);
+            Assert.IsTrue(pvrInvalidDonor.Model.ToString().Equals("no donors were found"));
 
-            fc.Add("mainInput", "Show me AnInvalidParameter");//a user who does not exist in the db
-            returnedView = (PartialViewResult)hc.SendInput(fc);
-            returnedModel = returnedView.ViewData.Model;
-            Assert.IsTrue(returnedModel.Equals("no parameters were recognized"));
+            //fetching with invalid parameters
+            Dictionary<string, object> invalidParameters = new Dictionary<string, object>();
+            invalidParameters.Add("donor-search", new List<String> { "name", "" });
+            invalidParameters.Add("email-address", "");
+            invalidParameters.Add("name", "");
+            invalidParameters.Add("phone-number", "");
+            PartialViewResult pvrInvalid = (PartialViewResult)dc.FetchDonor(invalidParameters);
+            Assert.IsTrue(pvrInvalid.Model.ToString().Equals("no parameters were recognized"));
         }
 
         //CREATING DONORS TESTS
@@ -167,7 +182,6 @@ namespace DMSLite.Tests.Controllers
         public void TestAddNewValidDonor()
         {
             DonorsController dc = new DonorsController();
-            //a valid donor is donor
             Donor d = new Donor
             {
                 FirstName = "fName_TestAddNewValidDonor",
@@ -175,17 +189,19 @@ namespace DMSLite.Tests.Controllers
                 Email = "email_TestAddNewValidDonor",
                 PhoneNumber = "111-111-1111",
             };
-            ContentResult coReturned = (ContentResult)dc.Add(d);
-            try
+            var arReturned = dc.Add(d);
+            if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Similar.cshtml")))
             {
-                dc.Remove(d);
+                Assert.IsTrue(true);
+                return;
             }
-            catch (Exception e)
+            if (arReturned.GetType().ToString().Equals("System.Web.Mvc.ContentResult")
+                && (((ContentResult)arReturned).Content.Equals("Thanks")))
             {
-                Assert.Fail();
+                Assert.IsTrue(true);
             }
-                //TEMPORARY
-                Assert.IsTrue(coReturned.Content.ToString().Equals("Thanks"));
+            dc.Remove(d);
         }
 
         [TestMethod]
@@ -193,28 +209,17 @@ namespace DMSLite.Tests.Controllers
         public void TestAddNewInvalidDonor()
         {
             DonorsController dc = new DonorsController();
-            //an invalid donor (has no firstName or lastName)
             Donor d = new Donor
             {
-                FirstName = "",
-                LastName = "",
-                Email = "TestAddNewInvalidDonor",
+                FirstName = "TestAddNewInvalidDonor",
                 PhoneNumber = "-24",
             };
-            ContentResult coReturned = new ContentResult();
-            try//try adding it and removing it
+            var arReturned = dc.Add(d);
+            if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Add.cshtml")))
             {
-                coReturned = (ContentResult)dc.Add(d);//the invalid donor should not be added to the db
-                dc.Remove(d);//if the test passes, the test should not reach this point. Just a cleanup precaution
-            }
-            catch (Exception e)
-            {
-                //This assertion should be enough
-                //a better way would be to check assert that Donors does not contain d, but this was causing issues and is very inefficient
                 Assert.IsTrue(true);
-                return;
             }
-            Assert.IsTrue(false);//reaches here if the invalid donor WAS actually added to the db
         }
 
         [TestMethod]
