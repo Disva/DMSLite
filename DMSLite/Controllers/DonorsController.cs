@@ -213,7 +213,7 @@ namespace DMSLite
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && donor.isValid())
             {
                 //confirm with the person submitting the form whether a similar donor already exists
 
