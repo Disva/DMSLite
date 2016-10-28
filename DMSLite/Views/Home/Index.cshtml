@@ -112,13 +112,11 @@ function addText() {
     // Also change the message in the associated bubble
     function checkHideModal()
     {
-        var node = $("#outputContainer").find(".addSuccess");
+        var node = $("#outputContainer").find(".modalContainer");
 
         if(node.length > 0)
         {
-            node.parents(".addContainer").find(".bubble").html("Donor added");
-            node.parents(".modal").modal('hide');
-            node.removeClass("addSuccess");
+            node.modal('hide');
         }
     }
 

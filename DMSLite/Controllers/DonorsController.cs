@@ -167,7 +167,7 @@ namespace DMSLite
             {
                 db.Entry(donor).State = EntityState.Modified;
                 db.SaveChanges();
-                return Content("Thanks", "text/html");
+                return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
             //an invalid submission should just return the form

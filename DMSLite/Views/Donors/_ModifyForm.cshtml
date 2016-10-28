@@ -5,8 +5,8 @@
 <div id="@id">
     @using (Ajax.BeginForm("Modify", "Donors", new AjaxOptions()
     {
-            InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = id,
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "outputContainer",
             OnSuccess = "checkHideModal"
     }))
     {

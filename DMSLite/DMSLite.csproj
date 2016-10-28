@@ -316,6 +316,7 @@
     <Content Include="Views\Donors\_AddForm.cshtml" />
     <Content Include="Views\Donors\_AddSuccess.cshtml" />
     <Content Include="Views\Donors\_ModifyForm.cshtml" />
+    <Content Include="Views\Donors\_ModifySuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
