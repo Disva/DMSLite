@@ -103,7 +103,13 @@ function addText() {
         var node = $("#outputContainer").find(".showModal");
         if (node.length > 0)
         {
-            $(node).find(".modal").modal();
+            var theModal = $(node).find(".modal");
+            theModal.modal();
+
+            theModal.on('hidden.bs.modal', function (e) {
+                setFocusToTextBox();
+            })
+
             $(node).removeClass("showModal");
         }            
     }
