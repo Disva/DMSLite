@@ -171,7 +171,7 @@ namespace DMSLite
             }
 
             //an invalid submission should just return the form
-            return PartialView("~/Views/Donors/_Modify.cshtml", donor);
+            return PartialView("~/Views/Donors/_ModifyForm.cshtml", donor);
         }
 
         public ActionResult ViewAllDonors()
@@ -243,11 +243,11 @@ namespace DMSLite
 
         //this method should only fire after the user has confirmed thy want to add a similar donor
         //(same phone number, email, or first name/ last name combo)
-        public ActionResult AddSimilar(SimilarDonorModel sdm)
+        public ActionResult AddSimilar(Donor donor)
         {
-            db.Donors.Add(sdm.newDonor);
+            db.Donors.Add(donor);
             db.SaveChanges();
-            return Content("Thanks", "text/html");
+            return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
         }
 
         public ActionResult Remove(Donor donor)
