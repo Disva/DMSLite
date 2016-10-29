@@ -108,7 +108,7 @@ function addText() {
 
             theModal.on('hidden.bs.modal', function (e) {
                 setFocusToTextBox();
-            })
+            });
 
             $(node).removeClass("showModal");
         }            
@@ -118,15 +118,29 @@ function addText() {
     // Also change the message in the associated bubble
     function checkHideModal()
     {
-        var node = $("#outputContainer").find(".modalContainer");
+        var node = $("#outputContainer").find(".modalHide");
 
         if(node.length > 0)
         {
-            node.modal('hide');
+            var theModal = node.parents(".modal");
+            // Set the modal to be removed once it is hidden
+            theModal.on('hidden.bs.modal', function (e) {
+                $(this).remove();
+            });
+
+            theModal.modal('hide');
+            node.removeClass("modalHide");
+
+            // Look for a message and place it in the bubble
+            var message = node.find(".message");
+            if (message.length > 0)
+            {
+                node.parents(".bubbleModalPair").find(".bubble").html(message.html());
+            }
         }
     }
 
-    function showAddModal(button)
+    function showModal(button)
     {
         $(button).parents(".modalSibling").next().modal('show');
     }

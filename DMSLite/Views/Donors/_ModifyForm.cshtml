@@ -5,9 +5,9 @@
 <div id="@id">
     @using (Ajax.BeginForm("Modify", "Donors", new AjaxOptions()
     {
-            InsertionMode = InsertionMode.InsertAfter,
-            UpdateTargetId = "outputContainer",
-            OnSuccess = "checkHideModal"
+        InsertionMode = InsertionMode.ReplaceWith,
+        UpdateTargetId = id,
+        OnSuccess = "checkHideModal"
     }))
     {
         @Html.AntiForgeryToken()
@@ -17,8 +17,6 @@
         </div>
         <div class="modal-body">
             <div class="form-horizontal">
-                <h4>Modify Donor</h4>
-                <hr />
                 <input type="hidden" value="@Model.Id" name="Id" />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
