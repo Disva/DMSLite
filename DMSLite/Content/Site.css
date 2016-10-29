@@ -31,12 +31,17 @@ textarea {
     max-width: 280px;
 }
 
+/* Keep the chat box on the bottom of the page at all times */
 .sticky-footer {
     position:fixed;
     bottom: 0;
     left:0;
     height: 50px;
     width:100%;
+}
+
+#mainInputGroup {
+    margin-top:8px;
 }
 
 #mainInput {
@@ -47,6 +52,7 @@ textarea {
     background-position: left center;
 }
 
+/* The chat output is set to appear directly above the chat box at all times */
 .content-box {
     height: calc(100vh - 100px);
     overflow-y: auto;
@@ -144,4 +150,14 @@ textarea {
     padding: 2px 12px;
     display: block;
   }
+}
+
+/* Make sure that the scroll bar for modal content only appears when necessary
+*/
+.modal {
+    overflow-y: auto;
+}
+body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+    overflow: auto;
+    margin-right: 0;
 }

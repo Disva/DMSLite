@@ -7,18 +7,12 @@
     {
             InsertionMode = InsertionMode.InsertAfter,
             UpdateTargetId = "outputContainer",
-            OnSuccess = "checkHideModal"
+            OnSuccess = "deleteModal"
     }))
     {
         @Html.AntiForgeryToken()
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modify a Donor</h4>
-        </div>
         <div class="modal-body">
             <div class="form-horizontal">
-                <h4>Modify Donor</h4>
-                <hr />
                 <input type="hidden" value="@Model.Id" name="Id" />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -49,38 +43,15 @@
                         @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <!--
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReceiptFrequency, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.ReceiptFrequency, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ReceiptFrequency, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10" id="saveButton">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
-                -->
             </div>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10" id="saveButton">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" onclick="deleteModal()">Close</button>
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
     }
-        </div>
+</div>

@@ -310,7 +310,7 @@
     <Content Include="Views\Donors\_FetchIndex.cshtml" />
     <Content Include="Views\Shared\_ErrorMessage.cshtml" />
     <Content Include="Views\Donors\_Add.cshtml" />
-    <Content Include="Views\Donors\_Similar.cshtml" />
+    <Content Include="Views\Donors\_AddSimilar.cshtml" />
     <Content Include="Views\Home\_Response.cshtml" />
     <Content Include="Views\Donors\_Modify.cshtml" />
     <Content Include="Views\Donors\_AddForm.cshtml" />
