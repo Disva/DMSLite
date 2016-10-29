@@ -83,7 +83,7 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
         
-        public List<Donor> findDonors(Dictionary<string, object> parameters)
+        public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
             List<Donor> filteredDonors = new List<Donor>();
 
@@ -156,7 +156,7 @@ namespace DMSLite
 
         public ActionResult ModifyForm(Dictionary<string, object> parameters)
         {
-            List<Donor> matchingDonors = findDonors(parameters);
+            List<Donor> matchingDonors = FindDonors(parameters);
             if (matchingDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if (matchingDonors.Count == 0)
@@ -182,7 +182,7 @@ namespace DMSLite
             }
 
             //an invalid submission should just return the form
-            return PartialView("~/Views/Donors/_Modify.cshtml", donor);
+            return PartialView("~/Views/Donors/_ModifyForm.cshtml", donor);
         }
 
         #endregion
@@ -226,7 +226,7 @@ namespace DMSLite
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && donor.isValid())
             {
                 //confirm with the person submitting the form whether a similar donor already exists
 
@@ -256,11 +256,11 @@ namespace DMSLite
 
         //this method should only fire after the user has confirmed thy want to add a similar donor
         //(same phone number, email, or first name/ last name combo)
-        public ActionResult AddSimilar(SimilarDonorModel sdm)
+        public ActionResult AddSimilar(Donor donor)
         {
-            db.Donors.Add(sdm.newDonor);
+            db.Donors.Add(donor);
             db.SaveChanges();
-            return PartialView("~/Views/Donors/_AddSuccess.cshtml", sdm.newDonor);
+            return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
         }
 
         #endregion
