@@ -17,6 +17,7 @@ namespace DMSLite
     {
         private OrganizationDb db = new OrganizationDb();
 
+        #region Fetch
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
             List<Donor> filteredDonors = new List<Donor>();
@@ -143,6 +144,16 @@ namespace DMSLite
                 return null;
         }
 
+        public ActionResult ViewAllDonors()
+        {
+            List<Donor> allDonors = db.Donors.ToList();
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+        }
+
+        #endregion
+
+        #region Modify
+
         public ActionResult ModifyForm(Dictionary<string, object> parameters)
         {
             List<Donor> matchingDonors = findDonors(parameters);
@@ -174,10 +185,13 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_Modify.cshtml", donor);
         }
 
-        public ActionResult ViewAllDonors()
+        #endregion
+
+        #region Add
+
+        public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            List<Donor> allDonors = db.Donors.ToList();
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+            return PartialView("~/Views/Donors/_Add.cshtml", parameters);
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
@@ -202,12 +216,11 @@ namespace DMSLite
                     newDonor.LastName = name.Substring(lastSpace + 1);
                 }
             }
-
             if (parameters.ContainsKey("phone-number"))
                 newDonor.PhoneNumber = parameters["phone-number"].ToString();
             if (parameters.ContainsKey("email"))
                 newDonor.Email = parameters["email"].ToString();
-            return PartialView("~/Views/Donors/_Add.cshtml", newDonor);
+            return PartialView("~/Views/Donors/_AddForm.cshtml", newDonor);
         }
 
         // TODO: Anti-forgery
@@ -227,7 +240,7 @@ namespace DMSLite
                 {
                     //return a view showing those similar donors if they exist
                     SimilarDonorModel sdm = new SimilarDonorModel() { newDonor = donor, similarDonors = sd };
-                    return PartialView("~/Views/Donors/_Similar.cshtml", sdm);
+                    return PartialView("~/Views/Donors/_AddSimilar.cshtml", sdm);
                 }
                 else
                 { 
@@ -247,9 +260,12 @@ namespace DMSLite
         {
             db.Donors.Add(sdm.newDonor);
             db.SaveChanges();
-            return Content("Thanks", "text/html");
+            return PartialView("~/Views/Donors/_AddSuccess.cshtml", sdm.newDonor);
         }
 
+        #endregion
+
+        #region MadeByMS
         public ActionResult Remove(Donor donor)
         {
             if (ModelState.IsValid)
@@ -371,5 +387,6 @@ namespace DMSLite
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

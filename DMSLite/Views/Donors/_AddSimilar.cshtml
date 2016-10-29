@@ -1,0 +1,67 @@
+﻿@model DMSLite.Models.SimilarDonorModel
+
+@{ var id = Guid.NewGuid().ToString(); }
+
+<div id="@id">
+
+@using (Ajax.BeginForm("AddSimilar", "Donors", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = id
+}))
+{
+    <div class="modal-body">
+        <p>Found some similar donors:</p>
+    </div>
+    <div class="divTableWrapper">
+        <div class="divTable">
+            <div class="tableRow header green">
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.newDonor.FirstName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.newDonor.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.newDonor.Email)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.newDonor.PhoneNumber)
+                </div>
+            </div>
+            @foreach (var item in Model.similarDonors)
+            {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    
+    @Html.HiddenFor(model => model.newDonor.FirstName)
+    @Html.HiddenFor(model => model.newDonor.LastName)
+    @Html.HiddenFor(model => model.newDonor.Email)
+    @Html.HiddenFor(model => model.newDonor.PhoneNumber)
+
+    <div class="modal-footer">
+        <p>Are you sure you want to add your donor?</p>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" id="createButton">
+                <button type="button" class="btn btn-default" onclick="deleteModal()">Close</button>
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+</div>
