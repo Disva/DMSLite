@@ -4,7 +4,13 @@
 
 <div id="@id">
 
-@using (Ajax.BeginForm("AddSimilar", "Donors", new AjaxOptions()
+@using (Ajax.BeginForm("AddSimilar", "Donors", new
+{
+    FirstName = Model.newDonor.FirstName,
+    LastName = Model.newDonor.LastName,
+    Email = Model.newDonor.Email,
+    PhoneNumber = Model.newDonor.PhoneNumber
+}, new AjaxOptions()
 {
     InsertionMode = InsertionMode.Replace,
     UpdateTargetId = id
@@ -48,11 +54,6 @@
             }
         </div>
     </div>
-    
-    @Html.HiddenFor(model => model.newDonor.FirstName)
-    @Html.HiddenFor(model => model.newDonor.LastName)
-    @Html.HiddenFor(model => model.newDonor.Email)
-    @Html.HiddenFor(model => model.newDonor.PhoneNumber)
 
     <div class="modal-footer">
         <p>Are you sure you want to add your donor?</p>
