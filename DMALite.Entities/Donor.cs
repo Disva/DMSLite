@@ -19,10 +19,14 @@ namespace DMSLite.Entities
         [StringLength(255)]
         public string LastName { get; set; }
 
+        [Required]
         [StringLength(255)]
+        [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         [StringLength(255)]
+        [Phone]
         public string PhoneNumber { get; set; }
 
         [StringLength(255)]
