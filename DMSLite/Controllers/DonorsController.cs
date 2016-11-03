@@ -10,6 +10,7 @@ using DMSLite.DataContexts;
 using DMSLite.Entities;
 using DMSLite.Controllers;
 using DMSLite.Models;
+using System.Text.RegularExpressions;
 
 namespace DMSLite
 {
@@ -18,6 +19,39 @@ namespace DMSLite
         private OrganizationDb db = new OrganizationDb();
 
         #region Fetch
+        public void Validate(Donor donor)
+        {
+            string phoneNumberCheck = "";
+            if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
+
+            //Custom validation error messages are added.
+            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
+
+            if (!String.IsNullOrWhiteSpace(donor.Email)
+                && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
+                ModelState.AddModelError("Email", "Email is invalid.");
+
+            if (!String.IsNullOrWhiteSpace(donor.PhoneNumber) && !Regex.IsMatch(phoneNumberCheck, "\\d{10}"))
+                ModelState.AddModelError("PhoneNumber", "Phone number is invalid.");
+        }
+
+        public string FormatValidPhoneNumber(string phoneNumber)
+        {
+            phoneNumber= Regex.Replace(phoneNumber, "[^\\d]", "");
+
+            //This method currently assumes the phone number is at least ten digits and does not feature a "+1".
+            string s1 = phoneNumber.Substring(0, 3);
+            string s2 = phoneNumber.Substring(3, 3);
+            string s3 = phoneNumber.Substring(6, 4);
+            string s4 = "";
+            if(phoneNumber.Length > 10)
+                s4 = phoneNumber.Substring(10);
+
+            return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
+        }
+
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
             List<Donor> filteredDonors = new List<Donor>();
@@ -174,18 +208,19 @@ namespace DMSLite
 
         public ActionResult Modify(Donor donor)
         {
+            Validate(donor);
+
             if (ModelState.IsValid)
             {
+                if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
+
                 db.Entry(donor).State = EntityState.Modified;
                 db.SaveChanges();
                 return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
             //an invalid submission should just return the form.
-
-            //A custom validation error message is added if both the emailand phonenumber field are left blank.
-            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
 
             return PartialView("~/Views/Donors/_ModifyForm.cshtml", donor);
         }
@@ -231,15 +266,19 @@ namespace DMSLite
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
+            Validate(donor);
+
             if (ModelState.IsValid && donor.isValid())
             {
+                if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
                 //confirm with the person submitting the form whether a similar donor already exists
 
                 //fetch a list of similar donors
                 List<Donor> sd = db.Donors.Where(x =>
                 (x.FirstName == donor.FirstName && x.LastName == donor.LastName) ||
-                (x.Email == donor.Email) ||
-                (x.PhoneNumber == donor.PhoneNumber)).ToList();
+                (x.Email != null && x.Email == donor.Email) ||
+                (x.PhoneNumber != null && x.PhoneNumber == donor.PhoneNumber)).ToList();
 
                 if (sd.Count() > 0)
                 {
@@ -256,11 +295,6 @@ namespace DMSLite
             }
 
             //an invalid submission shall return the form with some validation error messages.
-
-            //A custom validation error message is added if both the emailand phonenumber field are left blank.
-            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
-
             return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
         }
 
