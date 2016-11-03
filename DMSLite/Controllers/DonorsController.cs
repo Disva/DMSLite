@@ -10,12 +10,47 @@ using DMSLite.DataContexts;
 using DMSLite.Entities;
 using DMSLite.Controllers;
 using DMSLite.Models;
+using System.Text.RegularExpressions;
 
 namespace DMSLite
 {
     public class DonorsController : Controller
     {
         private OrganizationDb db = new OrganizationDb();
+
+        #region Fetch
+        public void Validate(Donor donor)
+        {
+            string phoneNumberCheck = "";
+            if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
+
+            //Custom validation error messages are added.
+            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
+
+            if (!String.IsNullOrWhiteSpace(donor.Email)
+                && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
+                ModelState.AddModelError("Email", "Email is invalid.");
+
+            if (!String.IsNullOrWhiteSpace(donor.PhoneNumber) && !Regex.IsMatch(phoneNumberCheck, "\\d{10}"))
+                ModelState.AddModelError("PhoneNumber", "Phone number is invalid.");
+        }
+
+        public string FormatValidPhoneNumber(string phoneNumber)
+        {
+            phoneNumber= Regex.Replace(phoneNumber, "[^\\d]", "");
+
+            //This method currently assumes the phone number is at least ten digits and does not feature a "+1".
+            string s1 = phoneNumber.Substring(0, 3);
+            string s2 = phoneNumber.Substring(3, 3);
+            string s3 = phoneNumber.Substring(6, 4);
+            string s4 = "";
+            if(phoneNumber.Length > 10)
+                s4 = phoneNumber.Substring(10);
+
+            return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
+        }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
@@ -82,7 +117,7 @@ namespace DMSLite
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
         }
         
-        public List<Donor> findDonors(Dictionary<string, object> parameters)
+        public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
             List<Donor> filteredDonors = new List<Donor>();
 
@@ -143,9 +178,19 @@ namespace DMSLite
                 return null;
         }
 
+        public ActionResult ViewAllDonors()
+        {
+            List<Donor> allDonors = db.Donors.ToList();
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+        }
+
+        #endregion
+
+        #region Modify
+
         public ActionResult ModifyForm(Dictionary<string, object> parameters)
         {
-            List<Donor> matchingDonors = findDonors(parameters);
+            List<Donor> matchingDonors = FindDonors(parameters);
             if (matchingDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if (matchingDonors.Count == 0)
@@ -163,21 +208,30 @@ namespace DMSLite
 
         public ActionResult Modify(Donor donor)
         {
+            Validate(donor);
+
             if (ModelState.IsValid)
             {
+                if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
+
                 db.Entry(donor).State = EntityState.Modified;
                 db.SaveChanges();
-                return Content("Thanks", "text/html");
+                return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
-            //an invalid submission should just return the form
-            return PartialView("~/Views/Donors/_Modify.cshtml", donor);
+            //an invalid submission should just return the form.
+
+            return PartialView("~/Views/Donors/_ModifyForm.cshtml", donor);
         }
 
-        public ActionResult ViewAllDonors()
+        #endregion
+
+        #region Add
+
+        public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            List<Donor> allDonors = db.Donors.ToList();
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+            return PartialView("~/Views/Donors/_Add.cshtml", parameters);
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
@@ -202,54 +256,60 @@ namespace DMSLite
                     newDonor.LastName = name.Substring(lastSpace + 1);
                 }
             }
-
             if (parameters.ContainsKey("phone-number"))
                 newDonor.PhoneNumber = parameters["phone-number"].ToString();
             if (parameters.ContainsKey("email"))
                 newDonor.Email = parameters["email"].ToString();
-            return PartialView("~/Views/Donors/_Add.cshtml", newDonor);
+            return PartialView("~/Views/Donors/_AddForm.cshtml", newDonor);
         }
 
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
+            Validate(donor);
+
             if (ModelState.IsValid && donor.isValid())
             {
+                if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
                 //confirm with the person submitting the form whether a similar donor already exists
 
                 //fetch a list of similar donors
                 List<Donor> sd = db.Donors.Where(x =>
                 (x.FirstName == donor.FirstName && x.LastName == donor.LastName) ||
-                (x.Email == donor.Email) ||
-                (x.PhoneNumber == donor.PhoneNumber)).ToList();
+                (x.Email != null && x.Email == donor.Email) ||
+                (x.PhoneNumber != null && x.PhoneNumber == donor.PhoneNumber)).ToList();
 
-                if(sd.Count() > 0)
+                if (sd.Count() > 0)
                 {
                     //return a view showing those similar donors if they exist
                     SimilarDonorModel sdm = new SimilarDonorModel() { newDonor = donor, similarDonors = sd };
-                    return PartialView("~/Views/Donors/_Similar.cshtml", sdm);
+                    return PartialView("~/Views/Donors/_AddSimilar.cshtml", sdm);
                 }
                 else
-                { 
+                {
                     db.Donors.Add(donor);
                     db.SaveChanges();
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
 
-            //an invalid submission should just return the form
+            //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
         }
 
         //this method should only fire after the user has confirmed thy want to add a similar donor
         //(same phone number, email, or first name/ last name combo)
-        public ActionResult AddSimilar(SimilarDonorModel sdm)
+        public ActionResult AddSimilar(Donor donor)
         {
-            db.Donors.Add(sdm.newDonor);
+            db.Donors.Add(donor);
             db.SaveChanges();
-            return Content("Thanks", "text/html");
+            return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
         }
 
+        #endregion
+
+        #region MadeByMS
         public ActionResult Remove(Donor donor)
         {
             if (ModelState.IsValid)
@@ -371,5 +431,6 @@ namespace DMSLite
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

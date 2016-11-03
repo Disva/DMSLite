@@ -50,8 +50,7 @@ namespace DMSLite.Entities
             return (
                 (!String.IsNullOrWhiteSpace(FirstName))
                 && (!String.IsNullOrWhiteSpace(LastName))
-                && (!String.IsNullOrWhiteSpace(PhoneNumber))
-                && (!String.IsNullOrWhiteSpace(Email)));
+                && (!String.IsNullOrWhiteSpace(PhoneNumber) || (!String.IsNullOrWhiteSpace(Email))));
         }
 
     }

@@ -24,10 +24,10 @@
         setFocusToTextBox();
 
         // Check if there any modals that need to be shown
-        checkShowModal()
+        checkShowModal();
     }
     // pop the searchbar text up into the feed
-function addText() {
+    function addText() {
         var div = document.getElementById('outputContainer');
         var searchTerm = document.getElementById('mainInput').value;
         var htmlCode = '<div class="bubbleLine"><div class="bubble rightBubble">'+searchTerm+'</div></div>';
@@ -97,33 +97,19 @@ function addText() {
     }
     setFocusToTextBox();
 
-    // Check if a class want's to be "modal'ed" and turn it into a modal
+    // Check if the webpage has any modals to display
     function checkShowModal()
     {
         var node = $("#outputContainer").find(".showModal");
         if (node.length > 0)
         {
-            $(node).find(".modal").modal();
+            $(node).modal();
             $(node).removeClass("showModal");
-        }            
-    }
 
-    // Check if a modal has a success form and close it
-    // Also change the message in the associated bubble
-    function checkHideModal()
-    {
-        var node = $("#outputContainer").find(".addSuccess");
-
-        if(node.length > 0)
-        {
-            node.parents(".addContainer").find(".bubble").html("Donor added");
-            node.parents(".modal").modal('hide');
-            node.removeClass("addSuccess");
+            //delete modals as soon as they are hidden
+            $(node).on('hidden.bs.modal', function (e) {
+                $(this).remove();
+            });
         }
-    }
-
-    function showAddModal(button)
-    {
-        $(button).parents(".modalSibling").next().modal('show');
     }
 </script>
