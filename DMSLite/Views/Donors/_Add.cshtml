@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" onclick="deleteModal()"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Add a New Donor</h4>
             </div>
             @Html.Action("AddForm", Model)

@@ -104,19 +104,12 @@
         if (node.length > 0)
         {
             $(node).modal();
-            $(node).modal('show');
             $(node).removeClass("showModal");
+
+            //delete modals as soon as they are hidden
+            $(node).on('hidden.bs.modal', function (e) {
+                $(this).remove();
+            });
         }
-    }
-
-    function deleteModal()
-    {
-        var node = $('#outputContainer').find(".modal");
-        $(node).modal('hide');
-
-        //delete modals as soon as they are hidden
-        $(document).on('hidden.bs.modal', '.modal', function () {
-            $(this).remove();
-        });
     }
 </script>
