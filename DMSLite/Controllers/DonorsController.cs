@@ -181,7 +181,12 @@ namespace DMSLite
                 return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
-            //an invalid submission should just return the form
+            //an invalid submission should just return the form.
+
+            //A custom validation error message is added if both the emailand phonenumber field are left blank.
+            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
+
             return PartialView("~/Views/Donors/_ModifyForm.cshtml", donor);
         }
 
@@ -236,21 +241,26 @@ namespace DMSLite
                 (x.Email == donor.Email) ||
                 (x.PhoneNumber == donor.PhoneNumber)).ToList();
 
-                if(sd.Count() > 0)
+                if (sd.Count() > 0)
                 {
                     //return a view showing those similar donors if they exist
                     SimilarDonorModel sdm = new SimilarDonorModel() { newDonor = donor, similarDonors = sd };
                     return PartialView("~/Views/Donors/_AddSimilar.cshtml", sdm);
                 }
                 else
-                { 
+                {
                     db.Donors.Add(donor);
                     db.SaveChanges();
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
 
-            //an invalid submission should just return the form
+            //an invalid submission shall return the form with some validation error messages.
+
+            //A custom validation error message is added if both the emailand phonenumber field are left blank.
+            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
+                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
+
             return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
         }
 
