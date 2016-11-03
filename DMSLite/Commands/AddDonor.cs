@@ -13,7 +13,7 @@ namespace DMSLite.Commands
     {
         public Tuple<string, string> Execute()
         {
-            return new Tuple<string, string>("Donors", "AddForm");
+            return new Tuple<string, string>("Donors", "AddMenu");
         }
     }
 }
