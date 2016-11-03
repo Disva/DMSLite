@@ -3,7 +3,6 @@
 @{ var id = Guid.NewGuid().ToString(); }
 
 <div id="@id">
-
     @using (Ajax.BeginForm("Add", "Donors", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
