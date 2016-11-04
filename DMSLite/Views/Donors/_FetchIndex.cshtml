@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DMSLite.Entities.Donor>
+    <div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.LastName)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.Email)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.Type)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.ReceiptFrequency)
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Type)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.ReceiptFrequency)
+                </div>
+            </div>
+        }
+    </div>
+</div>
