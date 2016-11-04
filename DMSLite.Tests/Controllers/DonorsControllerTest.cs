@@ -29,9 +29,11 @@ namespace DMSLite.Tests.Controllers
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> allDonors = db.Donors.ToList();
             Assert.AreEqual(allDonors.Count(), returnedModel.Count());
-            for(int i = 0; i < allDonors.Count(); i ++)
+            Console.WriteLine(allDonors.Count());
+            Console.WriteLine(returnedModel.Count());
+            for (int i = 0; i < allDonors.Count(); i ++)
             {
-                Assert.IsTrue(allDonors[i].isEqualTo(returnedModel[i]));
+                Assert.IsTrue(allDonors[i].FirstName == returnedModel[i].FirstName);
             }
         }
 
@@ -233,7 +235,7 @@ namespace DMSLite.Tests.Controllers
             {
                 FirstName = "fName_TestAddDuplicateDonor",
                 LastName = "lName_TestAddDuplicateDonor",
-                Email = "email_TestAddDuplicateDonor",
+                Email = "email@test.com",
                 PhoneNumber = "111-111-1111",
             };
             Donor d1Duplicate = new Donor
@@ -273,7 +275,7 @@ namespace DMSLite.Tests.Controllers
             {
                 FirstName = "fName_TestModifyDonor",
                 LastName = "lName_TestModifyDonor",
-                Email = "email_TestModifyDonor",
+                Email = "email@testmodify.com",
                 PhoneNumber = "000-111-9191",
             };
 
