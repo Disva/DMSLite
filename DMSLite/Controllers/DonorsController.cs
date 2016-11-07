@@ -25,10 +25,6 @@ namespace DMSLite
             if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
                 phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
 
-            //Custom validation error messages are added.
-            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
-
             if (!String.IsNullOrWhiteSpace(donor.Email)
                 && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
                 ModelState.AddModelError("Email", "Email is invalid.");
@@ -49,6 +45,7 @@ namespace DMSLite
             if(phoneNumber.Length > 10)
                 s4 = phoneNumber.Substring(10);
 
+            //formats the phone number to XXX-XXX-XXXX XXXX...
             return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
         }
 

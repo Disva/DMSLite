@@ -33,7 +33,7 @@ namespace DMSLite.Entities
 
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist
-        //TODO: update this method to allow fornull emails and phone numbers
+        //TODO: update this method to allow for null emails and phone numbers
         public bool isEqualTo(Donor otherDonor)
         {
             if (FirstName.Equals(otherDonor.FirstName) &&
@@ -50,8 +50,7 @@ namespace DMSLite.Entities
         {
             return (
                 (!String.IsNullOrWhiteSpace(FirstName))
-                && (!String.IsNullOrWhiteSpace(LastName))
-                && (!String.IsNullOrWhiteSpace(PhoneNumber) || (!String.IsNullOrWhiteSpace(Email))));
+                && (!String.IsNullOrWhiteSpace(LastName)));
         }
 
     }
