@@ -28,5 +28,7 @@ namespace DMSLite.DataContexts
 
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Donor> Donors { get; set; }
+        public DbSet<Batch> Batches { get; set; }
+        public DbSet<Donation> Donations { get; set; }
     }
 }
