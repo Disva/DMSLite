@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
+    public enum DonorType
+    {
+        Individual,
+        Business,
+        Charity,
+        Foreign,
+        Other
+    }
+
     public class Donor
     {
         public int Id { get; set; }
@@ -28,12 +37,14 @@ namespace DMSLite.Entities
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [StringLength(255)]
-        public string Type { get; set; }
+        [Required]
+        public DonorType Type { get; set; }
 
         [StringLength(255)]
         [Display(Name = "Receipt Frequency")]
         public string ReceiptFrequency { get; set; }
+
+        public Organization DonorOrganization { get; set; }
 
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist
