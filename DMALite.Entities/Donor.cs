@@ -44,7 +44,6 @@ namespace DMSLite.Entities
         [Display(Name = "Receipt Frequency")]
         public string ReceiptFrequency { get; set; }
 
-        [Required]
         public Organization DonorOrganization { get; set; }
 
         //ASSUMPTION
