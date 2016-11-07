@@ -26,8 +26,6 @@ namespace DMSLite
                 phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
 
             //Custom validation error messages are added.
-            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
 
             if (!String.IsNullOrWhiteSpace(donor.Email)
                 && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
