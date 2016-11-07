@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Commands\AddBatch.cs" />
     <Compile Include="Commands\AddDonor.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
