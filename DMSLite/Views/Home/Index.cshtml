@@ -57,6 +57,21 @@
         $("#mainInputGroup").addClass("has-error");
         $("#submitBtn").addClass("btn-danger");
     }
+
+    function showLoadingButton(id)
+    {
+        var button = document.getElementById(id);
+        $(button).find(".loading-button-icon").css("display", "inline-block");
+        $(button).prop("disabled", true);
+    }
+
+    function hideLoadingButton(id)
+    {
+        var button = document.getElementById(id);
+        $(button).find(".loading-button-icon").css("display", "none");
+        $(button).prop("disabled", false);
+    }
+
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"><div class="bubbleLine"><div class="bubble leftBubble">What would you like to do?</div></div></div>
