@@ -1,0 +1,14 @@
+﻿@model Dictionary<string, object>
+
+<div class="modal fade showModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add a New Batch</h4>
+            </div>
+            @Html.Action("AddForm", Model)
+        </div>
+    </div>
+</div>
+

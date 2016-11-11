@@ -324,6 +324,8 @@
     <Content Include="Views\Donors\_ModifyForm.cshtml" />
     <Content Include="Views\Donors\_ModifySuccess.cshtml" />
     <Content Include="Views\Batch\_AddSuccess.cshtml" />
+    <Content Include="Views\Batch\_AddForm.cshtml" />
+    <Content Include="Views\Batch\_Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
