@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using DMSLite.Entities;
 
 namespace DMSLite.Models
 {
@@ -16,6 +17,8 @@ namespace DMSLite.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public Organization UserOrganization { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

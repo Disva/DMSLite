@@ -46,6 +46,8 @@ namespace DMSLite.Entities
 
         public Organization DonorOrganization { get; set; }
 
+        public bool Archived { get; set; }
+
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist
         //TODO: update this method to allow fornull emails and phone numbers
