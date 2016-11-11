@@ -57,6 +57,14 @@
         $("#mainInputGroup").addClass("has-error");
         $("#submitBtn").addClass("btn-danger");
     }
+
+    function showLoadingButton(id)
+    {
+        var button = $(document.getElementById(id)).find(".loading-button");
+        $(button).find(".loading-button-icon").css("display", "inline-block");
+        $(button).prop("disabled", true);
+    }
+
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"><div class="bubbleLine"><div class="bubble leftBubble">What would you like to do?</div></div></div>
@@ -106,9 +114,15 @@
             $(node).modal();
             $(node).removeClass("showModal");
 
+            //focus the first input field
+            $(node).on('shown.bs.modal', function () {
+                $('.modal-body input:first').focus();
+            });
+
             //delete modals as soon as they are hidden
             $(node).on('hidden.bs.modal', function (e) {
                 $(this).remove();
+                setFocusToTextBox();
             });
         }
     }
