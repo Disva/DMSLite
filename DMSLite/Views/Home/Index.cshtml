@@ -116,8 +116,7 @@
 
             //focus the first input field
             $(node).on('shown.bs.modal', function () {
-                var elems = $('.modal-body input:text[value=""]:first').focus();
-                
+                $('.modal-body input:text[value=""]:first').focus();
             });
 
             //delete modals as soon as they are hidden
