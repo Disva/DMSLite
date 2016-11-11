@@ -180,5 +180,6 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 
 .loading-button-icon {
     display:none;
-    transform-origin: 52% 58%;
+    transform-origin: 54% 58%;
+    margin-right:7px;
 }

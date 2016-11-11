@@ -60,7 +60,7 @@
 
     function showLoadingButton(id)
     {
-        var button = document.getElementById(id);
+        var button = $(document.getElementById(id)).find(".loading-button");
         $(button).find(".loading-button-icon").css("display", "inline-block");
         $(button).prop("disabled", true);
     }
