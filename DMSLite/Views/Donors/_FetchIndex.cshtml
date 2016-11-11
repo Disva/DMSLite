@@ -3,9 +3,6 @@
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Donor ID
-            </div>
-            <div class="cell">
                 @Html.DisplayNameFor(model => model.FirstName)
             </div>
             <div class="cell">
@@ -27,9 +24,6 @@
         @foreach (var item in Model)
         {
             <div class="tableRow">
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </div>
