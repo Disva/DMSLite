@@ -48,6 +48,13 @@
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ReceiptFrequency)
                 </div>
+                <div>
+                    @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", item, new AjaxOptions() {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "checkShowModal"
+                    }, new { @class = "glyphicon" } )
+                </div>
             </div>
         }
     </div>
