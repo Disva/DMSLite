@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201610141722458_DonorNameSplit.Designer.cs">
       <DependentUpon>201610141722458_DonorNameSplit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611072046088_DonationsAndBatches.cs" />
+    <Compile Include="Migrations\201611072046088_DonationsAndBatches.Designer.cs">
+      <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -346,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610141722458_DonorNameSplit.resx">
       <DependentUpon>201610141722458_DonorNameSplit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611072046088_DonationsAndBatches.resx">
+      <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

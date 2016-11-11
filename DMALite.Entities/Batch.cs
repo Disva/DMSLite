@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
-    public class Organization
+    public class Batch
     {
         public int Id { get; set; }
 
-        [StringLength(255)]
         [Required]
-        public string Name { get; set; }
+        [StringLength(255)]
+        public string Title { get; set; }
 
+        [Required]
+        public DateTime CreateDate { get; set; }
 
+        public DateTime? CloseDate { get; set; }
+
+        [Required]
+        public Organization BatchOrganization { get; set; }
     }
 }

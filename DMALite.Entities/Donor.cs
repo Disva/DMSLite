@@ -7,29 +7,44 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
+    public enum DonorType
+    {
+        Individual,
+        Business,
+        Charity,
+        Foreign,
+        Other
+    }
+
     public class Donor
     {
         public int Id { get; set; }
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [StringLength(255)]
         public string Email { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [StringLength(255)]
-        public string Type { get; set; }
+        [Required]
+        public DonorType Type { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Receipt Frequency")]
         public string ReceiptFrequency { get; set; }
+
+        public Organization DonorOrganization { get; set; }
 
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist
@@ -50,8 +65,7 @@ namespace DMSLite.Entities
         {
             return (
                 (!String.IsNullOrWhiteSpace(FirstName))
-                && (!String.IsNullOrWhiteSpace(LastName))
-                && (!String.IsNullOrWhiteSpace(PhoneNumber) || (!String.IsNullOrWhiteSpace(Email))));
+                && (!String.IsNullOrWhiteSpace(LastName)));
         }
 
     }
