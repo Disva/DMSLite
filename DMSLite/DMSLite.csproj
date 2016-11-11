@@ -197,7 +197,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Commands\AddDonor.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ModifyDonor.cs" />
+    <Compile Include="Commands\ShowErrorCommand.cs" />
+    <Compile Include="Commands\ViewAllDonors.cs" />
+    <Compile Include="Commands\ViewDonors.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -244,7 +250,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Commands\Commands.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
