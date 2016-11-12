@@ -11,6 +11,7 @@ using DMSLite.Entities;
 using DMSLite.Controllers;
 using DMSLite.Models;
 using System.Text.RegularExpressions;
+using System.Linq.Expressions;
 
 namespace DMSLite
 {
@@ -50,35 +51,29 @@ namespace DMSLite
             return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
         }
 
-        public void FetchByName(ref List<Donor> list, string name)
+        private void FetchByName(ref List<Donor> list, string name)
         {
-            if (list.Count == 0)
+            //searching through the db uses LINQ, which is picky about what variables can be passed.
+            //For instance, LINQ does not accept ArrayIndex variables in queries,
+            //so they are individual string variables in this query instead.
+            string[] names = name.Split(' ');
+            if (names.Count() == 2)
             {
-                //for now, a name parameter containing a space is presumed to be a first name and last name
-                if (name.Contains(" "))
-                {
-                    string[] names = name.Split(new char[] { ' ' });
-                    //searching through the db uses LINQ, which is picky about what variables can be passed.
-                    //For instance, LINQ does not accept ArrayIndex variables in queries,
-                    //so they are individual string variables in this query instead.
-                    string name1 = names[0], name2 = names[1];
-
-                    list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                string name1 = names[0], name2 = names[1];
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
-
-                    list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                //reverse
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
-                }
-                //a name without a space is presumed to either be a first or last name
-                else
-                {
-                    list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+            }
+            else
+            {
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
                     x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
-                }
             }
         }
 
-        public void FetchByEmail(ref List<Donor> list, string email)
+        private void FetchByEmail(ref List<Donor> list, string email)
         {
             if (list.Count == 0)//to add new
                 list.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
@@ -86,7 +81,7 @@ namespace DMSLite
                 list = list.Where(x => x.Email.Equals(email)).ToList();
         }
 
-        public void FetchByPhoneNumber(ref List<Donor> list, string phone)
+        private void FetchByPhoneNumber(ref List<Donor> list, string phone)
         {
             if (list.Count == 0)//to add new
                 list.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
@@ -104,6 +99,7 @@ namespace DMSLite
                 || !String.IsNullOrEmpty(parameters["email-address"].ToString())
                 || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
 
+            //Note that there is no WHERE call, therefore this function must stay on top
             if (!String.IsNullOrEmpty(parameters["name"].ToString()))
                 FetchByName(ref filteredDonors, parameters["name"].ToString());
 
