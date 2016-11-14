@@ -39,7 +39,7 @@ namespace DMSLite.Tests.SDKs
 
             //With No params
             var response = apiAi.TextRequest("create new donor");
-            Assert.AreEqual(response.Result.Action, "AddDonor");
+            Assert.AreEqual(response.Result.Action,  "AddDonor");
             Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["name"].ToString()));
 
             //By name
@@ -102,7 +102,15 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestViewDonors()
         {
+            string[] inputs =
+            {
+                "show donors",
+                "View donors"
+            };
 
+            //By name
+            var response = RandomTextInput(inputs);
+            Assert.AreEqual(response.Result.Action, "ViewAllDonors");
         }
 
         //Sends a randomly selected NL request to API.ai
