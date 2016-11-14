@@ -21,7 +21,7 @@ namespace DMSLite.Controllers
         #region Add
         public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            return PartialView("~/Views/Batches/_Add.cshtml", parameters); //view must be made
+            return PartialView("~/Views/Batch/_Add.cshtml", parameters);
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
