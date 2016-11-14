@@ -27,6 +27,8 @@ namespace DMSLite.Controllers
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
             Batch newBatch = new Batch();
+            if (parameters.ContainsKey("title"))
+                newBatch.Title = parameters["title"].ToString();
             return PartialView("~/Views/Batch/_AddForm.cshtml", newBatch);
         }
 
