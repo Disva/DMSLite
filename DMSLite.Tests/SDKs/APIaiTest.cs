@@ -27,6 +27,36 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestAddDonor()
         {
+            string name = "john smith";
+            string email = "steve@stevemail.com";
+            string phoneNumber = "555-555-5555";
+
+            string[] inputs =
+            {
+                "add {0}",
+                "create {0}"
+            };
+
+            //With No params
+            var response = apiAi.TextRequest("create new donor");
+            Assert.AreEqual(response.Result.Action, "AddDonor");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["name"].ToString()));
+
+            //By name
+            response = RandomTextInput(inputs, name);
+            Assert.AreEqual(response.Result.Action, "AddDonor");
+            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
+
+            //By email
+            response = RandomTextInput(inputs, email);
+            Assert.AreEqual(response.Result.Action, "AddDonor");
+            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
+
+            //By phone number
+            response = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(response.Result.Action, "AddDonor");
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+
         }
 
         [TestMethod]
