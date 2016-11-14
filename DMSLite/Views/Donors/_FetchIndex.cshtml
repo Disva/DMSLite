@@ -23,6 +23,9 @@
             <div class="cell">
                 @Html.DisplayNameFor(model => model.ReceiptFrequency)
             </div>
+            <div class="cell">
+                <!-- Left Empty for edit column -->
+            </div>
         </div>
         @foreach (var item in Model)
         {
@@ -48,12 +51,12 @@
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ReceiptFrequency)
                 </div>
-                <div>
+                <div class="cell">
                     @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", item, new AjaxOptions() {
                         InsertionMode = InsertionMode.InsertAfter,
                         UpdateTargetId = "outputContainer",
                         OnComplete = "checkShowModal"
-                    }, new { @class = "glyphicon" } )
+                    }, new { @class = "glyphicon pencil" } )
                 </div>
             </div>
         }
