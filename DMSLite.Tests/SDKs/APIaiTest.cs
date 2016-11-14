@@ -67,6 +67,29 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestModifyDonor()
         {
+            string name = "john smith";
+            string email = "steve@stevemail.com";
+            string phoneNumber = "555-555-5555";
+
+            string[] inputs =
+            {
+                "edit {0}"
+            };
+
+            //By name
+            var response = RandomTextInput(inputs, name);
+            Assert.AreEqual(response.Result.Action, "ModifyDonor");
+            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
+
+            //By email
+            response = RandomTextInput(inputs, email);
+            Assert.AreEqual(response.Result.Action, "ModifyDonor");
+            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
+
+            //By phone number
+            response = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(response.Result.Action, "ModifyDonor");
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
         }
 
         [TestMethod]
