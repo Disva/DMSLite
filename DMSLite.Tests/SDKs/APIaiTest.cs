@@ -43,9 +43,30 @@ namespace DMSLite.Tests.SDKs
         public void TestViewDonor()
         {
             string name = "john smith";
-            var response = apiAi.TextRequest("show me " + name);
+            string email = "steve@stevemail.com";
+            string phoneNumber = "555-555-5555";
+
+            string[] inputs =
+            {
+                "show me {0}",
+                "View {0}"
+            };
+
+            //By name
+            var response = RandomTextInput(inputs, name);
             Assert.AreEqual(response.Result.Action, "ViewDonors");
             Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
+
+            //By email
+            response = RandomTextInput(inputs, email);
+            Assert.AreEqual(response.Result.Action, "ViewDonors");
+            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
+
+            //By phone number
+            response = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(response.Result.Action, "ViewDonors");
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+
         }
 
         [TestMethod]
@@ -55,9 +76,9 @@ namespace DMSLite.Tests.SDKs
         }
 
         //Sends a randomly selected NL request to API.ai
-        private AIResponse RandomTextInput(string[] inputs)
+        private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {
-            return apiAi.TextRequest(inputs[rand.Next(0, inputs.Length)]);
+            return apiAi.TextRequest(String.Format(inputs[rand.Next(0, inputs.Length)], values));
         }
     }
 }
