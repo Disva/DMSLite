@@ -197,18 +197,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Commands\AddDonor.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ModifyDonor.cs" />
-    <Compile Include="Commands\ShowErrorCommand.cs" />
-    <Compile Include="Commands\ViewAllDonors.cs" />
-    <Compile Include="Commands\ViewDonors.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
+      <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\Configuration.cs" />
     <Compile Include="DataContexts\OrganizationDb.cs" />
     <Compile Include="Controllers\DonorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,6 +229,10 @@
     <Compile Include="Migrations\201611072046088_DonationsAndBatches.Designer.cs">
       <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611112152330_UserOrganization.cs" />
+    <Compile Include="Migrations\201611112152330_UserOrganization.Designer.cs">
+      <DependentUpon>201611112152330_UserOrganization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -250,6 +253,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Commands\Commands.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -342,6 +346,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.resx">
+      <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610071735228_a.resx">
       <DependentUpon>201610071735228_a.cs</DependentUpon>
     </EmbeddedResource>
@@ -353,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611072046088_DonationsAndBatches.resx">
       <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611112152330_UserOrganization.resx">
+      <DependentUpon>201611112152330_UserOrganization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
