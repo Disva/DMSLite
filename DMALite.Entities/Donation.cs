@@ -22,5 +22,7 @@ namespace DMSLite.Entities
 
         [Required]
         public Batch DonationBatch { get; set; }
+
+        public Organization DonationOrganization { get; set; }
     }
 }
