@@ -6,6 +6,9 @@ using ApiAiSDK;
 using System.Web.Mvc;
 using DMSLite.Controllers;
 using DMSLite.Models;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace DMSLite.Commands
 { 
@@ -13,7 +16,7 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
-        private const string CommandsLocation = ".Commands.";
+        private const string CommandsLocation = "Commands.json";
 
         private static ApiAi apiAi;
 
@@ -50,29 +53,22 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            // Get Client's Project Name
-            string project = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            //Search commands file for appropriate command instructions
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Commands\", CommandsLocation);
+            StreamReader r = new StreamReader(path);
 
-            // Taken from API.ai returned JSON object
-            string action = response.Result.Action;
+            string json = r.ReadToEnd();
+            var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 
-            //Join strings to create classLocation
-            string classLocation = project + ".Commands." + action;
-            
-            //Find the class as a Type
-            Type commandType = Type.GetType(classLocation);
             try
             {
                 //Check if null, if null return message to the UI
-                if (commandType == null) throw new Exception("No command found.");
-            
-                //Cast and execute the command
-                ICommand command = Activator.CreateInstance(commandType) as ICommand;
+                if (data[response.Result.Action] == null) throw new Exception("No command found.");
 
                 ResponseModel responseModel = new ResponseModel()
                 {
                     Speech = response.Result.Fulfillment.Speech,
-                    Instructions = command.Execute(),
+                    Instructions = data[response.Result.Action],
                     Parameters = response.Result.Parameters
                 };
 
