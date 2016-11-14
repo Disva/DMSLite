@@ -91,31 +91,15 @@ namespace DMSLite
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> filteredDonors = new List<Donor>();
+            List<Donor> filteredDonors = FindDonors(parameters);
 
-            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
-            bool paramsExist =
-                !String.IsNullOrEmpty(parameters["name"].ToString())
-                || !String.IsNullOrEmpty(parameters["email-address"].ToString())
-                || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
+            if (filteredDonors == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            //Note that there is no WHERE call, therefore this function must stay on top
-            if (!String.IsNullOrEmpty(parameters["name"].ToString()))
-                FetchByName(ref filteredDonors, parameters["name"].ToString());
-
-            if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
-                FetchByEmail(ref filteredDonors, parameters["email-address"].ToString());
-
-            if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
-                FetchByPhoneNumber(ref filteredDonors, parameters["phone-number"].ToString());
-
-            if (filteredDonors.Count == 0 && paramsExist)
+            if (filteredDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
 
-            if (paramsExist) //If at least one parameter's value was non-empty
-                return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
-            else //if no parameters were recognized
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
         }
 
         public List<Donor> FindDonors(Dictionary<string, object> parameters)
@@ -128,6 +112,7 @@ namespace DMSLite
                 || !String.IsNullOrEmpty(parameters["email-address"].ToString())
                 || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
 
+            //FetchByName creates, but never Filters, so far place first
             if (!String.IsNullOrEmpty(parameters["name"].ToString()))
                 FetchByName(ref filteredDonors, parameters["name"].ToString());
 
@@ -141,7 +126,6 @@ namespace DMSLite
                 return filteredDonors;
             else
                 return null;
-
         }
 
         public ActionResult ViewAllDonors()
