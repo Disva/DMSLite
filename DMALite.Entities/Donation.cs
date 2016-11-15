@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
-    public class Donation
+    public class Donation : IHaveTenant
     {
         public int Id { get; set; }
 
@@ -24,5 +24,13 @@ namespace DMSLite.Entities
         public Batch DonationBatch { get; set; }
 
         public Organization DonationOrganization { get; set; }
+
+        public int TenantId
+        {
+            get
+            {
+                return DonationOrganization.Id;
+            }
+        }
     }
 }

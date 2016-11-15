@@ -16,7 +16,7 @@ namespace DMSLite.Entities
         Other
     }
 
-    public class Donor
+    public class Donor : IHaveTenant
     {
         public int Id { get; set; }
 
@@ -47,6 +47,14 @@ namespace DMSLite.Entities
         public Organization DonorOrganization { get; set; }
 
         public bool Archived { get; set; }
+
+        public int TenantId
+        {
+            get
+            {
+                return DonorOrganization.Id;
+            }
+        }
 
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist

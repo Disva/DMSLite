@@ -44,6 +44,7 @@
     <Compile Include="Batch.cs" />
     <Compile Include="Donation.cs" />
     <Compile Include="Donor.cs" />
+    <Compile Include="IHaveTenant.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

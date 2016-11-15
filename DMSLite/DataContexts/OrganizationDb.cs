@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using DMSLite.Entities;
 using DMSLite.Models;
+using EntityFramework.DynamicFilters;
+using Microsoft.AspNet.Identity;
+using System.Threading;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace DMSLite.DataContexts
 {
@@ -24,6 +28,8 @@ namespace DMSLite.DataContexts
         {
             Database.SetInitializer<OrganizationDb>(null);
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Filter("TenantFilter", (IHaveTenant entity, int organizationId) => entity.TenantId == organizationId, () => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(Thread.CurrentPrincipal.Identity.GetUserId()).UserOrganization.Id);
         }
 
         public DbSet<Organization> Organizations { get; set; }
