@@ -23,14 +23,7 @@ namespace DMSLite.Entities
         [Required]
         public Batch DonationBatch { get; set; }
 
-        public Organization DonationOrganization { get; set; }
-
-        public int TenantId
-        {
-            get
-            {
-                return DonationOrganization.Id;
-            }
-        }
+        [Required]
+        public int TenantOrganizationId {get; set; }
     }
 }

@@ -21,14 +21,6 @@ namespace DMSLite.Entities
         public DateTime? CloseDate { get; set; }
 
         [Required]
-        public Organization BatchOrganization { get; set; }
-
-        public int TenantId
-        {
-            get
-            {
-                return BatchOrganization.Id;
-            }
-        }
+        public int TenantOrganizationId { get; set; }
     }
 }

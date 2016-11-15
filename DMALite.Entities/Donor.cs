@@ -44,17 +44,10 @@ namespace DMSLite.Entities
         [Display(Name = "Receipt Frequency")]
         public string ReceiptFrequency { get; set; }
 
-        public Organization DonorOrganization { get; set; }
+        [Required]
+        public int TenantOrganizationId { get; set; }
 
         public bool Archived { get; set; }
-
-        public int TenantId
-        {
-            get
-            {
-                return DonorOrganization.Id;
-            }
-        }
 
         //ASSUMPTION
         //no users with NULL firstname, lastname, email or phone number can exist
