@@ -165,8 +165,7 @@ namespace DMSLite
                 if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
                     donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
 
-                db.Entry(donor).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Modify(donor);
                 return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
@@ -238,8 +237,7 @@ namespace DMSLite
                 }
                 else
                 {
-                    db.Donors.Add(donor);
-                    db.SaveChanges();
+                    db.Add(donor);
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
@@ -252,8 +250,7 @@ namespace DMSLite
         //(same phone number, email, or first name/ last name combo)
         public ActionResult AddSimilar(Donor donor)
         {
-            db.Donors.Add(donor);
-            db.SaveChanges();
+            db.Add(donor);
             return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
         }
 
