@@ -167,6 +167,16 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     -webkit-animation: spin2 .7s infinite linear;
 }
 
+.pencil {
+    color: #186839;
+    text-decoration: none;
+}
+.pencil:hover {
+    color: #27ae60;
+     text-decoration:none; 
+     cursor:pointer;
+}
+
 @-webkit-keyframes spin2 {
     from { -webkit-transform: rotate(0deg);}
     to { -webkit-transform: rotate(360deg);}

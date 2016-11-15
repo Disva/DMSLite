@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="DMSLite.Tests.Controllers.HomeControllerTest.Contact" /><Add Test="DMSLite.Tests.Controllers.HomeControllerTest.Index" /><Add Test="DMSLite.Tests.Controllers.HomeControllerTest.About" /></Playlist>
