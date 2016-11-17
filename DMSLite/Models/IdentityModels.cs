@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DMSLite.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace DMSLite.Models
 {
@@ -18,7 +19,9 @@ namespace DMSLite.Models
             return userIdentity;
         }
 
-        public Organization UserOrganization { get; set; }
+        // Corresponds to the user's Organization's Id
+        [Required]
+        public int TenantId { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

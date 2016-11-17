@@ -16,7 +16,7 @@ namespace DMSLite.Entities
         Other
     }
 
-    public class Donor
+    public class Donor : IHaveTenant
     {
         public int Id { get; set; }
 
@@ -44,7 +44,8 @@ namespace DMSLite.Entities
         [Display(Name = "Receipt Frequency")]
         public string ReceiptFrequency { get; set; }
 
-        public Organization DonorOrganization { get; set; }
+        [Required]
+        public int TenantOrganizationId { get; set; }
 
         public bool Archived { get; set; }
 

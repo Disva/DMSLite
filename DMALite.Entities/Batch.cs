@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
-    public class Batch
+    public class Batch : IHaveTenant
     {
         public int Id { get; set; }
 
@@ -21,6 +21,6 @@ namespace DMSLite.Entities
         public DateTime? CloseDate { get; set; }
 
         [Required]
-        public Organization BatchOrganization { get; set; }
+        public int TenantOrganizationId { get; set; }
     }
 }

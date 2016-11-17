@@ -36,14 +36,9 @@ namespace DMSLite.Controllers
         public ActionResult Add(Batch batch)
         {
             batch.CreateDate = DateTime.Now;
-            batch.BatchOrganization = db.Organizations.First();
-            //ModelState["batch.CreateDate"].Errors.Clear();
-            ModelState["BatchOrganization"].Errors.Clear();
-            //UpdateModel(batch);
             if (ModelState.IsValid)
-            {                
-                db.Batches.Add(batch);
-                db.SaveChanges();
+            {
+                db.Add(batch);
                 return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
             }
 

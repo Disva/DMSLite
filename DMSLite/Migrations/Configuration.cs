@@ -10,6 +10,8 @@ namespace DMSLite.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = false;
+            CommandTimeout = 5000;
 
             // register mysql code generator
             SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
