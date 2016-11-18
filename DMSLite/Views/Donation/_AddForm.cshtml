@@ -1,13 +1,13 @@
-﻿@model DMSLite.Entities.Batch
+﻿@model DMSLite.Entities.Donation
 
 @{ var id = Guid.NewGuid().ToString(); }
 
 <div id="@id">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add a New Batch</h4>
+        <h4 class="modal-title" id="myModalLabel">Add a New Donation</h4>
     </div>
-    @using (Ajax.BeginForm("Add", "Batch", new AjaxOptions()
+    @using (Ajax.BeginForm("Add", "Donation", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = id
@@ -19,10 +19,10 @@
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ObjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
