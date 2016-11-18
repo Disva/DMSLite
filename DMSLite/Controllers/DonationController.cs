@@ -27,9 +27,13 @@ namespace DMSLite.Controllers
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
             Donation newDonation = new Donation();
-           /* if (parameters.ContainsKey("title"))
-                newDonation.Title = parameters["title"].ToString();*/
-            return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+            if (parameters.ContainsKey("value"))
+            {
+                double donationValue;
+                Double.TryParse(parameters["value"].ToString(), out donationValue);
+                newDonation.Value = donationValue;
+            }
+            return PartialView("~/Views/Donations/_AddForm.cshtml", newDonation);
         }
 
         // TODO: Anti-forgery
