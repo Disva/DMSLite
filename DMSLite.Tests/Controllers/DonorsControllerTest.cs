@@ -151,8 +151,9 @@ namespace DMSLite.Tests.Controllers
             FormCollection fc = new FormCollection();
             fc.Add("mainInput", "Order a pizza. This is not a real command.");
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech ;
-            Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
+            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech;
+            //Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
+            Assert.IsNull(((ResponseModel)returnedView.Model).Instructions);
         }
 
         [TestMethod]

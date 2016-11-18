@@ -38,58 +38,30 @@ namespace DMSLite.Tests.SDKs
             };
 
             //With No params
-            var response = apiAi.TextRequest("create new donor");
-            Assert.AreEqual(response.Result.Action,  "AddDonor");
-            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["name"].ToString()));
+            var blankResponse = apiAi.TextRequest("create new donor");
+            Assert.AreEqual(blankResponse.Result.Action,  "AddDonor");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(blankResponse.Result.Parameters["name"].ToString()));
 
             //By name
-            response = RandomTextInput(inputs, name);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
+            var nameResponse = RandomTextInput(inputs, name);
+            Assert.AreEqual(nameResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
 
             //By email
-            response = RandomTextInput(inputs, email);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
 
             //By phone number
-            response = RandomTextInput(inputs, phoneNumber);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            var phoneResponse = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
 
         }
 
         [TestMethod]
         public void TestAddDonation()
         {
-        }
-
-        [TestMethod]
-        public void TestModifyDonor()
-        {
-            string name = "john smith";
-            string email = "steve@stevemail.com";
-            string phoneNumber = "555-555-5555";
-
-            string[] inputs =
-            {
-                "edit {0}"
-            };
-
-            //By name
-            var response = RandomTextInput(inputs, name);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
-
-            //By email
-            response = RandomTextInput(inputs, email);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
-
-            //By phone number
-            response = RandomTextInput(inputs, phoneNumber);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
         }
 
         [TestMethod]
@@ -120,6 +92,34 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Action, "ViewDonors");
             Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
 
+        }
+
+        [TestMethod]
+        public void TestModifyDonor()
+        {
+            string name = "john smith";
+            string email = "steve@stevemail.com";
+            string phoneNumber = "555-555-5555";
+
+            string[] inputs =
+            {
+                "edit {0}"
+            };
+
+            //By email
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
+
+            //By name
+            var nameResponse = RandomTextInput(inputs, name);
+            Assert.AreEqual(nameResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
+
+            //By phone number
+            var phoneResponse = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(phoneResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
         }
 
         [TestMethod]
