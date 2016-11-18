@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using ApiAiSDK;
-using System.Web.Mvc;
-using DMSLite.Controllers;
 using DMSLite.Models;
 using Newtonsoft.Json;
 using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace DMSLite.Commands
-{ 
+{
 
     public class Dispatcher
     {
@@ -33,22 +28,6 @@ namespace DMSLite.Commands
 
         public ResponseModel Dispatch(string request)
         {
-            try
-            {
-                if (String.IsNullOrWhiteSpace(request)) throw new EmptyRequestException();
-            }
-            catch (EmptyRequestException)
-            {
-                ResponseModel responseModel = new ResponseModel()
-                {
-                    Speech = "Please enter a command.",
-                    Instructions = null,
-                    Parameters = null
-                };
-
-                return responseModel;
-            }
-
             var response = apiAi.TextRequest(request);
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
@@ -60,33 +39,23 @@ namespace DMSLite.Commands
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 
+            ResponseModel responseModel = new ResponseModel()
+            {
+                Speech = response.Result.Fulfillment.Speech,
+            };
+
             try
             {
-                //Check if null, if null return message to the UI
-                if (data[response.Result.Action] == null) throw new Exception("No command found.");
-
-                ResponseModel responseModel = new ResponseModel()
-                {
-                    Speech = response.Result.Fulfillment.Speech,
-                    Instructions = data[response.Result.Action],
-                    Parameters = response.Result.Parameters
-                };
-
-                return responseModel;
+                responseModel.Instructions = data[response.Result.Action];
+                responseModel.Parameters = response.Result.Parameters;
             }
-            catch (Exception e)
+            catch
             {
-                // Send Error message to the UI
-                //return e.ToString();
-                ResponseModel responseModel = new ResponseModel()
-                {
-                    Speech = "It seems we ran into an error: " + e.Message,
-                    Instructions = null,
-                    Parameters =  null
-                };
-
-                return responseModel;
+                responseModel.Instructions = null;
+                responseModel.Parameters = null;
             }
+
+            return responseModel;
         }
     }
 
