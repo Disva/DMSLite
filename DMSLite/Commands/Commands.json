@@ -18,5 +18,9 @@
   "AddBatch": {
     "Item1": "Batch",
     "Item2": "AddMenu"
+  },
+  "AddDonation": {
+    "Item1": "Donation",
+    "Item2": "AddMenu"
   }
 }

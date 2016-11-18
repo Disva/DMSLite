@@ -203,6 +203,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -341,6 +342,9 @@
     <Content Include="Views\Batch\_Add.cshtml" />
     <Content Include="Views\Batch\_AddForm.cshtml" />
     <Content Include="Views\Batch\_AddSuccess.cshtml" />
+    <Content Include="Views\Donation\_Add.cshtml" />
+    <Content Include="Views\Donation\_AddForm.cshtml" />
+    <Content Include="Views\Donation\_AddSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
