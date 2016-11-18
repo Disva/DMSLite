@@ -35,7 +35,17 @@ namespace DMSLite.Controllers
             }
             if (parameters.ContainsKey("donor"))
             {
-                //some way to select the right donor
+                string donorName = parameters["donor"].ToString();
+                List<Donor> donors = db.Donors.ToList();
+                FetchByName(ref donors, donorName);
+                if(donors.Count == 1)
+                {
+                    newDonation.DonationDonor = donors.First();
+                }
+                else
+                {
+                    ///multiple donor weirdness
+                }
             }
             if (parameters.ContainsKey("batch"))
             {
@@ -68,6 +78,28 @@ namespace DMSLite.Controllers
             */
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
+        }
+
+        private void FetchByName(ref List<Donor> list, string name)
+        {
+            //searching through the db uses LINQ, which is picky about what variables can be passed.
+            //For instance, LINQ does not accept ArrayIndex variables in queries,
+            //so they are individual string variables in this query instead.
+            string[] names = name.Split(' ');
+            if (names.Count() == 2)
+            {
+                string name1 = names[0], name2 = names[1];
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
+                //reverse
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
+            }
+            else
+            {
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+            }
         }
         #endregion
 
