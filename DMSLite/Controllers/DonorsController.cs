@@ -17,7 +17,17 @@ namespace DMSLite
 {
     public class DonorsController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
+
+        public DonorsController()
+        {
+            db = new OrganizationDb();
+        }
+
+        public DonorsController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         #region Fetch
         public void Validate(Donor donor)
