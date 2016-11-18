@@ -33,20 +33,6 @@ namespace DMSLite.Controllers
                 Double.TryParse(parameters["value"].ToString(), out donationValue);
                 newDonation.Value = donationValue;
             }
-            if (parameters.ContainsKey("donor"))
-            {
-                string donorName = parameters["donor"].ToString();
-                List<Donor> donors = db.Donors.ToList();
-                FetchByName(ref donors, donorName);
-                if(donors.Count == 1)
-                {
-                    newDonation.DonationDonor = donors.First();
-                }
-                else
-                {
-                    ///multiple donor weirdness
-                }
-            }
             if (parameters.ContainsKey("batch"))
             {
                 //some way to select the right batch
@@ -61,7 +47,25 @@ namespace DMSLite.Controllers
                 Int32.TryParse(parameters["orgId"].ToString(), out orgId);
                 newDonation.Value = orgId;
             }
-            return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+            if (parameters.ContainsKey("donor"))
+            {
+                string donorName = parameters["donor"].ToString();
+                List<Donor> donors = db.Donors.ToList();
+                FetchByName(ref donors, donorName);
+                if (donors.Count == 1)
+                {
+                    newDonation.DonationDonor = donors.First();
+                    return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+                }
+                else
+                {
+                    return PartialView("~/Views/Donation/_AddFormSimilar.cshtml", newDonation);
+                }
+            }
+            else
+            {
+                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+            }            
         }
 
         // TODO: Anti-forgery
