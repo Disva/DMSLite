@@ -22,6 +22,20 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestAddBatch()
         {
+            string batchTitle = "Birthday Party";
+
+            string[] inputs =
+            {
+                "add a batch {0}",
+            };
+
+            var response = apiAi.TextRequest("add new batch");
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
+
+            var nameResponse = RandomTextInput(inputs, batchTitle);
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.AreEqual(String.IsNullOrWhiteSpace(nameResponse.Result.Parameters["title"].ToString()), batchTitle);
         }
 
         [TestMethod]
@@ -62,6 +76,18 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestAddDonation()
         {
+            string[] inputs =
+            {
+                "add a donation {0}",
+            };
+
+            var response = apiAi.TextRequest("add new donation");
+            Assert.AreEqual(response.Result.Action, "AddDonation");
+            Assert.IsTrue(response.Result.Parameters.Count == 0);
+            /*NOTE
+                At this point, the parameter list is empty
+                This will change in the future, and donations will be added similarly to donors
+            */
         }
 
         [TestMethod]
