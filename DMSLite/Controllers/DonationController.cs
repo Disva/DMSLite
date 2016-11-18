@@ -33,6 +33,24 @@ namespace DMSLite.Controllers
                 Double.TryParse(parameters["value"].ToString(), out donationValue);
                 newDonation.Value = donationValue;
             }
+            if (parameters.ContainsKey("donor"))
+            {
+                //some way to select the right donor
+            }
+            if (parameters.ContainsKey("batch"))
+            {
+                //some way to select the right batch
+            }
+            if (parameters.ContainsKey("description"))
+            {
+                newDonation.ObjectDescription = parameters["description"].ToString();
+            }
+            if (parameters.ContainsKey("orgId"))
+            {
+                int orgId;
+                Int32.TryParse(parameters["orgId"].ToString(), out orgId);
+                newDonation.Value = orgId;
+            }
             return PartialView("~/Views/Donations/_AddForm.cshtml", newDonation);
         }
 
