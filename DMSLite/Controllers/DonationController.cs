@@ -51,7 +51,7 @@ namespace DMSLite.Controllers
                 Int32.TryParse(parameters["orgId"].ToString(), out orgId);
                 newDonation.Value = orgId;
             }
-            return PartialView("~/Views/Donations/_AddForm.cshtml", newDonation);
+            return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
         }
 
         // TODO: Anti-forgery
