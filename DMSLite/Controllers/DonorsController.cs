@@ -134,6 +134,7 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
         }
 
+        // Action to search for donors by name and obtain a json result
         public ActionResult SearchDonors(string searchKey)
         {
             if(string.IsNullOrEmpty(searchKey))

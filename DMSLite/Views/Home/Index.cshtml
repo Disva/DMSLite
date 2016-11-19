@@ -148,7 +148,7 @@
                     },
                     cache: true
                 },
-                placeholder: { id: "-1", text: "Select a donor" },
+                placeholder: { id: -1, text: "Select a donor" },
                 templateResult: function (state) {
                     if (state.id === undefined) {
                         return 'Searching...';
@@ -157,6 +157,9 @@
                     return state.firstName + " " + state.lastName;
                 },
                 templateSelection: function (state) {
+                    if (state.id === -1) {
+                        return state.text;
+                    }
                     return state.firstName;
                 },
                 minimumInputLength: 1,
