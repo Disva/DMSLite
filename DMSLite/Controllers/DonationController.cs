@@ -1,5 +1,6 @@
 ﻿using DMSLite.DataContexts;
 using DMSLite.Entities;
+using DMSLite.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace DMSLite.Controllers
         public ActionResult AddForm(Dictionary<string, object> parameters)
         {
             Donation newDonation = new Donation();
+            AddDonationViewModel viewModel = new AddDonationViewModel { Donation = newDonation };
+
             if (parameters.ContainsKey("value"))
             {
                 double donationValue;
@@ -35,7 +38,15 @@ namespace DMSLite.Controllers
             }
             if (parameters.ContainsKey("batch"))
             {
-                //some way to select the right batch
+                var batches = db.Batches.Where(x => x.Title.Equals(parameters["batch"].ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+                if(batches.Count == 1)
+                {
+                    newDonation.DonationBatch = batches[0];
+                }
+                else if(batches.Count > 1)
+                {
+                    viewModel.SimilarBatches = batches;
+                }
             }
             if (parameters.ContainsKey("description"))
             {
@@ -55,12 +66,25 @@ namespace DMSLite.Controllers
                 if (donors.Count == 1)
                 {
                     newDonation.DonationDonor = donors.First();
-                    return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
                 }
-                else
+                else if(donors.Count > 1)
                 {
-                    return PartialView("~/Views/Donation/_AddFormSimilar.cshtml", newDonation);
+                    viewModel.SimilarDonors = donors;
                 }
+            }
+            
+            // When api.ai can parse out the donor and batch names, we can test a flow
+            // for similar objects. We can store the viewModel in a session, and pass
+            // the session through the flow, for now just show the new donation form
+            if(viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
+            {
+                //return PartialView("~/Views/Donation/_AddDonationSimilarDonor.cshtml", viewModel);
+                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+            }
+            else if (viewModel.SimilarBatches != null && viewModel.SimilarBatches.Count > 1)
+            {
+                //return PartialView("~/Views/Donation/_AddDonationSimilarBatch.cshtml", viewModel);
+                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
             }
             else
             {

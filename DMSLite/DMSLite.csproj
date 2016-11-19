@@ -252,6 +252,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AddDonationViewModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
