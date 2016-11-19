@@ -2,10 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 
-<link href="~/Content/css/select2.min.css" type="text/css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/select2.min.js"></script> 
 
 <script>
 
@@ -28,6 +26,9 @@
 
         // Check if there any modals that need to be shown
         checkShowModal();
+
+        // Check if any of those modals have select2 boxes
+        checkFormatSelect2();
     }
     // pop the searchbar text up into the feed
     function addText() {
@@ -129,4 +130,45 @@
             });
         }
     }
+
+    function checkFormatSelect2()
+    {
+        var node = $("#outputContainer").find(".format-select2");
+        if (node.length > 0) {
+
+            $(node).select2({
+                ajax: {
+                    url: "/Donors/SearchDonors/",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            searchKey: params.term
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: { id: "-1", text: "Select a donor" },
+                templateResult: function (state) {
+                    if (state.id === undefined) {
+                        return 'Searching...';
+                    }
+
+                    return state.firstName + " " + state.lastName;
+                },
+                templateSelection: function (state) {
+                    return state.firstName;
+                },
+                minimumInputLength: 1,
+                dropdownParent: $(node).parents(".modal")
+            });
+
+            $(node).removeClass("format-select2");
+        }
+    }
+
+    /*$(function () {
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    })*/
+
 </script>
