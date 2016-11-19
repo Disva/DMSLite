@@ -133,7 +133,7 @@
 
     function checkFormatSelect2()
     {
-        var node = $("#outputContainer").find(".format-select2");
+        var node = $("#outputContainer").find(".format-donor-select2");
         if (node.length > 0) {
 
             $(node).select2({
@@ -166,7 +166,43 @@
                 dropdownParent: $(node).parents(".modal")
             });
 
-            $(node).removeClass("format-select2");
+            $(node).removeClass("format-donor-select2");
+        }
+
+        var node = $("#outputContainer").find(".format-batch-select2");
+        if (node.length > 0) {
+
+            $(node).select2({
+                ajax: {
+                    url: "/Batch/SearchBatches/",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            searchKey: params.term
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: { id: -1, text: "Select a batch" },
+                templateResult: function (state) {
+                    if (state.id === undefined) {
+                        return 'Searching...';
+                    }
+
+                    return state.title;
+                },
+                templateSelection: function (state) {
+                    if (state.id === -1) {
+                        return state.text;
+                    }
+                    return state.title;
+                },
+                minimumInputLength: 1,
+                dropdownParent: $(node).parents(".modal")
+            });
+
+            $(node).removeClass("format-batch-select2");
         }
     }
 
