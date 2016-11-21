@@ -9,13 +9,14 @@ using System.Web.Mvc;
 using DMSLite.Entities;
 using DMSLite.DataContexts;
 using DMSLite.Models;
+using DMSLite.Tests.Mocks;
 
 namespace DMSLite.Tests.Controllers
 {
     [TestClass]
     public class DonorsControllerTest
     {
-        private OrganizationDb db = new OrganizationDb();
+        private FakeOrganizationDb db = new FakeOrganizationDb();
 
         //VALIDITY TESTS
         [TestMethod]
@@ -24,7 +25,7 @@ namespace DMSLite.Tests.Controllers
         {
             //works under the assumption that no donors with with null values for names, phonenumber, or email exist
             //if this test ever fails, remove your invalidly inserted donors from the db
-            DonorsController ds = new DonorsController();
+            DonorsController ds = new DonorsController(db);
             PartialViewResult pvr = (PartialViewResult)ds.ViewAllDonors();
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> allDonors = db.Donors.ToList();
@@ -41,7 +42,7 @@ namespace DMSLite.Tests.Controllers
         //Tests that requesting a specific valid donor returns that valid donor.
         public void TestViewSpecificDonor()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "name", "Steve" });
             parameters.Add("email-address", "");
@@ -58,7 +59,7 @@ namespace DMSLite.Tests.Controllers
         //Tests requesting a donor by name where all donors with the same name are returned.
         public void TestViewMultipleDonors()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "name", "Squidward" });
             parameters.Add("email-address", "");
@@ -76,7 +77,7 @@ namespace DMSLite.Tests.Controllers
         //Tests searching for a donor by phone number.
         public void TestViewByPhoneNumber()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "phone-number", "555-555-5555" });
             parameters.Add("email-address", "");
@@ -93,7 +94,7 @@ namespace DMSLite.Tests.Controllers
         //Tests searching for a donor by Email.
         public void TestViewByEmail()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "email-address", "steve@stevemail.com"});
             parameters.Add("email-address" ,"steve@stevemail.com");
@@ -110,7 +111,7 @@ namespace DMSLite.Tests.Controllers
         //Tests a case where a donor with a duplicate first name is searched for with their unique last name and only one proper donor is returned
         public void TestViewSpecificDonorWithDuplicateName()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "name", "Squidward Tentacles" });
             parameters.Add("email-address", "");
@@ -127,7 +128,7 @@ namespace DMSLite.Tests.Controllers
         //Tests searching for a specific donor by lowercase
         public void TestViewSpecificDonorsByLowerCase()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-search", new List<String> { "name", "squidward" });
             parameters.Add("email-address", "");
@@ -150,8 +151,9 @@ namespace DMSLite.Tests.Controllers
             FormCollection fc = new FormCollection();
             fc.Add("mainInput", "Order a pizza. This is not a real command.");
             PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech ;
-            Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
+            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech;
+            //Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
+            Assert.IsNull(((ResponseModel)returnedView.Model).Instructions);
         }
 
         [TestMethod]
@@ -159,7 +161,7 @@ namespace DMSLite.Tests.Controllers
         public void TestViewInvalidDonorAndParameter()
         {
             //fetching a donor that doesn't exist
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Dictionary<string, object> invalidDonorParameters = new Dictionary<string, object>();
             invalidDonorParameters.Add("donor-search", new List<String> { "name", "Tom Sawyer" });
             invalidDonorParameters.Add("email-address", "");
@@ -183,7 +185,7 @@ namespace DMSLite.Tests.Controllers
         //Tests that creating a valid new donor
         public void TestAddNewValidDonor()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Donor d = new Donor
             {
                 FirstName = "fName_TestAddNewValidDonor",
@@ -210,7 +212,7 @@ namespace DMSLite.Tests.Controllers
         //Tests that creating an invalid new donor fails
         public void TestAddNewInvalidDonor()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             Donor d = new Donor
             {
                 FirstName = "TestAddNewInvalidDonor",
@@ -229,7 +231,7 @@ namespace DMSLite.Tests.Controllers
         //WILL EVENTUALLY NEED TO BE RELATIVE TO ORGANIZATION
         public void TestAddDuplicateDonor()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
             //creating two of the same donor
             Donor d1 = new Donor
             {
@@ -266,7 +268,7 @@ namespace DMSLite.Tests.Controllers
         //Create a donor, persist it, change it, compare two versions.
         public void TestModifyDonor()
         {
-            DonorsController dc = new DonorsController();
+            DonorsController dc = new DonorsController(db);
 
             string oldName = "fName_TestModifyDonor";
 

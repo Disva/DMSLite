@@ -10,7 +10,17 @@ namespace DMSLite.Controllers
 {
     public class BatchController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
+
+        public BatchController()
+        {
+            db = new OrganizationDb();
+        }
+
+        public BatchController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         #region Fetch
         #endregion
@@ -60,6 +70,17 @@ namespace DMSLite.Controllers
         #endregion
 
         #region MadeByMs
+        public ActionResult Remove(Batch batch)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Batches.Remove(batch);
+                db.SaveChanges();
+                return Content("Removed", "text/html");
+            }
+            return PartialView("~/Views/Batches/_Add.cshtml", batch);
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
         // GET: Batch
         public ActionResult Index()
         {

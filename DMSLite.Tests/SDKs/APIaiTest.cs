@@ -22,6 +22,20 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestAddBatch()
         {
+            string batchTitle = "Birthday Party";
+
+            string[] inputs =
+            {
+                "add a batch {0}",
+            };
+
+            var response = apiAi.TextRequest("add new batch");
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
+
+            var nameResponse = RandomTextInput(inputs, batchTitle);
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.AreEqual(String.IsNullOrWhiteSpace(nameResponse.Result.Parameters["title"].ToString()), batchTitle);
         }
 
         [TestMethod]
@@ -38,58 +52,42 @@ namespace DMSLite.Tests.SDKs
             };
 
             //With No params
-            var response = apiAi.TextRequest("create new donor");
-            Assert.AreEqual(response.Result.Action,  "AddDonor");
-            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["name"].ToString()));
+            var blankResponse = apiAi.TextRequest("create new donor");
+            Assert.AreEqual(blankResponse.Result.Action,  "AddDonor");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(blankResponse.Result.Parameters["name"].ToString()));
 
             //By name
-            response = RandomTextInput(inputs, name);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
+            var nameResponse = RandomTextInput(inputs, name);
+            Assert.AreEqual(nameResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
 
             //By email
-            response = RandomTextInput(inputs, email);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
 
             //By phone number
-            response = RandomTextInput(inputs, phoneNumber);
-            Assert.AreEqual(response.Result.Action, "AddDonor");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            var phoneResponse = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
 
         }
 
         [TestMethod]
         public void TestAddDonation()
         {
-        }
-
-        [TestMethod]
-        public void TestModifyDonor()
-        {
-            string name = "john smith";
-            string email = "steve@stevemail.com";
-            string phoneNumber = "555-555-5555";
-
             string[] inputs =
             {
-                "edit {0}"
+                "add a donation {0}",
             };
 
-            //By name
-            var response = RandomTextInput(inputs, name);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["name"].ToString(), name, true);
-
-            //By email
-            response = RandomTextInput(inputs, email);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["email-address"].ToString(), email, true);
-
-            //By phone number
-            response = RandomTextInput(inputs, phoneNumber);
-            Assert.AreEqual(response.Result.Action, "ModifyDonor");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            var response = apiAi.TextRequest("add new donation");
+            Assert.AreEqual(response.Result.Action, "AddDonation");
+            Assert.IsTrue(response.Result.Parameters.Count == 0);
+            /*NOTE
+                At this point, the parameter list is empty
+                This will change in the future, and donations will be added similarly to donors
+            */
         }
 
         [TestMethod]
@@ -120,6 +118,34 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Action, "ViewDonors");
             Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
 
+        }
+
+        [TestMethod]
+        public void TestModifyDonor()
+        {
+            string name = "john smith";
+            string email = "steve@stevemail.com";
+            string phoneNumber = "555-555-5555";
+
+            string[] inputs =
+            {
+                "edit {0}"
+            };
+
+            //By email
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
+
+            //By name
+            var nameResponse = RandomTextInput(inputs, name);
+            Assert.AreEqual(nameResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
+
+            //By phone number
+            var phoneResponse = RandomTextInput(inputs, phoneNumber);
+            Assert.AreEqual(phoneResponse.Result.Action, "ModifyDonor");
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
         }
 
         [TestMethod]
