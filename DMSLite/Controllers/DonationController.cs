@@ -93,12 +93,18 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation)
+        public ActionResult Add(Donation donation, int donationDonor, int donationBatch)
         {
+            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
+            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            donation.DonationDonor = actualDonor;
+            donation.DonationBatch = actualBatch;
+            ModelState.Clear();
+            TryValidateModel(donation);
             if (ModelState.IsValid)
             {
                 db.Add(donation);
-                return PartialView("~Views/Donation/_AddSuccess.cshtml", donation);
+                return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
             }
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }

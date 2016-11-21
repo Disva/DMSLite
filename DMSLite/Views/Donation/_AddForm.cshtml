@@ -9,7 +9,7 @@
     </div>
     @using (Ajax.BeginForm("Add", "Donation", new AjaxOptions()
     {
-        InsertionMode = InsertionMode.Replace,
+        InsertionMode = InsertionMode.ReplaceWith,
         UpdateTargetId = id,
         OnComplete = "checkFormatSelect2"
     }))

@@ -14,7 +14,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.DonationBatch)
+                @Html.DisplayFor(model => model.DonationBatch.Title)
             </dd>
 
             <dt>
@@ -22,7 +22,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.DonationDonor)
+                @Model.DonationDonor.FirstName @Model.DonationDonor.LastName
             </dd>
 
             <dt>
@@ -39,6 +39,14 @@
 
             <dd>
                 @Html.DisplayFor(model => model.ObjectDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Value)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Value)
             </dd>
         </dl>
     </div>
