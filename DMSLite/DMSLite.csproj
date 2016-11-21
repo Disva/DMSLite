@@ -341,6 +341,7 @@
     <Content Include="Views\Batch\_Add.cshtml" />
     <Content Include="Views\Batch\_AddForm.cshtml" />
     <Content Include="Views\Batch\_AddSuccess.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DonorType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
