@@ -55,6 +55,18 @@ namespace DMSLite.Controllers
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Batch/_AddForm.cshtml", batch);
         }
+
+        // Action to search for donors by name and obtain a json result
+        public ActionResult SearchBatches(string searchKey)
+        {
+            if (string.IsNullOrEmpty(searchKey))
+            {
+                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
+            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()));
+            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         #endregion
 
         #region MadeByMs

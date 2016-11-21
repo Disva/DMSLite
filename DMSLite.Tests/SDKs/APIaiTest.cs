@@ -35,7 +35,7 @@ namespace DMSLite.Tests.SDKs
 
             var nameResponse = RandomTextInput(inputs, batchTitle);
             Assert.AreEqual(response.Result.Action, "AddBatch");
-            Assert.AreEqual(String.IsNullOrWhiteSpace(nameResponse.Result.Parameters["title"].ToString()), batchTitle);
+            Assert.AreEqual(nameResponse.Result.Parameters["title"].ToString(), batchTitle);
         }
 
         [TestMethod]
