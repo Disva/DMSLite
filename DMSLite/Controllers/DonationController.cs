@@ -95,16 +95,11 @@ namespace DMSLite.Controllers
         // TODO: Anti-forgery
         public ActionResult Add(Donation donation)
         {
-            //TODO: add to the db
-            /*
-            batch.CreateDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                db.Add(batch);
-                return PartialView("~/Views/Donation/_AddSuccess.cshtml", batch);
+                db.Add(donation);
+                return PartialView("~Views/Donation/_AddSuccess.cshtml", donation);
             }
-            */
-            //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 
