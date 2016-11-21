@@ -25,5 +25,19 @@ namespace DMSLite.Entities
 
         [Required]
         public int TenantOrganizationId {get; set; }
+
+        public bool isEqualTo(Donation otherDonation)
+        {
+            if (Id.Equals(otherDonation.Id) &&
+                DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
+                DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
+                ObjectDescription.Equals(otherDonation.ObjectDescription) &&
+                Value.Equals(otherDonation.Value))
+            {
+                return true;
+            }
+            else return false;
+        }
+
     }
 }

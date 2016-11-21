@@ -109,8 +109,11 @@ namespace DMSLite.Controllers
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             donation.DonationDonor = actualDonor;
             donation.DonationBatch = actualBatch;
-            ModelState.Clear();
-            TryValidateModel(donation);
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donation);
+            }
             if (ModelState.IsValid)
             {
                 db.Add(donation);
@@ -144,6 +147,18 @@ namespace DMSLite.Controllers
 
         #region MadeByMs
         // GET: Batch
+        public ActionResult Remove(Donation donation)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Donations.Remove(donation);
+                db.SaveChanges();
+                return Content("Removed", "text/html");
+            }
+            return PartialView("~/Views/Donation/_Add.cshtml", donation);
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
+
         public ActionResult Index()
         {
             return View();

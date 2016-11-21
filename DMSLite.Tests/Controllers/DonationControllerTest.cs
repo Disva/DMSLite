@@ -9,35 +9,81 @@ using System.Web.Mvc;
 using DMSLite.Entities;
 using DMSLite.DataContexts;
 using DMSLite.Models;
+using DMSLite.Tests.Mocks;
 
 namespace DMSLite.Tests.Controllers
 {
     [TestClass]
     public class DonationControllerTest
     {
-        private OrganizationDb db = new OrganizationDb();
+        private FakeOrganizationDb db = new FakeOrganizationDb();
 
+        [TestMethod]
+        //Tests that ...
+        public void TestFetchDonation()
+        {
+            //Not implemented yet
+        }
 
+        [TestMethod]
+        //Tests that ...
+        public void TestModifyDonation()
+        {
+            //Not implemented yet
+        }
 
-        ////VALIDITY TESTS
-        //[TestMethod]
-        ////Tests that viewing all donors returns the list of all donors.
-        //public void TestViewDonors()
-        //{
-        //    //works under the assumption that no donors with with null values for names, phonenumber, or email exist
-        //    //if this test ever fails, remove your invalidly inserted donors from the db
-        //    DonorsController ds = new DonorsController();
-        //    PartialViewResult pvr = (PartialViewResult)ds.ViewAllDonors();
-        //    List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
-        //    List<Donor> allDonors = db.Donors.ToList();
-        //    Assert.AreEqual(allDonors.Count(), returnedModel.Count());
-        //    Console.WriteLine(allDonors.Count());
-        //    Console.WriteLine(returnedModel.Count());
-        //    for (int i = 0; i < allDonors.Count(); i++)
-        //    {
-        //        Assert.IsTrue(allDonors[i].FirstName == returnedModel[i].FirstName);
-        //    }
-        //}
+        [TestMethod]
+        //Tests that adding a donation does add the donation to the db and that all data is persisted
+        public void TestAddDonation()
+        {
+            //Add(Donation donation, int donationDonor, int donationBatch)
+
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation() {
+                Value = 123,
+                ObjectDescription = "wow",
+                DonationDonor = db.Donors.First<Donor>(),
+                DonationBatch = db.Batches.First<Batch>(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            //check db to see if Roswell exists
+            List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+            if (Donations.Count != 1)
+            {
+                Assert.Fail();
+            }
+            Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
+            dc.Remove(d);
+        }
+
+        [TestMethod]
+        //Tests that adding an invalid donation does NOT add the donation to the db and that no data is persisted
+        public void TestAddInvalidDonation()
+        {
+            //Add(Donation donation, int donationDonor, int donationBatch)
+
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation()
+            {
+            };
+            try
+            {
+                d = (Donation)(((PartialViewResult)(dc.Add(d, 0, 0))).Model);
+            }
+            catch(Exception e)
+            {
+                Assert.IsTrue(true);
+                return;
+            }
+            //check db to see if Roswell exists
+            List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+            if (Donations.Count != 1)
+            {
+                Assert.Fail();
+            }
+            Assert.IsFalse(d.isEqualTo(Donations.ElementAt<Donation>(0)));
+            dc.Remove(d);
+        }
 
     }
 }
