@@ -11,7 +11,17 @@ namespace DMSLite.Controllers
 {
     public class DonationController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
+
+        public DonationController()
+        {
+            db = new OrganizationDb();
+        }
+
+        public DonationController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         #region Fetch
         #endregion
