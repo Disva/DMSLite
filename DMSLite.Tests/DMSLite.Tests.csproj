@@ -111,6 +111,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BatchControllerTest.cs" />
     <Compile Include="Controllers\DonorsControllerTest.cs" />
+    <Compile Include="Controllers\MultiTenancyTest.cs" />
     <Compile Include="Mocks\FakeOrganizationDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
