@@ -262,8 +262,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\select2.css" />
-    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -398,6 +398,7 @@
     <Content Include="Views\Donation\_AddForm.cshtml" />
     <Content Include="Views\Donation\_AddSuccess.cshtml" />
     <Content Include="Views\Donation\_AddFormSimilar.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DonorType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
