@@ -26,7 +26,7 @@ namespace DMSLite
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/css/select2.css"));
+                      "~/Content/select2.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/select2").Include(
                 "~/Scripts/select2.js"));
