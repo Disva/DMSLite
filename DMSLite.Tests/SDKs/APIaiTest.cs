@@ -20,6 +20,19 @@ namespace DMSLite.Tests.SDKs
         private Random rand = new Random();
 
         [TestMethod]
+        public void TestContextConversation()
+        {
+            //Since it is missing a parameter, it is not a complete action
+            var response = apiAi.TextRequest("add new batch");
+            Assert.AreEqual("AddBatch", response.Result.Action);
+            Assert.IsTrue(response.Result.ActionIncomplete);
+            Assert.IsFalse(response.Result.Contexts.Length == 0);
+
+            response = apiAi.TextRequest("my batch title");
+            Assert.IsFalse(response.Result.ActionIncomplete);
+        }
+
+        [TestMethod]
         public void TestAddBatch()
         {
             string batchTitle = "Birthday Party";
