@@ -22,5 +22,19 @@ namespace DMSLite.Entities
 
         [Required]
         public int TenantOrganizationId { get; set; }
+
+        public bool isEqualTo(Batch otherBatch)
+        {
+            if (Title.Equals(otherBatch.Title) &&
+                CreateDate.Equals(otherBatch.CreateDate) &&
+                CloseDate.Equals(otherBatch.CloseDate) &&
+                TenantOrganizationId.Equals(otherBatch.TenantOrganizationId))
+            {
+                return true;
+            }
+            else return false;
+        }
+
     }
+
 }

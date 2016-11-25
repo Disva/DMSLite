@@ -193,3 +193,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     transform-origin: 54% 58%;
     margin-right:7px;
 }
+
+.select2-container {
+    width: 100%;
+    max-width: 280px;
+}

@@ -109,7 +109,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DonationControllerTest.cs" />
+    <Compile Include="Controllers\BatchControllerTest.cs" />
     <Compile Include="Controllers\DonorsControllerTest.cs" />
+    <Compile Include="Mocks\FakeOrganizationDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="SDKs\APIaiTest.cs" />

@@ -10,7 +10,17 @@ namespace DMSLite.Controllers
 {
     public class BatchController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
+
+        public BatchController()
+        {
+            db = new OrganizationDb();
+        }
+
+        public BatchController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         #region Fetch
         #endregion
@@ -45,9 +55,32 @@ namespace DMSLite.Controllers
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Batch/_AddForm.cshtml", batch);
         }
+
+        // Action to search for donors by name and obtain a json result
+        public ActionResult SearchBatches(string searchKey)
+        {
+            if (string.IsNullOrEmpty(searchKey))
+            {
+                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
+            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()));
+            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         #endregion
 
         #region MadeByMs
+        public ActionResult Remove(Batch batch)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Batches.Remove(batch);
+                db.SaveChanges();
+                return Content("Removed", "text/html");
+            }
+            return PartialView("~/Views/Batches/_Add.cshtml", batch);
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
         // GET: Batch
         public ActionResult Index()
         {

@@ -48,6 +48,14 @@
             <dd>
                 @Html.DisplayFor(model => model.PhoneNumber)
             </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
         </dl>
     </div>
     @using (Ajax.BeginForm("AddForm", "Donors", new AjaxOptions()

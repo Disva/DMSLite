@@ -1,0 +1,68 @@
+﻿@model DMSLite.Entities.Donation
+
+@{ var id = Guid.NewGuid().ToString(); }
+
+<div id="@id">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Added New Donation</h4>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DonationBatch)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DonationBatch.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DonationDonor)
+            </dt>
+
+            <dd>
+                @Model.DonationDonor.FirstName @Model.DonationDonor.LastName
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ObjectDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ObjectDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Value)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Value)
+            </dd>
+        </dl>
+    </div>
+    @using (Ajax.BeginForm("AddForm", "Donation", new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = id
+    }))
+    {
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" id="createButton">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Add Another Donation" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

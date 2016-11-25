@@ -17,7 +17,17 @@ namespace DMSLite
 {
     public class DonorsController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
+
+        public DonorsController()
+        {
+            db = new OrganizationDb();
+        }
+
+        public DonorsController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         #region Fetch
         public void Validate(Donor donor)
@@ -132,6 +142,18 @@ namespace DMSLite
         {
             List<Donor> allDonors = db.Donors.ToList();
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+        }
+
+        // Action to search for donors by name and obtain a json result
+        public ActionResult SearchDonors(string searchKey)
+        {
+            if(string.IsNullOrEmpty(searchKey))
+            {
+                return new JsonResult { Data = new { results = new List<Donor>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            }
+
+            var donors = db.Donors.Where(x => x.FirstName.ToLower().StartsWith(searchKey.ToLower()) || x.LastName.ToLower().StartsWith(searchKey.ToLower()));
+            return new JsonResult { Data = new { results = donors.Select(x => new { firstName = x.FirstName, lastName = x.LastName, id = x.Id})}, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
         }
 
         #endregion
