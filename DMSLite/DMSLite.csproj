@@ -398,6 +398,7 @@
     <Content Include="Views\Donation\_AddForm.cshtml" />
     <Content Include="Views\Donation\_AddSuccess.cshtml" />
     <Content Include="Views\Donation\_AddFormSimilar.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DonorType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
