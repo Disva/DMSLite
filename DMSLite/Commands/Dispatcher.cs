@@ -33,42 +33,31 @@ namespace DMSLite.Commands
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
             //Search commands file for appropriate command instructions
-            //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Commands\", CommandsLocation);
-            string thisPath = AppDomain.CurrentDomain.BaseDirectory;
+           string thisPath = AppDomain.CurrentDomain.BaseDirectory;
             string path = "";
+
             if (thisPath.Contains("DMSLite\\"))//for the DMS project
                 path = Path.Combine(thisPath, @"Commands\", CommandsLocation);
             else//for the testing project
                 path = Path.Combine("../../../DMSLite/", @"Commands\", CommandsLocation);
-            StreamReader r = new StreamReader(path);
 
+            StreamReader r = new StreamReader(path);
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 
             ResponseModel responseModel = new ResponseModel()
             {
-                Speech = response.Result.Fulfillment.Speech,
+                Speech = response.Result.Fulfillment.Speech
+                //other properties assumed null
             };
 
-            try
+            if (!response.Result.ActionIncomplete && data.ContainsKey(response.Result.Action))
             {
                 responseModel.Instructions = data[response.Result.Action];
                 responseModel.Parameters = response.Result.Parameters;
             }
-            catch
-            {
-                responseModel.Instructions = null;
-                responseModel.Parameters = null;
-            }
 
             return responseModel;
-        }
-    }
-
-    internal class EmptyRequestException : Exception
-    {
-        public EmptyRequestException()
-        {
         }
     }
 }
