@@ -23,6 +23,47 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
+
+        public ActionResult FetchBatch(Dictionary<string, object> parameters) //Main method to search for batches, parameters may or may not be used
+        {
+            List<Batch> matchingBatches = FindBatches(parameters);
+            if (matchingBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+            else if (matchingBatches.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
+            else if (matchingBatches.Count > 1)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+            else
+                return PartialView("~/Views/Donors/_Modify.cshtml", matchingBatches.First());
+        }
+
+        public List<Batch> FindBatches(Dictionary<string, object> parameters)
+        {
+            List<Batch> filteredDonors = new List<Batch>();
+
+            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["title"].ToString());
+
+            //FetchByName creates, but never Filters, so far place first
+            if (!String.IsNullOrEmpty(parameters["name"].ToString()))
+                FetchByTitle(ref filteredDonors, parameters["name"].ToString());
+
+            if (paramsExist)
+                return filteredDonors;
+            else
+                return null;
+        }
+
+        private void FetchByTitle(ref List<Batch> list, string name)
+        {
+            //searching through the db uses LINQ, which is picky about what variables can be passed.
+            //For instance, LINQ does not accept ArrayIndex variables in queries,
+            //so they are individual string variables in this query instead.
+                list.AddRange(db.Batches.Where(x => x.Title.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+        }
+
+
         #endregion
 
         #region Modify
