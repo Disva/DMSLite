@@ -23,6 +23,50 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
+        public ActionResult FetchBatches(Dictionary<string, object> parameters)
+        {
+            List<Batch> filteredBatches = FindBatches(parameters);
+            if (filteredBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredBatches.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
+
+            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+        }
+
+        public List<Batch> FindBatches(Dictionary<string, object> parameters)
+        {
+            List<Batch> filteredBatches = new List<Batch>();
+
+            if (!String.IsNullOrEmpty(parameters["type"].ToString()))
+                FetchByType(ref filteredBatches, parameters["type"].ToString());
+
+            return filteredBatches;
+        }
+
+        private void FetchByType(ref List<Batch> list, string v)
+        {
+            bool openBatches = true;
+            if (v == "open")
+                openBatches = true;
+            else if (v == "closed")
+                openBatches = false;
+            if (list.Count == 0)
+            {
+                if(openBatches)
+                    list.AddRange(db.Batches.Where(x => x.CloseDate == null));
+                else
+                    list.AddRange(db.Batches.Where(x => x.CloseDate != null));
+            }                
+            else
+            {
+                if (openBatches)
+                    list.Where(x => x.CloseDate == null);
+                else
+                    list.Where(x => x.CloseDate != null);
+            }                
+        }
         #endregion
 
         #region Modify
