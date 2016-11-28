@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DMSLite.Entities.Batch>
+<div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                Donor ID
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.Id)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.CloseDate)
+            </div>
+            <div class="cell">
+                <!-- Left Empty for edit column -->
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.CloseDate)
+                </div>
+                <div class="cell">
+                    @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", item, new AjaxOptions()
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "checkShowModal"
+               }, new { @class = "glyphicon pencil" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
