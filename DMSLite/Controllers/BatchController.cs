@@ -23,6 +23,10 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
+        private void FetchBatch(Dictionary<string, object> parameters)
+        {
+            List<Batch> batches;
+        }
         #endregion
 
         #region Modify
