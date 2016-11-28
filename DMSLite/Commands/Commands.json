@@ -22,5 +22,9 @@
   "AddDonation": {
     "Item1": "Donation",
     "Item2": "AddMenu"
+  },
+  "ModifyDonation": {
+    "Item1": "Donation",
+    "Item2": "ModifyForm"
   }
 }

@@ -24,9 +24,29 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
+        public void Validate(Donation donation)
+        {
+            //make sure donation amounts are using proper notation
+        }
         #endregion
 
         #region Modify
+        public ActionResult ModifyFromDonation(Donation donation)
+        {
+            return PartialView("~/Views/Donation/_Modify.cshtml", donation);
+        }
+
+        public ActionResult Modify(Donation donation)
+        {
+            Validate(donation);
+
+            if (ModelState.IsValid)
+                //are we sure we wanna show this for donations?
+                return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
+
+            //an invalid submission should just return the form.
+            return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
+        }
         #endregion
 
         #region Add
