@@ -26,5 +26,9 @@
   "ViewBatch": {
     "Item1": "Batch",
     "Item2": "FetchBatch"
+  },
+  "ViewBatches": {
+    "Item1": "Batch",
+    "Item2": "FetchBatches"
   }
 }
