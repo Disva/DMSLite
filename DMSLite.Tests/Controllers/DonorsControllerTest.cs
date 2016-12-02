@@ -10,6 +10,7 @@ using DMSLite.Entities;
 using DMSLite.DataContexts;
 using DMSLite.Models;
 using DMSLite.Tests.Mocks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DMSLite.Tests.Controllers
 {
@@ -17,6 +18,14 @@ namespace DMSLite.Tests.Controllers
     public class DonorsControllerTest
     {
         private FakeOrganizationDb db = new FakeOrganizationDb();
+
+        private IList<ValidationResult> ValidateModel(object model)
+        {
+            var validationResults = new List<ValidationResult>();
+            var ctx = new ValidationContext(model, null, null);
+            Validator.TryValidateObject(model, ctx, validationResults, true);
+            return validationResults;
+        }
 
         //VALIDITY TESTS
         [TestMethod]
@@ -190,7 +199,7 @@ namespace DMSLite.Tests.Controllers
             {
                 FirstName = "fName_TestAddNewValidDonor",
                 LastName = "lName_TestAddNewValidDonor",
-                Email = "email_TestAddNewValidDonor",
+                Email = "test_email@test.com",
                 PhoneNumber = "111-111-1111",
             };
             var arReturned = dc.Add(d);
@@ -216,14 +225,10 @@ namespace DMSLite.Tests.Controllers
             Donor d = new Donor
             {
                 FirstName = "TestAddNewInvalidDonor",
-                PhoneNumber = "-24",
+                Email = "-24",
             };
-            var arReturned = dc.Add(d);
-            if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
-                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Add.cshtml")))
-            {
-                Assert.IsTrue(true);
-            }
+
+            Assert.AreNotEqual(ValidateModel(d).Count(), 0);
         }
 
         [TestMethod]
