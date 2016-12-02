@@ -30,11 +30,9 @@ namespace DMSLite.Controllers
             if (matchingBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if (matchingBatches.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
-            else if (matchingBatches.Count > 1)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
-            else
-                return PartialView("~/Views/Donors/_Modify.cshtml", matchingBatches.First());
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batch was found");
+            else //if (matchingBatches.Count > 1)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one batch was found");
         }
         public ActionResult FetchBatches(Dictionary<string, object> parameters)
         {
