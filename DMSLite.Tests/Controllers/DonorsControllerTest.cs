@@ -41,7 +41,7 @@ namespace DMSLite.Tests.Controllers
             Assert.AreEqual(allDonors.Count(), returnedModel.Count());
             Console.WriteLine(allDonors.Count());
             Console.WriteLine(returnedModel.Count());
-            for (int i = 0; i < allDonors.Count(); i ++)
+            for (int i = 0; i < allDonors.Count(); i++)
             {
                 Assert.IsTrue(allDonors[i].FirstName == returnedModel[i].FirstName);
             }
@@ -105,8 +105,8 @@ namespace DMSLite.Tests.Controllers
         {
             DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("donor-search", new List<String> { "email-address", "steve@stevemail.com"});
-            parameters.Add("email-address" ,"steve@stevemail.com");
+            parameters.Add("donor-search", new List<String> { "email-address", "steve@stevemail.com" });
+            parameters.Add("email-address", "steve@stevemail.com");
             parameters.Add("name", "");
             parameters.Add("phone-number", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
@@ -200,20 +200,24 @@ namespace DMSLite.Tests.Controllers
                 FirstName = "fName_TestAddNewValidDonor",
                 LastName = "lName_TestAddNewValidDonor",
                 Email = "test_email@test.com",
-                PhoneNumber = "111-111-1111",
+                PhoneNumber = "000-000-0000",
             };
             var arReturned = dc.Add(d);
             if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
-                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_Similar.cshtml")))
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_AddSimilar.cshtml")))
             {
                 Assert.IsTrue(true);
+                return;//not actually added in this case
+            }
+            else if (arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult")//no longer returns a ContentResult
+                && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_AddSuccess.cshtml")))
+            {
+                Assert.IsTrue(true);
+                dc.Remove(d);
                 return;
             }
-            if (arReturned.GetType().ToString().Equals("System.Web.Mvc.ContentResult")
-                && (((ContentResult)arReturned).Content.Equals("Thanks")))
-            {
-                Assert.IsTrue(true);
-            }
+            else
+                Assert.Fail();
             dc.Remove(d);
         }
 
@@ -258,7 +262,7 @@ namespace DMSLite.Tests.Controllers
                 dc.Add(d1Duplicate);
                 dc.Remove(d1Duplicate);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 //The duplicate was not added which passes the test
                 Assert.IsTrue(true);
