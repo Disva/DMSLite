@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace DMSLite
 {
+    [Authorize]
     public class DonorsController : Controller
     {
         private OrganizationDb db = new OrganizationDb();

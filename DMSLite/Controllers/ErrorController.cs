@@ -8,6 +8,7 @@ using DMSLite.Entities;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class ErrorController : Controller
     {
         public ActionResult ErrorMessage(string msg)
