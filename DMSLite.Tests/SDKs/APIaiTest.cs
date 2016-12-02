@@ -40,6 +40,7 @@ namespace DMSLite.Tests.SDKs
             string[] inputs =
             {
                 "add a batch {0}",
+                "add new batch {0}"
             };
 
             var response = apiAi.TextRequest("add new batch");

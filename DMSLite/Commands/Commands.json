@@ -22,5 +22,9 @@
   "AddDonation": {
     "Item1": "Donation",
     "Item2": "AddMenu"
+  },
+  "ViewBatches": {
+    "Item1": "Batch",
+    "Item2": "FetchBatches"
   }
 }
