@@ -3,10 +3,10 @@
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Donor ID
+                Batch ID
             </div>
             <div class="cell">
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Title)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.CreateDate)
@@ -25,13 +25,16 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
                 <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </div>
+                <div class="cell">
                     @Html.DisplayFor(modelItem => item.CreateDate)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.CloseDate)
                 </div>
                 <div class="cell">
-                    @Ajax.ActionLink("", "ModifyFromDonor", "Donors", item, new AjaxOptions()
+                    @Ajax.ActionLink("", "ViewBatchDetails", "Batches", item, new AjaxOptions()
                {
                    InsertionMode = InsertionMode.InsertAfter,
                    UpdateTargetId = "outputContainer",
