@@ -30,36 +30,6 @@ namespace DMSLite
         }
 
         #region Fetch
-        public void Validate(Donor donor)
-        {
-            string phoneNumberCheck = "";
-            if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
-
-            //Custom validation error messages are added.
-
-            if (!String.IsNullOrWhiteSpace(donor.Email)
-                && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
-                ModelState.AddModelError("Email", "Email is invalid.");
-
-            if (!String.IsNullOrWhiteSpace(donor.PhoneNumber) && !Regex.IsMatch(phoneNumberCheck, "\\d{10}"))
-                ModelState.AddModelError("PhoneNumber", "Phone number is invalid.");
-        }
-
-        public string FormatValidPhoneNumber(string phoneNumber)
-        {
-            phoneNumber = Regex.Replace(phoneNumber, "[^\\d]", "");
-
-            //This method currently assumes the phone number is at least ten digits and does not feature a "+1".
-            string s1 = phoneNumber.Substring(0, 3);
-            string s2 = phoneNumber.Substring(3, 3);
-            string s3 = phoneNumber.Substring(6, 4);
-            string s4 = "";
-            if (phoneNumber.Length > 10)
-                s4 = phoneNumber.Substring(10);
-
-            return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
-        }
 
         private void FetchByName(ref List<Donor> list, string name)
         {
@@ -180,13 +150,8 @@ namespace DMSLite
 
         public ActionResult Modify(Donor donor)
         {
-            Validate(donor);
-
             if (ModelState.IsValid)
             {
-                if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
-
                 db.Modify(donor);
                 return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
@@ -237,12 +202,8 @@ namespace DMSLite
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
-            Validate(donor);
-
-            if (ModelState.IsValid && donor.isValid())
+            if (ModelState.IsValid)
             {
-                if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
                 //confirm with the person submitting the form whether a similar donor already exists
 
                 //fetch a list of similar donors
