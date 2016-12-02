@@ -23,17 +23,6 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
-
-        public ActionResult FetchBatch(Dictionary<string, object> parameters) //Main method to search for batches, parameters may or may not be used
-        {
-            List<Batch> matchingBatches = FindBatch(parameters);
-            if (matchingBatches == null)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
-            else if (matchingBatches.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batch was found");
-            else //if (matchingBatches.Count > 1)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one batch was found");
-        }
         public ActionResult FetchBatches(Dictionary<string, object> parameters)
         {
             List<Batch> filteredBatches = FindBatches(parameters);
@@ -46,17 +35,20 @@ namespace DMSLite.Controllers
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
 
-        public List<Batch> FindBatch(Dictionary<string, object> parameters)
+        public List<Batch> FindBatches(Dictionary<string, object> parameters)
         {
             List<Batch> filteredBatches = new List<Batch>();
 
             //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
             bool paramsExist =
-                !String.IsNullOrEmpty(parameters["title"].ToString());
+                !String.IsNullOrEmpty(parameters["type"].ToString())
+                || !String.IsNullOrEmpty(parameters["title"].ToString());
 
             //FetchByName creates, but never Filters, so far place first
-            if (paramsExist)
+            if(paramsExist)
             {
+                if (!String.IsNullOrEmpty(parameters["type"].ToString()))
+                    FetchByType(ref filteredBatches, parameters["type"].ToString());
                 if (!String.IsNullOrEmpty(parameters["title"].ToString()))
                     FetchByTitle(ref filteredBatches, parameters["title"].ToString());
             }
@@ -67,33 +59,19 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
-        public List<Batch> FindBatches(Dictionary<string, object> parameters)
-        {
-            List<Batch> filteredBatches = new List<Batch>();
-
-            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
-            bool paramsExist =
-                !String.IsNullOrEmpty(parameters["type"].ToString());
-
-            //FetchByName creates, but never Filters, so far place first
-            if(paramsExist)
-            {
-                if (!String.IsNullOrEmpty(parameters["type"].ToString()))
-                    FetchByType(ref filteredBatches, parameters["type"].ToString());
-            }
-            else
-            {
-                filteredBatches = FetchAllBatches();
-            }
-            return filteredBatches;
-        }
-
-        private void FetchByTitle(ref List<Batch> list, string name)
+        private void FetchByTitle(ref List<Batch> list, string Title)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
             //For instance, LINQ does not accept ArrayIndex variables in queries,
             //so they are individual string variables in this query instead.
-            list.AddRange(db.Batches.Where(x => x.Title.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+            if (list.Count == 0)
+            {
+                list.AddRange(db.Batches.Where(x => x.Title.Equals(Title, StringComparison.InvariantCultureIgnoreCase)));
+            }
+            else
+            {
+                list = list.Where(x => x.Title.Equals(Title, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
         }
 
         public List<Batch> FetchAllBatches()
