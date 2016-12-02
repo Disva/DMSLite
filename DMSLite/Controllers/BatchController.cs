@@ -26,7 +26,7 @@ namespace DMSLite.Controllers
 
         public ActionResult FetchBatch(Dictionary<string, object> parameters) //Main method to search for batches, parameters may or may not be used
         {
-            List<Batch> matchingBatches = FindBatches(parameters);
+            List<Batch> matchingBatches = FindBatch(parameters);
             if (matchingBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
             else if (matchingBatches.Count == 0)
@@ -48,20 +48,38 @@ namespace DMSLite.Controllers
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
 
+        public List<Batch> FindBatch(Dictionary<string, object> parameters)
+        {
+            List<Batch> filteredBatches = new List<Batch>();
+
+            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["title"].ToString());
+
+            //FetchByName creates, but never Filters, so far place first
+            if (paramsExist)
+            {
+                if (!String.IsNullOrEmpty(parameters["title"].ToString()))
+                    FetchByTitle(ref filteredBatches, parameters["title"].ToString());
+            }
+            else
+            {
+                filteredBatches = FetchAllBatches();
+            }
+            return filteredBatches;
+        }
+
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
         {
             List<Batch> filteredBatches = new List<Batch>();
 
             //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
             bool paramsExist =
-                (!String.IsNullOrEmpty(parameters["title"].ToString()) && !String.IsNullOrEmpty(parameters["type"].ToString()));
+                !String.IsNullOrEmpty(parameters["type"].ToString());
 
             //FetchByName creates, but never Filters, so far place first
             if(paramsExist)
             {
-                if (!String.IsNullOrEmpty(parameters["title"].ToString()))
-                    FetchByTitle(ref filteredBatches, parameters["title"].ToString());
-
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                     FetchByType(ref filteredBatches, parameters["type"].ToString());
             }
