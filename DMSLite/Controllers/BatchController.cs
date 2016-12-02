@@ -30,7 +30,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
             if (filteredBatches.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batchess were found");
 
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
@@ -41,8 +41,16 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                 FetchByType(ref filteredBatches, parameters["type"].ToString());
+            else
+                filteredBatches = FetchAllBatches();
 
             return filteredBatches;
+        }
+
+        public List<Batch> FetchAllBatches()
+        {
+            List<Batch> allBatches = db.Batches.ToList();
+            return allBatches;
         }
 
         private void FetchByType(ref List<Batch> list, string v)
