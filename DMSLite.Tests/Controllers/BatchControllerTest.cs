@@ -20,9 +20,30 @@ namespace DMSLite.Tests.Controllers
 
         [TestMethod]
         //Tests that ...
-        public void TestFetchBatch()
+        public void TestFetchBatches()
         {
-            //Not implemented yet
+            BatchController bc = new BatchController(db);
+            List<Batch> dbBatches = db.Batches.ToList();
+            List<Batch> testBatches = bc.FetchAllBatches();
+            int i = 0;
+            foreach(Batch b in dbBatches)
+            {
+                Assert.AreEqual(b.Id, testBatches.ElementAt(i).Id);
+                Assert.AreEqual(b.Title, testBatches.ElementAt(i).Title);
+                Assert.AreEqual(b.CreateDate, testBatches.ElementAt(i).CreateDate);
+                i++;
+            }
+        }
+
+        public void TestFetchBatchByTitle()
+        {
+            BatchController bc = new BatchController(db);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "Batch for the new tenant").ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("title", "Batch for the new tenant");
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            Assert.AreEqual(dbBatches.Count, testBatches.Count);
+            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
         }
 
         [TestMethod]
