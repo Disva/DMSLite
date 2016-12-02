@@ -73,17 +73,17 @@ namespace DMSLite.Tests.SDKs
             //By name
             var nameResponse = RandomTextInput(inputs, name);
             Assert.AreEqual(nameResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
-
-            //By email
-            var emailResponse = RandomTextInput(inputs, email);
-            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString().ToLower(), name.ToLower());
 
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower());
+
+            //By email
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email);
 
         }
 
