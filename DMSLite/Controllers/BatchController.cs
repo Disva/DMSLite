@@ -39,12 +39,11 @@ namespace DMSLite.Controllers
         {
             List<Batch> filteredBatches = new List<Batch>();
 
-            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
+            //the paramsExist variable is used to check if the list of batches must be created or filtered.
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString());
 
-            //FetchByName creates, but never Filters, so far place first
             if(paramsExist)
             {
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
@@ -66,18 +65,12 @@ namespace DMSLite.Controllers
             //so they are individual string variables in this query instead.
             if (list.Count == 0)
             {
-                list.AddRange(db.Batches.Where(x => x.Title.Equals(Title, StringComparison.InvariantCultureIgnoreCase)));
+                list.AddRange(db.Batches.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0));
             }
             else
             {
-                list = list.Where(x => x.Title.Equals(Title, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                list = list.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             }
-        }
-
-        public List<Batch> FetchAllBatches()
-        {
-            List<Batch> allBatches = db.Batches.ToList();
-            return allBatches;
         }
 
         private void FetchByType(ref List<Batch> list, string v)
@@ -102,6 +95,13 @@ namespace DMSLite.Controllers
                     list.Where(x => x.CloseDate != null);
             }                
         }
+
+        public List<Batch> FetchAllBatches()
+        {
+            List<Batch> allBatches = db.Batches.ToList();
+            return allBatches;
+        }
+
         #endregion
 
         #region Modify
