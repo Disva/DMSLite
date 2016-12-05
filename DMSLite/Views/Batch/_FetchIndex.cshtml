@@ -34,12 +34,11 @@
                     @Html.DisplayFor(modelItem => item.CloseDate)
                 </div>
                 <div class="cell">
-                    @Ajax.ActionLink("", "ViewBatchDetails", "Batches", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "checkShowModal"
-               }, new { @class = "glyphicon search" })
+                    @Ajax.ActionLink("", "FetchByBatchId", "Donation", item, new AjaxOptions()
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                    }, new { @class = "glyphicon search" })
                 </div>
             </div>
         }
