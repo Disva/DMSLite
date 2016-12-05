@@ -29,7 +29,10 @@ namespace DMSLite.Controllers
             int batchId = batch.Id;
             List<Donation> donations = new List<Donation>();
             donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
-            return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            if (donations.Count > 0)
+                return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
         #endregion
 
