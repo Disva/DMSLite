@@ -19,7 +19,7 @@ namespace DMSLite.Tests.Controllers
         private FakeOrganizationDb db = new FakeOrganizationDb();
 
         [TestMethod]
-        //Tests that ...
+        //Tests fetching the list of all batches
         public void TestFetchBatches()
         {
             BatchController bc = new BatchController(db);
@@ -35,6 +35,8 @@ namespace DMSLite.Tests.Controllers
             }
         }
 
+        [TestMethod]
+        //Tests fetching a batch by the title
         public void TestFetchBatchByTitle()
         {
             BatchController bc = new BatchController(db);
