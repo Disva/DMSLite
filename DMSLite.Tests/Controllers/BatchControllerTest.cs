@@ -47,10 +47,42 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //Tests that ...
-        public void TestModifyBatch()
+        //Tests that viewing a fetced batch either returns a view of the batches donations or an error message if it has none
+        public void TestViewFetchedBatch()
         {
-            //Not implemented yet
+            BatchController bc = new BatchController(db);
+            DonationController dc = new DonationController(db);
+            Batch testBatch = new Batch()
+            {
+                Title = "TestBatch",
+            };
+            testBatch = (Batch)(((PartialViewResult)(bc.Add(testBatch))).Model);
+            PartialViewResult pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+            //make sure empty batch returns an error message
+            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_ErrorMessage.cshtml"))
+                )
+            {
+                Assert.IsTrue(true);
+            }
+            //add donations to batch and ensure that it returns the batch view
+            Donation testDonation = new Donation()
+            {
+                Value = 5,
+                ObjectDescription = "a test donation",
+                DonationBatch = testBatch,
+                DonationBatch_Id = testBatch.Id,
+            };
+            dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id);
+            pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_FetchIndex.cshtml"))
+                )
+            {
+                Assert.IsTrue(true);
+            }
+            dc.Remove(testDonation);
+            bc.Remove(testBatch);
         }
 
         [TestMethod]
