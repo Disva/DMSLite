@@ -44,7 +44,7 @@ namespace DMSLite.Controllers
 
         public ActionResult Modify(Donation donation)
         {
-            Validate(donation);
+            ValidateModel(donation);
 
             if (ModelState.IsValid)
                 //are we sure we wanna show this for donations?
