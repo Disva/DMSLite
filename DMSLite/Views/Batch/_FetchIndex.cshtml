@@ -34,7 +34,7 @@
                     @Html.DisplayFor(modelItem => item.CloseDate)
                 </div>
                 <div class="cell">
-                    @Ajax.ActionLink("", "FetchByBatchId", "Batches", item.Id, new AjaxOptions()
+                    @Ajax.ActionLink("", "FetchByBatchId", "Donation", item.Id, new AjaxOptions()
                {
                    InsertionMode = InsertionMode.InsertAfter,
                    UpdateTargetId = "outputContainer",
