@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -40,9 +40,6 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
          
                     <p>
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
