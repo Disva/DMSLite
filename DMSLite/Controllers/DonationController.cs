@@ -24,10 +24,11 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
-        public ActionResult FetchByBatchId(int batchId)
+        public ActionResult FetchByBatchId(Batch batch)
         {
+            int batchId = batch.Id;
             List<Donation> donations = new List<Donation>();
-            donations.AddRange(db.Donations.Where(x => x.DonationBatch.Equals(batchId)));
+            donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
             return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
         }
         #endregion
