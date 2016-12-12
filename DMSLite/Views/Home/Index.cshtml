@@ -133,6 +133,12 @@
 
     function checkFormatSelect2()
     {
+        checkFormatSelect2Donor();
+        checkFormatSelect2Batch();
+    }
+
+    function checkFormatSelect2Donor()
+    {
         var node = $("#outputContainer").find(".format-donor-select2");
         if (node.length > 0) {
 
@@ -168,7 +174,10 @@
 
             $(node).removeClass("format-donor-select2");
         }
+    }
 
+    function checkFormatSelect2Batch()
+    {
         var node = $("#outputContainer").find(".format-batch-select2");
         if (node.length > 0) {
 

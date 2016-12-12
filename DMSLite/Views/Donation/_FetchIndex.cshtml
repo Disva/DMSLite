@@ -41,11 +41,11 @@
                 </div>
                 <div class="cell">
                     @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "checkShowModal"
-               }, new { @class = "glyphicon pencil" })
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "checkShowModal"
+                    }, new { @class = "glyphicon pencil" })
                 </div>
             </div>
         }
