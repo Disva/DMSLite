@@ -1,12 +1,14 @@
 ﻿@using DMSLite.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Log into DMS Lite";
 }
 
-<h2>@ViewBag.Title</h2>
 <div class="row">
+    <div class="col-md-3">
+    </div>
     <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -40,17 +42,10 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-         
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>
             }
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            
-        </section>
+    <div class="col-md-3">
     </div>
 </div>
 
