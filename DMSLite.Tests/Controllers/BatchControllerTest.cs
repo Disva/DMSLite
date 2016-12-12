@@ -48,7 +48,7 @@ namespace DMSLite.Tests.Controllers
             b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
             List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            //searches for that batch by title
+            //searches for that batch by title TestFetchBatch merge
             parameters.Add("title", "TestFetchBatch");
             parameters.Add("type", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
