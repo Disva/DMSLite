@@ -19,7 +19,7 @@ namespace DMSLite.Tests.Controllers
         private FakeOrganizationDb db = new FakeOrganizationDb();
 
         [TestMethod]
-        //Tests that ...
+        //Tests fetching the list of all batches
         public void TestFetchBatches()
         {
             BatchController bc = new BatchController(db);
@@ -35,15 +35,27 @@ namespace DMSLite.Tests.Controllers
             }
         }
 
+        [TestMethod]
+        //Tests fetching a batch by the title
         public void TestFetchBatchByTitle()
         {
+            //adds a new testing batch to the db
             BatchController bc = new BatchController(db);
-            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "Batch for the new tenant").ToList();
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("title", "Batch for the new tenant");
+            //searches for that batch by title
+            parameters.Add("title", "TestFetchBatch");
+            parameters.Add("type", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            //remove testing batch
+            bc.Remove(b);
         }
 
         [TestMethod]

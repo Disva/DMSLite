@@ -40,6 +40,7 @@ namespace DMSLite.Controllers
             List<Batch> filteredBatches = new List<Batch>();
 
             //the paramsExist variable is used to check if the list of batches must be created or filtered.
+            //every call of FindBatches must include both a type and title i nthe params, even if empty
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString());
