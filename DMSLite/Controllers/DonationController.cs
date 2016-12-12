@@ -42,15 +42,23 @@ namespace DMSLite.Controllers
             return PartialView("~/Views/Donation/_Modify.cshtml", donation);
         }
 
-        public ActionResult Modify(Donation donation)
+        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch)
         {
-            ValidateModel(donation);
-
+            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
+            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            donation.DonationDonor = actualDonor;
+            donation.DonationBatch = actualBatch;
+            donation.DonationBatch_Id = donationBatch;
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donation);
+            }
             if (ModelState.IsValid)
-                //are we sure we wanna show this for donations?
+            {
+                db.Modify(donation);
                 return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
-
-            //an invalid submission should just return the form.
+            }
             return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
         }
         #endregion

@@ -30,6 +30,15 @@
         // Check if any of those modals have select2 boxes
         checkFormatSelect2();
     }
+
+    function checkModalWithSearch()
+    {
+        // Check if there any modals that need to be shown
+        checkShowModal();
+        scrollToBottom();
+        // Check if any of those modals have select2 boxes
+        checkFormatSelect2();
+    }
     // pop the searchbar text up into the feed
     function addText() {
         var div = document.getElementById('outputContainer');

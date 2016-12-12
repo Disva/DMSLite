@@ -404,6 +404,7 @@
     <Content Include="Views\Batch\_EmptyBatch.cshtml" />
     <Content Include="Views\Donation\_Modify.cshtml" />
     <Content Include="Views\Donation\_ModifyForm.cshtml" />
+    <Content Include="Views\Donation\_ModifySuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
