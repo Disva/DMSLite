@@ -44,13 +44,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApiAiSDK, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ApiAiSDK.1.6.3\lib\net35\ApiAiSDK.dll</HintPath>
+    <Reference Include="ApiAiSDK, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ApiAiSDK.1.6.5\lib\net35\ApiAiSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.DynamicFilters, Version=2.4.0.0, Culture=neutral, PublicKeyToken=146423a1b8d60775, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.DynamicFilters.2.4.0\lib\net40\EntityFramework.DynamicFilters.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -197,18 +201,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Commands\AddDonor.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ModifyDonor.cs" />
-    <Compile Include="Commands\ShowErrorCommand.cs" />
-    <Compile Include="Commands\ViewAllDonors.cs" />
-    <Compile Include="Commands\ViewDonors.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DonationController.cs" />
+    <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
+      <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\201611151908267_GlobalTenantUserFilter.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201611151908267_GlobalTenantUserFilter.Designer.cs">
+      <DependentUpon>201611151908267_GlobalTenantUserFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\Configuration.cs" />
     <Compile Include="DataContexts\OrganizationDb.cs" />
     <Compile Include="Controllers\DonorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,11 +235,24 @@
     <Compile Include="Migrations\201610141722458_DonorNameSplit.Designer.cs">
       <DependentUpon>201610141722458_DonorNameSplit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611072046088_DonationsAndBatches.cs" />
+    <Compile Include="Migrations\201611072046088_DonationsAndBatches.Designer.cs">
+      <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611112152330_UserOrganization.cs" />
+    <Compile Include="Migrations\201611112152330_UserOrganization.Designer.cs">
+      <DependentUpon>201611112152330_UserOrganization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611151903300_GlobalTenantFilter.cs" />
+    <Compile Include="Migrations\201611151903300_GlobalTenantFilter.Designer.cs">
+      <DependentUpon>201611151903300_GlobalTenantFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AddDonationViewModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
@@ -240,13 +262,63 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Commands\Commands.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\i18n\ar.js" />
+    <Content Include="Scripts\i18n\az.js" />
+    <Content Include="Scripts\i18n\bg.js" />
+    <Content Include="Scripts\i18n\ca.js" />
+    <Content Include="Scripts\i18n\cs.js" />
+    <Content Include="Scripts\i18n\da.js" />
+    <Content Include="Scripts\i18n\de.js" />
+    <Content Include="Scripts\i18n\el.js" />
+    <Content Include="Scripts\i18n\en.js" />
+    <Content Include="Scripts\i18n\es.js" />
+    <Content Include="Scripts\i18n\et.js" />
+    <Content Include="Scripts\i18n\eu.js" />
+    <Content Include="Scripts\i18n\fa.js" />
+    <Content Include="Scripts\i18n\fi.js" />
+    <Content Include="Scripts\i18n\fr.js" />
+    <Content Include="Scripts\i18n\gl.js" />
+    <Content Include="Scripts\i18n\he.js" />
+    <Content Include="Scripts\i18n\hi.js" />
+    <Content Include="Scripts\i18n\hr.js" />
+    <Content Include="Scripts\i18n\hu.js" />
+    <Content Include="Scripts\i18n\id.js" />
+    <Content Include="Scripts\i18n\is.js" />
+    <Content Include="Scripts\i18n\it.js" />
+    <Content Include="Scripts\i18n\ja.js" />
+    <Content Include="Scripts\i18n\km.js" />
+    <Content Include="Scripts\i18n\ko.js" />
+    <Content Include="Scripts\i18n\lt.js" />
+    <Content Include="Scripts\i18n\lv.js" />
+    <Content Include="Scripts\i18n\mk.js" />
+    <Content Include="Scripts\i18n\ms.js" />
+    <Content Include="Scripts\i18n\nb.js" />
+    <Content Include="Scripts\i18n\nl.js" />
+    <Content Include="Scripts\i18n\pl.js" />
+    <Content Include="Scripts\i18n\pt-BR.js" />
+    <Content Include="Scripts\i18n\pt.js" />
+    <Content Include="Scripts\i18n\ro.js" />
+    <Content Include="Scripts\i18n\ru.js" />
+    <Content Include="Scripts\i18n\sk.js" />
+    <Content Include="Scripts\i18n\sr-Cyrl.js" />
+    <Content Include="Scripts\i18n\sr.js" />
+    <Content Include="Scripts\i18n\sv.js" />
+    <Content Include="Scripts\i18n\th.js" />
+    <Content Include="Scripts\i18n\tr.js" />
+    <Content Include="Scripts\i18n\uk.js" />
+    <Content Include="Scripts\i18n\vi.js" />
+    <Content Include="Scripts\i18n\zh-CN.js" />
+    <Content Include="Scripts\i18n\zh-TW.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -259,6 +331,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -317,6 +391,17 @@
     <Content Include="Views\Donors\_AddSuccess.cshtml" />
     <Content Include="Views\Donors\_ModifyForm.cshtml" />
     <Content Include="Views\Donors\_ModifySuccess.cshtml" />
+    <Content Include="Views\Batch\_Add.cshtml" />
+    <Content Include="Views\Batch\_AddForm.cshtml" />
+    <Content Include="Views\Batch\_AddSuccess.cshtml" />
+    <Content Include="Views\Donation\_Add.cshtml" />
+    <Content Include="Views\Donation\_AddForm.cshtml" />
+    <Content Include="Views\Donation\_AddSuccess.cshtml" />
+    <Content Include="Views\Donation\_AddFormSimilar.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DonorType.cshtml" />
+    <Content Include="Views\Batch\_FetchIndex.cshtml" />
+    <Content Include="Views\Donation\_FetchIndex.cshtml" />
+    <Content Include="Views\Batch\_EmptyBatch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -338,6 +423,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.resx">
+      <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201611151908267_GlobalTenantUserFilter.resx">
+      <DependentUpon>201611151908267_GlobalTenantUserFilter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610071735228_a.resx">
       <DependentUpon>201610071735228_a.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +437,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610141722458_DonorNameSplit.resx">
       <DependentUpon>201610141722458_DonorNameSplit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611072046088_DonationsAndBatches.resx">
+      <DependentUpon>201611072046088_DonationsAndBatches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611112152330_UserOrganization.resx">
+      <DependentUpon>201611112152330_UserOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611151903300_GlobalTenantFilter.resx">
+      <DependentUpon>201611151903300_GlobalTenantFilter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -13,7 +13,7 @@ namespace DMSLite.Controllers
         public Dispatcher dispatcher;
         public HomeController()
         {
-            dispatcher = new Dispatcher();
+            dispatcher = Dispatcher.getDispatcher();
         }
 
         public ActionResult Index()

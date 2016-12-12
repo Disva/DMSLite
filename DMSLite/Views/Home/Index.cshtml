@@ -4,6 +4,7 @@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <script>
 
     function scrollToBottom(){
@@ -25,6 +26,9 @@
 
         // Check if there any modals that need to be shown
         checkShowModal();
+
+        // Check if any of those modals have select2 boxes
+        checkFormatSelect2();
     }
     // pop the searchbar text up into the feed
     function addText() {
@@ -57,6 +61,14 @@
         $("#mainInputGroup").addClass("has-error");
         $("#submitBtn").addClass("btn-danger");
     }
+
+    function showLoadingButton(id)
+    {
+        var button = $(document.getElementById(id)).find(".loading-button");
+        $(button).find(".loading-button-icon").css("display", "inline-block");
+        $(button).prop("disabled", true);
+    }
+
 </script>
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer"><div class="bubbleLine"><div class="bubble leftBubble">What would you like to do?</div></div></div>
@@ -106,10 +118,96 @@
             $(node).modal();
             $(node).removeClass("showModal");
 
+            //focus the first input field
+            $(node).on('shown.bs.modal', function () {
+                $('.modal-body input:text[value=""]:first').focus();
+            });
+
             //delete modals as soon as they are hidden
             $(node).on('hidden.bs.modal', function (e) {
                 $(this).remove();
+                setFocusToTextBox();
             });
         }
     }
+
+    function checkFormatSelect2()
+    {
+        var node = $("#outputContainer").find(".format-donor-select2");
+        if (node.length > 0) {
+
+            $(node).select2({
+                ajax: {
+                    url: "/Donors/SearchDonors/",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            searchKey: params.term
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: { id: -1, text: "Select a donor" },
+                templateResult: function (state) {
+                    if (state.id === undefined) {
+                        return 'Searching...';
+                    }
+
+                    return state.firstName + " " + state.lastName;
+                },
+                templateSelection: function (state) {
+                    if (state.id === -1) {
+                        return state.text;
+                    }
+                    return state.firstName;
+                },
+                minimumInputLength: 1,
+                dropdownParent: $(node).parents(".modal")
+            });
+
+            $(node).removeClass("format-donor-select2");
+        }
+
+        var node = $("#outputContainer").find(".format-batch-select2");
+        if (node.length > 0) {
+
+            $(node).select2({
+                ajax: {
+                    url: "/Batch/SearchBatches/",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            searchKey: params.term
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: { id: -1, text: "Select a batch" },
+                templateResult: function (state) {
+                    if (state.id === undefined) {
+                        return 'Searching...';
+                    }
+
+                    return state.title;
+                },
+                templateSelection: function (state) {
+                    if (state.id === -1) {
+                        return state.text;
+                    }
+                    return state.title;
+                },
+                minimumInputLength: 1,
+                dropdownParent: $(node).parents(".modal")
+            });
+
+            $(node).removeClass("format-batch-select2");
+        }
+    }
+
+    /*$(function () {
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    })*/
+
 </script>
