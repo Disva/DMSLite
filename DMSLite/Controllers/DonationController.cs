@@ -155,6 +155,13 @@ namespace DMSLite.Controllers
         }
         #endregion
 
+        #region Delete
+        public ActionResult DeleteFromDonation(Dictionary<string, object> parameters)
+        {
+            return PartialView("~/Views/Donation/_Delete.cshtml", parameters);
+        }
+        #endregion
+
         #region MadeByMs
         // GET: Batch
         public ActionResult Remove(Donation donation)
