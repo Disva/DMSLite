@@ -36,6 +36,73 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests fetching the list of all open batches
+        public void TestFetchOpenBatches()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("title", "");
+            parameters.Add("type", "open");
+
+            BatchController bc = new BatchController(db);
+            PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
+            if (pvr.ViewName == "~/Views/Shared/_ErrorMessage.cshtml")
+            {
+                //this is the case where there are no batches of that type
+                Assert.IsTrue(true);
+                return;
+            }
+            List<Batch> fetchedOpenBatches = ((List<Batch>)pvr.ViewData.Model).ToList();
+            List<Batch> dbOpenBatches = db.Batches.Where(x => x.CloseDate == null).ToList();
+            int i = 0;
+            if (dbOpenBatches.Count() == 0 && fetchedOpenBatches.Count() == 0)
+            {
+                Assert.IsTrue(true);
+            }
+            else if (dbOpenBatches.Count() == fetchedOpenBatches.Count()) {
+                foreach (Batch b in dbOpenBatches)
+                {
+                    Assert.AreEqual(b.Id, fetchedOpenBatches.ElementAt(i).Id);
+                    Assert.IsNull(fetchedOpenBatches.ElementAt(i).CloseDate);
+                    i++;
+                }
+            }
+        }
+
+        [TestMethod]
+        //Tests fetching the list of all open batches
+        public void TestFetchClosedBatches()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("title", "");
+            parameters.Add("type", "closed");
+
+            BatchController bc = new BatchController(db);
+            PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
+            if (pvr.ViewName == "~/Views/Shared/_ErrorMessage.cshtml")
+            {
+                //this is the case where there are no batches of that type
+                Assert.IsTrue(true);
+                return;
+            }
+            List<Batch> fetchedClosedBatches = ((List<Batch>)pvr.ViewData.Model).ToList();
+            List<Batch> dbClosedBatches = db.Batches.Where(x => x.CloseDate != null).ToList();
+            int i = 0;
+            if (dbClosedBatches.Count() == 0 && fetchedClosedBatches.Count() == 0)
+            {
+                Assert.IsTrue(true);
+            }
+            else if (dbClosedBatches.Count() == fetchedClosedBatches.Count())
+            {
+                foreach (Batch b in dbClosedBatches)
+                {
+                    Assert.AreEqual(b.Id, fetchedClosedBatches.ElementAt(i).Id);
+                    Assert.AreEqual(b.CloseDate, fetchedClosedBatches.ElementAt(i).CloseDate);
+                    i++;
+                }
+            }
+        }
+
+        [TestMethod]
         //Tests fetching a batch by the title
         public void TestFetchBatchByTitle()
         {
