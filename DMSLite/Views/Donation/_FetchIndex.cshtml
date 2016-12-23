@@ -31,7 +31,8 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.DonationDonor.Id)
+                    @Html.DisplayFor(modelItem => item.DonationDonor.FirstName)
+                    @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
