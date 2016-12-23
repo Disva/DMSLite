@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class BatchController : Controller
     {
         private OrganizationDb db;

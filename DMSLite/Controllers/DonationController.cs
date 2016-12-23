@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class DonationController : Controller
     {
         private OrganizationDb db;
