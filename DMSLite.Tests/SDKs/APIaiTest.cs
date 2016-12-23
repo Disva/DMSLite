@@ -199,6 +199,28 @@ namespace DMSLite.Tests.SDKs
 
         }
 
+        [TestMethod]
+        public void TestViewSingleBatch()
+        {
+            string closed = "closed";
+
+            string title = "my batch title";
+
+            string[] inputs =
+            {
+                "view {0} batch {1}",
+                "show {0} batches {1}"
+            };
+
+            var response = RandomTextInput(inputs, closed, title);
+            Assert.AreEqual(response.Result.Action, "ViewBatches");
+
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), closed, true);
+
+            Assert.AreEqual(response.Result.Parameters["title"].ToString(), title, true);
+
+        }
+
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {
