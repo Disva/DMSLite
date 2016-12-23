@@ -54,6 +54,7 @@ namespace DMSLite.Controllers
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             donation.DonationDonor = actualDonor;
+            donation.DonationDonor_Id = actualDonor.Id;
             donation.DonationBatch = actualBatch;
             donation.DonationBatch_Id = donationBatch;
             if (!ModelState.IsValid)

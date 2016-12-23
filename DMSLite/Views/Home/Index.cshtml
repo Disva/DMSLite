@@ -175,11 +175,10 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.firstName;
+                    return state.firstName || state.text;
                 },
                 minimumInputLength: 1,
-                dropdownParent: $(node).parents(".modal"),
-                dataAdapter: CustomData
+                dropdownParent: $(node).parents(".modal")
             });
 
             $(node).removeClass("format-donor-select2");
@@ -215,7 +214,7 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.title;
+                    return state.title || state.text;
                 },
                 minimumInputLength: 1,
                 dropdownParent: $(node).parents(".modal")
@@ -225,37 +224,4 @@
         }
     }
 
-    function CustomData($element, options) {
-        CustomData.__super__.constructor.call(this, $element, options);
-    }
-
-    $(function () {
-        $.fn.select2.amd.require([
-          'select2/data/array',
-          'select2/utils'
-        ], function (ArrayData, Utils) {
-            Utils.Extend(CustomData, ArrayData);
-
-            CustomData.prototype.current = function (callback) {
-                var data = [];
-                var currentVal = this.$element.val();
-                var firstname = this.$element.children().data("firstname");
-
-                if (!this.$element.prop('multiple')) {
-                    currentVal = [currentVal];
-                    firstname = [firstname];
-                }
-
-                for (var v = 0; v < currentVal.length; v++) {
-                    data.push({
-                        id: currentVal[v],
-                        firstName: firstname[v]
-                    });
-                }
-
-                callback(data);
-            };
-
-        });
-    });
 </script>
