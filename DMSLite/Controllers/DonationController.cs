@@ -162,9 +162,15 @@ namespace DMSLite.Controllers
         #endregion
 
         #region Delete
-        public ActionResult DeleteFromDonation(Dictionary<string, object> parameters)
+        public ActionResult ShowDeleteFromDonation(Donation item)
         {
-            return PartialView("~/Views/Donation/_Delete.cshtml", parameters);
+            return PartialView("~/Views/Donation/_Delete.cshtml", item);
+        }
+
+        public void DeleteFromDonation(int id)
+        {
+            db.Donations.Remove(db.Donations.First(x => x.Id == id));
+            db.SaveChanges();
         }
         #endregion
 
