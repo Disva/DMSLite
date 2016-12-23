@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class BatchController : Controller
     {
         private OrganizationDb db;
@@ -39,18 +40,41 @@ namespace DMSLite.Controllers
         {
             List<Batch> filteredBatches = new List<Batch>();
 
-            if (!String.IsNullOrEmpty(parameters["type"].ToString()))
-                FetchByType(ref filteredBatches, parameters["type"].ToString());
-            else
-                filteredBatches = FetchAllBatches();
+            //the paramsExist variable is used to check if the list of batches must be created or filtered.
+            //every call of FindBatches must include both a type and title i nthe params, even if empty
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["type"].ToString())
+                || !String.IsNullOrEmpty(parameters["title"].ToString());
 
+            if(paramsExist)
+            {
+                if (!String.IsNullOrEmpty(parameters["type"].ToString()))
+                    FetchByType(ref filteredBatches, parameters["type"].ToString());
+                if (!String.IsNullOrEmpty(parameters["title"].ToString()))
+                    FetchByTitle(ref filteredBatches, parameters["title"].ToString());
+            }
+            else
+            {
+                filteredBatches = FetchAllBatches();
+            }
             return filteredBatches;
         }
 
-        public List<Batch> FetchAllBatches()
+        private void FetchByTitle(ref List<Batch> list, string Title)
         {
-            List<Batch> allBatches = db.Batches.ToList();
-            return allBatches;
+            //searching through the db uses LINQ, which is picky about what variables can be passed.
+            //For instance, LINQ does not accept ArrayIndex variables in queries,
+            //so they are individual string variables in this query instead.
+            if (list.Count == 0)
+            {
+                //list.AddRange(db.Batches.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0));
+                list.AddRange(db.Batches.Where(x => x.Title == Title));
+            }
+            else
+            {
+                //list = list.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                list = list.Where(x => x.Title == Title).ToList();
+            }
         }
 
         private void FetchByType(ref List<Batch> list, string v)
@@ -75,6 +99,13 @@ namespace DMSLite.Controllers
                     list.Where(x => x.CloseDate != null);
             }                
         }
+
+        public List<Batch> FetchAllBatches()
+        {
+            List<Batch> allBatches = db.Batches.ToList();
+            return allBatches;
+        }
+
         #endregion
 
         #region Modify

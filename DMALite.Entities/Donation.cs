@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace DMSLite.Entities
 
         [Required]
         public Batch DonationBatch { get; set; }
+
+        [ForeignKey("DonationBatch")]
+        public int DonationBatch_Id { get; set; }
 
         [Required]
         public int TenantOrganizationId {get; set; }

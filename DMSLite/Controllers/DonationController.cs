@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class DonationController : Controller
     {
         private OrganizationDb db;
@@ -24,6 +25,16 @@ namespace DMSLite.Controllers
         }
 
         #region Fetch
+        public ActionResult FetchByBatchId(Batch batch)
+        {
+            int batchId = batch.Id;
+            List<Donation> donations = new List<Donation>();
+            donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
+            if (donations.Count > 0)
+                return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
+        }
         #endregion
 
         #region Modify

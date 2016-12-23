@@ -11,6 +11,7 @@ using DMSLite.Entities;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class OrganizationsController : Controller
     {
         private OrganizationDb db = new OrganizationDb();

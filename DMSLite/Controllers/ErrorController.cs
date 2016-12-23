@@ -10,6 +10,7 @@ namespace DMSLite.Controllers
 {
     public class ErrorController : Controller
     {
+        [Authorize]
         public ActionResult ErrorMessage(string msg)
         {
             return PartialView("_ErrorMessage", msg);

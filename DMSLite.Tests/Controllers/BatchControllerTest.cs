@@ -19,7 +19,7 @@ namespace DMSLite.Tests.Controllers
         private FakeOrganizationDb db = new FakeOrganizationDb();
 
         [TestMethod]
-        //Tests that ...
+        //Tests fetching the list of all batches
         public void TestFetchBatches()
         {
             BatchController bc = new BatchController(db);
@@ -35,22 +35,66 @@ namespace DMSLite.Tests.Controllers
             }
         }
 
+        [TestMethod]
+        //Tests fetching a batch by the title
         public void TestFetchBatchByTitle()
         {
+            //adds a new testing batch to the db
             BatchController bc = new BatchController(db);
-            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "Batch for the new tenant").ToList();
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("title", "Batch for the new tenant");
+            //searches for that batch by title TestFetchBatch merge
+            parameters.Add("title", "TestFetchBatch");
+            parameters.Add("type", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            //remove testing batch
+            bc.Remove(b);
         }
 
         [TestMethod]
-        //Tests that ...
-        public void TestModifyBatch()
+        //Tests that viewing a fetced batch either returns a view of the batches donations or an error message if it has none
+        public void TestViewFetchedBatch()
         {
-            //Not implemented yet
+            BatchController bc = new BatchController(db);
+            DonationController dc = new DonationController(db);
+            Batch testBatch = new Batch()
+            {
+                Title = "TestBatch",
+            };
+            testBatch = (Batch)(((PartialViewResult)(bc.Add(testBatch))).Model);
+            PartialViewResult pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+            //make sure empty batch returns an error message
+            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_ErrorMessage.cshtml"))
+                )
+            {
+                Assert.IsTrue(true);
+            }
+            //add donations to batch and ensure that it returns the batch view
+            Donation testDonation = new Donation()
+            {
+                Value = 5,
+                ObjectDescription = "a test donation",
+                DonationBatch = testBatch,
+                DonationBatch_Id = testBatch.Id,
+            };
+            dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id);
+            pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_FetchIndex.cshtml"))
+                )
+            {
+                Assert.IsTrue(true);
+            }
+            dc.Remove(testDonation);
+            bc.Remove(testBatch);
         }
 
         [TestMethod]
