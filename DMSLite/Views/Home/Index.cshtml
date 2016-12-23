@@ -178,7 +178,8 @@
                     return state.firstName;
                 },
                 minimumInputLength: 1,
-                dropdownParent: $(node).parents(".modal")
+                dropdownParent: $(node).parents(".modal"),
+                dataAdapter: CustomData
             });
 
             $(node).removeClass("format-donor-select2");
@@ -224,8 +225,37 @@
         }
     }
 
-    /*$(function () {
-        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
-    })*/
+    function CustomData($element, options) {
+        CustomData.__super__.constructor.call(this, $element, options);
+    }
 
+    $(function () {
+        $.fn.select2.amd.require([
+          'select2/data/array',
+          'select2/utils'
+        ], function (ArrayData, Utils) {
+            Utils.Extend(CustomData, ArrayData);
+
+            CustomData.prototype.current = function (callback) {
+                var data = [];
+                var currentVal = this.$element.val();
+                var firstname = this.$element.children().data("firstname");
+
+                if (!this.$element.prop('multiple')) {
+                    currentVal = [currentVal];
+                    firstname = [firstname];
+                }
+
+                for (var v = 0; v < currentVal.length; v++) {
+                    data.push({
+                        id: currentVal[v],
+                        firstName: firstname[v]
+                    });
+                }
+
+                callback(data);
+            };
+
+        });
+    });
 </script>
