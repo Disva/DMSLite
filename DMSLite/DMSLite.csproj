@@ -402,7 +402,7 @@
     <Content Include="Views\Batch\_FetchIndex.cshtml" />
     <Content Include="Views\Donation\_FetchIndex.cshtml" />
     <Content Include="Views\Batch\_EmptyBatch.cshtml" />
-    <Content Include="Views\Donation\Delete.cshtml" />
+    <Content Include="Views\Donation\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
