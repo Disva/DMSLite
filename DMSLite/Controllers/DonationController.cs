@@ -30,7 +30,13 @@ namespace DMSLite.Controllers
             List<Donation> donations = new List<Donation>();
             donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
             if (donations.Count > 0)
+            {
+                //Entity Framework needs related entities to be explicitly loaded to see their data.
+                foreach(Donation donation in donations)
+                    donation.DonationDonor = db.Donors.Where(x => x.Id.Equals(donation.DonationDonor_Id)).First();
+
                 return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
