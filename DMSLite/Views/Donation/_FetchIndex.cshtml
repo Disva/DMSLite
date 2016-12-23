@@ -20,6 +20,9 @@
             <div class="cell">
                 <!-- Left Empty for edit column -->
             </div>
+            <div class="cell">
+                <!-- Left Empty for edit column -->
+            </div>
         </div>
         @foreach (var item in Model)
         {
@@ -28,7 +31,7 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.DonationDonor)
+                    @Html.DisplayFor(modelItem => item.DonationDonor.Id)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
@@ -47,6 +50,15 @@
                    OnComplete = "checkShowModal"
                }, new { @class = "glyphicon pencil" })
                 </div>
+                <div class="cell">
+                    @Ajax.ActionLink("", "DeleteFromDonation", "Donation", item, new AjaxOptions()
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "checkShowModal"
+               }, new { @class = "glyphicon remove" })
+                </div>
+
             </div>
         }
     </div>
