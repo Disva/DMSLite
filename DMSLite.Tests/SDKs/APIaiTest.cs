@@ -165,15 +165,38 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestViewDonors()
         {
+            
             string[] inputs =
             {
                 "show donors",
                 "View donors"
             };
 
-            //By name
+            //test Action
             var response = RandomTextInput(inputs);
             Assert.AreEqual(response.Result.Action, "ViewAllDonors");
+        }
+
+        [TestMethod]
+        public void TestViewListOfBatches()
+        {
+            string open = "open", closed = "closed";
+
+            string[] inputs =
+            {
+                "view {0} batches",
+                "show all {0} batches"
+            };
+
+            var response = RandomTextInput(inputs, "");
+            Assert.AreEqual(response.Result.Action, "ViewBatches");
+           
+            response = RandomTextInput(inputs, open);
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), open, true);
+
+            response = RandomTextInput(inputs, closed);
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), closed, true);
+
         }
 
         //Sends a randomly selected NL request to API.ai
