@@ -15,6 +15,9 @@ namespace DMSLite.Entities
         [Required]
         public Donor DonationDonor { get; set; }
 
+        [ForeignKey("DonationDonor")]
+        public int DonationDonor_Id { get; set; }
+
         [StringLength(255)]
         public string ObjectDescription { get; set; }
 
