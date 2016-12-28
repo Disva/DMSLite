@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace DMSLite.Controllers
 {
@@ -55,6 +56,7 @@ namespace DMSLite.Controllers
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             donation.DonationDonor = actualDonor;
+            donation.DonationDonor_Id = actualDonor.Id;
             donation.DonationBatch = actualBatch;
             donation.DonationBatch_Id = donationBatch;
 

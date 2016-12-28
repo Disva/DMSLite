@@ -22,8 +22,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.DonationDonor_Id, "", new { @class = "text-danger" })
                         <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor">
+                            <option value="@Model.DonationDonor_Id" selected="selected">@Model.DonationDonor.FirstName</option>
                         </select>
                     </div>
                 </div>
@@ -44,8 +45,10 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.DonationBatch.Title, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch"></select>
+                        @Html.ValidationMessageFor(model => model.DonationBatch_Id, "", new { @class = "text-danger" })
+                        <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch">
+                            <option value="@Model.DonationBatch_Id" selected="selected">@Model.DonationBatch.Title</option>
+                        </select>
                     </div>
                 </div>
             </div>
