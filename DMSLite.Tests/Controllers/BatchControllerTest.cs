@@ -110,7 +110,7 @@ namespace DMSLite.Tests.Controllers
         public void TestAddInvalidBatch()
         {
             BatchController bc = new BatchController(db);
-            Batch b = new Batch();//invalid as it has not title
+            Batch b = new Batch();//invalid as it has no title
             try
             {
                 b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);

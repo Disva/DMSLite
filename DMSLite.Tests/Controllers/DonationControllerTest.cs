@@ -42,11 +42,15 @@ namespace DMSLite.Tests.Controllers
             };
             donorsController.Add(donor);
 
+            //this batch cannot be located during DonationController's Modify method
             Batch batch = new Batch()
-            {
-                Title="title_TestModifyDonation",
+            { 
+                Title="title_TestModifyDonation"
             };
             batchController.Add(batch);
+            //Assumed this was the problem, was wrong
+            //batch.TenantOrganizationId = 1;
+            //db.Modify(batch);
 
             Donation donation = new Donation()
             {
@@ -55,25 +59,22 @@ namespace DMSLite.Tests.Controllers
                 ObjectDescription = "desc_TestModifyDonation",
                 Value = 200
             };
-            donationController.Add(donation, donor.Id, donation.Id);
 
-            Console.WriteLine("1");
+            //delete this line after this metod works, and delete stray test data from failed tests:
+            //it just bypasses the fact that only one donor with the test data exists and a new one can't be made
+            donor = db.Donors.First(x => x.FirstName == donor.FirstName);
+
+            donationController.Add(donation, donor.Id, batch.Id);
 
             //modify that donation
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
             donation.ObjectDescription = "desc2_TestModifyDonation";
 
-            Console.WriteLine("2");
-
             donationController.Modify(donation, donor.Id, donation.Id);
-
-            Console.WriteLine("3");
 
             //check for success in db
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
             Assert.Equals(donation.ObjectDescription, "desc2_TestModifyDonation");
-
-            Console.WriteLine("4");
 
             //ITERATION 6: close the batch
             //ITERATION 6: modifying a closed batch is not possible
