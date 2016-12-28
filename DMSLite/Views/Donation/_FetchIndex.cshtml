@@ -31,8 +31,7 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.DonationDonor.FirstName)
-                    @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
+                    @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
@@ -45,11 +44,11 @@
                 </div>
                 <div class="cell">
                     @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "checkShowModal"
-               }, new { @class = "glyphicon pencil" })
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "checkModalWithSearch"
+                    }, new { @class = "glyphicon pencil" })
                 </div>
                 <div class="cell">
                     @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()

@@ -37,13 +37,47 @@ namespace DMSLite.Controllers
                 .Where(x => x.DonationBatch_Id.Equals(batchId)));
 
             if (donations.Count > 0)
+            {
+                //Entity Framework needs related entities to be explicitly loaded to see their data.
+                foreach(Donation donation in donations)
+                    donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+
                 return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
         #endregion
 
         #region Modify
+        public ActionResult ModifyFromDonation(Donation donation)
+        {
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            return PartialView("~/Views/Donation/_Modify.cshtml", donation);
+        }
+
+        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch)
+        {
+            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
+            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            donation.DonationDonor = actualDonor;
+            donation.DonationDonor_Id = actualDonor.Id;
+            donation.DonationBatch = actualBatch;
+            donation.DonationBatch_Id = donationBatch;
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donation);
+            }
+            if (ModelState.IsValid)
+            {
+                db.Modify(donation);
+                return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
+            }
+            return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
+        }
         #endregion
 
         #region Add

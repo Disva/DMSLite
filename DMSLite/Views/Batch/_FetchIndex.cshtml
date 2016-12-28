@@ -35,10 +35,11 @@
                 </div>
                 <div class="cell">
                     @Ajax.ActionLink("", "FetchByBatchId", "Donation", item, new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                    }, new { @class = "glyphicon search" })
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "scrollToBottom"
+               }, new { @class = "glyphicon search" })
                 </div>
             </div>
         }

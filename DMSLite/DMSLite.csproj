@@ -399,7 +399,9 @@
     <Content Include="Views\Batch\_FetchIndex.cshtml" />
     <Content Include="Views\Donation\_FetchIndex.cshtml" />
     <Content Include="Views\Batch\_EmptyBatch.cshtml" />
-    <Content Include="Views\Donation\_Delete.cshtml" />
+    <Content Include="Views\Donation\_Modify.cshtml" />
+    <Content Include="Views\Donation\_ModifyForm.cshtml" />
+    <Content Include="Views\Donation\_ModifySuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

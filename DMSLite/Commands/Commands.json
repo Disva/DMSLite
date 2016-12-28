@@ -26,5 +26,9 @@
   "ViewBatches": {
     "Item1": "Batch",
     "Item2": "FetchBatches"
+  },
+  "ModifyDonation": {
+    "Item1": "Donation",
+    "Item2": "ModifyForm"
   }
 }
