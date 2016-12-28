@@ -70,11 +70,11 @@ namespace DMSLite.Tests.Controllers
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
             donation.ObjectDescription = "desc2_TestModifyDonation";
 
-            donationController.Modify(donation, donor.Id, donation.Id);
+            donationController.Modify(donation, donor.Id, batch.Id);
 
             //check for success in db
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
-            Assert.Equals(donation.ObjectDescription, "desc2_TestModifyDonation");
+            Assert.AreEqual(donation.ObjectDescription, "desc2_TestModifyDonation");
 
             //ITERATION 6: close the batch
             //ITERATION 6: modifying a closed batch is not possible
