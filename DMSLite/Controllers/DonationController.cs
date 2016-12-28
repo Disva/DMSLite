@@ -10,6 +10,7 @@ using System.Data.Entity;
 
 namespace DMSLite.Controllers
 {
+    [Authorize]
     public class DonationController : Controller
     {
         private OrganizationDb db;
@@ -29,7 +30,12 @@ namespace DMSLite.Controllers
         {
             int batchId = batch.Id;
             List<Donation> donations = new List<Donation>();
-            donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
+
+            donations.AddRange(db.Donations
+                .Include(x => x.DonationBatch)
+                .Include(x => x.DonationDonor)
+                .Where(x => x.DonationBatch_Id.Equals(batchId)));
+
             if (donations.Count > 0)
             {
                 //Entity Framework needs related entities to be explicitly loaded to see their data.
@@ -187,6 +193,19 @@ namespace DMSLite.Controllers
                 list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
                     x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
             }
+        }
+        #endregion
+
+        #region Delete
+        public ActionResult ShowDeleteFromDonation(Donation item)
+        {
+            return PartialView("~/Views/Donation/_Delete.cshtml", item);
+        }
+
+        public void DeleteFromDonation(int id)
+        {
+            db.Donations.Remove(db.Donations.First(x => x.Id == id));
+            db.SaveChanges();
         }
         #endregion
 

@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 
 namespace DMSLite
 {
+    [Authorize]
     public class DonorsController : Controller
     {
         private OrganizationDb db;

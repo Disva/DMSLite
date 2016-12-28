@@ -86,6 +86,37 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests that removing a donation works
+        public void TestRemoveDonation()
+        {
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation()
+            {
+                Value = 123,
+                ObjectDescription = "ToDelete",
+                DonationDonor = db.Donors.First<Donor>(),
+                DonationBatch = db.Batches.First<Batch>(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            //check db to see if ToDelete exists
+            List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+            if (Donations.Count != 1)
+            {
+                Assert.Fail();
+            }
+            Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
+            //now delete the donation and check that it no longer exists
+            dc.DeleteFromDonation(d.Id);
+            Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+            if (Donations.Count != 0)
+            {
+                dc.Remove(d);
+                Assert.Fail();
+            }
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
         //Tests that adding a donation does add the donation to the db and that all data is persisted
         public void TestAddDonation()
         {
@@ -99,7 +130,7 @@ namespace DMSLite.Tests.Controllers
                 DonationBatch = db.Batches.First<Batch>(),
             };
             d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
-            //check db to see if Roswell exists
+            //check db to see if wow exists
             List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
             if (Donations.Count != 1)
             {

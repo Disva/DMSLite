@@ -73,17 +73,17 @@ namespace DMSLite.Tests.SDKs
             //By name
             var nameResponse = RandomTextInput(inputs, name);
             Assert.AreEqual(nameResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString(), name, true);
-
-            //By email
-            var emailResponse = RandomTextInput(inputs, email);
-            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email, true);
+            Assert.AreEqual(nameResponse.Result.Parameters["name"].ToString().ToLower(), name.ToLower());
 
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower());
+
+            //By email
+            var emailResponse = RandomTextInput(inputs, email);
+            Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
+            Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email);
 
         }
 
@@ -165,15 +165,60 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void TestViewDonors()
         {
+            
             string[] inputs =
             {
                 "show donors",
                 "View donors"
             };
 
-            //By name
+            //test Action
             var response = RandomTextInput(inputs);
             Assert.AreEqual(response.Result.Action, "ViewAllDonors");
+        }
+
+        [TestMethod]
+        public void TestViewListOfBatches()
+        {
+            string open = "open", closed = "closed";
+
+            string[] inputs =
+            {
+                "view {0} batches",
+                "show all {0} batches"
+            };
+
+            var response = RandomTextInput(inputs, "");
+            Assert.AreEqual(response.Result.Action, "ViewBatches");
+           
+            response = RandomTextInput(inputs, open);
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), open, true);
+
+            response = RandomTextInput(inputs, closed);
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), closed, true);
+
+        }
+
+        [TestMethod]
+        public void TestViewSingleBatch()
+        {
+            string closed = "closed";
+
+            string title = "my batch title";
+
+            string[] inputs =
+            {
+                "view {0} batch {1}",
+                "show {0} batches {1}"
+            };
+
+            var response = RandomTextInput(inputs, closed, title);
+            Assert.AreEqual(response.Result.Action, "ViewBatches");
+
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), closed, true);
+
+            Assert.AreEqual(response.Result.Parameters["title"].ToString(), title, true);
+
         }
 
         //Sends a randomly selected NL request to API.ai

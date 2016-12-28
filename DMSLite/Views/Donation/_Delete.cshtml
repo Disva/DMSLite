@@ -1,0 +1,33 @@
+﻿@model DMSLite.Entities.Donation
+@{ var id = Guid.NewGuid().ToString(); }
+<div class="modal fade showModal" tabindex="-1" role="dialog" id="@id">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Donation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete donation @Model.Id?
+            </div>
+@using (Ajax.BeginForm("DeleteFromDonation", "Donation", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    OnBegin = "closeModal('"+id+"')"
+}))
+{
+    @Html.HiddenFor(model => model.Id)
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" id="createButton">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                       
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                        
+                    </div>
+                </div>
+            </div>
+}
+        </div>
+    </div>
+</div>
