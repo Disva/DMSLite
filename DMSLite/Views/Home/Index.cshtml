@@ -175,7 +175,7 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.firstName;
+                    return state.firstName || state.text;
                 },
                 minimumInputLength: 1,
                 dropdownParent: $(node).parents(".modal")
@@ -214,7 +214,7 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.title;
+                    return state.title || state.text;
                 },
                 minimumInputLength: 1,
                 dropdownParent: $(node).parents(".modal")
@@ -223,9 +223,5 @@
             $(node).removeClass("format-batch-select2");
         }
     }
-
-    /*$(function () {
-        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
-    })*/
 
 </script>

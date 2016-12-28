@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace DMSLite.Controllers
 {
@@ -45,7 +46,7 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult ModifyFromDonation(Donation donation)
         {
-            return PartialView("~/Views/Donation/_Modify.cshtml", donation);
+            return PartialView("~/Views/Donation/_Modify.cshtml", db.Donations.Include(x => x.DonationBatch).Include(x => x.DonationDonor).First(x => x.Id == donation.Id));
         }
 
         public ActionResult Modify(Donation donation, int donationDonor, int donationBatch)
@@ -53,6 +54,7 @@ namespace DMSLite.Controllers
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             donation.DonationDonor = actualDonor;
+            donation.DonationDonor_Id = actualDonor.Id;
             donation.DonationBatch = actualBatch;
             donation.DonationBatch_Id = donationBatch;
             if (!ModelState.IsValid)
