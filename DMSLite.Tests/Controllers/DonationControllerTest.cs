@@ -26,10 +26,62 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //Tests that ...
+        //Tests for successful modification of donations
         public void TestModifyDonation()
         {
-            //Not implemented yet
+            DonationController donationController = new DonationController(db);
+            DonorsController donorsController = new DonorsController(db);
+            BatchController batchController = new BatchController(db);
+            //make a new donation from a new donor to a new open batch
+            Donor donor = new Donor()
+            {
+                FirstName = "fName_TestModifyDonation",
+                LastName = "lName_TestModifyDonation",
+                Email = "email@testmodify.com",
+                PhoneNumber = "000-111-9191",
+            };
+            donorsController.Add(donor);
+
+            Batch batch = new Batch()
+            {
+                Title="title_TestModifyDonation",
+            };
+            batchController.Add(batch);
+
+            Donation donation = new Donation()
+            {
+                DonationDonor = donor,
+                DonationBatch = batch,
+                ObjectDescription = "desc_TestModifyDonation",
+                Value = 200
+            };
+            donationController.Add(donation, donor.Id, donation.Id);
+
+            Console.WriteLine("1");
+
+            //modify that donation
+            donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
+            donation.ObjectDescription = "desc2_TestModifyDonation";
+
+            Console.WriteLine("2");
+
+            donationController.Modify(donation, donor.Id, donation.Id);
+
+            Console.WriteLine("3");
+
+            //check for success in db
+            donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
+            Assert.Equals(donation.ObjectDescription, "desc2_TestModifyDonation");
+
+            Console.WriteLine("4");
+
+            //ITERATION 6: close the batch
+            //ITERATION 6: modifying a closed batch is not possible
+
+            //delete all temporary objects
+            donationController.Remove(donation);
+            donorsController.Remove(donor);
+            batchController.Remove(batch);
         }
 
         [TestMethod]

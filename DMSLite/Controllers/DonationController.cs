@@ -33,7 +33,7 @@ namespace DMSLite.Controllers
             {
                 //Entity Framework needs related entities to be explicitly loaded to see their data.
                 foreach(Donation donation in donations)
-                    donation.DonationDonor = db.Donors.Where(x => x.Id.Equals(donation.DonationDonor_Id)).First();
+                    donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
 
                 return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
             }
@@ -45,6 +45,8 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult ModifyFromDonation(Donation donation)
         {
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
             return PartialView("~/Views/Donation/_Modify.cshtml", donation);
         }
 
@@ -55,6 +57,7 @@ namespace DMSLite.Controllers
             donation.DonationDonor = actualDonor;
             donation.DonationBatch = actualBatch;
             donation.DonationBatch_Id = donationBatch;
+
             if (!ModelState.IsValid)
             {
                 ModelState.Clear();
