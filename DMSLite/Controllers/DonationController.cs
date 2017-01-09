@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace DMSLite.Controllers
 {
@@ -29,15 +30,54 @@ namespace DMSLite.Controllers
         {
             int batchId = batch.Id;
             List<Donation> donations = new List<Donation>();
-            donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id.Equals(batchId)));
+
+            donations.AddRange(db.Donations
+                .Include(x => x.DonationBatch)
+                .Include(x => x.DonationDonor)
+                .Where(x => x.DonationBatch_Id.Equals(batchId)));
+
             if (donations.Count > 0)
+            {
+                //Entity Framework needs related entities to be explicitly loaded to see their data.
+                foreach(Donation donation in donations)
+                    donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+
                 return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+            }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
         #endregion
 
         #region Modify
+        public ActionResult ModifyFromDonation(Donation donation)
+        {
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            return PartialView("~/Views/Donation/_Modify.cshtml", donation);
+        }
+
+        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch)
+        {
+            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
+            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            donation.DonationDonor = actualDonor;
+            donation.DonationDonor_Id = actualDonor.Id;
+            donation.DonationBatch = actualBatch;
+            donation.DonationBatch_Id = donationBatch;
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donation);
+            }
+            if (ModelState.IsValid)
+            {
+                db.Modify(donation);
+                return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
+            }
+            return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
+        }
         #endregion
 
         #region Add
@@ -153,6 +193,19 @@ namespace DMSLite.Controllers
                 list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
                     x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
             }
+        }
+        #endregion
+
+        #region Delete
+        public ActionResult ShowDeleteFromDonation(Donation item)
+        {
+            return PartialView("~/Views/Donation/_Delete.cshtml", item);
+        }
+
+        public void DeleteFromDonation(int id)
+        {
+            db.Donations.Remove(db.Donations.First(x => x.Id == id));
+            db.SaveChanges();
         }
         #endregion
 

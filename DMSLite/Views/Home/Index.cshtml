@@ -30,6 +30,15 @@
         // Check if any of those modals have select2 boxes
         checkFormatSelect2();
     }
+
+    function checkModalWithSearch()
+    {
+        // Check if there any modals that need to be shown
+        checkShowModal();
+        scrollToBottom();
+        // Check if any of those modals have select2 boxes
+        checkFormatSelect2();
+    }
     // pop the searchbar text up into the feed
     function addText() {
         var div = document.getElementById('outputContainer');
@@ -133,6 +142,12 @@
 
     function checkFormatSelect2()
     {
+        checkFormatSelect2Donor();
+        checkFormatSelect2Batch();
+    }
+
+    function checkFormatSelect2Donor()
+    {
         var node = $("#outputContainer").find(".format-donor-select2");
         if (node.length > 0) {
 
@@ -160,7 +175,7 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.firstName;
+                    return state.firstName || state.text;
                 },
                 minimumInputLength: 1,
                 dropdownParent: $(node).parents(".modal")
@@ -168,7 +183,10 @@
 
             $(node).removeClass("format-donor-select2");
         }
+    }
 
+    function checkFormatSelect2Batch()
+    {
         var node = $("#outputContainer").find(".format-batch-select2");
         if (node.length > 0) {
 
@@ -196,7 +214,7 @@
                     if (state.id === -1) {
                         return state.text;
                     }
-                    return state.title;
+                    return state.title || state.text;
                 },
                 minimumInputLength: 1,
                 dropdownParent: $(node).parents(".modal")
@@ -206,8 +224,10 @@
         }
     }
 
+    function closeModal(id) {
+        $('#' + id).modal('hide');
+    }
     /*$(function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     })*/
-
 </script>
