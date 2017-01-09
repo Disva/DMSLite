@@ -271,6 +271,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Commands\Commands.json" />
+    <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
