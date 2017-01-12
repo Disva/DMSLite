@@ -17,6 +17,9 @@
             <div class="cell">
                 <!-- Left Empty for edit column -->
             </div>
+            <div class="cell">
+                <!-- Left Empty for post column -->
+            </div>
         </div>
         @foreach (var item in Model)
         {
@@ -40,6 +43,14 @@
                    UpdateTargetId = "outputContainer",
                    OnComplete = "scrollToBottom"
                }, new { @class = "glyphicon search" })
+                </div>
+                <div class="cell">
+                    @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "checkShowModal"
+               }, new { @class = "glyphicon remove" })
                 </div>
             </div>
         }
