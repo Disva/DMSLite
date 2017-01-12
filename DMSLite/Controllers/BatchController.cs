@@ -102,13 +102,12 @@ namespace DMSLite.Controllers
             //so they are individual string variables in this query instead.
             if (list.Count == 0)
             {
-                //list.AddRange(db.Batches.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0));
-                list.AddRange(db.Batches.Where(x => x.Title == Title));
+                //look for batches that contain the specified title (case insensitive)
+                list.AddRange(db.Batches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())));
             }
             else
             {
-                //list = list.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                list = list.Where(x => x.Title == Title).ToList();
+                list = list.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())).ToList();
             }
         }
 
@@ -144,6 +143,35 @@ namespace DMSLite.Controllers
         #endregion
 
         #region Modify
+        public ActionResult CloseBatch(Dictionary<string, object> parameters)
+        {
+            String title = parameters["title"].ToString();
+            Batch batchToClose = db.Batches.First(x => x.Title == title);
+            return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+        }
+
+        public ActionResult CloseBatchFromList(int id)
+        {
+            Batch batchToClose = db.Batches.First(x => x.Id == id);
+            return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+        }
+
+        public ActionResult PostBatch(int id)
+        {
+            Batch batchToClose = db.Batches.First(x => x.Id == id);
+            if (batchToClose.CloseDate == null)
+            {
+                batchToClose.CloseDate = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    db.Modify(batchToClose);
+                    return PartialView("~/Views/Batch/_CloseSuccess.cshtml", batchToClose);
+                }
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "batch was invalid");
+            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "batch is already closed");
+        }
         #endregion
 
         #region Add
