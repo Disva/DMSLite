@@ -209,5 +209,26 @@ namespace DMSLite.Tests.Controllers
             bc.Remove(b);
         }
 
+        [TestMethod]
+        // tests that posting a batch indeed closes it
+        public void TestPostBatch()
+        {
+            //add a test batch
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "TestPostBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            Assert.IsNull(b.CloseDate);//check that the batch is still open
+            //post the batch
+            bc.PostBatch(b.Id);
+            //fetch the batch
+            Batch updatedB = db.Batches.Where(x => x.Id == b.Id).ToList().First<Batch>();
+            Assert.IsNotNull(updatedB.CloseDate);//checks that the batch is closed
+            //remove the test batch
+            bc.Remove(updatedB);
+        }
+
     }
 }
