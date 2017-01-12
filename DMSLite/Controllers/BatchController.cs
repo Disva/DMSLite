@@ -82,22 +82,22 @@ namespace DMSLite.Controllers
                 {
                     if(searchCreate)
                     {
-                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the openDate
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
                     }
                     else
                     {
-                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the openDate
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
                     }
                 }
                 else
                 {
                     if (searchCreate)
                     {
-                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the openDate
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the searchDate
                     }
                     else
                     {
-                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the openDate
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
                     }
                 }
             }
@@ -107,22 +107,22 @@ namespace DMSLite.Controllers
                 {
                     if (searchCreate)
                     {
-                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0).ToList(); //The createDate is earlier than the openDate
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0).ToList(); //The createDate is earlier than the searchDate
                     }
                     else
                     {
-                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the openDate
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the searchDate
                     }
                 }
                 else
                 {
                     if (searchCreate)
                     {
-                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0).ToList(); //The createDate is later than the openDate
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0).ToList(); //The createDate is later than the searchDate
                     }
                     else
                     {
-                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the openDate
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
                     }
                 }
             }
