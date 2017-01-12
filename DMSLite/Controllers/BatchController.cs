@@ -67,13 +67,11 @@ namespace DMSLite.Controllers
             //so they are individual string variables in this query instead.
             if (list.Count == 0)
             {
-                //list.AddRange(db.Batches.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0));
-                list.AddRange(db.Batches.Where(x => x.Title == Title));
+                list.AddRange(db.Batches.Where(x => x.Title.Contains(Title)));
             }
             else
             {
-                //list = list.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                list = list.Where(x => x.Title == Title).ToList();
+                list = list.Where(x => x.Title.Contains(Title)).ToList();
             }
         }
 
