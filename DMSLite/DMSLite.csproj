@@ -271,6 +271,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Commands\Commands.json" />
+    <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
@@ -402,6 +403,8 @@
     <Content Include="Views\Donation\_Modify.cshtml" />
     <Content Include="Views\Donation\_ModifyForm.cshtml" />
     <Content Include="Views\Donation\_ModifySuccess.cshtml" />
+    <Content Include="Views\Batch\_CloseBatch.cshtml" />
+    <Content Include="Views\Batch\_CloseSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

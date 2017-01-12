@@ -21,7 +21,7 @@
                 <!-- Left Empty for edit column -->
             </div>
             <div class="cell">
-                <!-- Left Empty for edit column -->
+                <!-- Left Empty for delete column -->
             </div>
         </div>
         @foreach (var item in Model)
@@ -42,23 +42,30 @@
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
                 </div>
-                <div class="cell">
-                    @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                        OnComplete = "checkModalWithSearch"
-                    }, new { @class = "glyphicon pencil" })
-                </div>
-                <div class="cell">
-                    @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "checkShowModal"
-               }, new { @class = "glyphicon remove" })
-                </div>
 
+                <div class="cell">
+                    @if (item.DonationBatch.CloseDate == null)
+                    {
+                        @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
+                        {
+                            InsertionMode = InsertionMode.InsertAfter,
+                            UpdateTargetId = "outputContainer",
+                            OnComplete = "checkModalWithSearch"
+                        }, new { @class = "glyphicon pencil" })
+                    }
+                </div>
+                
+                <div class="cell">
+                    @if (item.DonationBatch.CloseDate == null)
+                    {
+                        @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
+                        {
+                            InsertionMode = InsertionMode.InsertAfter,
+                            UpdateTargetId = "outputContainer",
+                            OnComplete = "checkShowModal"
+                        }, new { @class = "glyphicon remove" })
+                    }
+                </div>
             </div>
         }
     </div>
