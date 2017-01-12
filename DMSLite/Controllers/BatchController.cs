@@ -31,7 +31,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
             if (filteredBatches.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batchess were found");
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
@@ -44,10 +44,13 @@ namespace DMSLite.Controllers
             //every call of FindBatches must include both a type and title i nthe params, even if empty
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
-                || !String.IsNullOrEmpty(parameters["title"].ToString());
+                || !String.IsNullOrEmpty(parameters["title"].ToString())
+                || (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["datetype"].ToString()));
 
             if(paramsExist)
             {
+                if (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["datetype"].ToString()))
+                    FetchByDate(ref filteredBatches, parameters["date"].ToString(), parameters["datetype"].ToString());
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                     FetchByType(ref filteredBatches, parameters["type"].ToString());
                 if (!String.IsNullOrEmpty(parameters["title"].ToString()))
@@ -58,6 +61,38 @@ namespace DMSLite.Controllers
                 filteredBatches = FetchAllBatches();
             }
             return filteredBatches;
+        }
+
+        private void FetchByDate(ref List<Batch> filteredBatches, string date, string datetype)
+        {
+            DateTime openDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            bool isBefore;
+            if (datetype == "before")
+                isBefore = true;
+            else
+                isBefore = false;
+            if (filteredBatches.Count == 0)
+            {
+                if(isBefore)
+                {
+                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, openDate) < 0)); //The createDate is earlier than the openDate
+                }
+                else
+                {
+                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, openDate) > 0)); //The createDate is later than the openDate
+                }
+            }
+            else
+            {
+                if (isBefore)
+                {
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, openDate) < 0).ToList(); //The createDate is earlier than the openDate
+                }
+                else
+                {
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, openDate) < 0).ToList(); //The createDate is later than the openDate
+                }
+            }
         }
 
         private void FetchByTitle(ref List<Batch> list, string Title)
