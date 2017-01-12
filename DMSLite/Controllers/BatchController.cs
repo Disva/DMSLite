@@ -67,11 +67,12 @@ namespace DMSLite.Controllers
             //so they are individual string variables in this query instead.
             if (list.Count == 0)
             {
-                list.AddRange(db.Batches.Where(x => x.Title.Contains(Title)));
+                //look for batches that contain the specified title (case insensitive)
+                list.AddRange(db.Batches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())));
             }
             else
             {
-                list = list.Where(x => x.Title.Contains(Title)).ToList();
+                list = list.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())).ToList();
             }
         }
 
