@@ -42,30 +42,30 @@
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
                 </div>
-		@{ var buttonId = Guid.NewGuid().ToString(); }
+		        @{ var buttonId = Guid.NewGuid().ToString(); }
                 <div class="cell">
-		    @if (item.DonationBatch.CloseDate == null)
+		        @if (item.DonationBatch.CloseDate == null)
+                {
+                    @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
                     {
-                        @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.InsertAfter,
-                            UpdateTargetId = "outputContainer",
-                            OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
-                            OnBegin = "return bounceInput('" + buttonId + "')"
-                        }, new { @class = "glyphicon pencil" })
-		    }
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon pencil" })
+		        }
                 </div>
                 <div class="cell">
-		    @if (item.DonationBatch.CloseDate == null)
+		        @if (item.DonationBatch.CloseDate == null)
+                {
+                    @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
                     {
-                        @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.InsertAfter,
-                            UpdateTargetId = "outputContainer",
-                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                            OnBegin = "return bounceInput('" + buttonId + "')"
-                        }, new { @class = "glyphicon remove" })
-		    }
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon remove" })
+		        }
                 </div>
             </div>
         }
