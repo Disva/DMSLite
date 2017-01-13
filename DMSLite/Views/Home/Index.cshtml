@@ -227,6 +227,35 @@
     function closeModal(id) {
         $('#' + id).modal('hide');
     }
+
+    var clickedButtonMap = {};
+    function bounceInput(id) {
+        if(clickedButtonMap[id] === true)
+        {
+            return false;
+        }
+
+        clickedButtonMap[id] = true;
+    }
+
+    function enableButtonAndCheckShowModal(id)
+    {
+        clickedButtonMap[id] = false;
+        checkShowModal();
+    }
+
+    function enableButtonAndCheckSearch(id)
+    {
+        clickedButtonMap[id] = false;
+        checkModalWithSearch();
+    }
+
+    function enableButtonAndScroll(id)
+    {
+        clickedButtonMap[id] = false;
+        scrollToBottom();
+    }
+
     /*$(function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     })*/

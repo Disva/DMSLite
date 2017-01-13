@@ -37,12 +37,14 @@
                     @Html.DisplayFor(modelItem => item.CloseDate)
                 </div>
                 <div class="cell">
+                    @{ var buttonId = Guid.NewGuid().ToString(); }
                     @Ajax.ActionLink("", "FetchByBatchId", "Donation", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "scrollToBottom"
-               }, new { @class = "glyphicon search" })
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndScroll('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon search" })
                 </div>
                 <div class="cell">
                     @if (item.CloseDate == null)
@@ -51,7 +53,8 @@
                         {
                             InsertionMode = InsertionMode.InsertAfter,
                             UpdateTargetId = "outputContainer",
-                            OnComplete = "checkShowModal"
+                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                            OnBegin = "return bounceInput('" + buttonId + "')"
                         })
                     }
                 </div>
