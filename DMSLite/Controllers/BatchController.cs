@@ -3,6 +3,7 @@ using DMSLite.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,12 +46,22 @@ namespace DMSLite.Controllers
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
-                || ((!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["datetype"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString())));
+                || ((!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString())));
 
             if(paramsExist)
             {
-                if (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["datetype"].ToString()))
-                    FetchByDate(ref filteredBatches, parameters["date"].ToString(), parameters["datetype"].ToString(), parameters["posttype"].ToString());
+                if (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString()))
+                {
+                    DateTime convertedDate = convertDate(parameters["date"].ToString());
+                    if(!String.IsNullOrEmpty(parameters["datetype"].ToString()))
+                    {
+                        FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString(), parameters["posttype"].ToString());
+                    }
+                    else
+                    {
+                        FetchByDate(ref filteredBatches, convertedDate, "on", parameters["posttype"].ToString());
+                    }
+                }
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                     FetchByType(ref filteredBatches, parameters["type"].ToString());
                 if (!String.IsNullOrEmpty(parameters["title"].ToString()))
@@ -63,9 +74,19 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
-        private void FetchByDate(ref List<Batch> filteredBatches, string date, string datetype, string postType)
+        private DateTime convertDate(string date)
         {
-            DateTime searchDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime convertedDate;
+            if (date.Length == 4)
+                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            else
+                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            bool result = date.All(Char.IsLetter);            
+            return convertedDate;
+        }
+
+        private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype, string postType)
+        {
             bool isBefore;
             bool searchCreate;
             if (datetype == "before")
