@@ -48,11 +48,12 @@
                 </div>
                 <div class="cell">
                     @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "checkShowModal"
-               }, new { @class = "glyphicon remove" })
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon remove" })
                 </div>
             </div>
         }
