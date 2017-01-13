@@ -87,21 +87,16 @@ namespace DMSLite.Controllers
 
         private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype, string postType)
         {
-            bool isBefore;
             bool searchCreate;
-            if (datetype == "before")
-                isBefore = true;
-            else
-                isBefore = false;
             if (postType == "made")
                 searchCreate = true;
             else
                 searchCreate = false;
             if (filteredBatches.Count == 0)
             {
-                if(isBefore)
+                if (datetype == "before")
                 {
-                    if(searchCreate)
+                    if (searchCreate)
                     {
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
                     }
@@ -110,7 +105,7 @@ namespace DMSLite.Controllers
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
                     }
                 }
-                else
+                else if (datetype == "after")
                 {
                     if (searchCreate)
                     {
@@ -121,10 +116,21 @@ namespace DMSLite.Controllers
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
                     }
                 }
+                else
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0)); //The createDate is the same as the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0)); //The closeDate is the same as the searchDate
+                    }
+                }
             }
             else
             {
-                if (isBefore)
+                if (datetype == "before")
                 {
                     if (searchCreate)
                     {
@@ -135,7 +141,7 @@ namespace DMSLite.Controllers
                         filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the searchDate
                     }
                 }
-                else
+                else if (datetype == "after")
                 {
                     if (searchCreate)
                     {
@@ -144,6 +150,17 @@ namespace DMSLite.Controllers
                     else
                     {
                         filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
+                    }
+                }
+                else
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0).ToList(); //The createDate is the same as the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0).ToList(); //The closeDate is the same as the searchDate
                     }
                 }
             }
