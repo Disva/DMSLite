@@ -52,12 +52,12 @@
                     @Html.DisplayFor(modelItem => item.ReceiptFrequency)
                 </div>
                 <div class="cell">
-                    @{ var id = Guid.NewGuid().ToString(); }
+                    @{ var buttonId = Guid.NewGuid().ToString(); }
                     @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", item, new AjaxOptions() {
                         InsertionMode = InsertionMode.InsertAfter,
                         UpdateTargetId = "outputContainer",
-                        OnComplete = "enableButtonAndCheckShowModal('" + id + "')",
-                        OnBegin = "return bounceInput('" + id + "')"
+                        OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
                     }, new { @class = "glyphicon pencil" } )
                 </div>
             </div>

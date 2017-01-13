@@ -243,6 +243,19 @@
         clickedButtonMap[id] = false;
         checkShowModal();
     }
+
+    function enableButtonAndCheckSearch(id)
+    {
+        clickedButtonMap[id] = false;
+        checkModalWithSearch();
+    }
+
+    function enableButtonAndScroll(id)
+    {
+        clickedButtonMap[id] = false;
+        scrollToBottom();
+    }
+
     /*$(function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     })*/
