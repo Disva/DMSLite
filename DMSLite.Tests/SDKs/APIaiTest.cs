@@ -221,6 +221,27 @@ namespace DMSLite.Tests.SDKs
 
         }
 
+        [TestMethod]
+        public void TestFilterBatches()
+        {
+
+            string april17th = "2017-04-17";
+
+            string[] inputs =
+            {
+                "show {0} batches {1} {2}"
+            };
+
+            var response = RandomTextInput(inputs, "closed", "before", "april 17th");
+            Assert.AreEqual(response.Result.Action, "ViewBatches");
+
+            Assert.AreEqual(response.Result.Parameters["date"].ToString(), april17th, true);
+
+            Assert.AreEqual(response.Result.Parameters["datetype"].ToString(), "before", true);
+
+            Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
+        }
+
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {

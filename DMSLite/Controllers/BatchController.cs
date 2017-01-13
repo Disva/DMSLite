@@ -3,6 +3,7 @@ using DMSLite.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,7 +32,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
             if (filteredBatches.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batchess were found");
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
@@ -44,10 +45,23 @@ namespace DMSLite.Controllers
             //every call of FindBatches must include both a type and title i nthe params, even if empty
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
-                || !String.IsNullOrEmpty(parameters["title"].ToString());
+                || !String.IsNullOrEmpty(parameters["title"].ToString())
+                || ((!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString())));
 
             if(paramsExist)
             {
+                if (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString()))
+                {
+                    DateTime convertedDate = convertDate(parameters["date"].ToString());
+                    if(!String.IsNullOrEmpty(parameters["datetype"].ToString()))
+                    {
+                        FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString(), parameters["posttype"].ToString());
+                    }
+                    else
+                    {
+                        FetchByDate(ref filteredBatches, convertedDate, "on", parameters["posttype"].ToString());
+                    }
+                }
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                     FetchByType(ref filteredBatches, parameters["type"].ToString());
                 if (!String.IsNullOrEmpty(parameters["title"].ToString()))
@@ -60,6 +74,98 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
+        private DateTime convertDate(string date)
+        {
+            DateTime convertedDate;
+            if (date.Length == 4)
+                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            else
+                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            bool result = date.All(Char.IsLetter);            
+            return convertedDate;
+        }
+
+        private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype, string postType)
+        {
+            bool searchCreate;
+            if (postType == "made")
+                searchCreate = true;
+            else
+                searchCreate = false;
+            if (filteredBatches.Count == 0)
+            {
+                if (datetype == "before")
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
+                    }
+                }
+                else if (datetype == "after")
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
+                    }
+                }
+                else
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0)); //The createDate is the same as the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0)); //The closeDate is the same as the searchDate
+                    }
+                }
+            }
+            else
+            {
+                if (datetype == "before")
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0).ToList(); //The createDate is earlier than the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the searchDate
+                    }
+                }
+                else if (datetype == "after")
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0).ToList(); //The createDate is later than the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
+                    }
+                }
+                else
+                {
+                    if (searchCreate)
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0).ToList(); //The createDate is the same as the searchDate
+                    }
+                    else
+                    {
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0).ToList(); //The closeDate is the same as the searchDate
+                    }
+                }
+            }
+        }
+
         private void FetchByTitle(ref List<Batch> list, string Title)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
@@ -67,13 +173,12 @@ namespace DMSLite.Controllers
             //so they are individual string variables in this query instead.
             if (list.Count == 0)
             {
-                //list.AddRange(db.Batches.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0));
-                list.AddRange(db.Batches.Where(x => x.Title == Title));
+                //look for batches that contain the specified title (case insensitive)
+                list.AddRange(db.Batches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())));
             }
             else
             {
-                //list = list.Where(x => x.Title.IndexOf(Title, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                list = list.Where(x => x.Title == Title).ToList();
+                list = list.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())).ToList();
             }
         }
 

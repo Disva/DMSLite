@@ -42,6 +42,8 @@ namespace DMSLite.Tests.Controllers
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("title", "");
             parameters.Add("type", "open");
+            parameters.Add("date", "");
+            parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -75,6 +77,8 @@ namespace DMSLite.Tests.Controllers
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("title", "");
             parameters.Add("type", "closed");
+            parameters.Add("date", "");
+            parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -118,7 +122,48 @@ namespace DMSLite.Tests.Controllers
             //searches for that batch by title TestFetchBatch merge
             parameters.Add("title", "TestFetchBatch");
             parameters.Add("type", "");
+            parameters.Add("date", "");
+            parameters.Add("postype", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
+            Assert.AreEqual(dbBatches.Count, testBatches.Count);
+            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            //remove testing batch
+            bc.Remove(b);
+        }
+
+        [TestMethod]
+        //Tests fetching a batch by dates before and after
+        public void TestFetchBatchByDate()
+        {
+            //adds a new testing batch to the db
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatchByDate",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            //searches for that open batch by date before
+            parameters.Add("title", "TestFetchBatchByDate");
+            parameters.Add("date", b.CreateDate.AddDays(5).ToString("yyyy-MM-dd"));
+            parameters.Add("datetype", "before");
+            parameters.Add("type", "open");
+            parameters.Add("posttype", "opened");
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            Assert.AreEqual(dbBatches.Count, testBatches.Count);
+            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            //close batch
+            bc.PostBatch(b.Id);
+            //searches for that closed batch by date after
+            parameters = new Dictionary<string, object>();
+            parameters.Add("title", "TestFetchBatchByDate");
+            parameters.Add("date", b.CreateDate.AddDays(-5).ToString("yyyy-MM-dd"));
+            parameters.Add("datetype", "after");
+            parameters.Add("type", "close");
+            parameters.Add("posttype", "closed");
+            testBatches = bc.FindBatches(parameters);
+            dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
             //remove testing batch

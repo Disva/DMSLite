@@ -47,13 +47,16 @@
                     }, new { @class = "glyphicon search" })
                 </div>
                 <div class="cell">
-                    @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+                    @if (item.CloseDate == null)
                     {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                        OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                        OnBegin = "return bounceInput('" + buttonId + "')"
-                    }, new { @class = "glyphicon remove" })
+                        @Ajax.ActionLink("Close", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+                        {
+                            InsertionMode = InsertionMode.InsertAfter,
+                            UpdateTargetId = "outputContainer",
+                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                            OnBegin = "return bounceInput('" + buttonId + "')"
+                        })
+                    }
                 </div>
             </div>
         }
