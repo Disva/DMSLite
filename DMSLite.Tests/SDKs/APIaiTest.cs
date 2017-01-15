@@ -99,11 +99,6 @@ namespace DMSLite.Tests.SDKs
 
             var response = apiAi.TextRequest("add new donation");
             Assert.AreEqual(response.Result.Action, "AddDonation");
-            Assert.IsTrue(response.Result.Parameters.Count == 0);
-            /*NOTE
-                At this point, the parameter list is empty
-                This will change in the future, and donations will be added similarly to donors
-            */
         }
 
         [TestMethod]
