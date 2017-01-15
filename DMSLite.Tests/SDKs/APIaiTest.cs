@@ -15,12 +15,14 @@ namespace DMSLite.Tests.SDKs
          * Include varied input to test for robustness
          **/
 
-        private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
+        //private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
+        private const string apiaikey = "3f02d6beb5734fc7b516a2eb3bada5ea"; //BETA TOKEN
+
         private static ApiAi apiAi = new ApiAi(new AIConfiguration(apiaikey, SupportedLanguage.English));
         private Random rand = new Random();
 
         [TestMethod]
-        public void TestContextConversation()
+        public void APITestContextConversation()
         {
             //Since it is missing a parameter, it is not a complete action
             var response = apiAi.TextRequest("add new batch");
@@ -33,7 +35,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestAddBatch()
+        public void APITestAddBatch()
         {
             string batchTitle = "Birthday Party";
 
@@ -53,7 +55,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestAddDonor()
+        public void APITestAddDonor()
         {
             string name = "john smith";
             string email = "steve@stevemail.com";
@@ -78,7 +80,7 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower());
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower().Replace("-", ""));
 
             //By email
             var emailResponse = RandomTextInput(inputs, email);
@@ -88,7 +90,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestAddDonation()
+        public void APITestAddDonation()
         {
             string[] inputs =
             {
@@ -105,7 +107,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestViewDonor()
+        public void APITestViewDonor()
         {
             string name = "john smith";
             string email = "steve@stevemail.com";
@@ -130,12 +132,12 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             response = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(response.Result.Action, "ViewDonors");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
 
         }
 
         [TestMethod]
-        public void TestModifyDonor()
+        public void APITestModifyDonor()
         {
             string name = "john smith";
             string email = "steve@stevemail.com";
@@ -159,11 +161,11 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "ModifyDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber, true);
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
         }
 
         [TestMethod]
-        public void TestViewDonors()
+        public void APITestViewDonors()
         {
             
             string[] inputs =
@@ -178,7 +180,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestViewListOfBatches()
+        public void APITestViewListOfBatches()
         {
             string open = "open", closed = "closed";
 
@@ -200,7 +202,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestViewSingleBatch()
+        public void APITestViewSingleBatch()
         {
             string closed = "closed";
 
@@ -222,7 +224,7 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void TestFilterBatches()
+        public void APITestFilterBatches()
         {
 
             string april17th = "2017-04-17";
