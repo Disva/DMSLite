@@ -49,13 +49,17 @@
                 <div class="cell">
                     @if (item.CloseDate == null)
                     {
-                        @Ajax.ActionLink("Close", "CloseBatchFromList", "Batch", item, new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.InsertAfter,
-                            UpdateTargetId = "outputContainer",
-                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                            OnBegin = "return bounceInput('" + buttonId + "')"
-                        })
+                        @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+                       {
+                           InsertionMode = InsertionMode.InsertAfter,
+                           UpdateTargetId = "outputContainer",
+                           OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                           OnBegin = "return bounceInput('" + buttonId + "')"
+                       }, new { @class = "glyphicon floppy" })
+                    }
+                    else
+                    {
+                        <div class="glyphicon lock">🔒</div>
                     }
                 </div>
             </div>
