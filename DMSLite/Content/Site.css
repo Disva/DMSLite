@@ -108,7 +108,7 @@ textarea {
     padding: 5px;
 }
 .divTable {
-  margin: 0 0 40px 0;
+  margin: 20px 0 20px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
@@ -160,4 +160,45 @@ textarea {
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
     overflow: auto;
     margin-right: 0;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+.pencil {
+    color: #186839;
+    text-decoration: none;
+}
+.pencil:hover {
+    color: #27ae60;
+     text-decoration:none; 
+     cursor:pointer;
+}
+.lock {
+    color: #186839;
+    text-decoration: none;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+
+.loading-button-icon {
+    display:none;
+    transform-origin: 54% 58%;
+    margin-right:7px;
+}
+
+.select2-container {
+    width: 100%;
+    max-width: 280px;
 }

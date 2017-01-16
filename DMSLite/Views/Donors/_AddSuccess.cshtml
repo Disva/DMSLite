@@ -3,8 +3,20 @@
 @{ var id = Guid.NewGuid().ToString(); }
 
 <div id="@id">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Added New Donor</h4>
+    </div>
     <div class="modal-body">
         <dl class="dl-horizontal">
+            <dt>
+                Donor ID
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
             <dt>
                 @Html.DisplayNameFor(model => model.FirstName)
             </dt>
@@ -36,11 +48,19 @@
             <dd>
                 @Html.DisplayFor(model => model.PhoneNumber)
             </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
         </dl>
     </div>
     @using (Ajax.BeginForm("AddForm", "Donors", new AjaxOptions()
     {
-        InsertionMode = InsertionMode.Replace,
+        InsertionMode = InsertionMode.ReplaceWith,
         UpdateTargetId = id
     }))
     {

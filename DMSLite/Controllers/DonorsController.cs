@@ -11,167 +11,98 @@ using DMSLite.Entities;
 using DMSLite.Controllers;
 using DMSLite.Models;
 using System.Text.RegularExpressions;
+using System.Linq.Expressions;
 
 namespace DMSLite
 {
+    [Authorize]
     public class DonorsController : Controller
     {
-        private OrganizationDb db = new OrganizationDb();
+        private OrganizationDb db;
 
-        #region Fetch
-        public void Validate(Donor donor)
+        public DonorsController()
         {
-            string phoneNumberCheck = "";
-            if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                phoneNumberCheck = Regex.Replace(donor.PhoneNumber, "[^\\d]", "");
-
-            //Custom validation error messages are added.
-            if (String.IsNullOrWhiteSpace(donor.Email) && String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                ModelState.AddModelError(string.Empty, "At least a phone number or email is required.");
-
-            if (!String.IsNullOrWhiteSpace(donor.Email)
-                && !Regex.IsMatch(donor.Email, "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
-                ModelState.AddModelError("Email", "Email is invalid.");
-
-            if (!String.IsNullOrWhiteSpace(donor.PhoneNumber) && !Regex.IsMatch(phoneNumberCheck, "\\d{10}"))
-                ModelState.AddModelError("PhoneNumber", "Phone number is invalid.");
+            db = new OrganizationDb();
         }
 
-        public string FormatValidPhoneNumber(string phoneNumber)
+        public DonorsController(OrganizationDb db)
         {
-            phoneNumber= Regex.Replace(phoneNumber, "[^\\d]", "");
+            this.db = db;
+        }
 
-            //This method currently assumes the phone number is at least ten digits and does not feature a "+1".
-            string s1 = phoneNumber.Substring(0, 3);
-            string s2 = phoneNumber.Substring(3, 3);
-            string s3 = phoneNumber.Substring(6, 4);
-            string s4 = "";
-            if(phoneNumber.Length > 10)
-                s4 = phoneNumber.Substring(10);
+        #region Fetch
 
-            return s1 + "-" + s2 + "-" + s3 + ((s4 == "") ? "" : " " + s4);
+        private void FetchByName(ref List<Donor> list, string name)
+        {
+            //searching through the db uses LINQ, which is picky about what variables can be passed.
+            //For instance, LINQ does not accept ArrayIndex variables in queries,
+            //so they are individual string variables in this query instead.
+            string[] names = name.Split(' ');
+            if (names.Count() == 2)
+            {
+                string name1 = names[0], name2 = names[1];
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
+                //reverse
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
+            }
+            else
+            {
+                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+            }
+        }
+
+        private void FetchByEmail(ref List<Donor> list, string email)
+        {
+            if (list.Count == 0)//to add new
+                list.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
+            else//to filter
+                list = list.Where(x => x.Email.Equals(email)).ToList();
+        }
+
+        private void FetchByPhoneNumber(ref List<Donor> list, string phone)
+        {
+            if (list.Count == 0)//to add new
+                list.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
+            else//to filter
+                list = list.Where(x => x.PhoneNumber.Equals(phone)).ToList();
         }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> filteredDonors = new List<Donor>();
+            List<Donor> filteredDonors = FindDonors(parameters);
 
-            //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
-            bool paramsExist = false;
+            if (filteredDonors == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (parameters.ContainsKey("name") && !String.IsNullOrEmpty(parameters["name"].ToString()))
-            {
-                string name = parameters["name"].ToString();
-
-                //for now, a name parameter containing a space is presumed to be a first name and last name
-                if(name.Contains(" "))
-                {
-                    string[] names = name.Split(new char[] { ' ' });
-                    //searching through the db uses LINQ, which is picky about what variables can be passed.
-                    //For instance, LINQ does not accept ArrayIndex variables in queries,
-                    //so they are individual string variables in this query instead.
-                    string name1 = names[0];
-                    string name2 = names[1];
-                    filteredDonors.AddRange(db.Donors.Where(x=> x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
-
-                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
-                }
-                //a name without a space is presumed to either be a first or last name
-                else
-                {
-                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
-                }
-                //confirm that a parameter was used to create a list for later filtering
-                paramsExist = true;
-            }
-
-            if (parameters.ContainsKey("email-address") && !String.IsNullOrEmpty(parameters["email-address"].ToString()))
-            {
-                string email = parameters["email-address"].ToString();
-                if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                    filteredDonors.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
-                else if(filteredDonors.Count != 0 && paramsExist)//to filter
-                    filteredDonors = filteredDonors.Where(x => x.Email.Equals(email)).ToList();
-                paramsExist = true;
-            }
-
-            if (parameters.ContainsKey("phone-number") && !String.IsNullOrEmpty(parameters["phone-number"].ToString()))
-            {
-                string phone = parameters["phone-number"].ToString();
-                if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                    filteredDonors.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
-                else if (filteredDonors.Count != 0 && paramsExist)//to filter
-                    filteredDonors = filteredDonors.Where(x => x.PhoneNumber.Equals(phone)).ToList();
-                paramsExist = true;
-            }
-
-            if (filteredDonors.Count == 0 && paramsExist)
+            if (filteredDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
 
-            if (paramsExist) //If at least one parameter's value was non-empty
-                return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
-            else //if no parameters were recognized
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
         }
-        
+
         public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
             List<Donor> filteredDonors = new List<Donor>();
 
             //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
-            bool paramsExist = false;
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["name"].ToString())
+                || !String.IsNullOrEmpty(parameters["email-address"].ToString())
+                || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
 
-            if (parameters.ContainsKey("name") && !String.IsNullOrEmpty(parameters["name"].ToString()))
-            {
-                string name = parameters["name"].ToString();
+            //FetchByName creates, but never Filters, so far place first
+            if (!String.IsNullOrEmpty(parameters["name"].ToString()))
+                FetchByName(ref filteredDonors, parameters["name"].ToString());
 
-                //for now, a name parameter containing a space is presumed to be a first name and last name
-                if (name.Contains(" "))
-                {
-                    string[] names = name.Split(new char[] { ' ' });
-                    //searching through the db uses LINQ, which is picky about what variables can be passed.
-                    //For instance, LINQ does not accept ArrayIndex variables in queries,
-                    //so they are individual string variables in this query instead.
-                    string name1 = names[0];
-                    string name2 = names[1];
-                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
+            if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
+                FetchByEmail(ref filteredDonors, parameters["email-address"].ToString());
 
-                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
-                }
-                //a name without a space is presumed to either be a first or last name
-                else
-                {
-                    filteredDonors.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
-                }
-                //confirm that a parameter was used to create a list for later filtering
-                paramsExist = true;
-            }
+            if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
+                FetchByPhoneNumber(ref filteredDonors, parameters["phone-number"].ToString());
 
-            if (parameters.ContainsKey("email-address") && !String.IsNullOrEmpty(parameters["email-address"].ToString()))
-            {
-                string email = parameters["email-address"].ToString();
-                if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                    filteredDonors.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
-                else if (filteredDonors.Count != 0 && paramsExist)//to filter
-                    filteredDonors = filteredDonors.Where(x => x.Email.Equals(email)).ToList();
-                paramsExist = true;
-            }
-
-            if (parameters.ContainsKey("phone-number") && !String.IsNullOrEmpty(parameters["phone-number"].ToString()))
-            {
-                string phone = parameters["phone-number"].ToString();
-                if (filteredDonors.Count == 0 && !paramsExist)//to add new
-                    filteredDonors.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
-                else if (filteredDonors.Count != 0 && paramsExist)//to filter
-                    filteredDonors = filteredDonors.Where(x => x.PhoneNumber.Equals(phone)).ToList();
-                paramsExist = true;
-            }
             if (paramsExist)
                 return filteredDonors;
             else
@@ -182,6 +113,18 @@ namespace DMSLite
         {
             List<Donor> allDonors = db.Donors.ToList();
             return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+        }
+
+        // Action to search for donors by name and obtain a json result
+        public ActionResult SearchDonors(string searchKey)
+        {
+            if(string.IsNullOrEmpty(searchKey))
+            {
+                return new JsonResult { Data = new { results = new List<Donor>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            }
+
+            var donors = db.Donors.Where(x => x.FirstName.ToLower().StartsWith(searchKey.ToLower()) || x.LastName.ToLower().StartsWith(searchKey.ToLower()));
+            return new JsonResult { Data = new { results = donors.Select(x => new { firstName = x.FirstName, lastName = x.LastName, id = x.Id})}, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
         }
 
         #endregion
@@ -208,15 +151,9 @@ namespace DMSLite
 
         public ActionResult Modify(Donor donor)
         {
-            Validate(donor);
-
             if (ModelState.IsValid)
             {
-                if(!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
-
-                db.Entry(donor).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Modify(donor);
                 return PartialView("~/Views/Donors/_ModifySuccess.cshtml", donor);
             }
 
@@ -246,7 +183,7 @@ namespace DMSLite
 
                 int lastSpace = name.Trim().LastIndexOf(" ");
 
-                if(lastSpace < 0 || lastSpace + 1 > name.Length)
+                if (lastSpace < 0 || lastSpace + 1 > name.Length)
                 {
                     newDonor.FirstName = name;
                 }
@@ -266,12 +203,8 @@ namespace DMSLite
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor)
         {
-            Validate(donor);
-
-            if (ModelState.IsValid && donor.isValid())
+            if (ModelState.IsValid)
             {
-                if (!String.IsNullOrWhiteSpace(donor.PhoneNumber))
-                    donor.PhoneNumber = FormatValidPhoneNumber(donor.PhoneNumber);
                 //confirm with the person submitting the form whether a similar donor already exists
 
                 //fetch a list of similar donors
@@ -288,8 +221,7 @@ namespace DMSLite
                 }
                 else
                 {
-                    db.Donors.Add(donor);
-                    db.SaveChanges();
+                    db.Add(donor);
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
@@ -302,8 +234,7 @@ namespace DMSLite
         //(same phone number, email, or first name/ last name combo)
         public ActionResult AddSimilar(Donor donor)
         {
-            db.Donors.Add(donor);
-            db.SaveChanges();
+            db.Add(donor);
             return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
         }
 

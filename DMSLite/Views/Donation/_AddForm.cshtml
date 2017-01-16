@@ -1,0 +1,63 @@
+﻿@model DMSLite.Entities.Donation
+
+@{ var id = Guid.NewGuid().ToString(); }
+
+<div id="@id">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add a New Donation</h4>
+    </div>
+    @using (Ajax.BeginForm("Add", "Donation", new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.ReplaceWith,
+        UpdateTargetId = id,
+        OnComplete = "checkFormatSelect2"
+    }))
+    {
+
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ObjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ObjectDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ObjectDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
+                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor">
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.DonationBatch, "", new { @class = "text-danger" })
+                        <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" id="createButton">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Add" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
