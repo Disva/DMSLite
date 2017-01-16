@@ -14,6 +14,8 @@ namespace DMSLite.Controllers
     {
         private OrganizationDb db;
 
+        private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
+
         public BatchController()
         {
             db = new OrganizationDb();
@@ -92,13 +94,13 @@ namespace DMSLite.Controllers
         private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype, string postType)
         {
             bool searchCreate = !(postType == "closed");   //True if searching by when the batch was made
-            int searchType;
+            SEARCH_TYPE searchType;
             if (datetype == "before")                      //True when searching before a certain date
-                searchType = -1;
+                searchType = SEARCH_TYPE.BEFORE;
             else if (datetype == "after")                  //True when searching after a certain date
-                searchType = 1;
+                searchType = SEARCH_TYPE.AFTER;
             else                                           //True when searching on a specific date
-                searchType = 0;
+                searchType = SEARCH_TYPE.ON;
             bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
 
             if (emptyList)
@@ -107,53 +109,53 @@ namespace DMSLite.Controllers
                 filterByDate(ref filteredBatches, searchDate, searchType, searchCreate);
         }
 
-        private void filterByDate(ref List<Batch> filteredBatches, DateTime searchDate, int searchType, bool searchCreate)
+        private void filterByDate(ref List<Batch> filteredBatches, DateTime searchDate, SEARCH_TYPE searchType, bool searchCreate)
         {
-            if (searchType < 0) //Searching before a date
+            switch (searchType)
             {
-                if (searchCreate)
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0).ToList(); //The createDate is earlier than the searchDate
-                else
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the searchDate
-            }
-            else if (searchType > 0) //Searching after a date
-            {
-                if (searchCreate)
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0).ToList(); //The createDate is later than the searchDate
-                else
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
-            }
-            else //Searching on a date
-            {
-                if (searchCreate)
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0).ToList(); //The createDate is the same as the searchDate
-                else
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0).ToList(); //The closeDate is the same as the searchDate
+                case SEARCH_TYPE.BEFORE: //Searching before a date
+                    if (searchCreate)
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0).ToList(); //The createDate is earlier than the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0).ToList(); //The closeDate is earlier than the searchDate
+                    break;
+                case SEARCH_TYPE.AFTER: //Searching after a date
+                    if (searchCreate)
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0).ToList(); //The createDate is later than the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
+                    break;
+                case SEARCH_TYPE.ON:
+                    if (searchCreate)
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0).ToList(); //The createDate is the same as the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0).ToList(); //The closeDate is the same as the searchDate
+                    break;
             }
         }
 
-        private void addByDate(ref List<Batch> filteredBatches, DateTime searchDate, int searchType, bool searchCreate)
+        private void addByDate(ref List<Batch> filteredBatches, DateTime searchDate, SEARCH_TYPE searchType, bool searchCreate)
         {
-            if (searchType < 0) //Searching before a date
+            switch (searchType)
             {
-                if (searchCreate)
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
-                else
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
-            }
-            else if (searchType > 0) //Searching after a date
-            {
-                if (searchCreate)
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the searchDate
-                else
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
-            }
-            else //Searching on a date
-            {
-                if (searchCreate)
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0)); //The createDate is the same as the searchDate
-                else
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0)); //The closeDate is the same as the searchDate
+                case SEARCH_TYPE.BEFORE:
+                    if (searchCreate)
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
+                    break;
+                case SEARCH_TYPE.AFTER: //Searching after a date
+                    if (searchCreate)
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
+                    break;
+                case SEARCH_TYPE.ON:
+                    if (searchCreate)
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0)); //The createDate is the same as the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) == 0)); //The closeDate is the same as the searchDate
+                    break;
             }
         }
 
