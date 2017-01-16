@@ -1,0 +1,10 @@
+﻿@using DMSLite.Entities
+@{ 
+    var items = Enum.GetNames(typeof(DonorType)).Zip(
+            Enum.GetValues(typeof(DonorType)).Cast<int>(), (name, value) =>
+                new SelectListItem {
+                    Text = name,
+                    Value = value.ToString()
+                });
+}
+@Html.DropDownList("", items, ViewData)

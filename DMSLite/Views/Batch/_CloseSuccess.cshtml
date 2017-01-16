@@ -1,0 +1,4 @@
+﻿@model DMSLite.Entities.Batch
+@{ var id = Guid.NewGuid().ToString(); }
+
+<div class="bubbleLine"><div class="bubble leftBubble">The batch @Html.DisplayFor(model => model.Title) has been closed.</div></div>

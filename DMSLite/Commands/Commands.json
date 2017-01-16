@@ -1,0 +1,38 @@
+﻿{
+  "ViewDonors": {
+    "Item1": "Donors",
+    "Item2":"FetchDonor"
+  },
+  "ViewAllDonors": {
+    "Item1": "Donors",
+    "Item2":"ViewAllDonors"
+  },
+  "ModifyDonor": {
+    "Item1": "Donors",
+    "Item2":"ModifyForm"
+  },
+  "AddDonor": {
+    "Item1": "Donors",
+    "Item2": "AddMenu"
+  },
+  "AddBatch": {
+    "Item1": "Batch",
+    "Item2": "AddMenu"
+  },
+  "AddDonation": {
+    "Item1": "Donation",
+    "Item2": "AddMenu"
+  },
+  "ViewBatches": {
+    "Item1": "Batch",
+    "Item2": "FetchBatches"
+  },
+  "ModifyDonation": {
+    "Item1": "Donation",
+    "Item2": "ModifyForm"
+  },
+  "CloseBatch": {
+    "Item1": "Batch",
+    "Item2": "CloseBatch"
+  }
+}
