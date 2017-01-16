@@ -15,12 +15,10 @@ namespace DMSLite.Tests.SDKs
          * Include varied input to test for robustness
          **/
 
-        //private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
-        private const string apiaikey = "3f02d6beb5734fc7b516a2eb3bada5ea"; //BETA TOKEN
-
-        private static ApiAi apiAi = new ApiAi(new AIConfiguration(apiaikey, SupportedLanguage.English));
+        private static ApiAi apiAi = new ApiAi(new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English));
         private Random rand = new Random();
 
+        /**
         [TestMethod]
         public void APITestContextConversation()
         {
@@ -33,6 +31,7 @@ namespace DMSLite.Tests.SDKs
             response = apiAi.TextRequest("my batch title");
             Assert.IsFalse(response.Result.ActionIncomplete);
         }
+        **/
 
         [TestMethod]
         public void APITestAddBatch()
@@ -201,7 +200,7 @@ namespace DMSLite.Tests.SDKs
         {
             string closed = "closed";
 
-            string title = "my batch title";
+            string title = "new batch title";
 
             string[] inputs =
             {
