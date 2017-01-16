@@ -35,6 +35,15 @@ namespace DMSLite.Commands
 
         public ResponseModel Dispatch(string request)
         {
+            if (String.IsNullOrWhiteSpace(request))
+            {
+                ResponseModel emptyResponseModel = new ResponseModel()
+                {
+                    Speech = "Well, thats a whole lot of nothing. Try entering a command"
+                    //link to commands page later?
+                };
+                return emptyResponseModel;
+            }
             var response = apiAi.TextRequest(request);
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
