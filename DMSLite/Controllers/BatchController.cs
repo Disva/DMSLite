@@ -125,7 +125,7 @@ namespace DMSLite.Controllers
                     else
                         filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0).ToList(); //The closeDate is later than the searchDate
                     break;
-                case SEARCH_TYPE.ON:
+                case SEARCH_TYPE.ON:    //Searching on a date
                     if (searchCreate)
                         filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0).ToList(); //The createDate is the same as the searchDate
                     else
@@ -138,19 +138,19 @@ namespace DMSLite.Controllers
         {
             switch (searchType)
             {
-                case SEARCH_TYPE.BEFORE:
+                case SEARCH_TYPE.BEFORE: //Searching before a date
                     if (searchCreate)
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) < 0)); //The createDate is earlier than the searchDate
                     else
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) < 0)); //The closeDate is earlier than the searchDate
                     break;
-                case SEARCH_TYPE.AFTER: //Searching after a date
+                case SEARCH_TYPE.AFTER:  //Searching after a date
                     if (searchCreate)
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) > 0)); //The createDate is later than the searchDate
                     else
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CloseDate.Value, searchDate) > 0)); //The closeDate is later than the searchDate
                     break;
-                case SEARCH_TYPE.ON:
+                case SEARCH_TYPE.ON:     //Searching on a date
                     if (searchCreate)
                         filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchDate) == 0)); //The createDate is the same as the searchDate
                     else
