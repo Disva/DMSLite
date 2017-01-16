@@ -48,12 +48,12 @@ namespace DMSLite.Controllers
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || ((!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString())));
 
-            if(paramsExist)
+            if (paramsExist)
             {
                 if (!String.IsNullOrEmpty(parameters["date"].ToString()) && !String.IsNullOrEmpty(parameters["posttype"].ToString()))
                 {
                     DateTime convertedDate = convertDate(parameters["date"].ToString());
-                    if(!String.IsNullOrEmpty(parameters["datetype"].ToString()))
+                    if (!String.IsNullOrEmpty(parameters["datetype"].ToString()))
                     {
                         FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString(), parameters["posttype"].ToString());
                     }
@@ -62,8 +62,10 @@ namespace DMSLite.Controllers
                         FetchByDate(ref filteredBatches, convertedDate, "on", parameters["posttype"].ToString());
                     }
                 }
+
                 if (!String.IsNullOrEmpty(parameters["type"].ToString()))
                     FetchByType(ref filteredBatches, parameters["type"].ToString());
+
                 if (!String.IsNullOrEmpty(parameters["title"].ToString()))
                     FetchByTitle(ref filteredBatches, parameters["title"].ToString());
             }
@@ -74,6 +76,7 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
+        // TODO: rebuff
         private DateTime convertDate(string date)
         {
             DateTime convertedDate;
@@ -81,10 +84,11 @@ namespace DMSLite.Controllers
                 convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             else
                 convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            bool result = date.All(Char.IsLetter);            
+            bool result = date.All(Char.IsLetter);
             return convertedDate;
         }
 
+        // extract method
         private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype, string postType)
         {
             bool searchCreate;
@@ -182,27 +186,24 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void FetchByType(ref List<Batch> list, string v)
+        private void FetchByType(ref List<Batch> list, string batchStatus)
         {
-            bool openBatches = true;
-            if (v == "open")
-                openBatches = true;
-            else if (v == "closed")
-                openBatches = false;
+            bool openBatches = !batchStatus.Equals("closed");
+
             if (list.Count == 0)
             {
-                if(openBatches)
+                if (openBatches)
                     list.AddRange(db.Batches.Where(x => x.CloseDate == null));
                 else
                     list.AddRange(db.Batches.Where(x => x.CloseDate != null));
-            }                
+            }
             else
             {
                 if (openBatches)
                     list.Where(x => x.CloseDate == null);
                 else
                     list.Where(x => x.CloseDate != null);
-            }                
+            }
         }
 
         public List<Batch> FetchAllBatches()
@@ -230,18 +231,17 @@ namespace DMSLite.Controllers
         public ActionResult PostBatch(int id)
         {
             Batch batchToClose = db.Batches.First(x => x.Id == id);
-            if (batchToClose.CloseDate == null)
-            {
-                batchToClose.CloseDate = DateTime.Now;
-                if (ModelState.IsValid)
-                {
-                    db.Modify(batchToClose);
-                    return PartialView("~/Views/Batch/_CloseSuccess.cshtml", batchToClose);
-                }
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "batch was invalid");
-            }
-            else
+            if (batchToClose.CloseDate != null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "batch is already closed");
+
+            batchToClose.CloseDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                db.Modify(batchToClose);
+                return PartialView("~/Views/Batch/_CloseSuccess.cshtml", batchToClose);
+            }
+            return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "batch was invalid");
+
         }
         #endregion
 
