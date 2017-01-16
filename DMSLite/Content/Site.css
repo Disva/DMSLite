@@ -176,6 +176,10 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
      text-decoration:none; 
      cursor:pointer;
 }
+.lock {
+    color: #186839;
+    text-decoration: none;
+}
 
 @-webkit-keyframes spin2 {
     from { -webkit-transform: rotate(0deg);}
