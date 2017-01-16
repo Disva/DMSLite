@@ -10,7 +10,6 @@ namespace DMSLite.Commands
 
     public class Dispatcher
     {
-        private const string apiaikey = "9cc984ef80ef4502baa2de299ce11bbc"; //Client token used
         private const string CommandsLocation = "Commands.json";
 
         private static Dispatcher dispatcher;
@@ -30,7 +29,7 @@ namespace DMSLite.Commands
 
         private void InitAPIAI()
         {
-            var config = new AIConfiguration(apiaikey, SupportedLanguage.English);
+            var config = new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English);
             apiAi = new ApiAi(config);
         }
 
