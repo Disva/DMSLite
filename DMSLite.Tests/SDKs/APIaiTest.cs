@@ -36,6 +36,7 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void APITestAddBatch()
         {
+            return;
             string batchTitle = "Birthday Party";
 
             string[] inputs =
