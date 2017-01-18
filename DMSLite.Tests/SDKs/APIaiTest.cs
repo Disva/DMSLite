@@ -219,12 +219,6 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
-        public void Dummy()
-        {
-            Assert.AreEqual(true, false);
-        }
-
-        [TestMethod]
         public void APITestFilterBatches()
         {
             return; 
