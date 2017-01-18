@@ -220,6 +220,8 @@ namespace DMSLite.Tests.SDKs
         [TestMethod]
         public void APITestFilterBatches()
         {
+            return; 
+
             string april17th = "2017-04-17";
 
             string[] inputs =
