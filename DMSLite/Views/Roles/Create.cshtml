@@ -3,18 +3,16 @@
 }
 
 <h2>Create Role</h2>
-@Html.ActionLink("List Roles", "Index")
+@Html.ActionLink("List Roles", "Index", "Roles", null, new { @class = "btn btn-default" })
 <hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <div>
-        Role name
+    <div class="form-group">
+        <label for="role-input">Role name</label>
+        @Html.TextBox("RoleName", "", new { @class = "form-control", @id="role-input" })
     </div>
-    <p>
-        @Html.TextBox("RoleName")
-    </p>
-    <input type="submit" value="Save" />
+    <input type="submit" value="Add" class="btn btn-primary"/>
 }

@@ -4,27 +4,31 @@
 }
  
 <h2>Available Roles For Application</h2>
- 
-@Html.ActionLink("Create Role","Create","Roles")
- 
-<style type="text/css">
-    #tbrole,.c {
-    border:double;
-    }
-</style>
- 
-<table id="tbrole">
-    <tr>
-        <td class="c">
-            Role Name
-        </td>
-    </tr>
-    @foreach (var item in Model)
-    {
+@if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+{
+    <div class="alert alert-info" role="alert">@ViewBag.ResultMessage</div>
+}
+
+
+<table class="table">
+    <thead>
         <tr>
-            <td class="c">
-                @item.Name
-            </td>
+            <th>
+                Role Name
+            </th>
         </tr>
-    }   
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@Html.ActionLink("Create Role", "Create", "Roles", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Modify Admins", "SetRoles", "Roles", null, new { @class = "btn btn-default" })

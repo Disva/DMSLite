@@ -417,6 +417,7 @@
     <Content Include="Views\Batch\_CloseSuccess.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\SetRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

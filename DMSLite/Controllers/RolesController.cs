@@ -9,20 +9,27 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         ApplicationDbContext context;
+        UserManager<ApplicationUser> userManager;
 
         public RolesController()
         {
             context = new ApplicationDbContext();
 
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
         }
 
         public ActionResult Index()
         {
             var roles = context.Roles.ToList();
+
+            var message = TempData["ResultMessage"];
+            TempData["ResultMessage"] = string.Empty;
+            ViewBag.ResultMessage = message;
+
             return View(roles);
         }
 
@@ -51,6 +58,37 @@ namespace DMSLite.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult SetRoles()
+        {
+            ViewBag.Roles = context.Roles.ToDictionary(k => k.Id, v => v.Name);
+            return View(context.Users.ToList());
+        }
+
+        public ActionResult MakeAdmin(string userId)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            userManager.AddToRole(userId, "Admin");
+
+            TempData["ResultMessage"] = "User added to role";
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveAdmin(string userId)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            if (userManager.IsInRole(userId, "Admin"))
+            {
+                userManager.RemoveFromRole(userId, "Admin");
+                TempData["ResultMessage"] = "User removed from role";
+            }
+            else
+            {
+                TempData["ResultMessage"] = "User was not an admin";
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
