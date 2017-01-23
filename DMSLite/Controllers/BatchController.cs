@@ -251,13 +251,21 @@ namespace DMSLite.Controllers
         // TODO: Anti-forgery
         public ActionResult Add(Batch batch)
         {
-            batch.CreateDate = DateTime.Now;
-            if (ModelState.IsValid)
+            List<Batch> similarBatches = db.Batches.Where(x => x.Title == batch.Title).ToList();
+            if (similarBatches.Count() > 0)
             {
-                db.Add(batch);
-                return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
+                //return an error
+                ModelState.AddModelError("Title", "An existing batch has this title.");
             }
-
+            else
+            {
+                batch.CreateDate = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    db.Add(batch);
+                    return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
+                }
+            }
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Batch/_AddForm.cshtml", batch);
         }
