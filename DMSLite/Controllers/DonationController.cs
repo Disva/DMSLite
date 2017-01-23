@@ -52,10 +52,11 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult ModifyFromDonation(Donation donation)
         {
-            if(donation.DonationBatch.CloseDate == null)
-            { 
-                donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
-                donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+
+            if (donation.DonationBatch.CloseDate == null)
+            {
                 return PartialView("~/Views/Donation/_Modify.cshtml", donation);
             }
             else
