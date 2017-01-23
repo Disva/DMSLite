@@ -42,7 +42,7 @@ namespace DMSLite.Controllers
                 foreach(Donation donation in donations)
                     donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
 
-                return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+                return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", donations);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
@@ -57,21 +57,17 @@ namespace DMSLite.Controllers
             if (filteredDonations.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
 
-            return PartialView("~/Views/Donation/_FetchIndex.cshtml", filteredDonations);
+            return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
         }
 
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
-            List<Donation> returnedDonations = db.Donations.ToList<Donation>();
+            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationBatch).ToList<Donation>());
             bool paramsExist = (
                 !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
                 !String.IsNullOrEmpty(parameters["value"].ToString())
-                );
-            if (!paramsExist)
-            {
-                return returnedDonations;
-            }
-            else
+            );
+            if(paramsExist)
             {
                 if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
                     DonorsController dc = new DonorsController();
