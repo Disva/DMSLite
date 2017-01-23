@@ -209,6 +209,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
       <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
@@ -257,6 +258,11 @@
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +278,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Commands\Commands.json" />
     <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
@@ -405,6 +415,9 @@
     <Content Include="Views\Donation\_ModifySuccess.cshtml" />
     <Content Include="Views\Batch\_CloseBatch.cshtml" />
     <Content Include="Views\Batch\_CloseSuccess.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\SetRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
