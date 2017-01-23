@@ -47,6 +47,64 @@ namespace DMSLite.Controllers
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
+
+        public ActionResult FetchDonations(Dictionary<string, object> parameters)
+        {
+            List<Donation> filteredDonations = FindDonations(parameters);
+            if (filteredDonations == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredDonations.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
+
+            return PartialView("~/Views/Donation/_FetchIndex.cshtml", filteredDonations);
+        }
+
+        public List<Donation> FindDonations(Dictionary<string, object> parameters)
+        {
+            List<Donation> returnedDonations = db.Donations.ToList<Donation>();
+            bool paramsExist = (
+                !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
+                !String.IsNullOrEmpty(parameters["value"].ToString())
+                );
+            if (!paramsExist)
+            {
+                return returnedDonations;
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
+                    DonorsController dc = new DonorsController();
+                    List<Donor> matchedDonors = new List<Donor>();
+                    dc.FetchByName(ref matchedDonors, parameters["donor-name"].ToString());
+                    FetchByDonor(ref returnedDonations, matchedDonors);
+                }
+                if (!String.IsNullOrEmpty(parameters["value"].ToString()))
+                {
+
+                }
+            }
+            return returnedDonations;
+        }
+
+        // extract method
+        private void FetchByDonor(ref List<Donation> filteredDonations, List<Donor> donors)
+        {
+            //NOTE: This filter needs to be applied FIRST if other filters are to be applied
+            filteredDonations = new List<Donation>();
+            List<Donation> allDonations = db.Donations.ToList<Donation>();
+            foreach (Donor d in donors)
+            {
+                List<Donation> filteredDonationsPerDonor = allDonations.Where(x => x.DonationDonor_Id == d.Id).ToList();
+                filteredDonations.Concat(filteredDonationsPerDonor);
+            }
+        }
+
+        private void FetchByValue(ref List<Donation> filteredDonations, float value)
+        {
+            filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+        }
+
         #endregion
 
         #region Modify

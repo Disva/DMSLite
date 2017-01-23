@@ -32,7 +32,7 @@ namespace DMSLite
 
         #region Fetch
 
-        private void FetchByName(ref List<Donor> list, string name)
+        public void FetchByName(ref List<Donor> list, string name)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
             //For instance, LINQ does not accept ArrayIndex variables in queries,
