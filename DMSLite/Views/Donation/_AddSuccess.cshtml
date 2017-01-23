@@ -10,7 +10,7 @@
     <div class="modal-body">
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.DonationBatch)
+                Batch
             </dt>
 
             <dd>
@@ -18,7 +18,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.DonationDonor)
+                Donor
             </dt>
 
             <dd>
@@ -34,7 +34,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.ObjectDescription)
+                Description
             </dt>
 
             <dd>
@@ -53,8 +53,7 @@
     @using (Ajax.BeginForm("AddForm", "Donation", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = id,
-        OnComplete = "checkFormatSelect2"
+        UpdateTargetId = id
     }))
     {
         <div class="modal-footer">
