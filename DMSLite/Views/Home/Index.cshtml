@@ -97,10 +97,8 @@
                     <div id="mainInputGroup" class="input-group">
 
                         <div id="search-container">
-
                             <input type="text" disabled="disabled" id="suggestion" />
                             @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
-                           
                         </div>
                         <span class="input-group-btn">
                             <input id="submitBtn" class="btn btn-default" type="submit" value="Send" />
@@ -258,12 +256,16 @@
 </script>
 
 <script>
+    //inspired by http://stackoverflow.com/questions/4663710/how-do-i-implement-autocomplete-without-using-a-dropdownlist
     $(function () {
 
         var haystack = [
-            "Add donor",
+            "Add new donor [donor name]",
             "See all donors",
-            "Do [Donor Name]"
+            "Show all donors",
+            "Show donor [donor name]",
+            "Add new batch [batch name]",
+            "Show donations from [donor name]"
         ];
 
         $('#mainInput').keyup(function (e) {
