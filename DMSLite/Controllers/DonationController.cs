@@ -62,7 +62,7 @@ namespace DMSLite.Controllers
 
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
-            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationBatch).ToList<Donation>());
+            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
             bool paramsExist = (
                 !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
                 !String.IsNullOrEmpty(parameters["value"].ToString())
@@ -92,7 +92,7 @@ namespace DMSLite.Controllers
             foreach (Donor d in donors)
             {
                 List<Donation> filteredDonationsPerDonor = allDonations.Where(x => x.DonationDonor_Id == d.Id).ToList();
-                filteredDonations.Concat(filteredDonationsPerDonor);
+                filteredDonations.AddRange(filteredDonationsPerDonor);
             }
         }
 
