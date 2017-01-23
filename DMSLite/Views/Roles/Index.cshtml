@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+}
+ 
+<h2>Available Roles For Application</h2>
+@if (!string.IsNullOrEmpty(ViewBag.ResultMessage))
+{
+    <div class="alert alert-info" role="alert">@ViewBag.ResultMessage</div>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Role Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Create Role", "Create", "Roles", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Modify Admins", "SetRoles", "Roles", null, new { @class = "btn btn-default" })

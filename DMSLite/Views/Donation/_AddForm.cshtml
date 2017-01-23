@@ -27,23 +27,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ObjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ObjectDescription, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ObjectDescription, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("Donor", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor">
-                            
-                        </select>
+                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor"></select>
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("Batch", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationBatch, "", new { @class = "text-danger" })
                         <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch"></select>
