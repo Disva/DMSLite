@@ -7,14 +7,14 @@
 
 <script>
 
-    function scrollToBottom(){
+    function scrollToBottom() {
         // Scroll the output container to the bottom
         $("#outputOuter").animate({
             scrollTop: $("#outputOuter").prop("scrollHeight")
-        }, 350);   
+        }, 350);
     }
     // Remove loading styling
-    function updateContainer() {     
+    function updateContainer() {
 
         scrollToBottom();
 
@@ -31,8 +31,7 @@
         checkFormatSelect2();
     }
 
-    function checkModalWithSearch()
-    {
+    function checkModalWithSearch() {
         // Check if there any modals that need to be shown
         checkShowModal();
         scrollToBottom();
@@ -43,12 +42,12 @@
     function addText() {
         var div = document.getElementById('outputContainer');
         var searchTerm = document.getElementById('mainInput').value;
-        var htmlCode = '<div class="bubbleLine"><div class="bubble rightBubble">'+searchTerm+'</div></div>';
+        var htmlCode = '<div class="bubbleLine"><div class="bubble rightBubble">' + searchTerm + '</div></div>';
         div.innerHTML = div.innerHTML + htmlCode;
         scrollToBottom();
     }
 
-// Show loading styling (loading circle, disabled box)
+    // Show loading styling (loading circle, disabled box)
     function startLoading() {
         // Remove error states
         $("#mainInputGroup").removeClass("has-error");
@@ -71,8 +70,7 @@
         $("#submitBtn").addClass("btn-danger");
     }
 
-    function showLoadingButton(id)
-    {
+    function showLoadingButton(id) {
         var button = $(document.getElementById(id)).find(".loading-button");
         $(button).find(".loading-button-icon").css("display", "inline-block");
         $(button).prop("disabled", true);
@@ -97,7 +95,13 @@
             <div class="row">
                 <div class="form-group">
                     <div id="mainInputGroup" class="input-group">
-                        @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
+
+                        <div id="search-container">
+
+                            <input type="text" disabled="disabled" id="suggestion" />
+                            @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
+                           
+                        </div>
                         <span class="input-group-btn">
                             <input id="submitBtn" class="btn btn-default" type="submit" value="Send" />
                         </span>
@@ -119,11 +123,9 @@
     setFocusToTextBox();
 
     // Check if the webpage has any modals to display
-    function checkShowModal()
-    {
+    function checkShowModal() {
         var node = $("#outputContainer").find(".showModal");
-        if (node.length > 0)
-        {
+        if (node.length > 0) {
             $(node).modal();
             $(node).removeClass("showModal");
 
@@ -140,14 +142,12 @@
         }
     }
 
-    function checkFormatSelect2()
-    {
+    function checkFormatSelect2() {
         checkFormatSelect2Donor();
         checkFormatSelect2Batch();
     }
 
-    function checkFormatSelect2Donor()
-    {
+    function checkFormatSelect2Donor() {
         var node = $("#outputContainer").find(".format-donor-select2");
         if (node.length > 0) {
 
@@ -185,8 +185,7 @@
         }
     }
 
-    function checkFormatSelect2Batch()
-    {
+    function checkFormatSelect2Batch() {
         var node = $("#outputContainer").find(".format-batch-select2");
         if (node.length > 0) {
 
@@ -231,28 +230,24 @@
 
     var clickedButtonMap = {};
     function bounceInput(id) {
-        if(clickedButtonMap[id] === true)
-        {
+        if (clickedButtonMap[id] === true) {
             return false;
         }
 
         clickedButtonMap[id] = true;
     }
 
-    function enableButtonAndCheckShowModal(id)
-    {
+    function enableButtonAndCheckShowModal(id) {
         clickedButtonMap[id] = false;
         checkShowModal();
     }
 
-    function enableButtonAndCheckSearch(id)
-    {
+    function enableButtonAndCheckSearch(id) {
         clickedButtonMap[id] = false;
         checkModalWithSearch();
     }
 
-    function enableButtonAndScroll(id)
-    {
+    function enableButtonAndScroll(id) {
         clickedButtonMap[id] = false;
         scrollToBottom();
     }
@@ -260,4 +255,47 @@
     /*$(function () {
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
     })*/
+</script>
+
+<script>
+    $(function () {
+
+        var haystack = [
+            "Add donor",
+            "See all donors",
+            "Do [Donor Name]"
+        ];
+
+        $('#mainInput').keyup(function (e) {
+            // 'enter' key was pressed
+            var $suggest = $('#suggestion');
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) {
+                $(this).val($suggest.val());
+                $suggest.val("");
+                return false;
+            }
+
+            // some other key was pressed
+            var needle = $(this).val();
+
+            // is the field empty?
+            if (!$.trim(needle).length) {
+                $suggest.val("");
+                return false;
+            }
+
+            // compare input with haystack
+            $.each(haystack, function (i, term) {
+                var regex = new RegExp('^' + needle, 'i');
+                if (regex.test(term)) {
+                    $suggest.val(needle + term.slice(needle.length));
+                    // use first result
+                    return false;
+                }
+                $suggest.val("");
+            });
+        });
+
+    });
 </script>
