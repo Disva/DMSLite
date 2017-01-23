@@ -50,31 +50,26 @@ namespace DMSLite.Controllers
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || ((!String.IsNullOrEmpty(parameters["date"].ToString())));
 
-            if (paramsExist)
-            {
-                if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
-                {
-                    DateTime convertedDate = dateFromRange(ref parameters);
-                    if (!String.IsNullOrEmpty(parameters["datetype"].ToString()))
-                    {
-                        FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString());
-                    }
-                    else
-                    {
-                        FetchByDate(ref filteredBatches, convertedDate, "on");
-                    }
-                }
+            if (!paramsExist)
+                return FetchAllBatches();
 
-                if (!String.IsNullOrEmpty(parameters["type"].ToString()))
-                    FetchByType(ref filteredBatches, parameters["type"].ToString());
-
-                if (!String.IsNullOrEmpty(parameters["title"].ToString()))
-                    FetchByTitle(ref filteredBatches, parameters["title"].ToString());
-            }
-            else
+            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                filteredBatches = FetchAllBatches();
+                DateTime convertedDate = dateFromRange(ref parameters);
+                FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
             }
+
+            if (!String.IsNullOrEmpty(parameters["type"].ToString()))
+            {
+                FetchByType(ref filteredBatches, parameters["type"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
+
+            if (!String.IsNullOrEmpty(parameters["title"].ToString()))
+                FetchByTitle(ref filteredBatches, parameters["title"].ToString());
+
+            Finish:
             return filteredBatches;
         }
 
@@ -108,7 +103,7 @@ namespace DMSLite.Controllers
         }
 
         // extract method
-        private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype)
+        private void FetchByDate(ref List<Batch> filteredBatches, DateTime searchDate, string datetype = "on")
         {
             SEARCH_TYPE searchType;
             if (datetype == "before")                      //True when searching before a certain date
