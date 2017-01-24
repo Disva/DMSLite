@@ -46,25 +46,33 @@
                 <div class="cell">
                 @if (item.DonationBatch.CloseDate == null)
                 {
-                        @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
+                    @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon pencil" })
+                }
+                else
                 {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
-                   OnBegin = "return bounceInput('" + buttonId + "')"
-               }, new { @class = "glyphicon pencil" })
-                    }
+                    <div class="glyphicon lock">🔒</div>
+                }
                 </div>
                 <div class="cell">
                     @if (item.DonationBatch.CloseDate == null)
-                {
+                    {
                         @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
-               {
-                   InsertionMode = InsertionMode.InsertAfter,
-                   UpdateTargetId = "outputContainer",
-                   OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                   OnBegin = "return bounceInput('" + buttonId + "')"
-               }, new { @class = "glyphicon remove" })
+                        {
+                            InsertionMode = InsertionMode.InsertAfter,
+                            UpdateTargetId = "outputContainer",
+                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                            OnBegin = "return bounceInput('" + buttonId + "')"
+                        }, new { @class = "glyphicon remove" })
+                    }
+                    else
+                    {
+                        <div class="glyphicon lock">🔒</div>
                     }
                 </div>
             </div>

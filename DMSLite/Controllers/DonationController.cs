@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace DMSLite.Controllers
 {
@@ -77,7 +78,7 @@ namespace DMSLite.Controllers
                 }
                 if (!String.IsNullOrEmpty(parameters["value"].ToString()))
                 {
-
+                    FetchByValue(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
                 }
             }
             return returnedDonations;
