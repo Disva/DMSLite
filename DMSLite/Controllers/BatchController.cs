@@ -48,7 +48,9 @@ namespace DMSLite.Controllers
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
-                || ((!String.IsNullOrEmpty(parameters["date"].ToString())));
+                || !String.IsNullOrEmpty(parameters["datetype"].ToString()) && (
+                ((!String.IsNullOrEmpty(parameters["date"].ToString()))) || !String.IsNullOrEmpty(parameters["date-period"].ToString())
+                );
 
             if (!paramsExist)
                 return FetchAllBatches();
@@ -82,7 +84,7 @@ namespace DMSLite.Controllers
                 return Tuple.Create<DateTime, DateTime>(dateValue, dateValue);
             }
 
-            if(!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
+            if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
                 return Tuple.Create<DateTime, DateTime>(
                     convertDate(parameters["date-period"].ToString().Split('/')[0]),
                     convertDate(parameters["date-period"].ToString().Split('/')[1])
