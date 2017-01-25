@@ -43,7 +43,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("title", "");
             parameters.Add("type", "open");
             parameters.Add("date", "");
-            parameters.Add("postype", "");
+            parameters.Add("date-period", "");
+            //parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -78,7 +79,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("title", "");
             parameters.Add("type", "closed");
             parameters.Add("date", "");
-            parameters.Add("postype", "");
+            parameters.Add("date-period", "");
+            //parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -123,7 +125,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("title", "TestFetchBatch");
             parameters.Add("type", "");
             parameters.Add("date", "");
-            parameters.Add("postype", "");
+            parameters.Add("date-period", "");
+            //parameters.Add("postype", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
