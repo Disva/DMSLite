@@ -12,6 +12,7 @@ using DMSLite.Controllers;
 using DMSLite.Models;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
+using LinqKit;
 
 namespace DMSLite
 {
@@ -32,42 +33,43 @@ namespace DMSLite
 
         #region Fetch
 
-        public void FetchByName(ref List<Donor> list, string name)
+        public Expression<Func<Donor, bool>> FetchByName(string name)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
             //For instance, LINQ does not accept ArrayIndex variables in queries,
             //so they are individual string variables in this query instead.
             string[] names = name.Split(' ');
+
+            var predicate = PredicateBuilder.New<Donor>();
+
+
             if (names.Count() == 2)
             {
                 string name1 = names[0], name2 = names[1];
-                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
-                //reverse
-                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));
+
+                predicate.Or(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase));
+
+                predicate.Or(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
-                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
+                predicate = PredicateBuilder.New<Donor>(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
             }
+
+            return predicate;
         }
 
-        private void FetchByEmail(ref List<Donor> list, string email)
+        private Expression<Func<Donor, bool>> FetchByEmail(string email)
         {
-            if (list.Count == 0)//to add new
-                list.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
-            else//to filter
-                list = list.Where(x => x.Email.Equals(email)).ToList();
+            return PredicateBuilder.New<Donor>(x => x.Email.Equals(email));
         }
 
-        private void FetchByPhoneNumber(ref List<Donor> list, string phone)
+        private Expression<Func<Donor, bool>> FetchByPhoneNumber(string phone)
         {
-            if (list.Count == 0)//to add new
-                list.AddRange(db.Donors.Where(x => x.PhoneNumber.Equals(phone)));
-            else//to filter
-                list = list.Where(x => x.PhoneNumber.Equals(phone)).ToList();
+            return PredicateBuilder.New<Donor>(x => x.PhoneNumber.Equals(phone));
         }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
@@ -85,7 +87,7 @@ namespace DMSLite
 
         public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
-            List<Donor> filteredDonors = new List<Donor>();
+            var donorSearchPredicate = PredicateBuilder.New<Donor>();
 
             //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
             bool paramsExist =
@@ -93,18 +95,17 @@ namespace DMSLite
                 || !String.IsNullOrEmpty(parameters["email-address"].ToString())
                 || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
 
-            //FetchByName creates, but never Filters, so far place first
             if (!String.IsNullOrEmpty(parameters["name"].ToString()))
-                FetchByName(ref filteredDonors, parameters["name"].ToString());
+                donorSearchPredicate.And(FetchByName(parameters["name"].ToString()));
 
             if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
-                FetchByEmail(ref filteredDonors, parameters["email-address"].ToString());
+                donorSearchPredicate.And(FetchByEmail(parameters["email-address"].ToString()));
 
             if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
-                FetchByPhoneNumber(ref filteredDonors, parameters["phone-number"].ToString());
+                donorSearchPredicate.And(FetchByPhoneNumber(parameters["phone-number"].ToString()));
 
             if (paramsExist)
-                return filteredDonors;
+                return db.Donors.AsExpandable().Where(donorSearchPredicate).ToList();
             else
                 return null;
         }

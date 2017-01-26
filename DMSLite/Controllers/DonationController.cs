@@ -107,10 +107,11 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult ModifyFromDonation(Donation donation)
         {
-            if(donation.DonationBatch.CloseDate == null)
-            { 
-                donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
-                donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+
+            if (donation.DonationBatch.CloseDate == null)
+            {
                 return PartialView("~/Views/Donation/_Modify.cshtml", donation);
             }
             else
@@ -223,18 +224,23 @@ namespace DMSLite.Controllers
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
-            donation.DonationDonor = actualDonor;
-            donation.DonationBatch = actualBatch;
-            if (!ModelState.IsValid)
+            if (actualBatch.CloseDate == null)
             {
-                ModelState.Clear();
-                TryValidateModel(donation);
+                donation.DonationDonor = actualDonor;
+                donation.DonationBatch = actualBatch;
+                if (!ModelState.IsValid)
+                {
+                    ModelState.Clear();
+                    TryValidateModel(donation);
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Add(donation);
+                    return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
+                }
             }
-            if (ModelState.IsValid)
-            {
-                db.Add(donation);
-                return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
-            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 
