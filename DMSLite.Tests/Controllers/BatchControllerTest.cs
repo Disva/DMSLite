@@ -138,28 +138,30 @@ namespace DMSLite.Tests.Controllers
         //Tests fetching a batch by dates before and after
         public void TestFetchBatchByDate()
         {
-            //adds a new testing batch to the db
             BatchController bc = new BatchController(db);
-            Batch b = new Batch()
-            {
-                Title = "TestFetchBatchByDate",
-            };
-            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
-            List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
+            //adds a new testing batch to the db
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             //searches for that open batch by date before
-            parameters.Add("title", "TestFetchBatchByDate");
-            parameters.Add("date", b.CreateDate.AddDays(5).ToString("yyyy-MM-dd"));
+            /*parameters.Add("title", "We are number one"); //The batch that exists at the beginning of the current era
+            parameters.Add("date", "2000-01-01"); //A date 2000 years later
             parameters.Add("date-period", "");
             parameters.Add("datetype", "before");
             parameters.Add("type", "open");
             //parameters.Add("posttype", "opened");
             List<Batch> testBatches = bc.FindBatches(parameters);
-            Assert.AreEqual(dbBatches.Count, testBatches.Count);
-            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            Assert.AreEqual(1, testBatches.Count);
+            Assert.AreEqual("We are number one", testBatches.First().Title);*/
             //close batch
-            bc.PostBatch(b.Id);
+            
             //searches for that closed batch by date after
+            
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatchByDate",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            bc.PostBatch(b.Id);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
             parameters = new Dictionary<string, object>();
             parameters.Add("title", "TestFetchBatchByDate");
             parameters.Add("date", b.CreateDate.AddDays(-5).ToString("yyyy-MM-dd"));
@@ -167,7 +169,7 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("datetype", "after");
             parameters.Add("type", "closed");
             //parameters.Add("posttype", "closed");
-            testBatches = bc.FindBatches(parameters);
+            List<Batch> testBatches = bc.FindBatches(parameters);
             dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
