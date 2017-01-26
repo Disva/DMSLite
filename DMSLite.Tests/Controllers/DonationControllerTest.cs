@@ -19,10 +19,82 @@ namespace DMSLite.Tests.Controllers
         private FakeOrganizationDb db = new FakeOrganizationDb();
 
         [TestMethod]
-        //Tests that ...
-        public void TestFetchDonation()
+        //Tests that fetching all donations works
+        public void TestFetchAllDonations()
         {
             //Not implemented yet
+            DonationController dc = new DonationController(db);
+            List<Donation> dbDonations = db.Donations.ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-name", "");
+            parameters.Add("value", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
+            List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
+            Assert.AreEqual(testDonations.Count(), dbDonations.Count());
+            int i = 0;
+            foreach (Donation d in testDonations)
+            {
+                Assert.AreEqual(d.Id, dbDonations.ElementAt(i).Id);
+                Assert.AreEqual(d.DonationDonor_Id, dbDonations.ElementAt(i).DonationDonor_Id);
+                Assert.AreEqual(d.Value, dbDonations.ElementAt(i).Value);
+                i++;
+            }
+        }
+
+        [TestMethod]
+        //Tests that fetching donations by donor works
+        public void FetchByDonor()
+        {
+            //FetchByDonor
+            DonationController dc = new DonationController(db);
+
+            //create a new donor
+            DonorsController doc = new DonorsController(db);
+            Donor donationDonor  = new Donor
+            {
+                FirstName = "fName_FetchByDonor",
+                LastName = "lName_FetchByDonor",
+                Email = "test_email@test12345678901234567890.com",
+                PhoneNumber = "123456789012345678901234567890",
+            };
+            var arReturned = doc.Add(donationDonor);
+
+            //create a new batch
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "batch_FetchByDonor",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = 111,
+                ObjectDescription = "FetchByDonor",
+                DonationDonor = donationDonor,
+                DonationBatch = b,
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+
+            try
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                parameters.Add("donor-name", donationDonor.FirstName);
+                parameters.Add("value", "");
+                PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
+                //check that the new donation is part of that returned list
+                List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
+                Assert.IsTrue(testDonations.Contains(d));
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(donationDonor);
+                bc.Remove(b);
+            }
+
+
         }
 
         [TestMethod]
