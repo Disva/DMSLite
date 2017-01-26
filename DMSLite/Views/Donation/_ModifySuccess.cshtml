@@ -7,13 +7,13 @@
     Donation successfully updated.
     <dl class="dl-horizontal">
         <dt>
-            Batch
+            @Html.DisplayNameFor(model => model.DonationBatch)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DonationBatch.Title)
         </dd>
         <dt>
-            Donor
+            @Html.DisplayNameFor(model => model.DonationDonor)
         </dt>
         <dd>
             @Model.DonationDonor.FirstName @Model.DonationDonor.LastName
@@ -25,7 +25,7 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            Description
+            @Html.DisplayNameFor(model => model.ObjectDescription)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ObjectDescription)
