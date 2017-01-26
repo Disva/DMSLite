@@ -85,7 +85,7 @@ namespace DMSLite.Controllers
         }
 
         // extract method
-        private void FetchByDonor(ref List<Donation> filteredDonations, List<Donor> donors)
+        public void FetchByDonor(ref List<Donation> filteredDonations, List<Donor> donors)
         {
             //NOTE: This filter needs to be applied FIRST if other filters are to be applied
             filteredDonations = new List<Donation>();
