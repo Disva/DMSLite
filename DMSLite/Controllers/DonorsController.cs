@@ -33,7 +33,7 @@ namespace DMSLite
 
         #region Fetch
 
-        private Expression<Func<Donor, bool>> FetchByName(string name)
+        public Expression<Func<Donor, bool>> FetchByName(string name)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
             //For instance, LINQ does not accept ArrayIndex variables in queries,

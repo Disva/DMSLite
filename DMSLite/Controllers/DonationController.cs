@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace DMSLite.Controllers
 {
@@ -42,11 +43,65 @@ namespace DMSLite.Controllers
                 foreach(Donation donation in donations)
                     donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
 
-                return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+                return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", donations);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
+
+        public ActionResult FetchDonations(Dictionary<string, object> parameters)
+        {
+            List<Donation> filteredDonations = FindDonations(parameters);
+            if (filteredDonations == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredDonations.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
+
+            return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
+        }
+
+        public List<Donation> FindDonations(Dictionary<string, object> parameters)
+        {
+            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
+            bool paramsExist = (
+                !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
+                !String.IsNullOrEmpty(parameters["value"].ToString())
+            );
+            if(paramsExist)
+            {
+                if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
+                    DonorsController dc = new DonorsController(db);
+                    List<Donor> matchedDonors = new List<Donor>();
+                    dc.FetchByName(ref matchedDonors, parameters["donor-name"].ToString());
+                    FetchByDonor(ref returnedDonations, matchedDonors);
+                }
+                if (!String.IsNullOrEmpty(parameters["value"].ToString()))
+                {
+                    FetchByValue(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
+                }
+            }
+            return returnedDonations;
+        }
+
+        // extract method
+        public void FetchByDonor(ref List<Donation> filteredDonations, List<Donor> donors)
+        {
+            //NOTE: This filter needs to be applied FIRST if other filters are to be applied
+            filteredDonations = new List<Donation>();
+            List<Donation> allDonations = db.Donations.ToList<Donation>();
+            foreach (Donor d in donors)
+            {
+                List<Donation> filteredDonationsPerDonor = allDonations.Where(x => x.DonationDonor_Id == d.Id).ToList();
+                filteredDonations.AddRange(filteredDonationsPerDonor);
+            }
+        }
+
+        public void FetchByValue(ref List<Donation> filteredDonations, float value)
+        {
+            filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+        }
+
         #endregion
 
         #region Modify
