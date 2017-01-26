@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Globalization;
+using LinqKit;
 
 namespace DMSLite.Controllers
 {
@@ -72,8 +73,8 @@ namespace DMSLite.Controllers
             {
                 if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
                     DonorsController dc = new DonorsController(db);
-                    List<Donor> matchedDonors = new List<Donor>();
-                    dc.FetchByName(ref matchedDonors, parameters["donor-name"].ToString());
+                    var donorPredicate = dc.FetchByName(parameters["donor-name"].ToString());
+                    List<Donor> matchedDonors = db.Donors.AsExpandable().Where(donorPredicate).ToList();
                     FetchByDonor(ref returnedDonations, matchedDonors);
                 }
                 if (!String.IsNullOrEmpty(parameters["value"].ToString()))
