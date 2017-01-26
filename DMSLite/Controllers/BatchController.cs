@@ -278,7 +278,7 @@ namespace DMSLite.Controllers
                 return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
 
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()));
+            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate == null));
             return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         #endregion

@@ -169,18 +169,23 @@ namespace DMSLite.Controllers
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
-            donation.DonationDonor = actualDonor;
-            donation.DonationBatch = actualBatch;
-            if (!ModelState.IsValid)
+            if (actualBatch.CloseDate == null)
             {
-                ModelState.Clear();
-                TryValidateModel(donation);
+                donation.DonationDonor = actualDonor;
+                donation.DonationBatch = actualBatch;
+                if (!ModelState.IsValid)
+                {
+                    ModelState.Clear();
+                    TryValidateModel(donation);
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Add(donation);
+                    return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
+                }
             }
-            if (ModelState.IsValid)
-            {
-                db.Add(donation);
-                return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
-            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 
