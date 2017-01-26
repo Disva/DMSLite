@@ -19,10 +19,106 @@ namespace DMSLite.Tests.Controllers
         private FakeOrganizationDb db = new FakeOrganizationDb();
 
         [TestMethod]
-        //Tests that ...
-        public void TestFetchDonation()
+        //Tests that fetching all donations works
+        public void TestFetchAllDonations()
         {
-            //Not implemented yet
+            DonationController dc = new DonationController(db);
+            List<Donation> dbDonations = db.Donations.ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-name", "");
+            parameters.Add("value", "");
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
+            List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
+            Assert.AreEqual(testDonations.Count(), dbDonations.Count());
+            int i = 0;
+            foreach (Donation d in testDonations)
+            {
+                Assert.AreEqual(d.Id, dbDonations.ElementAt(i).Id);
+                Assert.AreEqual(d.DonationDonor_Id, dbDonations.ElementAt(i).DonationDonor_Id);
+                Assert.AreEqual(d.Value, dbDonations.ElementAt(i).Value);
+                i++;
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByDonor
+        public void TestFetchByDonor()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByDonor",
+                LastName = "lName_TestFetchByDonor",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = 111,
+                ObjectDescription = "FetchByDonor",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            try
+            {
+                dc.FetchByDonor(ref fetchedDonations, donList);
+                Assert.IsTrue(fetchedDonations.Count() == 1);
+                Assert.AreEqual(d.Id, fetchedDonations.First().Id);
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByValue
+        public void TestFetchByValue()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByDonor",
+                LastName = "lName_TestFetchByDonor",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            float testValue = 123456789;
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = testValue,
+                ObjectDescription = "FetchByValue",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            try
+            {
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValue(ref fetchedDonations, testValue);
+                Assert.IsTrue(fetchedDonations.Contains(d));
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
         }
 
         [TestMethod]
