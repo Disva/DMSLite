@@ -167,10 +167,10 @@ namespace DMSLite.Controllers
         // TODO: Anti-forgery
         public ActionResult Add(Donation donation, int donationDonor, int donationBatch)
         {
-            if (donation.DonationBatch.CloseDate == null)
+            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
+            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            if (actualBatch.CloseDate == null)
             {
-                Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
-                Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
                 donation.DonationDonor = actualDonor;
                 donation.DonationBatch = actualBatch;
                 if (!ModelState.IsValid)
