@@ -48,9 +48,8 @@ namespace DMSLite.Controllers
             bool paramsExist =
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
-                || !String.IsNullOrEmpty(parameters["datetype"].ToString()) && (
-                ((!String.IsNullOrEmpty(parameters["date"].ToString()))) || !String.IsNullOrEmpty(parameters["date-period"].ToString())
-                );
+                || !String.IsNullOrEmpty(parameters["date"].ToString())
+                || !String.IsNullOrEmpty(parameters["date-period"].ToString());
 
             if (!paramsExist)
                 return FetchAllBatches();
@@ -81,6 +80,7 @@ namespace DMSLite.Controllers
             if (!String.IsNullOrWhiteSpace(parameters["date"].ToString()))
             {
                 DateTime dateValue = convertDate(parameters["date"].ToString());
+
                 return Tuple.Create<DateTime, DateTime>(dateValue, dateValue);
             }
 
@@ -101,7 +101,11 @@ namespace DMSLite.Controllers
                 convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             else
                 convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            bool result = date.All(Char.IsLetter);
+
+            //If date in the future, send it into the past (only year for year basis)
+            if (convertedDate.CompareTo(DateTime.Today) > 0)
+                convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
+
             return convertedDate;
         }
 
