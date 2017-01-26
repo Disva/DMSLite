@@ -45,12 +45,7 @@ namespace DMSLite
 
             if (names.Count() == 2)
             {
-                string name1 = names[0], name2 = names[1];/*
-                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase)));
-                //reverse
-                list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
-                    x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase)));*/
+                string name1 = names[0], name2 = names[1];
 
                 predicate.Or(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase));
@@ -62,8 +57,6 @@ namespace DMSLite
             {
                 predicate = PredicateBuilder.New<Donor>(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
                     x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-                /*list.AddRange(db.Donors.Where(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));*/
             }
 
             return predicate;
@@ -71,10 +64,6 @@ namespace DMSLite
 
         private Expression<Func<Donor, bool>> FetchByEmail(string email)
         {
-            /*if (list.Count == 0)//to add new
-                list.AddRange(db.Donors.Where(x => x.Email.Equals(email)));
-            else//to filter
-                list = list.Where(x => x.Email.Equals(email)).ToList();*/
             return PredicateBuilder.New<Donor>(x => x.Email.Equals(email));
         }
 
@@ -98,8 +87,6 @@ namespace DMSLite
 
         public List<Donor> FindDonors(Dictionary<string, object> parameters)
         {
-            //List<Donor> filteredDonors = new List<Donor>();
-
             var donorSearchPredicate = PredicateBuilder.New<Donor>();
 
             //the paramsExist variable is used to check if the list of filtered donors must be created or filtered.
