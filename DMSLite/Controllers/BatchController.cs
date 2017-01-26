@@ -185,9 +185,9 @@ namespace DMSLite.Controllers
             else
             {
                 if (openBatches)
-                    list.Where(x => x.CloseDate == null);
+                    list = list.Where(x => x.CloseDate == null).ToList();
                 else
-                    list.Where(x => x.CloseDate != null);
+                    list = list.Where(x => x.CloseDate != null).ToList();
             }
         }
 
