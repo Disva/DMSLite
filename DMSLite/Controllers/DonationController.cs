@@ -71,7 +71,7 @@ namespace DMSLite.Controllers
             if(paramsExist)
             {
                 if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
-                    DonorsController dc = new DonorsController();
+                    DonorsController dc = new DonorsController(db);
                     List<Donor> matchedDonors = new List<Donor>();
                     dc.FetchByName(ref matchedDonors, parameters["donor-name"].ToString());
                     FetchByDonor(ref returnedDonations, matchedDonors);
@@ -97,7 +97,7 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void FetchByValue(ref List<Donation> filteredDonations, float value)
+        public void FetchByValue(ref List<Donation> filteredDonations, float value)
         {
             filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
         }

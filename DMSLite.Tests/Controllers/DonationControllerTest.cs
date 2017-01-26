@@ -41,7 +41,7 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //
+        //Tests DonationController method FetchByDonor
         public void TestFetchByDonor()
         {
             DonationController dc = new DonationController(db);
@@ -71,19 +71,54 @@ namespace DMSLite.Tests.Controllers
             {
                 dc.FetchByDonor(ref fetchedDonations, donList);
                 Assert.IsTrue(fetchedDonations.Count() == 1);
+                Assert.AreEqual(d.Id, fetchedDonations.First().Id);
             }
             finally
             {
                 dc.Remove(d);
                 doc.Remove(don);
             }
+        }
 
+        [TestMethod]
+        //Tests DonationController method FetchByValue
+        public void TestFetchByValue()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByDonor",
+                LastName = "lName_TestFetchByDonor",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            float testValue = 123456789;
 
-
-
-            //FetchByDonor(ref List < Donation > filteredDonations, List < Donor > donors)
-
-
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = testValue,
+                ObjectDescription = "FetchByValue",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            try
+            {
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValue(ref fetchedDonations, testValue);
+                Assert.IsTrue(fetchedDonations.Contains(d));
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
         }
 
         [TestMethod]
