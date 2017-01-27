@@ -268,36 +268,56 @@
             "Show donations from [donor name]"
         ];
 
-        $('#mainInput').keyup(function (e) {
-            // 'enter' key was pressed
-            var $suggest = $('#suggestion');
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if (code == 13) {
-                $(this).val($suggest.val());
-                $suggest.val("");
-                return false;
-            }
-
-            // some other key was pressed
-            var needle = $(this).val();
-
-            // is the field empty?
-            if (!$.trim(needle).length) {
-                $suggest.val("");
-                return false;
-            }
-
-            // compare input with haystack
-            $.each(haystack, function (i, term) {
-                var regex = new RegExp('^' + needle, 'i');
-                if (regex.test(term)) {
-                    $suggest.val(needle + term.slice(needle.length));
-                    // use first result
+          //use the KEYDOWN to cancel out the tab key in the #search interface
+            $('#mainInput').keydown(function (e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 9) {
                     return false;
                 }
-                $suggest.val("");
             });
-        });
+
+            //act on the keyup
+            $('#mainInput').keyup(function (e) {
+                var $suggest = $('#suggestion');
+                var code = (e.keyCode ? e.keyCode : e.which);
+
+                // 'tab' key was pressed
+                if (code == 9) {
+                    s = $suggest.val();
+
+                    //if there is a [] somewhere in the suggestion, jump to it, otherwise fill the box
+                    if (s.indexOf('[') > -1) {
+                        s = s.substring(0, s.indexOf('['));
+                    }
+
+                    //if there is no suggestion, break
+                    if (s == "") {
+                        return false;
+                    }
+                    $(this).val(s);
+
+                    return false;
+                }
+
+                // if some other key was pressed
+                var needle = $(this).val();
+                // is the field is empty, make the suggestion ""
+                if (!$.trim(needle).length) {
+                    $suggest.val("");
+                    return false;
+                }
+
+                // compare input with haystack to get a suggestion
+                $.each(haystack, function (i, term) {
+                    var regex = new RegExp('^' + needle, 'i');
+                    if (regex.test(term)) {
+                        $suggest.val(needle + term.slice(needle.length));
+                        // use first result
+                        return false;
+                    }
+                    $suggest.val("");
+                });
+            });
 
     });
 </script>
