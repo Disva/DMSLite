@@ -281,7 +281,37 @@
              'all',
              '*',
              [
-                 'donors'
+                 'donors',
+                 'batches'
+             ]
+         ]
+     ],
+     [
+         'edit',
+         'modify',
+         [
+             '[donor name or search]'
+         ]
+     ],
+     [
+         'add',
+         'add new',
+         'create',
+         'create new',
+         'new',
+         [
+             '[donor name, email or phoneNumber]',
+             'donor',
+             'donation',
+             'batch'
+         ]
+     ],
+     [
+         'close',
+         [
+             'batch',
+             [
+                 '[batch name]'
              ]
          ]
      ]
@@ -309,7 +339,12 @@
                         for (j = 0; j < tempArray2.length; j++) {
                             if (!Array.isArray(input[i])) {
                                 if (input[i] != "*") {
-                                    tempArray.push(tempArray2[j] + " " + input[i]);
+                                    if (tempArray2[j].length == 0) {
+                                        tempArray.push(input[i]);
+                                    } else {
+                                        tempArray.push(tempArray2[j] + " " + input[i]);
+                                    }
+
                                 } else {
                                     tempArray.push(tempArray2[j]);
                                 }
@@ -326,10 +361,9 @@
                 tempArray = [];
             }
             while (true);
-            console.log(tempArray);
             $.merge(haystack, tempArray);
-            console.log(haystack);
         }
+        console.log(haystack);
 
         //use the KEYDOWN to cancel out the tab key in the #search interface
         $('#mainInput').keydown(function (e) {
