@@ -128,10 +128,16 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("date-period", "");
             //parameters.Add("postype", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
-            Assert.AreEqual(dbBatches.Count, testBatches.Count);
-            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
-            //remove testing batch
-            bc.Remove(b);
+            try
+            {
+                Assert.AreEqual(dbBatches.Count, testBatches.Count);
+                Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            }
+            finally
+            {
+                //remove testing batch
+                bc.Remove(b);
+            }
         }
 
         [TestMethod]
@@ -146,33 +152,39 @@ namespace DMSLite.Tests.Controllers
                 Title = "TestFetchBatchByDate",
             };
             b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
-            //searches for that open batch by date before
-            parameters.Add("title", "TestFetchBatchByDate"); //The batch that exists at the beginning of the current era
-            parameters.Add("date", b.CreateDate.AddMilliseconds(1).ToString("yyyy-MM-dd"));
-            parameters.Add("date-period", "");
-            parameters.Add("datetype", "before");
-            parameters.Add("type", "open");
-            //parameters.Add("posttype", "opened");
-            List<Batch> testBatches = bc.FindBatches(parameters);
-            Assert.AreEqual(1, testBatches.Count);
-            Assert.AreEqual(b.Title, testBatches.First().Title);
+            try
+            {
+                //searches for that open batch made on a certain date
+                parameters.Add("title", "TestFetchBatchByDate");
+                parameters.Add("date", b.CreateDate.ToString("yyyy-MM-dd"));
+                parameters.Add("date-period", "");
+                parameters.Add("datetype", "on");
+                parameters.Add("type", "open");
+                //parameters.Add("posttype", "opened");
+                List<Batch> testBatches = bc.FindBatches(parameters);
+                Assert.AreEqual(1, testBatches.Count);
+                Assert.AreEqual(b.Title, testBatches.First().Title);
 
-            bc.PostBatch(b.Id);
+                bc.PostBatch(b.Id);
 
-            List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
-            parameters = new Dictionary<string, object>();
-            parameters.Add("title", "TestFetchBatchByDate");
-            parameters.Add("date", b.CreateDate.AddDays(-5).ToString("yyyy-MM-dd"));
-            parameters.Add("date-period", "");
-            parameters.Add("datetype", "after");
-            parameters.Add("type", "closed");
-            //parameters.Add("posttype", "closed");
-            testBatches = bc.FindBatches(parameters);
-            dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
-            Assert.AreEqual(dbBatches.Count, testBatches.Count);
-            Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
-            //remove testing batch
-            bc.Remove(b);
+                List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
+                parameters = new Dictionary<string, object>();
+                parameters.Add("title", "TestFetchBatchByDate");
+                parameters.Add("date", b.CreateDate.AddDays(-5).ToString("yyyy-MM-dd"));
+                parameters.Add("date-period", "");
+                parameters.Add("datetype", "after");
+                parameters.Add("type", "closed");
+                //parameters.Add("posttype", "closed");
+                testBatches = bc.FindBatches(parameters);
+                dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
+                Assert.AreEqual(dbBatches.Count, testBatches.Count);
+                Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
+            }
+            finally
+            {
+                //remove testing batch
+                bc.Remove(b);
+            }
         }
 
         [TestMethod]

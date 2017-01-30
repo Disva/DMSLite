@@ -81,13 +81,13 @@ namespace DMSLite.Controllers
             {
                 DateTime dateValue = convertDate(parameters["date"].ToString());
 
-                return Tuple.Create<DateTime, DateTime>(dateValue, dateValue);
+                return Tuple.Create<DateTime, DateTime>(StartOfDay(dateValue), EndOfDay(dateValue));
             }
 
             if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
                 return Tuple.Create<DateTime, DateTime>(
-                    convertDate(parameters["date-period"].ToString().Split('/')[0]),
-                    convertDate(parameters["date-period"].ToString().Split('/')[1])
+                    StartOfDay(convertDate(parameters["date-period"].ToString().Split('/')[0])),
+                    EndOfDay(convertDate(parameters["date-period"].ToString().Split('/')[1]))
                     );
 
             return null;
@@ -107,6 +107,16 @@ namespace DMSLite.Controllers
                 convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
 
             return convertedDate;
+        }
+
+        private DateTime StartOfDay(DateTime dateTime)
+        {
+            return dateTime.Date;
+        }
+
+        private DateTime EndOfDay(DateTime dateTime)
+        {
+            return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
         }
 
         // extract method
