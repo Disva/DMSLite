@@ -35,6 +35,10 @@ namespace DMSLite.Entities
         [EmailAddress]
         public string Email { get; set; }
 
+        [StringLength(255)]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
         private string _phoneNumber;
 
         [StringLength(255)]
