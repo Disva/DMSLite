@@ -280,12 +280,19 @@
                     break;
                 }
                 if (tempArray2.length == 0 && !Array.isArray(input[i])) {
-                    tempArray.push(input[i]);
+                    if (input[i] != "*") {
+                        tempArray.push(input[i]);
+                    }
+
                 } else {
                     //append
                     for (j = 0; j < tempArray2.length; j++) {
                         if (!Array.isArray(input[i])) {
-                            tempArray.push(tempArray2[j] + " " + input[i]);
+                            if (input[i] != "*") {
+                                tempArray.push(tempArray2[j] + " " + input[i]);
+                            } else {
+                                tempArray.push(tempArray2[j]);
+                            }
                         }
                     }
                 }
