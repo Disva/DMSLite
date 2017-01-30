@@ -141,26 +141,24 @@ namespace DMSLite.Tests.Controllers
             BatchController bc = new BatchController(db);
             //adds a new testing batch to the db
             Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatchByDate",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
             //searches for that open batch by date before
-            /*parameters.Add("title", "We are number one"); //The batch that exists at the beginning of the current era
-            parameters.Add("date", "2000-01-01"); //A date 2000 years later
+            parameters.Add("title", "TestFetchBatchByDate"); //The batch that exists at the beginning of the current era
+            parameters.Add("date", b.CreateDate.AddMilliseconds(1).ToString("yyyy-MM-dd"));
             parameters.Add("date-period", "");
             parameters.Add("datetype", "before");
             parameters.Add("type", "open");
             //parameters.Add("posttype", "opened");
             List<Batch> testBatches = bc.FindBatches(parameters);
             Assert.AreEqual(1, testBatches.Count);
-            Assert.AreEqual("We are number one", testBatches.First().Title);*/
-            //close batch
-            
-            //searches for that closed batch by date after
-            
-            Batch b = new Batch()
-            {
-                Title = "TestFetchBatchByDate",
-            };
-            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            Assert.AreEqual(b.Title, testBatches.First().Title);
+
             bc.PostBatch(b.Id);
+
             List<Batch> dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
             parameters = new Dictionary<string, object>();
             parameters.Add("title", "TestFetchBatchByDate");
@@ -169,7 +167,7 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("datetype", "after");
             parameters.Add("type", "closed");
             //parameters.Add("posttype", "closed");
-            List<Batch> testBatches = bc.FindBatches(parameters);
+            testBatches = bc.FindBatches(parameters);
             dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
             Assert.AreEqual(dbBatches.Count, testBatches.Count);
             Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
@@ -226,14 +224,20 @@ namespace DMSLite.Tests.Controllers
                 Title = "Roswell",
             };
             b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
-            //check db to see if Roswell exists
-            List<Batch> Roswells = db.Batches.Where(x => x.Id == b.Id).ToList();
-            if(Roswells.Count != 1)
+            try
             {
-                Assert.Fail();
+                //check db to see if Roswell exists
+                List<Batch> Roswells = db.Batches.Where(x => x.Id == b.Id).ToList();
+                if (Roswells.Count != 1)
+                {
+                    Assert.Fail();
+                }
+                Assert.IsTrue(b.isEqualTo(Roswells.ElementAt<Batch>(0)));
             }
-            Assert.IsTrue(b.isEqualTo(Roswells.ElementAt<Batch>(0)));
-            bc.Remove(b);
+            finally
+            {
+                bc.Remove(b);
+            }            
         }
 
         [TestMethod]
@@ -257,8 +261,14 @@ namespace DMSLite.Tests.Controllers
             {
                 Assert.Fail();
             }
-            Assert.IsFalse(b.isEqualTo(Roswells.ElementAt<Batch>(0)));
-            bc.Remove(b);
+            try
+            {
+                Assert.IsFalse(b.isEqualTo(Roswells.ElementAt<Batch>(0)));
+            }
+            finally
+            {
+                bc.Remove(b);
+            }
         }
 
         [TestMethod]
@@ -272,14 +282,21 @@ namespace DMSLite.Tests.Controllers
                 Title = "TestPostBatch",
             };
             b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
-            Assert.IsNull(b.CloseDate);//check that the batch is still open
-            //post the batch
-            bc.PostBatch(b.Id);
-            //fetch the batch
-            Batch updatedB = db.Batches.Where(x => x.Id == b.Id).ToList().First<Batch>();
-            Assert.IsNotNull(updatedB.CloseDate);//checks that the batch is closed
-            //remove the test batch
-            bc.Remove(updatedB);
+            Batch updatedB = new Batch();
+            try
+            {
+                Assert.IsNull(b.CloseDate);//check that the batch is still open
+                                           //post the batch
+                bc.PostBatch(b.Id);
+                //fetch the batch
+                updatedB = db.Batches.Where(x => x.Id == b.Id).ToList().First<Batch>();
+                Assert.IsNotNull(updatedB.CloseDate);//checks that the batch is closed
+            }
+            finally
+            {
+                //remove the test batch
+                bc.Remove(updatedB);
+            }
         }
 
     }
