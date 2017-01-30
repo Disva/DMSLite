@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Globalization;
 using LinqKit;
+using Newtonsoft.Json;
 
 namespace DMSLite.Controllers
 {
@@ -52,6 +53,17 @@ namespace DMSLite.Controllers
 
         public ActionResult FetchDonations(Dictionary<string, object> parameters)
         {
+            //error responses related to range
+            List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
+            if (valueRangeList.Any())
+            {
+                if (valueRangeList.Count() != 2)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range isn't completed");
+                if (float.Parse(valueRangeList[0]) > float.Parse(valueRangeList[1]))
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range is invalid");
+            }
+
+            //post-fetch responses
             List<Donation> filteredDonations = FindDonations(parameters);
             if (filteredDonations == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
@@ -66,8 +78,11 @@ namespace DMSLite.Controllers
         {
             List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
             bool paramsExist = (
-                !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
-                !String.IsNullOrEmpty(parameters["value"].ToString())
+                (
+                    (!String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
+                    !String.IsNullOrEmpty(parameters["value"].ToString())) ||
+                    (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
+                )
             );
             if(paramsExist)
             {
@@ -80,6 +95,11 @@ namespace DMSLite.Controllers
                 if (!String.IsNullOrEmpty(parameters["value"].ToString()))
                 {
                     FetchByValue(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
+                }
+                if (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
+                {
+                    List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
+                    FetchByValueRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
                 }
             }
             return returnedDonations;
@@ -101,6 +121,11 @@ namespace DMSLite.Controllers
         public void FetchByValue(ref List<Donation> filteredDonations, float value)
         {
             filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+        }
+
+        public void FetchByValueRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
+        {
+            filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
         }
 
         #endregion
