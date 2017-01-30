@@ -215,6 +215,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     padding: 5px;
     font-size: 1.2em;
     width: 100%;
+    max-width: none;
 }
 
 #search {
