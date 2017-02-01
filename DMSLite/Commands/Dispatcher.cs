@@ -55,7 +55,7 @@ namespace DMSLite.Commands
             if (thisPath.Contains("DMSLite\\"))//for the DMS project
                 path = Path.Combine(thisPath, @"Commands\", CommandsLocation);
             else//for the testing project
-                path = Path.Combine("../../../DMSLite/", @"Commands\", CommandsLocation);
+                path = Path.Combine("../../../Users/Administrator/deployment/", @"Commands\", CommandsLocation);
 
             StreamReader r = new StreamReader(path);
             string json = r.ReadToEnd();
