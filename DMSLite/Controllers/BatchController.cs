@@ -16,7 +16,7 @@ namespace DMSLite.Controllers
 
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
 
-        private List<Batch> filteredBatches;
+        private static List<Batch> filteredBatches;
 
         public BatchController()
         {
@@ -34,6 +34,23 @@ namespace DMSLite.Controllers
             filteredBatches = FindBatches(parameters);
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredBatches.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
+
+            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+        }
+
+        public ActionResult FetchClosedBatchesByDate(Dictionary<string, object> parameters)
+        {
+            if (filteredBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            {
+                DateRange convertedDate = dateFromRange(ref parameters);
+                FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
+            }
 
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
@@ -137,6 +154,22 @@ namespace DMSLite.Controllers
                 addByDate(searchRange, searchType);
             else
                 filterByDate(searchRange, searchType);
+        }
+
+        private void FilterByClosedDate(DateRange searchRange, string datetype = "on")
+        {
+            switch (datetype)
+            {
+                case "before": //Searching before a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item1) < 0).ToList(); //The closeDate is earlier than the searchDate
+                    break;
+                case "after": //Searching after a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item2) > 0).ToList(); //The closeDate is later than the searchDate
+                    break;
+                case "on":    //Searching on a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item2) <= 0).ToList(); //The closeDate is the same as the searchDate
+                    break;
+            }
         }
 
         private void filterByDate(DateRange searchRange, SEARCH_TYPE searchType)
