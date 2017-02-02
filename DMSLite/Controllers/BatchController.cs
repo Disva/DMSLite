@@ -16,6 +16,8 @@ namespace DMSLite.Controllers
 
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
 
+        private List<Batch> filteredBatches;
+
         public BatchController()
         {
             db = new OrganizationDb();
@@ -29,7 +31,7 @@ namespace DMSLite.Controllers
         #region Fetch
         public ActionResult FetchBatches(Dictionary<string, object> parameters)
         {
-            List<Batch> filteredBatches = FindBatches(parameters);
+            filteredBatches = FindBatches(parameters);
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
@@ -41,7 +43,7 @@ namespace DMSLite.Controllers
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
         {
-            List<Batch> filteredBatches = new List<Batch>();
+            filteredBatches = new List<Batch>();
 
             //the paramsExist variable is used to check if the list of batches must be created or filtered.
             //every call of FindBatches must include both a type and title i nthe params, even if empty
@@ -57,18 +59,18 @@ namespace DMSLite.Controllers
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
                 DateRange convertedDate = dateFromRange(ref parameters);
-                FetchByDate(ref filteredBatches, convertedDate, parameters["datetype"].ToString());
+                FetchByDate(convertedDate, parameters["datetype"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
             if (!String.IsNullOrEmpty(parameters["type"].ToString()))
             {
-                FetchByType(ref filteredBatches, parameters["type"].ToString());
+                FetchByType(parameters["type"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
             if (!String.IsNullOrEmpty(parameters["title"].ToString()))
-                FetchByTitle(ref filteredBatches, parameters["title"].ToString());
+                FetchByTitle(parameters["title"].ToString());
 
             Finish:
             return filteredBatches;
@@ -120,7 +122,7 @@ namespace DMSLite.Controllers
         }
 
         // extract method
-        private void FetchByDate(ref List<Batch> filteredBatches, DateRange searchRange, string datetype = "on")
+        private void FetchByDate(DateRange searchRange, string datetype = "on")
         {
             SEARCH_TYPE searchType;
             if (datetype == "before")                      //True when searching before a certain date
@@ -132,12 +134,12 @@ namespace DMSLite.Controllers
             bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
 
             if (emptyList)
-                addByDate(ref filteredBatches, searchRange, searchType);
+                addByDate(searchRange, searchType);
             else
-                filterByDate(ref filteredBatches, searchRange, searchType);
+                filterByDate(searchRange, searchType);
         }
 
-        private void filterByDate(ref List<Batch> filteredBatches, DateRange searchRange, SEARCH_TYPE searchType)
+        private void filterByDate(DateRange searchRange, SEARCH_TYPE searchType)
         {
             switch (searchType)
             {
@@ -153,7 +155,7 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void addByDate(ref List<Batch> filteredBatches, DateRange searchRange, SEARCH_TYPE searchType)
+        private void addByDate(DateRange searchRange, SEARCH_TYPE searchType)
         {
             switch (searchType)
             {
@@ -169,39 +171,39 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void FetchByTitle(ref List<Batch> list, string Title)
+        private void FetchByTitle(string Title)
         {
             //searching through the db uses LINQ, which is picky about what variables can be passed.
             //For instance, LINQ does not accept ArrayIndex variables in queries,
             //so they are individual string variables in this query instead.
-            if (list.Count == 0)
+            if (filteredBatches.Count == 0)
             {
                 //look for batches that contain the specified title (case insensitive)
-                list.AddRange(db.Batches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())));
+                filteredBatches.AddRange(db.Batches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())));
             }
             else
             {
-                list = list.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())).ToList();
+                filteredBatches = filteredBatches.Where(x => x.Title.ToUpper().Contains(Title.ToUpper())).ToList();
             }
         }
 
-        private void FetchByType(ref List<Batch> list, string batchStatus)
+        private void FetchByType(string batchStatus)
         {
             bool openBatches = !batchStatus.Equals("closed");
 
-            if (list.Count == 0)
+            if (filteredBatches.Count == 0)
             {
                 if (openBatches)
-                    list.AddRange(db.Batches.Where(x => x.CloseDate == null));
+                    filteredBatches.AddRange(db.Batches.Where(x => x.CloseDate == null));
                 else
-                    list.AddRange(db.Batches.Where(x => x.CloseDate != null));
+                    filteredBatches.AddRange(db.Batches.Where(x => x.CloseDate != null));
             }
             else
             {
                 if (openBatches)
-                    list = list.Where(x => x.CloseDate == null).ToList();
+                    filteredBatches = filteredBatches.Where(x => x.CloseDate == null).ToList();
                 else
-                    list = list.Where(x => x.CloseDate != null).ToList();
+                    filteredBatches = filteredBatches.Where(x => x.CloseDate != null).ToList();
             }
         }
 
