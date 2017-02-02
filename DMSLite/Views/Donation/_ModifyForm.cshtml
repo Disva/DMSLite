@@ -1,5 +1,4 @@
 ﻿@model DMSLite.Entities.Donation
-
 @{ var id = Guid.NewGuid().ToString(); }
 <div id="@id">
     @using (Ajax.BeginForm("Modify", "Donation", new AjaxOptions()
