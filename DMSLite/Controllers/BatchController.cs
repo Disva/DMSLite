@@ -48,7 +48,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = dateFromRange(ref parameters);
+                DateRange convertedDate = DateFromRange(ref parameters);
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
             }
 
@@ -75,7 +75,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = dateFromRange(ref parameters);
+                DateRange convertedDate = DateFromRange(ref parameters);
                 FetchByDate(convertedDate, parameters["datetype"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
@@ -93,27 +93,27 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
-        private DateRange dateFromRange(ref Dictionary<string, object> parameters)
+        private DateRange DateFromRange(ref Dictionary<string, object> parameters)
         {
 
             if (!String.IsNullOrWhiteSpace(parameters["date"].ToString()))
             {
-                DateTime dateValue = convertDate(parameters["date"].ToString());
+                DateTime dateValue = ConvertDate(parameters["date"].ToString());
 
-                return Tuple.Create<DateTime, DateTime>(StartOfDay(dateValue), EndOfDay(dateValue));
+                return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
             }
 
             if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
-                return Tuple.Create<DateTime, DateTime>(
-                    StartOfDay(convertDate(parameters["date-period"].ToString().Split('/')[0])),
-                    EndOfDay(convertDate(parameters["date-period"].ToString().Split('/')[1]))
+                return Tuple.Create(
+                    StartOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[0])),
+                    EndOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[1]))
                     );
 
             return null;
         }
 
         // TODO: rebuff
-        private DateTime convertDate(string date)
+        private DateTime ConvertDate(string date)
         {
             DateTime convertedDate;
             if (date.Length == 4)
@@ -151,9 +151,9 @@ namespace DMSLite.Controllers
             bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
 
             if (emptyList)
-                addByDate(searchRange, searchType);
+                AddByDate(searchRange, searchType);
             else
-                filterByDate(searchRange, searchType);
+                FilterByDate(searchRange, searchType);
         }
 
         private void FilterByClosedDate(DateRange searchRange, string datetype = "on")
@@ -172,7 +172,7 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void filterByDate(DateRange searchRange, SEARCH_TYPE searchType)
+        private void FilterByDate(DateRange searchRange, SEARCH_TYPE searchType)
         {
             switch (searchType)
             {
@@ -188,7 +188,7 @@ namespace DMSLite.Controllers
             }
         }
 
-        private void addByDate(DateRange searchRange, SEARCH_TYPE searchType)
+        private void AddByDate(DateRange searchRange, SEARCH_TYPE searchType)
         {
             switch (searchType)
             {
