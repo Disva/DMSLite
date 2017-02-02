@@ -72,6 +72,42 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests fetching closed batches closed on a certain date
+        public void TestFetchBatchesClosedOnDate()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("datetype", "before");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "2017-01-01/2017-12-31");
+
+            BatchController bc = new BatchController(db);
+            PartialViewResult pvr = (PartialViewResult)bc.FetchClosedBatchesByDate(parameters);
+            if (pvr.ViewName == "~/Views/Shared/_ErrorMessage.cshtml")
+            {
+                //this is the case where there are no batches of that type
+                Assert.IsTrue(true);
+                return;
+            }
+
+            List<Batch> fetchedClosedBatches = ((List<Batch>)pvr.ViewData.Model).ToList();
+            List<Batch> dbClosedBatches = db.Batches.Where(x => x.CloseDate != null && x.CloseDate < DateTime.Parse("2017-01-01")).ToList();
+            int i = 0;
+            if (dbClosedBatches.Count() == 0 && fetchedClosedBatches.Count() == 0)
+            {
+                Assert.IsTrue(true);
+            }
+            else if (dbClosedBatches.Count() == fetchedClosedBatches.Count())
+            {
+                foreach (Batch b in dbClosedBatches)
+                {
+                    Assert.AreEqual(b.Id, fetchedClosedBatches.ElementAt(i).Id);
+                    Assert.AreEqual(b.CloseDate, fetchedClosedBatches.ElementAt(i).CloseDate);
+                    i++;
+                }
+            }
+        }
+
+        [TestMethod]
         //Tests fetching the list of all open batches
         public void TestFetchClosedBatches()
         {
