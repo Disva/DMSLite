@@ -102,6 +102,7 @@ function checkShowModal() {
 function checkFormatSelect2() {
     checkFormatSelect2Donor();
     checkFormatSelect2Batch();
+    checkFormatSelect2Account();
 }
 
 function checkFormatSelect2Donor() {
@@ -177,6 +178,44 @@ function checkFormatSelect2Batch() {
         });
 
         $(node).removeClass("format-batch-select2");
+    }
+}
+
+function checkFormatSelect2Account() {
+    var node = $("#outputContainer").find(".format--select2");
+    if (node.length > 0) {
+
+        $(node).select2({
+            ajax: {
+                url: "/Account/SearchAccounts/",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        searchKey: params.term
+                    };
+                },
+                cache: true
+            },
+            placeholder: { id: -1, text: "Select an account" },
+            templateResult: function (state) {
+                if (state.id === undefined) {
+                    return 'Searching...';
+                }
+
+                return state.title;
+            },
+            templateSelection: function (state) {
+                if (state.id === -1) {
+                    return state.text;
+                }
+                return state.title || state.text;
+            },
+            minimumInputLength: 1,
+            dropdownParent: $(node).parents(".modal")
+        });
+
+        $(node).removeClass("format-account-select2");
     }
 }
 
