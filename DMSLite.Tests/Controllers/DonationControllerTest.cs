@@ -28,6 +28,7 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("donor-name", "");
             parameters.Add("value", "");
             parameters.Add("value-range", "[]");
+            parameters.Add("value-comparator", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
             Assert.AreEqual(testDonations.Count(), dbDonations.Count());
@@ -112,7 +113,7 @@ namespace DMSLite.Tests.Controllers
             try
             {
                 fetchedDonations = db.Donations.ToList();
-                dc.FetchByValue(ref fetchedDonations, testValue);
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue, "==");
                 Assert.IsTrue(fetchedDonations.Contains(d));
             }
             finally
@@ -153,7 +154,7 @@ namespace DMSLite.Tests.Controllers
             try
             {
                 fetchedDonations = db.Donations.ToList();
-                dc.FetchByValueRange(ref fetchedDonations, testValue - 1, testValue + 1);
+                dc.FetchByValueClosedRange(ref fetchedDonations, testValue - 1, testValue + 1);
                 Assert.IsTrue(fetchedDonations.Contains(d));
             }
             finally
