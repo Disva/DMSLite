@@ -166,7 +166,7 @@ namespace DMSLite.Controllers
                 case "after": //Searching after a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item2) > 0).ToList(); //The closeDate is later than the searchDate
                     break;
-                case "on":    //Searching on a date
+                case "on":default:    //Searching on a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item2) <= 0).ToList(); //The closeDate is the same as the searchDate
                     break;
             }

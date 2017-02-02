@@ -18,7 +18,6 @@ namespace DMSLite.Tests.SDKs
         private static ApiAi apiAi = new ApiAi(new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English));
         private Random rand = new Random();
 
-        /**
         [TestMethod]
         public void APITestContextConversation()
         {
@@ -31,28 +30,8 @@ namespace DMSLite.Tests.SDKs
             response = apiAi.TextRequest("my batch title");
             Assert.IsFalse(response.Result.ActionIncomplete);
         }
-        **/
 
-        [TestMethod]
-        public void APITestAddBatch()
-        {
-            string batchTitle = "Birthday Party";
-
-            string[] inputs =
-            {
-                "add a batch {0}",
-                "add new batch {0}"
-            };
-
-            var response = apiAi.TextRequest("add new batch");
-            Assert.AreEqual(response.Result.Action, "AddBatch");
-            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
-
-            var nameResponse = RandomTextInput(inputs, batchTitle);
-            Assert.AreEqual(response.Result.Action, "AddBatch");
-            Assert.AreEqual(nameResponse.Result.Parameters["title"].ToString(), batchTitle);
-        }
-
+        #region Donor
         [TestMethod]
         public void APITestAddDonor()
         {
@@ -68,7 +47,7 @@ namespace DMSLite.Tests.SDKs
 
             //With No params
             var blankResponse = apiAi.TextRequest("create new donor");
-            Assert.AreEqual(blankResponse.Result.Action,  "AddDonor");
+            Assert.AreEqual(blankResponse.Result.Action, "AddDonor");
             Assert.IsTrue(String.IsNullOrWhiteSpace(blankResponse.Result.Parameters["name"].ToString()));
 
             //By name
@@ -86,18 +65,6 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
             Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email);
 
-        }
-
-        [TestMethod]
-        public void APITestAddDonation()
-        {
-            string[] inputs =
-            {
-                "add a donation {0}",
-            };
-
-            var response = apiAi.TextRequest("add new donation");
-            Assert.AreEqual(response.Result.Action, "AddDonation");
         }
 
         [TestMethod]
@@ -126,7 +93,7 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             response = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(response.Result.Action, "ViewDonors");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-", ""), true);
 
         }
 
@@ -155,13 +122,13 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "ModifyDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-", ""), true);
         }
 
         [TestMethod]
         public void APITestViewDonors()
         {
-            
+
             string[] inputs =
             {
                 "show donors",
@@ -171,6 +138,28 @@ namespace DMSLite.Tests.SDKs
             //test Action
             var response = RandomTextInput(inputs);
             Assert.AreEqual(response.Result.Action, "ViewAllDonors");
+        }
+        #endregion
+
+        #region Batch
+        [TestMethod]
+        public void APITestAddBatch()
+        {
+            string batchTitle = "Birthday Party";
+
+            string[] inputs =
+            {
+                "add a batch {0}",
+                "add new batch {0}"
+            };
+
+            var response = apiAi.TextRequest("add new batch");
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
+
+            var nameResponse = RandomTextInput(inputs, batchTitle);
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.AreEqual(nameResponse.Result.Parameters["title"].ToString(), batchTitle);
         }
 
         [TestMethod]
@@ -186,7 +175,7 @@ namespace DMSLite.Tests.SDKs
 
             var response = RandomTextInput(inputs, "");
             Assert.AreEqual(response.Result.Action, "ViewBatches");
-           
+
             response = RandomTextInput(inputs, open);
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), open, true);
 
@@ -238,6 +227,41 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
         }
 
+        [TestMethod]
+        public void APITestShowByClosedDate()
+        {
+            string[] inputs =
+            {
+                "closed {0} {1}",
+                "show closed {0} {1}"
+            };
+
+            var noContext = RandomTextInput(inputs, "before", "june");
+
+            Assert.AreEqual(noContext.Result.Action, "input.unknown");
+
+            var showAllBatches = apiAi.TextRequest("show all batches");
+            Assert.AreEqual(showAllBatches.Result.Action, "ViewBatches");
+
+            var response = RandomTextInput(inputs, "after", "2016");
+            Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
+        }
+        #endregion
+
+        #region Donation
+        [TestMethod]
+        public void APITestAddDonation()
+        {
+            string[] inputs =
+            {
+                "add a donation {0}",
+            };
+
+            var response = apiAi.TextRequest("add new donation");
+            Assert.AreEqual(response.Result.Action, "AddDonation");
+        }
+        #endregion
+        
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {
