@@ -38,5 +38,9 @@
   "ViewDonations": {
     "Item1": "Donation",
     "Item2": "FetchDonations"
+  },
+  "Help": {
+    "Item1": "Help",
+    "item2": "returnHelp"
   }
 }

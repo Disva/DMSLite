@@ -210,6 +210,7 @@
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\SetRoles.cshtml" />
     <Content Include="Views\Donation\_FetchIndexSolo.cshtml" />
+    <Content Include="Views\Shared\_Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

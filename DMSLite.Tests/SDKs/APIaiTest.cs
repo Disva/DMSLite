@@ -238,6 +238,20 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
         }
 
+        [TestMethod]
+        public void APITestHelp()
+        {
+            string[] inputs =
+            {
+                "help",
+                "help me",
+                "sos"
+            };
+
+            var response = RandomTextInput(inputs);
+            Assert.AreEqual(response.Result.Action, "Help");
+        }
+
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {
