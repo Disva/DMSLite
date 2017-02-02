@@ -256,6 +256,10 @@
     <Compile Include="Migrations\201701192123346_DonorAddress.Designer.cs">
       <DependentUpon>201701192123346_DonorAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701302144372_Account.cs" />
+    <Compile Include="Migrations\201701302144372_Account.Designer.cs">
+      <DependentUpon>201701302144372_Account.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -474,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701192123346_DonorAddress.resx">
       <DependentUpon>201701192123346_DonorAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701302144372_Account.resx">
+      <DependentUpon>201701302144372_Account.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
