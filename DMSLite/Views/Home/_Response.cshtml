@@ -1,6 +1,6 @@
 ﻿@model DMSLite.Models.ResponseModel
 
-<div class="bubbleLine"><div class="bubble leftBubble">@Model.Speech</div></div>
+<div class="bubbleLine"><div class="bubble leftBubble">@Html.Raw(Model.Speech)</div></div>
 
 @if(Model.Instructions != null)
 {
