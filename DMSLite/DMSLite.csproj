@@ -299,6 +299,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\homeJavascript.js" />
+    <Content Include="Scripts\Custom\suggestionBar.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
     <Content Include="Scripts\i18n\bg.js" />
