@@ -124,8 +124,64 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //Tests DonationController method FetchByValue
-        public void TestFetchByValueRange()
+        //Tests DonationController method FetchByValueOpenRange
+        public void TestFetchByValueOpenRange()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByValueRange",
+                LastName = "lName_TestFetchByValueRange",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            float testValue = 5;
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = testValue,
+                ObjectDescription = "FetchByValue",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            try
+            {
+                //test <
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue + 1, "<");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value > testValue + 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+                //test >
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue - 1, ">");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value < testValue - 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+                //test ==
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue, "==");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value != testValue).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByValueClosedRange
+        public void TestFetchByValueClosedRange()
         {
             DonationController dc = new DonationController(db);
             List<Donation> fetchedDonations = new List<Donation>();
@@ -156,6 +212,8 @@ namespace DMSLite.Tests.Controllers
                 fetchedDonations = db.Donations.ToList();
                 dc.FetchByValueClosedRange(ref fetchedDonations, testValue - 1, testValue + 1);
                 Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value < testValue - 1 && x.Value > testValue + 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
             }
             finally
             {
