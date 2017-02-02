@@ -55,6 +55,7 @@ function startLoading() {
 
     // Clear the textbox
     $("#mainInput").val("");
+    $("#suggestion").val("");
 
     // Format the textbox
     $("#mainInput").toggleClass("loading-background");

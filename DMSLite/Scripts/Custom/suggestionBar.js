@@ -45,7 +45,7 @@ $(function () {
          '[donor name, email or phoneNumber]',
          'donor',
          'donation',
-         'batch'
+         'batch [batch name]'
      ]
  ],
  [
