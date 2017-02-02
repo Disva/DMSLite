@@ -24,6 +24,7 @@ namespace DMSLite.Controllers
         {
             // we are using this MemoryStream to be able to access the PDF as an ActionResult.
             // source: https://stackoverflow.com/questions/15121876/how-do-i-display-a-pdf-using-pdfsharp-in-asp-net-mvc#15145131
+            //lol
             using (MemoryStream stream = new MemoryStream())
             { 
                 // Create a new PDF document
