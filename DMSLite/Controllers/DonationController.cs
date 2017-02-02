@@ -7,6 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Globalization;
+using LinqKit;
+using Newtonsoft.Json;
 
 namespace DMSLite.Controllers
 {
@@ -42,20 +45,99 @@ namespace DMSLite.Controllers
                 foreach(Donation donation in donations)
                     donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
 
-                return PartialView("~/Views/Donation/_FetchIndex.cshtml", donations);
+                return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", donations);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "No donations in \"" + batch.Title + "\".");
         }
+
+        public ActionResult FetchDonations(Dictionary<string, object> parameters)
+        {
+            //error responses related to range
+            List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
+            if (valueRangeList.Any())
+            {
+                if (valueRangeList.Count() != 2)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range isn't completed");
+                if (float.Parse(valueRangeList[0]) > float.Parse(valueRangeList[1]))
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range is invalid");
+            }
+
+            //post-fetch responses
+            List<Donation> filteredDonations = FindDonations(parameters);
+            if (filteredDonations == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredDonations.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
+
+            return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
+        }
+
+        public List<Donation> FindDonations(Dictionary<string, object> parameters)
+        {
+            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
+            bool paramsExist = (
+                (
+                    (!String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
+                    !String.IsNullOrEmpty(parameters["value"].ToString())) ||
+                    (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
+                )
+            );
+            if(paramsExist)
+            {
+                if (!String.IsNullOrEmpty(parameters["donor-name"].ToString())){
+                    DonorsController dc = new DonorsController(db);
+                    var donorPredicate = dc.FetchByName(parameters["donor-name"].ToString());
+                    List<Donor> matchedDonors = db.Donors.AsExpandable().Where(donorPredicate).ToList();
+                    FetchByDonor(ref returnedDonations, matchedDonors);
+                }
+                if (!String.IsNullOrEmpty(parameters["value"].ToString()))
+                {
+                    FetchByValue(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
+                }
+                if (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
+                {
+                    List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
+                    FetchByValueRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
+                }
+            }
+            return returnedDonations;
+        }
+
+        // extract method
+        public void FetchByDonor(ref List<Donation> filteredDonations, List<Donor> donors)
+        {
+            //NOTE: This filter needs to be applied FIRST if other filters are to be applied
+            filteredDonations = new List<Donation>();
+            List<Donation> allDonations = db.Donations.ToList<Donation>();
+            foreach (Donor d in donors)
+            {
+                List<Donation> filteredDonationsPerDonor = allDonations.Where(x => x.DonationDonor_Id == d.Id).ToList();
+                filteredDonations.AddRange(filteredDonationsPerDonor);
+            }
+        }
+
+        public void FetchByValue(ref List<Donation> filteredDonations, float value)
+        {
+            filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+        }
+
+        public void FetchByValueRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
+        {
+            filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
+        }
+
         #endregion
 
         #region Modify
         public ActionResult ModifyFromDonation(Donation donation)
         {
-            if(donation.DonationBatch.CloseDate == null)
-            { 
-                donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
-                donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
+            donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+
+            if (donation.DonationBatch.CloseDate == null)
+            {
                 return PartialView("~/Views/Donation/_Modify.cshtml", donation);
             }
             else
@@ -168,18 +250,23 @@ namespace DMSLite.Controllers
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
-            donation.DonationDonor = actualDonor;
-            donation.DonationBatch = actualBatch;
-            if (!ModelState.IsValid)
+            if (actualBatch.CloseDate == null)
             {
-                ModelState.Clear();
-                TryValidateModel(donation);
+                donation.DonationDonor = actualDonor;
+                donation.DonationBatch = actualBatch;
+                if (!ModelState.IsValid)
+                {
+                    ModelState.Clear();
+                    TryValidateModel(donation);
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Add(donation);
+                    return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
+                }
             }
-            if (ModelState.IsValid)
-            {
-                db.Add(donation);
-                return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
-            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 

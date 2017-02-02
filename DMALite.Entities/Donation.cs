@@ -13,19 +13,25 @@ namespace DMSLite.Entities
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Donor")]
         public Donor DonationDonor { get; set; }
 
-        [ForeignKey("DonationDonor")]
+        [ForeignKey("DonationDonor")]        
         public int DonationDonor_Id { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Description")]
         public string ObjectDescription { get; set; }
 
         [Required]
         public double Value { get; set; }
 
         [Required]
+        [Display(Name = "Batch")]
         public Batch DonationBatch { get; set; }
+
+        [Display(Name = "Account")]
+        public Account DonationAccount { get; set; }
 
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }

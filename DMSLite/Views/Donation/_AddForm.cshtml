@@ -37,9 +37,7 @@
                     @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor">
-                            
-                        </select>
+                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor"></select>
                     </div>
                 </div>
                 <div class="form-group">

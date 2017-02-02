@@ -53,7 +53,8 @@
     @using (Ajax.BeginForm("AddForm", "Donation", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = id
+        UpdateTargetId = id,
+        OnComplete = "checkFormatSelect2"
     }))
     {
         <div class="modal-footer">

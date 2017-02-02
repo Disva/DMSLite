@@ -50,6 +50,9 @@ textarea {
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='5' fill='white'/></svg>");
     background-repeat:no-repeat;
     background-position: left center;
+    position: relative;
+    z-index: 10;
+    background: transparent;
 }
 
 /* The chat output is set to appear directly above the chat box at all times */
@@ -72,7 +75,8 @@ textarea {
      background-image:url("ring-alt.svg") !important;
      transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, start) !important;
      cursor:default !important;
-     padding-left:34px;
+     padding-left:34px !important;
+     background-repeat: no-repeat !important;
 }
 
 #submitBtn {
@@ -201,4 +205,34 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .select2-container {
     width: 100%;
     max-width: 280px;
+}
+
+#search-container {
+    position: relative;
+}
+
+#search-container input {
+
+    padding: 6px;
+    font-size: 1.2em;
+    width: 100%;
+    max-width: none;
+}
+
+#search {
+    position: relative;
+    color: #000;
+    z-index: 10;
+    border: 1px solid #666;
+    background: transparent;
+}
+
+#suggestion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    color: #ccc;
+    background: transparent;
+    border: 1px solid #fff;
 }

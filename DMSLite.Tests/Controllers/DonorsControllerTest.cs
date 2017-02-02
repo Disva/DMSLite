@@ -202,6 +202,7 @@ namespace DMSLite.Tests.Controllers
                 Email = "test_email@test.com",
                 PhoneNumber = "000-000-0000",
             };
+            
             var arReturned = dc.Add(d);
             if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
                 && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_AddSimilar.cshtml")))
@@ -217,8 +218,10 @@ namespace DMSLite.Tests.Controllers
                 return;
             }
             else
+            {
+                dc.Remove(d);
                 Assert.Fail();
-            dc.Remove(d);
+            }
         }
 
         [TestMethod]
@@ -265,6 +268,7 @@ namespace DMSLite.Tests.Controllers
             catch (Exception e)
             {
                 //The duplicate was not added which passes the test
+                dc.Remove(d1);
                 Assert.IsTrue(true);
                 return;
             }
@@ -316,10 +320,16 @@ namespace DMSLite.Tests.Controllers
             pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
             Donor fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
 
-            Assert.IsNotNull(fetchedAgain);
-            Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
-            //delete test users
-            dc.Remove(fetchedAgain);
+            try
+            {
+                Assert.IsNotNull(fetchedAgain);
+                Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
+            }
+            finally
+            {
+                //delete test users
+                dc.Remove(fetchedAgain);
+            }
         }
 
     }

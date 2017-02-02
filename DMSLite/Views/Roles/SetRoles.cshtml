@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DMSLite.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Set Role";
+}
+
+<h2>Application Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                TenantId
+            </th>
+            <th>
+                Current Roles
+            </th>
+            <th>
+                Make Admin
+            </th>
+            <th>
+                Remove Admin
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.TenantId
+                </td>
+                <td>
+                    @string.Join(",", item.Roles.Select(x => ViewBag.Roles[x.RoleId]))
+                </td>
+                <td>
+                    @Html.ActionLink("Make Admin", "MakeAdmin", "Roles", new { @userId = item.Id}, new { @class = "btn btn-primary" })
+                </td>
+                <td>
+                    @Html.ActionLink("Remove Admin", "RemoveAdmin", "Roles", new { @userId = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
