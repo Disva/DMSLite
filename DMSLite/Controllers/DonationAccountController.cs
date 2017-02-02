@@ -33,7 +33,7 @@ namespace DMSLite.Controllers
             if (filteredAccounts.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no accounts were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredAccounts);//TODO PARTIAL VIEW NOT CREATED
+            return PartialView("~/Views/DonationAccount/_FetchIndex.cshtml", filteredAccounts);
         }
 
         public List<Account> FindAccounts(Dictionary<string, object> parameters)
@@ -81,7 +81,7 @@ namespace DMSLite.Controllers
         #region Add
         public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            return PartialView("~/Views/Batch/_Add.cshtml", parameters);//TODO CREATE PROPER PARTIAL VIEW
+            return PartialView("~/Views/DonationAccount/_Add.cshtml", parameters);
         }
 
         public ActionResult AddForm(Dictionary<string, object> parameters)
@@ -89,7 +89,7 @@ namespace DMSLite.Controllers
             Account newAccount = new Account();
             if (parameters.ContainsKey("title"))
                 newAccount.Title = parameters["title"].ToString();
-            return PartialView("~/Views/Batch/_AddForm.cshtml", newAccount);//TODO CREATE PROPER PARTIAL VIEW
+            return PartialView("~/Views/DonationAccount/_AddForm.cshtml", newAccount);
         }
 
         // TODO: Anti-forgery
@@ -106,11 +106,11 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(account);
-                    return PartialView("~/Views/Batch/_AddSuccess.cshtml", account);//TODO CREATE PROPER PARTIAL VIEW
+                    return PartialView("~/Views/DonationAccount/_AddSuccess.cshtml", account);
                 }
             }
             //an invalid submission shall return the form with some validation error messages.
-            return PartialView("~/Views/Batch/_AddForm.cshtml", account);//TODO CREATE PROPER PARTIAL VIEW
+            return PartialView("~/Views/DonationAccount/_AddForm.cshtml", account);
         }
 
         // Action to search for donors by name and obtain a json result
