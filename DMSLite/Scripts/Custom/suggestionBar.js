@@ -56,6 +56,12 @@ $(function () {
              '[batch name]'
          ]
      ]
+ ],
+ [
+     'help',
+     'sos',
+     'help me',
+     'list of commands'
  ]
     ];
     var haystack = [];
