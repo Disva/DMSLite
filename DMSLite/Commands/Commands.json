@@ -38,5 +38,17 @@
   "ViewDonations": {
     "Item1": "Donation",
     "Item2": "FetchDonations"
+  },
+  "Help": {
+    "Item1": "Help",
+    "item2": "returnHelp"
+  },
+  "AddAccount": {
+    "Item1": "DonationAccount",
+    "item2": "AddMenu"
+  },
+  "ViewAccounts": {
+    "Item1": "DonationAccount",
+    "Item2": "FetchAccounts"
   }
 }
