@@ -27,6 +27,7 @@ namespace DMSLite.Tests.Controllers
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("donor-name", "");
             parameters.Add("value", "");
+            parameters.Add("value-range", "[]");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
             Assert.AreEqual(testDonations.Count(), dbDonations.Count());
@@ -89,8 +90,8 @@ namespace DMSLite.Tests.Controllers
             DonorsController doc = new DonorsController(db);
             Donor don = new Donor
             {
-                FirstName = "fName_TestFetchByDonor",
-                LastName = "lName_TestFetchByDonor",
+                FirstName = "fName_TestFetchByValue",
+                LastName = "lName_TestFetchByValue",
                 Email = "test_email@test.com",
                 PhoneNumber = "000-000-0000",
             };
@@ -112,6 +113,47 @@ namespace DMSLite.Tests.Controllers
             {
                 fetchedDonations = db.Donations.ToList();
                 dc.FetchByValue(ref fetchedDonations, testValue);
+                Assert.IsTrue(fetchedDonations.Contains(d));
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByValue
+        public void TestFetchByValueRange()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByValueRange",
+                LastName = "lName_TestFetchByValueRange",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            float testValue = 5;
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = testValue,
+                ObjectDescription = "FetchByValue",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            try
+            {
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueRange(ref fetchedDonations, testValue - 1, testValue + 1);
                 Assert.IsTrue(fetchedDonations.Contains(d));
             }
             finally
@@ -170,15 +212,20 @@ namespace DMSLite.Tests.Controllers
 
             //check for success in db
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
-            Assert.AreEqual(donation.ObjectDescription, "desc2_TestModifyDonation");
+            try
+            {
+                Assert.AreEqual(donation.ObjectDescription, "desc2_TestModifyDonation");
+            }
+            finally
+            {
+                //ITERATION 6: close the batch
+                //ITERATION 6: modifying a closed batch is not possible
 
-            //ITERATION 6: close the batch
-            //ITERATION 6: modifying a closed batch is not possible
-
-            //delete all temporary objects
-            donationController.Remove(donation);
-            donorsController.Remove(donor);
-            batchController.Remove(batch);
+                //delete all temporary objects
+                donationController.Remove(donation);
+                donorsController.Remove(donor);
+                batchController.Remove(batch);
+            }
         }
 
         [TestMethod]
@@ -200,16 +247,22 @@ namespace DMSLite.Tests.Controllers
             {
                 Assert.Fail();
             }
-            Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
-            //now delete the donation and check that it no longer exists
-            dc.DeleteFromDonation(d.Id);
-            Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
-            if (Donations.Count != 0)
+            try
             {
-                dc.Remove(d);
-                Assert.Fail();
+                Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
             }
-            Assert.IsTrue(true);
+            finally
+            {
+                //now delete the donation and check that it no longer exists
+                dc.DeleteFromDonation(d.Id);
+                Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+                if (Donations.Count != 0)
+                {
+                    dc.Remove(d);
+                    Assert.Fail();
+                }
+                Assert.IsTrue(true);
+            }
         }
 
         [TestMethod]
@@ -226,14 +279,20 @@ namespace DMSLite.Tests.Controllers
                 DonationBatch = db.Batches.First<Batch>(),
             };
             d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
-            //check db to see if wow exists
-            List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
-            if (Donations.Count != 1)
+            try
             {
-                Assert.Fail();
+                //check db to see if wow exists
+                List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
+                if (Donations.Count != 1)
+                {
+                    Assert.Fail();
+                }
+                Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
             }
-            Assert.IsTrue(d.isEqualTo(Donations.ElementAt<Donation>(0)));
-            dc.Remove(d);
+            finally
+            {
+                dc.Remove(d);
+            }
         }
 
         [TestMethod]
@@ -261,8 +320,14 @@ namespace DMSLite.Tests.Controllers
             {
                 Assert.Fail();
             }
-            Assert.IsFalse(d.isEqualTo(Donations.ElementAt<Donation>(0)));
-            dc.Remove(d);
+            try
+            {
+                Assert.IsFalse(d.isEqualTo(Donations.ElementAt<Donation>(0)));
+            }
+            finally
+            {
+                dc.Remove(d);
+            }
         }
 
     }

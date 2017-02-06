@@ -210,6 +210,7 @@
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -260,6 +261,10 @@
     <Compile Include="Migrations\201701302144372_Account.Designer.cs">
       <DependentUpon>201701302144372_Account.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702021911046_DonnorAccount.cs" />
+    <Compile Include="Migrations\201702021911046_DonnorAccount.Designer.cs">
+      <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -295,6 +300,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\homeJavascript.js" />
+    <Content Include="Scripts\Custom\suggestionBar.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
     <Content Include="Scripts\i18n\bg.js" />
@@ -435,6 +442,7 @@
     <Content Include="Views\DonationAccount\_Add.cshtml" />
     <Content Include="Views\DonationAccount\_AddForm.cshtml" />
     <Content Include="Views\DonationAccount\_AddSuccess.cshtml" />
+    <Content Include="Views\Shared\_Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -485,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701302144372_Account.resx">
       <DependentUpon>201701302144372_Account.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702021911046_DonnorAccount.resx">
+      <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

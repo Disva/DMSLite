@@ -36,28 +36,32 @@ namespace DMSLite.Tests.Controllers
                 LastName = "lName_TestAddMultiTNewValidDonor"
             };
             var arReturned = dc.Add(d);
-
             var foundDonors = findDonors(db, d);
+            try
+            {
+                // Ensure that the donor was in fact added
+                Assert.IsTrue(foundDonors.Count() == 1, "Donor could not be added to the database for testing");
 
-            // Ensure that the donor was in fact added
-            Assert.IsTrue(foundDonors.Count() == 1, "Donor could not be added to the database for testing");
+                // Switch to another tenant
+                db.SetTenantId(1);
 
-            // Switch to another tenant
-            db.SetTenantId(1);
+                foundDonors = findDonors(db, d);
 
-            foundDonors = findDonors(db, d);
+                // Check if we can now access the donor
+                Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we switched tenants");
 
-            // Check if we can now access the donor
-            Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we switched tenants");
+                db.SetTenantId(0);              
+            }
+            finally
+            {
+                // Clean up
+                dc.Remove(d);
 
-            db.SetTenantId(0);
+                foundDonors = findDonors(db, d);
 
-            // Clean up
-            dc.Remove(d);
-
-            foundDonors = findDonors(db, d);
-
-            Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we tried to delete it");
+                Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we tried to delete it");
+            }
+            
         }
 
         // Check if a donor retains its tenant after modification
@@ -82,33 +86,37 @@ namespace DMSLite.Tests.Controllers
             Assert.IsTrue(foundDonors.Count() == 1, "Donor could not be added to the database for testing");
 
             Donor foundEditedDonor = foundDonors.First();
+            try
+            {
+                foundEditedDonor.Email = "test.test@email.ca";
 
-            foundEditedDonor.Email = "test.test@email.ca";
+                // Make a change to the donor
+                dc.Modify(foundEditedDonor);
 
-            // Make a change to the donor
-            dc.Modify(foundEditedDonor);
+                foundDonors = findDonors(db, d);
 
-            foundDonors = findDonors(db, d);
+                // Ensure that the donor was modified
+                Assert.IsTrue(foundDonors.First().Email == foundEditedDonor.Email, "The Donor was not successfully edited");
 
-            // Ensure that the donor was modified
-            Assert.IsTrue(foundDonors.First().Email == foundEditedDonor.Email, "The Donor was not successfully edited");
+                db.SetTenantId(1);
 
-            db.SetTenantId(1);
+                foundDonors = findDonors(db, foundEditedDonor);
 
-            foundDonors = findDonors(db, foundEditedDonor);
+                // Check to see if we can find the donor from the other tenant
+                int foundCount = foundDonors.Count();
+                Assert.IsTrue(foundCount == 0, "Donor was still in the database even though we switched tenants. Found " + foundCount.ToString() + " donors");
 
-            // Check to see if we can find the donor from the other tenant
-            int foundCount = foundDonors.Count();
-            Assert.IsTrue(foundCount == 0, "Donor was still in the database even though we switched tenants. Found " + foundCount.ToString() + " donors");
+                db.SetTenantId(2);
+            }
+            finally
+            {
+                // Clean up
+                dc.Remove(foundEditedDonor);
 
-            db.SetTenantId(2);
+                foundDonors = findDonors(db, foundEditedDonor);
 
-            // Clean up
-            dc.Remove(foundEditedDonor);
-
-            foundDonors = findDonors(db, foundEditedDonor);
-
-            Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we tried to delete it");
+                Assert.IsTrue(foundDonors.Count() == 0, "Donor was still in the database even though we tried to delete it");
+            }
         }
     }
 }
