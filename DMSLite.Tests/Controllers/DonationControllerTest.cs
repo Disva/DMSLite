@@ -67,7 +67,7 @@ namespace DMSLite.Tests.Controllers
                 DonationDonor = don,
                 DonationBatch = db.Batches.First(),
             };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, null))).Model);
             try
             {
                 dc.FetchByDonor(ref fetchedDonations, donList);
@@ -108,7 +108,7 @@ namespace DMSLite.Tests.Controllers
                 DonationDonor = don,
                 DonationBatch = db.Batches.First(),
             };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, null))).Model);
             try
             {
                 fetchedDonations = db.Donations.ToList();
@@ -149,7 +149,7 @@ namespace DMSLite.Tests.Controllers
                 DonationDonor = don,
                 DonationBatch = db.Batches.First(),
             };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, null))).Model);
             try
             {
                 fetchedDonations = db.Donations.ToList();
@@ -202,13 +202,13 @@ namespace DMSLite.Tests.Controllers
             //it just bypasses the fact that only one donor with the test data exists and a new one can't be made
             donor = db.Donors.First(x => x.FirstName == donor.FirstName);
 
-            donationController.Add(donation, donor.Id, batch.Id);
+            donationController.Add(donation, donor.Id, batch.Id, null);
 
             //modify that donation
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
             donation.ObjectDescription = "desc2_TestModifyDonation";
 
-            donationController.Modify(donation, donor.Id, batch.Id);
+            donationController.Modify(donation, donor.Id, batch.Id, null);
 
             //check for success in db
             donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
@@ -240,7 +240,7 @@ namespace DMSLite.Tests.Controllers
                 DonationDonor = db.Donors.First<Donor>(),
                 DonationBatch = db.Batches.First<Batch>(),
             };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, null))).Model);
             //check db to see if ToDelete exists
             List<Donation> Donations = db.Donations.Where(x => x.Id == d.Id).ToList();
             if (Donations.Count != 1)
@@ -278,7 +278,7 @@ namespace DMSLite.Tests.Controllers
                 DonationDonor = db.Donors.First<Donor>(),
                 DonationBatch = db.Batches.First<Batch>(),
             };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, null))).Model);
             try
             {
                 //check db to see if wow exists
@@ -307,7 +307,7 @@ namespace DMSLite.Tests.Controllers
             };
             try
             {
-                d = (Donation)(((PartialViewResult)(dc.Add(d, 0, 0))).Model);
+                d = (Donation)(((PartialViewResult)(dc.Add(d, 0, 0, null))).Model);
             }
             catch(Exception e)
             {

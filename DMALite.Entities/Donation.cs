@@ -34,7 +34,7 @@ namespace DMSLite.Entities
         public Account DonationAccount { get; set; }
 
         [ForeignKey("DonationAccount")]
-        public int DonationAccount_Id { get; set; }
+        public int? DonationAccount_Id { get; set; }
 
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }

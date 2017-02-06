@@ -214,7 +214,7 @@ namespace DMSLite.Tests.Controllers
                 DonationBatch = testBatch,
                 DonationBatch_Id = testBatch.Id,
             };
-            dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id);
+            dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id, null);
             pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
             if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
                 && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_FetchIndex.cshtml"))

@@ -71,12 +71,17 @@ namespace DMSLite.Controllers
             if (filteredDonations.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
 
+            foreach(var donation in filteredDonations)
+            {
+
+            }
+
             return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
         }
 
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
-            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
+            List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).Include(z => z.DonationAccount).ToList<Donation>());
             bool paramsExist = (
                 (
                     (!String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
@@ -135,6 +140,7 @@ namespace DMSLite.Controllers
         {
             donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
             donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
+            donation.DonationAccount = db.Accounts.First(x => x.Id == donation.DonationAccount_Id);
 
             if (donation.DonationBatch.CloseDate == null)
             {
@@ -144,17 +150,26 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be edited: batch \"" + donation.DonationBatch.Title + "\"is closed.");
         }
 
-        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch)
+        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch, int? donationAccount)
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
-            if(actualBatch.CloseDate == null)
+            Account actualAccount = null;
+            if (donationAccount.HasValue)
+            {
+                actualAccount = db.Accounts.First(x => x.Id == donationAccount);
+            }
+            if (actualBatch.CloseDate == null)
             {
                 donation.DonationDonor = actualDonor;
                 donation.DonationDonor_Id = actualDonor.Id;
                 donation.DonationBatch = actualBatch;
                 donation.DonationBatch_Id = donationBatch;
-
+                if (donationAccount.HasValue)
+                {
+                    donation.DonationAccount = actualAccount;
+                    donation.DonationAccount_Id = donationAccount;
+                }
                 if (!ModelState.IsValid)
                 {
                     ModelState.Clear();
@@ -246,14 +261,23 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int donationDonor, int donationBatch)
+        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount)
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
+            Account actualAccount = null;
+            if (donationAccount.HasValue)
+            {
+                actualAccount = db.Accounts.First(x => x.Id == donationAccount);
+            }
             if (actualBatch.CloseDate == null)
             {
                 donation.DonationDonor = actualDonor;
                 donation.DonationBatch = actualBatch;
+                if (donationAccount.HasValue)
+                {
+                    donation.DonationAccount = actualAccount;
+                }                    
                 if (!ModelState.IsValid)
                 {
                     ModelState.Clear();
