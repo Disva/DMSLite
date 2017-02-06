@@ -78,11 +78,14 @@ namespace DMSLite.Controllers
         {
             List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).ToList<Donation>());
             bool paramsExist = (
-                (
-                    (!String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
-                    !String.IsNullOrEmpty(parameters["value"].ToString())) ||
-                    (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
-                )
+                    (
+                        (
+                            !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
+                            !String.IsNullOrEmpty(parameters["value"].ToString())
+                        ) ||
+                        JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any()
+                    ) ||
+                    !String.IsNullOrEmpty(parameters["value-comparator"].ToString())
             );
             if(paramsExist)
             {
@@ -94,12 +97,12 @@ namespace DMSLite.Controllers
                 }
                 if (!String.IsNullOrEmpty(parameters["value"].ToString()))
                 {
-                    FetchByValue(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
+                    FetchByValueOpenRange(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat), parameters["value-comparator"].ToString());
                 }
                 if (JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any())
                 {
                     List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
-                    FetchByValueRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
+                    FetchByValueClosedRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
                 }
             }
             return returnedDonations;
@@ -118,12 +121,24 @@ namespace DMSLite.Controllers
             }
         }
 
-        public void FetchByValue(ref List<Donation> filteredDonations, float value)
+        public void FetchByValueOpenRange(ref List<Donation> filteredDonations, float value, string comparator)
         {
-            filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+            switch (comparator)
+            {
+                case "<":
+                    filteredDonations = filteredDonations.Where(x => x.Value < value).ToList();
+                    break;
+                case ">":
+                    filteredDonations = filteredDonations.Where(x => x.Value > value).ToList();
+                    break;
+                default:
+                    //search for donations exactly at that value
+                    filteredDonations = filteredDonations.Where(x => x.Value == value).ToList();
+                    break;
+            }
         }
 
-        public void FetchByValueRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
+        public void FetchByValueClosedRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
         {
             filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
         }
