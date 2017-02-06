@@ -1,66 +1,16 @@
-﻿@model IEnumerable<DMSLite.Entities.Batch>
+﻿@model IEnumerable<DMSLite.Entities.Account>
 <div class="divTableWrapper">
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Batch ID
-            </div>
-            <div class="cell">
                 @Html.DisplayNameFor(model => model.Title)
-            </div>
-            <div class="cell">
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </div>
-            <div class="cell">
-                @Html.DisplayNameFor(model => model.CloseDate)
-            </div>
-            <div class="cell">
-                <!-- Left Empty for edit column -->
-            </div>
-            <div class="cell">
-                <!-- Left Empty for post column -->
             </div>
         </div>
         @foreach (var item in Model)
         {
             <div class="tableRow">
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </div>
-                <div class="cell">
                     @Html.DisplayFor(modelItem => item.Title)
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => item.CreateDate)
-                </div>
-                <div class="cell">
-                    @Html.DisplayFor(modelItem => item.CloseDate)
-                </div>
-                <div class="cell">
-                    @{ var buttonId = Guid.NewGuid().ToString(); }
-                    @Ajax.ActionLink("", "FetchByBatchId", "Donation", item, new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                        OnComplete = "enableButtonAndScroll('" + buttonId + "')",
-                        OnBegin = "return bounceInput('" + buttonId + "')"
-                    }, new { @class = "glyphicon search" })
-                </div>
-                <div class="cell">
-                    @if (item.CloseDate == null)
-                    {
-                        @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
-                       {
-                           InsertionMode = InsertionMode.InsertAfter,
-                           UpdateTargetId = "outputContainer",
-                           OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                           OnBegin = "return bounceInput('" + buttonId + "')"
-                       }, new { @class = "glyphicon floppy" })
-                    }
-                    else
-                    {
-                        <div class="glyphicon lock">🔒</div>
-                    }
                 </div>
             </div>
         }
