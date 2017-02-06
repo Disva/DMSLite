@@ -229,33 +229,40 @@ namespace DMSLite.Tests.Controllers
             {
                 Title = "TestBatch",
             };
-            testBatch = (Batch)(((PartialViewResult)(bc.Add(testBatch))).Model);
-            PartialViewResult pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
-            //make sure empty batch returns an error message
-            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
-                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_ErrorMessage.cshtml"))
-                )
+            Donation testDonation = new Donation();
+            try
             {
-                Assert.IsTrue(true);
+                testBatch = (Batch)(((PartialViewResult)(bc.Add(testBatch))).Model);
+                PartialViewResult pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+                //make sure empty batch returns an error message
+                if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                    && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_ErrorMessage.cshtml"))
+                    )
+                {
+                    Assert.IsTrue(true);
+                }
+                //add donations to batch and ensure that it returns the batch view
+                testDonation = new Donation()
+                {
+                    Value = 5,
+                    ObjectDescription = "a test donation",
+                    DonationBatch = testBatch,
+                    DonationBatch_Id = testBatch.Id,
+                };
+                dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id);
+                pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
+                if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
+                    && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_FetchIndex.cshtml"))
+                    )
+                {
+                    Assert.IsTrue(true);
+                }
             }
-            //add donations to batch and ensure that it returns the batch view
-            Donation testDonation = new Donation()
+            finally
             {
-                Value = 5,
-                ObjectDescription = "a test donation",
-                DonationBatch = testBatch,
-                DonationBatch_Id = testBatch.Id,
-            };
-            dc.Add(testDonation, db.Donors.First<Donor>().Id, testBatch.Id);
-            pvrReturned = (PartialViewResult)dc.FetchByBatchId(testBatch);
-            if ((pvrReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
-                && (((PartialViewResult)pvrReturned).ViewName.Equals("~/Views/Shared/_FetchIndex.cshtml"))
-                )
-            {
-                Assert.IsTrue(true);
+                dc.Remove(testDonation);
+                bc.Remove(testBatch);
             }
-            dc.Remove(testDonation);
-            bc.Remove(testBatch);
         }
 
         [TestMethod]

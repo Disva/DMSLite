@@ -293,35 +293,35 @@ namespace DMSLite.Tests.Controllers
                 Email = "email@testmodify.com",
                 PhoneNumber = "000-111-9191",
             };
+            Donor fetchedAgain = new Donor();
 
-            //Add the donor to the db
-            dc.Add(d1);
-            //Fetch the donor
-            Dictionary<string, object> fetchParameters = new Dictionary<string, object>();
-            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor lName_TestModifyDonor" });
-            fetchParameters.Add("email-address", "");
-            fetchParameters.Add("name", "fName_TestModifyDonor lName_TestModifyDonor");
-            fetchParameters.Add("phone-number", "");
+            try { 
+                //Add the donor to the db
+                dc.Add(d1);
+                //Fetch the donor
+                Dictionary<string, object> fetchParameters = new Dictionary<string, object>();
+                fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor lName_TestModifyDonor" });
+                fetchParameters.Add("email-address", "");
+                fetchParameters.Add("name", "fName_TestModifyDonor lName_TestModifyDonor");
+                fetchParameters.Add("phone-number", "");
 
-            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
-            Donor fetched = ((List<Donor>)pvr.ViewData.Model).ToList().First();
+                PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+                Donor fetched = ((List<Donor>)pvr.ViewData.Model).ToList().First();
 
-            //Modify it
-            fetched.FirstName = "fName_TestModifyDonor_MODIFIED";
-            //Indicate change and Save it
-            dc.Modify(fetched);
-            //Fetch it and compare it to the previous version
-            fetchParameters = new Dictionary<string, object>();
-            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor_MODIFIED" });
-            fetchParameters.Add("email-address", "");
-            fetchParameters.Add("name", "fName_TestModifyDonor_MODIFIED");
-            fetchParameters.Add("phone-number", "");
+                //Modify it
+                fetched.FirstName = "fName_TestModifyDonor_MODIFIED";
+                //Indicate change and Save it
+                dc.Modify(fetched);
+                //Fetch it and compare it to the previous version
+                fetchParameters = new Dictionary<string, object>();
+                fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor_MODIFIED" });
+                fetchParameters.Add("email-address", "");
+                fetchParameters.Add("name", "fName_TestModifyDonor_MODIFIED");
+                fetchParameters.Add("phone-number", "");
 
-            pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
-            Donor fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
+                pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+                fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
 
-            try
-            {
                 Assert.IsNotNull(fetchedAgain);
                 Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
             }
