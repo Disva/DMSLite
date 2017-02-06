@@ -48,7 +48,8 @@ namespace DMSLite.Entities
                 DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
                 DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
                 ObjectDescription.Equals(otherDonation.ObjectDescription) &&
-                Value.Equals(otherDonation.Value))
+                Value.Equals(otherDonation.Value) &&
+                DonationAccount.Equals(otherDonation.DonationAccount))
             {
                 return true;
             }

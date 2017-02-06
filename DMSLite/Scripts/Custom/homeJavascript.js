@@ -182,12 +182,12 @@ function checkFormatSelect2Batch() {
 }
 
 function checkFormatSelect2Account() {
-    var node = $("#outputContainer").find(".format--select2");
+    var node = $("#outputContainer").find(".format-account-select2");
     if (node.length > 0) {
 
         $(node).select2({
             ajax: {
-                url: "/Account/SearchAccounts/",
+                url: "/DonationAccount/SearchAccounts/",
                 dataType: 'json',
                 delay: 500,
                 data: function (params) {
