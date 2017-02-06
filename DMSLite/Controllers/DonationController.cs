@@ -165,7 +165,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be edited: batch \"" + donation.DonationBatch.Title + "\"is closed.");
         }
 
-        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch, int? donationAccount)
+        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
@@ -276,7 +276,7 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount)
+        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
         {
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
