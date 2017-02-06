@@ -155,7 +155,8 @@ namespace DMSLite.Controllers
         {
             donation.DonationDonor = db.Donors.First(x => x.Id == donation.DonationDonor_Id);
             donation.DonationBatch = db.Batches.First(x => x.Id == donation.DonationBatch_Id);
-            donation.DonationAccount = db.Accounts.First(x => x.Id == donation.DonationAccount_Id);
+            if(donation.DonationAccount_Id.HasValue)
+                donation.DonationAccount = db.Accounts.First(x => x.Id == donation.DonationAccount_Id);
 
             if (donation.DonationBatch.CloseDate == null)
             {

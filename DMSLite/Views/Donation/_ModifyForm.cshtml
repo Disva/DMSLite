@@ -55,7 +55,10 @@
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationAccount_Id, "", new { @class = "text-danger" })
                         <select class="donors-selector format-account-select2" style="width:100%;" name="DonationAccount">
-                            <option value="@Model.DonationAccount_Id" selected="selected">@Model.DonationAccount.Title</option>
+                            @if (Model.DonationAccount_Id.HasValue)
+                            {
+                                <option value="@Model.DonationAccount_Id" selected="selected">@Model.DonationAccount.Title</option>
+                            }
                         </select>
                     </div>
                 </div>
