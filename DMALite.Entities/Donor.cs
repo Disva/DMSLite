@@ -21,7 +21,7 @@ namespace DMSLite.Entities
     {
         public int Id { get; set; }
 
-        [Required]
+        //not required due to companies
         [StringLength(255)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
