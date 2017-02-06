@@ -431,6 +431,10 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\SetRoles.cshtml" />
     <Content Include="Views\Donation\_FetchIndexSolo.cshtml" />
+    <Content Include="Views\DonationAccount\_FetchIndex.cshtml" />
+    <Content Include="Views\DonationAccount\_Add.cshtml" />
+    <Content Include="Views\DonationAccount\_AddForm.cshtml" />
+    <Content Include="Views\DonationAccount\_AddSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
