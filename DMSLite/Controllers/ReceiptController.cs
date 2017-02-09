@@ -99,22 +99,22 @@ namespace DMSLite.Controllers
                 List<string> outputString = new List<string>();
                 outputString.Add(donor.FirstName + " " + donor.LastName);
                 outputString.Add(donor.Address);
-                outputString.Add("\n ");
+                outputString.Add("\n");
                 outputString.Add("Donations:");
-                outputString.Add("\n ");
+                outputString.Add("\n");
                 foreach (var donation in donations)
                 {
                     donation.DonationBatch = db.Batches.Where(x => x.Id.Equals(donation.DonationBatch_Id)).First();
                     if (donation.Value > 0)
                     {
-                        outputString.Add("$" + donation.Value + " to " + donation.DonationBatch.Title
-                             + " on " + donation.DonationBatch.CreateDate);
+                        outputString.Add(donation.DonationBatch.CreateDate.ToShortDateString() + " : "
+                            + "$" + donation.Value + " to " + donation.DonationBatch.Title);
                         if (donation.ObjectDescription != "")
                             outputString.Add("     Description: " + donation.ObjectDescription);
                     }
                     else if (donation.ObjectDescription != "")
-                        outputString.Add(donation.ObjectDescription + " to " + donation.DonationBatch.Title
-                             + " on " + donation.DonationBatch.CreateDate);
+                        outputString.Add(donation.DonationBatch.CreateDate.ToShortDateString() + " : "
+                        + donation.ObjectDescription + " to " + donation.DonationBatch.Title);
                     outputString.Add("\n");
                 }
 
@@ -132,30 +132,14 @@ namespace DMSLite.Controllers
                 //use Helpers/LayoutHelper.cs for multiple page support.
                 //Source: http://www.pdfsharp.net/wiki/MultiplePages-sample.ashx
                 LayoutHelper helper = new LayoutHelper(document, XUnit.FromCentimeter(margin), XUnit.FromCentimeter(29.7 - margin));
-                XUnit left = XUnit.FromCentimeter(2.5);
-                
-                foreach(var line in outputString)
+                XUnit left = XUnit.FromCentimeter(margin);
+
+                foreach (var line in outputString)
                 {
                     XUnit top = helper.GetLinePosition(fontSize, fontSize);
                     if(line != null)
                         helper.Gfx.DrawString(line, font, XBrushes.Black, left, top, XStringFormats.TopLeft);
                 }
-
-                /*
-                // Create an empty page
-                PdfPage page = document.AddPage();
-                // Get an XGraphics object for drawing
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                // Create a font
-                XFont font = new XFont("Verdana", 8, XFontStyle.Regular);
-                // Create a text formatter to make sure newlines work on the rendered string
-                XTextFormatter tf = new XTextFormatter(gfx);
-                // Draw a rectangle to contain the text
-                XRect rect = new XRect(50, 50, page.Width - 50, page.Height - 50);
-                gfx.DrawRectangle(XBrushes.White, rect);
-                // Draw the text using the text formatter
-                tf.DrawString(full, font, XBrushes.Black, rect, XStringFormats.TopLeft);
-                */
 
                 // Save the document...
                 document.Save(stream, false);
