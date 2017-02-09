@@ -12,6 +12,7 @@ using System.IO;
 using DMSLite.DataContexts;
 using DMSLite.Controllers;
 using PdfSharp.Drawing.Layout;
+using DMSLite.Helpers;
 
 namespace DMSLite.Controllers
 {
@@ -72,35 +73,90 @@ namespace DMSLite.Controllers
             List<Donation> donations = db.Donations.Where(x => x.DonationDonor_Id.Equals(donor.Id)).ToList();
             using (MemoryStream stream = new MemoryStream())
             {
+                /*
                 // Create output string
                 string full = donor.FirstName + " " + donor.LastName + "\n";
                 full += donor.Address + "\n";
-                full += "Donations:\n";
+                full += "Donations:\n\n";
                 foreach (var donation in donations)
                 {
                     donation.DonationBatch = db.Batches.Where(x => x.Id.Equals(donation.DonationBatch_Id)).First();
                     if (donation.Value > 0)
+                    { 
                         full += "$" + donation.Value + " to " + donation.DonationBatch.Title
                              + " on " + donation.DonationBatch.CreateDate + "\n";
-                    if (donation.ObjectDescription != "")
-                        full += "Description: " + donation.ObjectDescription + "\n";
+                        if (donation.ObjectDescription != "")
+                            full += "     Description: " + donation.ObjectDescription + "\n";
+                    }
+                    else if (donation.ObjectDescription != "")
+                        full += donation.ObjectDescription + " to " + donation.DonationBatch.Title
+                             + " on " + donation.DonationBatch.CreateDate + "\n";
+                    full += "\n";
                 }
+                */
+
+                // Create output string
+                List<string> outputString = new List<string>();
+                outputString.Add(donor.FirstName + " " + donor.LastName);
+                outputString.Add(donor.Address);
+                outputString.Add("\n ");
+                outputString.Add("Donations:");
+                outputString.Add("\n ");
+                foreach (var donation in donations)
+                {
+                    donation.DonationBatch = db.Batches.Where(x => x.Id.Equals(donation.DonationBatch_Id)).First();
+                    if (donation.Value > 0)
+                    {
+                        outputString.Add("$" + donation.Value + " to " + donation.DonationBatch.Title
+                             + " on " + donation.DonationBatch.CreateDate);
+                        if (donation.ObjectDescription != "")
+                            outputString.Add("     Description: " + donation.ObjectDescription);
+                    }
+                    else if (donation.ObjectDescription != "")
+                        outputString.Add(donation.ObjectDescription + " to " + donation.DonationBatch.Title
+                             + " on " + donation.DonationBatch.CreateDate);
+                    outputString.Add("\n");
+                }
+
                 // Create a new PDF document
                 PdfDocument document = new PdfDocument();
                 document.Info.Title = "Created with PDFsharp";
+
+                // Create a font
+                int fontSize = 8;
+                XFont font = new XFont("Verdana", fontSize, XFontStyle.Regular);
+
+                //setup margins
+                double margin = 2.5;
+
+                //use Helpers/LayoutHelper.cs for multiple page support.
+                //Source: http://www.pdfsharp.net/wiki/MultiplePages-sample.ashx
+                LayoutHelper helper = new LayoutHelper(document, XUnit.FromCentimeter(margin), XUnit.FromCentimeter(29.7 - margin));
+                XUnit left = XUnit.FromCentimeter(2.5);
+                
+                foreach(var line in outputString)
+                {
+                    XUnit top = helper.GetLinePosition(fontSize, fontSize);
+                    if(line != null)
+                        helper.Gfx.DrawString(line, font, XBrushes.Black, left, top, XStringFormats.TopLeft);
+                }
+
+                /*
                 // Create an empty page
                 PdfPage page = document.AddPage();
                 // Get an XGraphics object for drawing
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 // Create a font
-                XFont font = new XFont("Verdana", 12, XFontStyle.Regular);
+                XFont font = new XFont("Verdana", 8, XFontStyle.Regular);
                 // Create a text formatter to make sure newlines work on the rendered string
                 XTextFormatter tf = new XTextFormatter(gfx);
                 // Draw a rectangle to contain the text
-                XRect rect = new XRect(100, 100, page.Width - 100, page.Height - 100);
+                XRect rect = new XRect(50, 50, page.Width - 50, page.Height - 50);
                 gfx.DrawRectangle(XBrushes.White, rect);
                 // Draw the text using the text formatter
                 tf.DrawString(full, font, XBrushes.Black, rect, XStringFormats.TopLeft);
+                */
+
                 // Save the document...
                 document.Save(stream, false);
 
