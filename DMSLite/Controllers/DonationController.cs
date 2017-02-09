@@ -77,15 +77,11 @@ namespace DMSLite.Controllers
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
             List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).Include(z => z.DonationAccount).ToList<Donation>());
-            bool paramsExist = (
-                    (
-                        (
-                            !String.IsNullOrEmpty(parameters["donor-name"].ToString()) ||
-                            !String.IsNullOrEmpty(parameters["value"].ToString())
-                        ) ||
-                        JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any()
-                    ) ||
-                    !String.IsNullOrEmpty(parameters["value-comparator"].ToString())
+            bool paramsExist = (((((
+                !String.IsNullOrEmpty(parameters["donor-name"].ToString()) || !String.IsNullOrEmpty(parameters["value"].ToString())) ||
+                        JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any()) ||
+                            !String.IsNullOrEmpty(parameters["value-comparator"].ToString())) ||
+                                !String.IsNullOrEmpty(parameters["account-name"].ToString()))
             );
             if(paramsExist)
             {
@@ -95,6 +91,12 @@ namespace DMSLite.Controllers
                     List<Donor> matchedDonors = db.Donors.AsExpandable().Where(donorPredicate).ToList();
                     FetchByDonor(ref returnedDonations, matchedDonors);
                 }
+                if (!String.IsNullOrEmpty(parameters["account-name"].ToString()))
+                {
+                    DonationAccountController dc = new DonationAccountController(db);
+                    List<Account> possibleAccounts = dc.FindByTitle(parameters["account-name"].ToString());
+                    FetchByAccount(ref returnedDonations, possibleAccounts);
+                }
                 if (!String.IsNullOrEmpty(parameters["value"].ToString()))
                 {
                     FetchByValueOpenRange(ref returnedDonations, float.Parse(parameters["value"].ToString(), CultureInfo.InvariantCulture.NumberFormat), parameters["value-comparator"].ToString());
@@ -103,9 +105,22 @@ namespace DMSLite.Controllers
                 {
                     List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
                     FetchByValueClosedRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
-                }
+                }                
             }
             return returnedDonations;
+        }
+
+        private void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
+        {
+            List<Donation> matchingDonations = new List<Donation>();
+            foreach (Donation d in returnedDonations)
+            {
+                if((accounts.Where(x => x.Id == d.DonationAccount_Id)).Count() > 0)
+                {
+                    matchingDonations.Add(d);
+                }
+            }
+            returnedDonations = returnedDonations.Intersect(matchingDonations).ToList();
         }
 
         // extract method
