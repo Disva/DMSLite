@@ -252,11 +252,12 @@ namespace DMSLite.Tests.Controllers
                 {
                     Value = 111,
                     ObjectDescription = "FetchByDonor",
-                    DonationDonor = don,
+                    DonationDonor = db.Donors.First<Donor>(),
                     DonationBatch = db.Batches.First(),
                     DonationAccount = acc,
                 };
                 d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, d.DonationAccount_Id))).Model);
+                fetchedDonations = db.Donations.ToList();
                 dc.FetchByAccount(ref fetchedDonations, accList);
                 Assert.IsTrue(fetchedDonations.Count() == 1);
                 Assert.AreEqual(d.Id, fetchedDonations.First().Id);
