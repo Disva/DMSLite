@@ -212,11 +212,13 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 
 #search-container input {
-
     padding: 6px;
     font-size: 1.2em;
     width: 100%;
     max-width: none;
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 #search {

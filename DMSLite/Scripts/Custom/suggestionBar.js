@@ -24,7 +24,8 @@ $(function () {
          '*',
          [
              'donors',
-             'batches'
+             'batches',
+             'donations [value, donor name, or account]'
          ]
      ]
  ],
@@ -45,7 +46,8 @@ $(function () {
          '[donor name, email or phoneNumber]',
          'donor',
          'donation',
-         'batch [batch name]'
+         'batch [batch name]',
+         'account'
      ]
  ],
  [
