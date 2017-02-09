@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApiAiSDK;
 using ApiAiSDK.Model;
+using System.Collections.Generic;
 
 namespace DMSLite.Tests.SDKs
 {
@@ -235,7 +236,7 @@ namespace DMSLite.Tests.SDKs
                 "closed {0} {1}",
                 "show closed {0} {1}"
             };
-
+            
             var noContext = RandomTextInput(inputs, "before", "june");
 
             Assert.AreEqual(noContext.Result.Action, "input.unknown");
@@ -243,7 +244,16 @@ namespace DMSLite.Tests.SDKs
             var showAllBatches = apiAi.TextRequest("show all batches");
             Assert.AreEqual(showAllBatches.Result.Action, "ViewBatches");
 
-            var response = RandomTextInput(inputs, "after", "2016");
+            List<AIContext> contexts = new List<AIContext>() {
+                    new AIContext()
+                    {
+                        Name = showAllBatches.Result.Contexts[0].Name,
+                        Lifespan = showAllBatches.Result.Contexts[0].Lifespan
+                    }
+                };
+
+            var response = apiAi.TextRequest("show closed after 2016",
+                new RequestExtras(contexts, null));
             Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
         }
         #endregion
@@ -261,7 +271,7 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Action, "AddDonation");
         }
         #endregion
-        
+
         public void APITestHelp()
         {
             string[] inputs =
