@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DMSLite.Entities.Account>
+<div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.Title)
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </div>
+            </div>
+        }
+    </div>
+</div>
