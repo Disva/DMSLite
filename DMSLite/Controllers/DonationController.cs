@@ -110,7 +110,7 @@ namespace DMSLite.Controllers
             return returnedDonations;
         }
 
-        private void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
+        public void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
         {
             List<Donation> matchingDonations = new List<Donation>();
             foreach (Donation d in returnedDonations)
