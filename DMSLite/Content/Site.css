@@ -13,7 +13,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
+    padding-left: 15px;input
     padding-right: 15px;
 }
 
@@ -217,6 +217,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     font-size: 1.2em;
     width: 100%;
     max-width: none;
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 #search {
