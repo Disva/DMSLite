@@ -207,6 +207,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DonationAccountController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -442,6 +443,10 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\SetRoles.cshtml" />
     <Content Include="Views\Donation\_FetchIndexSolo.cshtml" />
+    <Content Include="Views\DonationAccount\_FetchIndex.cshtml" />
+    <Content Include="Views\DonationAccount\_Add.cshtml" />
+    <Content Include="Views\DonationAccount\_AddForm.cshtml" />
+    <Content Include="Views\DonationAccount\_AddSuccess.cshtml" />
     <Content Include="Views\Shared\_Help.cshtml" />
   </ItemGroup>
   <ItemGroup>

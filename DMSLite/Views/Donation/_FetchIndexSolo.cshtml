@@ -18,6 +18,9 @@
                 @Html.DisplayNameFor(model => model.DonationBatch)
             </div>
             <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationAccount)
+            </div>
+            <div class="cell">
                 <!-- Left Empty for edit column -->
             </div>
             <div class="cell">
@@ -41,6 +44,9 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationAccount.Title)
                 </div>
                 @{ var buttonId = Guid.NewGuid().ToString(); }
                 <div class="cell">
