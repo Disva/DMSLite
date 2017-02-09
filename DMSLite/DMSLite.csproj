@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201702021911046_DonnorAccount.Designer.cs">
       <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702061943139_Donor.cs" />
+    <Compile Include="Migrations\201702061943139_Donor.Designer.cs">
+      <DependentUpon>201702061943139_Donor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -497,6 +501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702021911046_DonnorAccount.resx">
       <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702061943139_Donor.resx">
+      <DependentUpon>201702061943139_Donor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

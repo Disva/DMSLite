@@ -125,14 +125,15 @@ function checkFormatSelect2Donor() {
                 if (state.id === undefined) {
                     return 'Searching...';
                 }
-
-                return state.firstName + " " + state.lastName;
+                if (state.firstName == null)
+                    return state.lastName + " (ID: " + state.id + ")"
+                return state.firstName + " " + state.lastName + " (ID: " + state.id + ")";
             },
             templateSelection: function (state) {
                 if (state.id === -1) {
                     return state.text;
                 }
-                return state.firstName || state.text;
+                return state.lastName + " (ID: " + state.id + ")" || state.text;
             },
             minimumInputLength: 1,
             dropdownParent: $(node).parents(".modal")
