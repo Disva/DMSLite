@@ -47,6 +47,13 @@
                         <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch"></select>
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonationAccount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.DonationAccount, "", new { @class = "text-danger" })
+                        <select class="donors-selector format-account-select2" style="width:100%;" name="DonationAccount"></select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
