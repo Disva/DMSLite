@@ -67,13 +67,6 @@ namespace DMSLite.Controllers
             }
         }
 
-        public List<Account> FindByTitle(string title)
-        {
-            List<Account> matchingAccounts = FetchAllAccounts();
-            FetchByTitle(ref matchingAccounts, title);
-            return matchingAccounts;
-        }
-
         public List<Account> FetchAllAccounts()
         {
             List<Account> allAccounts = db.Accounts.ToList();
@@ -132,7 +125,6 @@ namespace DMSLite.Controllers
             return new JsonResult { Data = new { results = accounts.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         #endregion
-
         public ActionResult Remove(Account account)
         {
             if (ModelState.IsValid)
@@ -142,7 +134,12 @@ namespace DMSLite.Controllers
                 return Content("Removed", "text/html");
             }
             return PartialView("~/Views/DonationAccount/_Add.cshtml", account);
-            //TODO: make sure the title field is recognized as valid by api.ai
+            //TODO: make sure the name field is recognized as valid by api.ai
+        }
+        // GET: Batch
+        public ActionResult Index()
+        {
+            return View();
         }
     }
 }
