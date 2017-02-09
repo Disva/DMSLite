@@ -29,6 +29,7 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("value", "");
             parameters.Add("value-range", "[]");
             parameters.Add("value-comparator", "");
+            parameters.Add("account-name", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
             Assert.AreEqual(testDonations.Count(), dbDonations.Count());
@@ -219,6 +220,52 @@ namespace DMSLite.Tests.Controllers
             {
                 dc.Remove(d);
                 doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests for successful fetching of donations by accounts
+        public void TestFetchByAccount()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonationAccountController dac = new DonationAccountController(db);
+            Account acc = new Account
+            {
+                Title = "DonationFetchTest",
+            };
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByAccount",
+                LastName = "lName_TestFetchByAccount",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Account> accList = new List<Account>();
+            Donation d = new Donation();
+            try
+            {
+                acc = (Account)(((PartialViewResult)dac.Add(acc))).Model;
+                accList.Add(acc);
+                //create a new donation
+                d = new Donation()
+                {
+                    Value = 111,
+                    ObjectDescription = "FetchByDonor",
+                    DonationDonor = db.Donors.First<Donor>(),
+                    DonationBatch = db.Batches.First(),
+                    DonationAccount = acc,
+                };
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, d.DonationAccount_Id))).Model);
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByAccount(ref fetchedDonations, accList);
+                Assert.IsTrue(fetchedDonations.Count() == 1);
+                Assert.AreEqual(d.Id, fetchedDonations.First().Id);
+            }
+            finally
+            {
+                dc.Remove(d);
+                dac.Remove(acc);
             }
         }
 
