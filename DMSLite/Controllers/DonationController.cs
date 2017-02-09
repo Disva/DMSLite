@@ -71,11 +71,6 @@ namespace DMSLite.Controllers
             if (filteredDonations.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
 
-            foreach(var donation in filteredDonations)
-            {
-
-            }
-
             return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
         }
 
