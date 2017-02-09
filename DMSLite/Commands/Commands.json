@@ -41,11 +41,11 @@
   },
   "Help": {
     "Item1": "Help",
-    "item2": "returnHelp"
+    "Item2": "returnHelp"
   },
   "AddAccount": {
     "Item1": "DonationAccount",
-    "item2": "AddMenu"
+    "Item2": "AddMenu"
   },
   "ViewAccounts": {
     "Item1": "DonationAccount",
