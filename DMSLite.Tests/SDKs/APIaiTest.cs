@@ -285,6 +285,31 @@ namespace DMSLite.Tests.SDKs
             Assert.AreEqual(response.Result.Action, "Help");
         }
 
+        [TestMethod]
+        public void APITestViewDonations()
+        {
+            string donor = "from James Bond", value = "over 100$", account = "from the Phoenix Convention Account";
+
+            string[] inputs =
+            {
+                "view donations {0}",
+                "show all donations {0}"
+            };
+
+            var response = RandomTextInput(inputs, "");
+            Assert.AreEqual(response.Result.Action, "ViewDonations");
+
+            response = RandomTextInput(inputs, donor);
+            Assert.AreEqual(response.Result.Parameters["donor-name"].ToString(), "James Bond", true);
+
+            response = RandomTextInput(inputs, value);
+            Assert.AreEqual(response.Result.Parameters["value"].ToString(), "100", true);
+            Assert.AreEqual(response.Result.Parameters["value-comparator"].ToString(), ">", true);
+
+            response = RandomTextInput(inputs, account);
+            Assert.AreEqual(response.Result.Parameters["account-name"].ToString(), "Phoenix Convention", true);
+        }
+
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)
         {

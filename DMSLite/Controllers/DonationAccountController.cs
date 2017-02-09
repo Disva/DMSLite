@@ -67,7 +67,14 @@ namespace DMSLite.Controllers
             }
         }
 
-        public List<Account> FetchAllAccounts()
+        public List<Account> FindByTitle(string title)
+        {
+            List<Account> matchingAccounts = FetchAllAccounts();
+            FetchByTitle(ref matchingAccounts, title);
+            return matchingAccounts;
+        }
+
+    public List<Account> FetchAllAccounts()
         {
             List<Account> allAccounts = db.Accounts.ToList();
             return allAccounts;
