@@ -48,6 +48,14 @@
             <dd>
                 @Html.DisplayFor(model => model.Value)
             </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DonationAccount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DonationAccount.Title)
+            </dd>
         </dl>
     </div>
     @using (Ajax.BeginForm("AddForm", "Donation", new AjaxOptions()
