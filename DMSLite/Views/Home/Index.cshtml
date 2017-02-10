@@ -441,4 +441,14 @@
         var formData = $(form).serialize();
         window.location.assign("/Receipt/ZipReceipts?"+formData);
     }
+
+    function checkReceiptButton() {
+        var receiptButton = $("#submitReceiptForm");
+        var donorSelect = $("#receiptDonors").next();
+        var batchSelect = $("#receiptBatches").next();
+        if (donorSelect.find(".select2-selection__choice").length == 0 || batchSelect.find(".select2-selection__choice").length == 0)
+            receiptButton.attr("disabled", true);
+        else
+            receiptButton.attr("disabled", false);
+    }
 </script>

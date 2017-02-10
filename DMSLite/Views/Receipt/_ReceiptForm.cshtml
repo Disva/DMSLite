@@ -22,14 +22,14 @@
                 @Html.LabelFor(model => model.donors, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.donors, "", new { @class = "text-danger" })
-                    <select class="donors-selector format-donor-select2" multiple="multiple" style="width:100%;" name="donors"></select>
+                    <select id="receiptDonors" onchange="checkReceiptButton()" class="donors-selector format-donor-select2" multiple="multiple" style="width:100%;" name="donors"></select>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.batches, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.batches, "", new { @class = "text-danger" })
-                    <select class="donors-selector format-closed-batch-select2" multiple="multiple" style="width:100%;" name="batches"></select>
+                    <select id="receiptBatches" onchange="checkReceiptButton()" class="donors-selector format-closed-batch-select2" multiple="multiple" style="width:100%;" name="batches"></select>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10" id="createButton">
                     <button type="button" class="btn btn-default loading-button" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Make Receipts" class="btn btn-primary" />
+                    <input type="submit" disabled="disabled" id="submitReceiptForm" value="Make Receipts" class="btn btn-primary" />
                 </div>
             </div>
         </div>
