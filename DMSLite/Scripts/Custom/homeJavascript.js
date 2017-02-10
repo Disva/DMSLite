@@ -73,6 +73,13 @@ function showLoadingButton(id) {
     $(button).prop("disabled", true);
 }
 
+function hideLoadingButton(id) {
+    var button = $(document.getElementById(id)).find(".loading-button");
+    $(button).find(".loading-button-icon").css("display", "none");
+    $(button).prop("disabled", false);
+}
+
+
 
 function setFocusToTextBox() {
     document.getElementById("mainInput").focus();
