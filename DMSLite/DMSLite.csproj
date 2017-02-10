@@ -97,6 +97,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -280,6 +281,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AddDonationViewModel.cs" />
+    <Compile Include="Models\ReceiptFormModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
@@ -445,10 +447,11 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\SetRoles.cshtml" />
     <Content Include="Views\Donation\_FetchIndexSolo.cshtml" />
+    <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
+    <Content Include="Views\Receipt\_Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Receipt\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

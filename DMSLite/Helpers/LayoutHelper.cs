@@ -43,16 +43,12 @@ namespace DMSLite.Helpers
 
         public XGraphics Gfx { get; private set; }
         public PdfPage Page { get; private set; }
-        public XTextFormatter Tf { get; private set; }
 
         void CreatePage()
         {
-
-
             Page = _document.AddPage();
             Page.Size = PageSize.A4;
             Gfx = XGraphics.FromPdfPage(Page);
-            Tf = new XTextFormatter(Gfx);
             _currentPosition = _topPosition;
         }
     }
