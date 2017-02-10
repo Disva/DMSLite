@@ -75,7 +75,8 @@ textarea {
      background-image:url("ring-alt.svg") !important;
      transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, start) !important;
      cursor:default !important;
-     padding-left:34px;
+     padding-left:34px !important;
+     background-repeat: no-repeat !important;
 }
 
 #submitBtn {
@@ -211,11 +212,13 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 
 #search-container input {
-
     padding: 6px;
     font-size: 1.2em;
     width: 100%;
     max-width: none;
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 #search {

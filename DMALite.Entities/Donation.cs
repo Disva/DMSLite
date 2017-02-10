@@ -33,6 +33,9 @@ namespace DMSLite.Entities
         [Display(Name = "Account")]
         public Account DonationAccount { get; set; }
 
+        [ForeignKey("DonationAccount")]
+        public int? DonationAccount_Id { get; set; }
+
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }
 
@@ -41,11 +44,22 @@ namespace DMSLite.Entities
 
         public bool isEqualTo(Donation otherDonation)
         {
+            if (DonationAccount != null)
+            {
+                if (otherDonation.DonationAccount != null)
+                {
+                    if (!DonationAccount.isEqualTo(otherDonation.DonationAccount))
+                        return false;
+                }
+                else return false;
+            }
+            else if (otherDonation.DonationAccount != null)
+                return false;
             if (Id.Equals(otherDonation.Id) &&
-                DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
-                DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
-                ObjectDescription.Equals(otherDonation.ObjectDescription) &&
-                Value.Equals(otherDonation.Value))
+            DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
+            DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
+            ObjectDescription.Equals(otherDonation.ObjectDescription) &&
+            Value.Equals(otherDonation.Value))
             {
                 return true;
             }

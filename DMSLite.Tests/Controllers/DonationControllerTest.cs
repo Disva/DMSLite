@@ -28,6 +28,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("donor-name", "");
             parameters.Add("value", "");
             parameters.Add("value-range", "[]");
+            parameters.Add("value-comparator", "");
+            parameters.Add("account-name", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
             Assert.AreEqual(testDonations.Count(), dbDonations.Count());
@@ -56,20 +58,21 @@ namespace DMSLite.Tests.Controllers
                 PhoneNumber = "000-000-0000",
             };
             List<Donor> donList = new List<Donor>();
-            doc.Add(don);
-            donList.Add(don);
-
-            //create a new donation
-            Donation d = new Donation()
-            {
-                Value = 111,
-                ObjectDescription = "FetchByDonor",
-                DonationDonor = don,
-                DonationBatch = db.Batches.First(),
-            };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            Donation d = new Donation();
             try
             {
+                doc.Add(don);
+                donList.Add(don);
+
+                //create a new donation
+                d = new Donation()
+                {
+                    Value = 111,
+                    ObjectDescription = "FetchByDonor",
+                    DonationDonor = don,
+                    DonationBatch = db.Batches.First(),
+                };
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
                 dc.FetchByDonor(ref fetchedDonations, donList);
                 Assert.IsTrue(fetchedDonations.Count() == 1);
                 Assert.AreEqual(d.Id, fetchedDonations.First().Id);
@@ -98,21 +101,21 @@ namespace DMSLite.Tests.Controllers
             List<Donor> donList = new List<Donor>();
             doc.Add(don);
             donList.Add(don);
+            Donation d = new Donation();
             float testValue = 123456789;
-
-            //create a new donation
-            Donation d = new Donation()
-            {
-                Value = testValue,
-                ObjectDescription = "FetchByValue",
-                DonationDonor = don,
-                DonationBatch = db.Batches.First(),
-            };
-            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
             try
             {
+                //create a new donation
+                d = new Donation()
+                {
+                    Value = testValue,
+                    ObjectDescription = "FetchByValue",
+                    DonationDonor = don,
+                    DonationBatch = db.Batches.First(),
+                };
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
                 fetchedDonations = db.Donations.ToList();
-                dc.FetchByValue(ref fetchedDonations, testValue);
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue, "==");
                 Assert.IsTrue(fetchedDonations.Contains(d));
             }
             finally
@@ -123,8 +126,8 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
-        //Tests DonationController method FetchByValue
-        public void TestFetchByValueRange()
+        //Tests DonationController method FetchByValueOpenRange
+        public void TestFetchByValueOpenRange()
         {
             DonationController dc = new DonationController(db);
             List<Donation> fetchedDonations = new List<Donation>();
@@ -152,14 +155,117 @@ namespace DMSLite.Tests.Controllers
             d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
             try
             {
+                //test <
                 fetchedDonations = db.Donations.ToList();
-                dc.FetchByValueRange(ref fetchedDonations, testValue - 1, testValue + 1);
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue + 1, "<");
                 Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value > testValue + 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+                //test >
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue - 1, ">");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value < testValue - 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+                //test ==
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueOpenRange(ref fetchedDonations, testValue, "==");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value != testValue).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
             }
             finally
             {
                 dc.Remove(d);
                 doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByValueClosedRange
+        public void TestFetchByValueClosedRange()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByValueRange",
+                LastName = "lName_TestFetchByValueRange",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            float testValue = 5;
+
+            //create a new donation
+            Donation d = new Donation()
+            {
+                Value = testValue,
+                ObjectDescription = "FetchByValue",
+                DonationDonor = don,
+                DonationBatch = db.Batches.First(),
+            };
+            try { 
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByValueClosedRange(ref fetchedDonations, testValue - 1, testValue + 1);
+                Assert.IsTrue(fetchedDonations.Contains(d));
+                fetchedDonations = fetchedDonations.Where(x => x.Value < testValue - 1 && x.Value > testValue + 1).ToList();
+                Assert.IsFalse(fetchedDonations.Any());
+            }
+            finally
+            {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests for successful fetching of donations by accounts
+        public void TestFetchByAccount()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonationAccountController dac = new DonationAccountController(db);
+            Account acc = new Account
+            {
+                Title = "DonationFetchTest",
+            };
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByAccount",
+                LastName = "lName_TestFetchByAccount",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Account> accList = new List<Account>();
+            Donation d = new Donation();
+            try
+            {
+                acc = (Account)(((PartialViewResult)dac.Add(acc))).Model;
+                accList.Add(acc);
+                //create a new donation
+                d = new Donation()
+                {
+                    Value = 111,
+                    ObjectDescription = "FetchByDonor",
+                    DonationDonor = db.Donors.First<Donor>(),
+                    DonationBatch = db.Batches.First(),
+                    DonationAccount = acc,
+                };
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id, d.DonationAccount_Id))).Model);
+                fetchedDonations = db.Donations.ToList();
+                dc.FetchByAccount(ref fetchedDonations, accList);
+                Assert.IsTrue(fetchedDonations.Count() == 1);
+                Assert.AreEqual(d.Id, fetchedDonations.First().Id);
+            }
+            finally
+            {
+                dc.Remove(d);
+                dac.Remove(acc);
             }
         }
 
@@ -202,18 +308,18 @@ namespace DMSLite.Tests.Controllers
             //it just bypasses the fact that only one donor with the test data exists and a new one can't be made
             donor = db.Donors.First(x => x.FirstName == donor.FirstName);
 
-            donationController.Add(donation, donor.Id, batch.Id);
-
-            //modify that donation
-            donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
-            donation.ObjectDescription = "desc2_TestModifyDonation";
-
-            donationController.Modify(donation, donor.Id, batch.Id);
-
-            //check for success in db
-            donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
             try
             {
+                donationController.Add(donation, donor.Id, batch.Id);
+
+                //modify that donation
+                donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
+                donation.ObjectDescription = "desc2_TestModifyDonation";
+
+                donationController.Modify(donation, donor.Id, batch.Id);
+
+                //check for success in db
+                donation = db.Donations.First(x => x.ObjectDescription.Equals(donation.ObjectDescription));
                 Assert.AreEqual(donation.ObjectDescription, "desc2_TestModifyDonation");
             }
             finally

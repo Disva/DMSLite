@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DonationAccountControllerTest.cs" />
     <Compile Include="Controllers\DonationControllerTest.cs" />
     <Compile Include="Controllers\BatchControllerTest.cs" />
     <Compile Include="Controllers\DonorsControllerTest.cs" />

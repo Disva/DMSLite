@@ -1,11 +1,11 @@
-﻿@model DMSLite.Entities.Batch
+﻿@model DMSLite.Entities.Account
 
 @{ var id = Guid.NewGuid().ToString(); }
 
 <div id="@id">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Added New Batch</h4>
+        <h4 class="modal-title" id="myModalLabel">Added New Account</h4>
     </div>
     <div class="modal-body">
         <dl class="dl-horizontal">
@@ -16,17 +16,9 @@
             <dd>
                 @Html.DisplayFor(model => model.Title)
             </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreateDate)
-            </dd>
         </dl>
     </div>
-    @using (Ajax.BeginForm("AddForm", "Batch", new AjaxOptions()
+    @using (Ajax.BeginForm("AddForm", "DonationAccount", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = id
@@ -36,7 +28,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10" id="createButton">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Add Another Batch" class="btn btn-primary" />
+                    <input type="submit" value="Add Another Account" class="btn btn-primary" />
                 </div>
             </div>
         </div>
