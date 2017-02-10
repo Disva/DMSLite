@@ -57,8 +57,8 @@ namespace DMSLite.Controllers
             //generate ReceiptFormModel from the form
             ReceiptFormModel rfm = new ReceiptFormModel()
             {
-                donors = db.Donors.Where(x => donors.Any(y => y.Equals(x.Id))).ToList(),
-                batches = db.Batches.Where(x => batches.Any(y => y.Equals(x.Id))).ToList()
+                donors = db.Donors.Where(x => donors.Contains(x.Id)).ToList(),
+                batches = db.Batches.Where(x => batches.Contains(x.Id)).ToList()
             };
 
             using (MemoryStream outputZip = new MemoryStream())

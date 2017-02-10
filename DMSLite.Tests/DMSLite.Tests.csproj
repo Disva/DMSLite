@@ -79,6 +79,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -123,6 +124,7 @@
     <Compile Include="Controllers\BatchControllerTest.cs" />
     <Compile Include="Controllers\DonorsControllerTest.cs" />
     <Compile Include="Controllers\MultiTenancyTest.cs" />
+    <Compile Include="Controllers\ReceiptControllerTest.cs" />
     <Compile Include="Mocks\FakeOrganizationDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
