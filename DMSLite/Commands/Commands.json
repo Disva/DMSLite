@@ -38,5 +38,9 @@
   "ViewDonations": {
     "Item1": "Donation",
     "Item2": "FetchDonations"
+  },
+  "PrintReceipts": {
+    "Item1": "Receipt",
+    "Item2":  "ReceiptMenu"
   }
 }
