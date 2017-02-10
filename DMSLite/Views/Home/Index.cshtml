@@ -109,6 +109,19 @@
         </div>
     </div>
 }
+@using (Ajax.BeginForm("ReceiptMenu", "Receipt", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.InsertAfter,
+    UpdateTargetId = "outputContainer",
+    OnSuccess = "updateContainer",
+    OnBegin = "startLoading",
+    OnFailure = "ajaxFailure"
+}))
+{
+    <span class="input-group-btn" style="position:fixed; top: 200px; left: 200px; z-index: 10;">
+        <input id="submitBtn" class="btn btn-default" type="submit" value="Test Receipt Generation!" />
+    </span>
+}
 
 <script>
     document.getElementById("submitBtn").addEventListener("click", function () {
@@ -184,12 +197,18 @@
     }
 
     function checkFormatSelect2Batch() {
+        var searchOpenBatches = true;
         var node = $("#outputContainer").find(".format-batch-select2");
+        if (node.length == 0)
+        {
+            node = $("#outputContainer").find(".format-closed-batch-select2");
+            searchOpenBatches = false;
+        }
         if (node.length > 0) {
 
             $(node).select2({
                 ajax: {
-                    url: "/Batch/SearchBatches/",
+                    url: searchOpenBatches ? "/Batch/SearchBatches/" : "/Batch/SearchClosedBatches/",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
@@ -217,7 +236,7 @@
                 dropdownParent: $(node).parents(".modal")
             });
 
-            $(node).removeClass("format-batch-select2");
+            $(node).removeClass( searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
         }
     }
 
@@ -417,4 +436,9 @@
         });
 
     });
+
+    function downloadZipFile(form) {
+        var formData = $(form).serialize();
+        window.location.assign("/Receipt/ZipReceipts?"+formData);
+    }
 </script>
