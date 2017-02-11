@@ -50,5 +50,9 @@
   "ViewAccounts": {
     "Item1": "DonationAccount",
     "Item2": "FetchAccounts"
+  },
+  "PrintReceipts": {
+    "Item1": "Receipt",
+    "Item2":  "ReceiptMenu"
   }
 }

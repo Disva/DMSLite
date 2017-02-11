@@ -64,6 +64,13 @@ $(function () {
      'sos',
      'help me',
      'list of commands'
+ ],
+ [
+     'print',
+     'make',
+     [
+         'receipts'
+     ]
  ]
     ];
     var haystack = [];

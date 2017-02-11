@@ -86,9 +86,18 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -215,6 +224,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
@@ -230,6 +240,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Migrations\201610071735228_a.cs" />
     <Compile Include="Migrations\201610071735228_a.Designer.cs">
       <DependentUpon>201610071735228_a.cs</DependentUpon>
@@ -276,6 +287,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AddDonationViewModel.cs" />
+    <Compile Include="Models\ReceiptFormModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
@@ -448,6 +460,8 @@
     <Content Include="Views\DonationAccount\_AddForm.cshtml" />
     <Content Include="Views\DonationAccount\_AddSuccess.cshtml" />
     <Content Include="Views\Shared\_Help.cshtml" />
+    <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
+    <Content Include="Views\Receipt\_Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
