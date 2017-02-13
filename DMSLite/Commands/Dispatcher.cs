@@ -4,6 +4,7 @@ using ApiAiSDK;
 using DMSLite.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Web.Configuration;
 
 namespace DMSLite.Commands
 {
@@ -29,7 +30,7 @@ namespace DMSLite.Commands
 
         private void InitAPIAI()
         {
-            var config = new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English);
+            var config = new AIConfiguration(WebConfigurationManager.AppSettings["APIAIKey"], SupportedLanguage.English);
             apiAi = new ApiAi(config);
         }
 

@@ -2,10 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApiAiSDK;
 using ApiAiSDK.Model;
+using System.Configuration;
 using System.Collections.Generic;
 
 namespace DMSLite.Tests.SDKs
 {
+
+
     [TestClass]
     public class APIaiTest
     {
@@ -16,8 +19,20 @@ namespace DMSLite.Tests.SDKs
          * Include varied input to test for robustness
          **/
 
-        private static ApiAi apiAi = new ApiAi(new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English));
+        private static ApiAi apiAi;
         private Random rand = new Random();
+
+        [TestInitialize]
+        public void APIAIInit()
+        {
+            string key = "";
+#if DEBUG
+            key = ConfigurationManager.AppSettings["APIAIKey-Debug"];
+#else
+            key = ConfigurationManager.AppSettings["APIAIKey-Release"];
+#endif
+            apiAi = new ApiAi(new AIConfiguration(key, SupportedLanguage.English));
+        }
 
         [TestMethod]
         public void APITestContextConversation()
@@ -30,6 +45,19 @@ namespace DMSLite.Tests.SDKs
 
             response = apiAi.TextRequest("my batch title");
             Assert.IsFalse(response.Result.ActionIncomplete);
+        }
+
+        public void APITestHelp()
+        {
+            string[] inputs =
+            {
+                "help",
+                "help me",
+                "sos"
+            };
+
+            var response = RandomTextInput(inputs);
+            Assert.AreEqual(response.Result.Action, "Help");
         }
 
         #region Donor
@@ -270,21 +298,7 @@ namespace DMSLite.Tests.SDKs
             var response = apiAi.TextRequest("add new donation");
             Assert.AreEqual(response.Result.Action, "AddDonation");
         }
-        #endregion
-
-        public void APITestHelp()
-        {
-            string[] inputs =
-            {
-                "help",
-                "help me",
-                "sos"
-            };
-
-            var response = RandomTextInput(inputs);
-            Assert.AreEqual(response.Result.Action, "Help");
-        }
-
+        
         [TestMethod]
         public void APITestViewDonations()
         {
@@ -309,6 +323,7 @@ namespace DMSLite.Tests.SDKs
             response = RandomTextInput(inputs, account);
             Assert.AreEqual(response.Result.Parameters["account-name"].ToString(), "Phoenix Convention", true);
         }
+        #endregion
 
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)

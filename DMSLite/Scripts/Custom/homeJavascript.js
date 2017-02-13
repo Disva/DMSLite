@@ -73,6 +73,13 @@ function showLoadingButton(id) {
     $(button).prop("disabled", true);
 }
 
+function hideLoadingButton(id) {
+    var button = $(document.getElementById(id)).find(".loading-button");
+    $(button).find(".loading-button-icon").css("display", "none");
+    $(button).prop("disabled", false);
+}
+
+
 
 function setFocusToTextBox() {
     document.getElementById("mainInput").focus();
@@ -145,12 +152,17 @@ function checkFormatSelect2Donor() {
 }
 
 function checkFormatSelect2Batch() {
+    var searchOpenBatches = true;
     var node = $("#outputContainer").find(".format-batch-select2");
+    if (node.length == 0) {
+        node = $("#outputContainer").find(".format-closed-batch-select2");
+        searchOpenBatches = false;
+    }
     if (node.length > 0) {
 
         $(node).select2({
             ajax: {
-                url: "/Batch/SearchBatches/",
+                url: searchOpenBatches ? "/Batch/SearchBatches/" : "/Batch/SearchClosedBatches/",
                 dataType: 'json',
                 delay: 500,
                 data: function (params) {
@@ -178,7 +190,7 @@ function checkFormatSelect2Batch() {
             dropdownParent: $(node).parents(".modal")
         });
 
-        $(node).removeClass("format-batch-select2");
+        $(node).removeClass(searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
     }
 }
 
@@ -247,6 +259,21 @@ function enableButtonAndCheckSearch(id) {
 function enableButtonAndScroll(id) {
     clickedButtonMap[id] = false;
     scrollToBottom();
+}
+
+function downloadZipFile(form) {
+    var formData = $(form).serialize();
+    window.location.assign("/Receipt/ZipReceipts?" + formData);
+}
+
+function checkReceiptButton() {
+    var receiptButton = $("#submitReceiptForm");
+    var donorSelect = $("#receiptDonors").next();
+    var batchSelect = $("#receiptBatches").next();
+    if (donorSelect.find(".select2-selection__choice").length == 0 || batchSelect.find(".select2-selection__choice").length == 0)
+        receiptButton.attr("disabled", true);
+    else
+        receiptButton.attr("disabled", false);
 }
 
 /*$(function () {
