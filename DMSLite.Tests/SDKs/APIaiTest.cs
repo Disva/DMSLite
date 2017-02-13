@@ -2,9 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApiAiSDK;
 using ApiAiSDK.Model;
+using System.Configuration;
 
 namespace DMSLite.Tests.SDKs
 {
+
+
     [TestClass]
     public class APIaiTest
     {
@@ -15,8 +18,20 @@ namespace DMSLite.Tests.SDKs
          * Include varied input to test for robustness
          **/
 
-        private static ApiAi apiAi = new ApiAi(new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English));
+        private static ApiAi apiAi;
         private Random rand = new Random();
+
+        [TestInitialize]
+        public void APIAIInit()
+        {
+            string key = "";
+#if DEBUG
+            key = ConfigurationManager.AppSettings["APIAIKey-Debug"];
+#else
+            key = ConfigurationManager.AppSettings["APIAIKey-Release"];
+#endif
+            apiAi = new ApiAi(new AIConfiguration(key, SupportedLanguage.English));
+        }
 
         /**
         [TestMethod]
@@ -32,6 +47,7 @@ namespace DMSLite.Tests.SDKs
             Assert.IsFalse(response.Result.ActionIncomplete);
         }
         **/
+
 
         [TestMethod]
         public void APITestAddBatch()
