@@ -68,10 +68,21 @@ namespace DMSLite.Controllers
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
-                || !String.IsNullOrEmpty(parameters["date-period"].ToString());
+                || !String.IsNullOrEmpty(parameters["date-period"].ToString())
+                || !String.IsNullOrEmpty(parameters["id"].ToString());
 
             if (!paramsExist)
                 return FetchAllBatches();
+
+            if (!String.IsNullOrEmpty(parameters["id"].ToString()))
+            {
+                int batchID = 0;
+                if (int.TryParse(parameters["id"].ToString(), out batchID))
+                {
+                    FetchByID(ref filteredBatches, batchID);
+                }
+                return filteredBatches;
+            }
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
@@ -136,6 +147,18 @@ namespace DMSLite.Controllers
         private DateTime EndOfDay(DateTime dateTime)
         {
             return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
+        }
+
+        private void FetchByID(ref List<Batch> filteredBatches, int batchID)
+        {
+            if (filteredBatches.Count == 0)
+            {
+                filteredBatches.AddRange(db.Batches.Where(x => x.Id == batchID));
+            }
+            else
+            {
+                filteredBatches = filteredBatches.Where(x => x.Id == batchID).ToList();
+            }
         }
 
         // extract method
