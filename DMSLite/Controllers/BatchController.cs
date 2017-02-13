@@ -46,7 +46,7 @@ namespace DMSLite.Controllers
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
                 DateRange convertedDate = DateFromRange(ref parameters);
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
@@ -96,14 +96,14 @@ namespace DMSLite.Controllers
         private DateRange DateFromRange(ref Dictionary<string, object> parameters)
         {
 
-            if (!String.IsNullOrWhiteSpace(parameters["date"].ToString()))
+            if (parameters.ContainsKey("date") && !String.IsNullOrWhiteSpace(parameters["date"].ToString()))
             {
                 DateTime dateValue = ConvertDate(parameters["date"].ToString());
 
                 return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
             }
 
-            if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
+            if (parameters.ContainsKey("date-period") && !String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
                 return Tuple.Create(
                     StartOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[0])),
                     EndOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[1]))
