@@ -47,6 +47,7 @@ namespace DMSLite.Tests.SDKs
             Assert.IsFalse(response.Result.ActionIncomplete);
         }
 
+        [TestMethod]
         public void APITestHelp()
         {
             string[] inputs =
