@@ -4,7 +4,10 @@
             Enum.GetValues(typeof(DonorType)).Cast<int>(), (name, value) =>
                 new SelectListItem {
                     Text = name,
-                    Value = value.ToString()
+                    Value = value.ToString(),
+                    Selected = (int)ViewData.Model == value
                 });
+
+    var selectList = new SelectList(items, "Value", "Text", ((int)ViewData.Model).ToString());
 }
-@Html.DropDownList("", items, ViewData)
+@Html.DropDownList("Type", items, ViewData)
