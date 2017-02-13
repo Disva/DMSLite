@@ -13,6 +13,7 @@ namespace DMSLite.Controllers
         public Dispatcher dispatcher;
         public HomeController()
         {
+            Helpers.Log.writeLog("User connected to DMSLite", " # ");
             dispatcher = Dispatcher.getDispatcher();
         }
 
