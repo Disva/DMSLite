@@ -27,6 +27,10 @@
     "Item1": "Batch",
     "Item2": "FetchBatches"
   },
+  "FilterForClosedBatches": {
+    "Item1": "Batch",
+    "Item2": "FetchClosedBatchesByDate"
+  },
   "ModifyDonation": {
     "Item1": "Donation",
     "Item2": "ModifyForm"
