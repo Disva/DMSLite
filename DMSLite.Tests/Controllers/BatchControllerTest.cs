@@ -145,6 +145,40 @@ namespace DMSLite.Tests.Controllers
 
         [TestMethod]
         //Tests fetching a batch by dates before and after
+        public void TestFetchBatchById()
+        {
+            BatchController bc = new BatchController(db);
+            //adds a new testing batch to the db
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatchById",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            try
+            {
+                //searches for that open batch made on a certain date
+                string id = b.Id.ToString();
+                parameters.Add("title", "");
+                parameters.Add("date", "");
+                parameters.Add("date-period", "");
+                parameters.Add("datetype", "");
+                parameters.Add("type", "");
+                parameters.Add("id", id);
+                //parameters.Add("posttype", "opened");
+                List<Batch> testBatches = bc.FindBatches(parameters);
+                Assert.AreEqual(1, testBatches.Count);
+                Assert.AreEqual(b.Title, testBatches.First().Title);
+            }
+            finally
+            {
+                //remove testing batch
+                bc.Remove(b);
+            }
+        }
+
+        [TestMethod]
+        //Tests fetching a batch by dates before and after
         public void TestFetchBatchByDate()
         {
             BatchController bc = new BatchController(db);
