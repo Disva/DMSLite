@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 
 namespace DMSLite.Controllers
 {
+    using DateRange = Tuple<DateTime, DateTime>;
+
     [Authorize]
     public class DonationController : Controller
     {
@@ -77,11 +79,12 @@ namespace DMSLite.Controllers
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
             List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).Include(z => z.DonationAccount).ToList<Donation>());
-            bool paramsExist = (((((
+            bool paramsExist = ((((((
                 !String.IsNullOrEmpty(parameters["donor-name"].ToString()) || !String.IsNullOrEmpty(parameters["value"].ToString())) ||
                         JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any()) ||
-                            !String.IsNullOrEmpty(parameters["value-comparator"].ToString())) ||
-                                !String.IsNullOrEmpty(parameters["account-name"].ToString()))
+                                !String.IsNullOrEmpty(parameters["account-name"].ToString())) ||
+                                    !String.IsNullOrEmpty(parameters["date"].ToString())) ||
+                                        !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             );
             if(paramsExist)
             {
@@ -90,6 +93,11 @@ namespace DMSLite.Controllers
                     var donorPredicate = dc.FetchByName(parameters["donor-name"].ToString());
                     List<Donor> matchedDonors = db.Donors.AsExpandable().Where(donorPredicate).ToList();
                     FetchByDonor(ref returnedDonations, matchedDonors);
+                }
+                if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+                {
+                    DateRange convertedDate = DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString());
+                    FetchByDate(ref returnedDonations, convertedDate, parameters["date-comparator"].ToString());
                 }
                 if (!String.IsNullOrEmpty(parameters["account-name"].ToString()))
                 {
@@ -108,6 +116,11 @@ namespace DMSLite.Controllers
                 }                
             }
             return returnedDonations;
+        }
+
+        private void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
+        {
+            returnedDonations = returnedDonations.Where(x=> x.DonationBatch.CreateDate.Date == dateRange.Item1.Date).ToList();
         }
 
         public void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
@@ -156,6 +169,48 @@ namespace DMSLite.Controllers
         public void FetchByValueClosedRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
         {
             filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
+        }
+
+        //originally from batch controller
+        //refactor into a helper class
+        private DateRange DateFromRange(string date, string datePeriod)
+        {
+            if (!String.IsNullOrWhiteSpace(date));
+            {
+                DateTime dateValue = ConvertDate(date);
+                return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
+            }
+            if (!String.IsNullOrWhiteSpace(datePeriod))
+                return Tuple.Create(
+                    StartOfDay(ConvertDate(datePeriod.Split('/')[0])),
+                    EndOfDay(ConvertDate(datePeriod.Split('/')[1]))
+                    );
+            return null;
+        }
+
+        private DateTime ConvertDate(string date)
+        {
+            DateTime convertedDate;
+            if (date.Length == 4)
+                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            else
+                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+            //If date in the future, send it into the past (only year for year basis)
+            if (convertedDate.CompareTo(DateTime.Today) > 0)
+                convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
+
+            return convertedDate;
+        }
+
+        private DateTime StartOfDay(DateTime dateTime)
+        {
+            return dateTime.Date;
+        }
+
+        private DateTime EndOfDay(DateTime dateTime)
+        {
+            return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
         }
 
         #endregion
