@@ -44,7 +44,6 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("type", "open");
             parameters.Add("date", "");
             parameters.Add("date-period", "");
-            parameters.Add("id", "");
             //parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
@@ -73,6 +72,42 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests fetching closed batches closed on a certain date
+        public void TestFetchBatchesClosedOnDate()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("datetype", "before");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "2017-01-01/2017-12-31");
+
+            BatchController bc = new BatchController(db);
+            PartialViewResult pvr = (PartialViewResult)bc.FetchClosedBatchesByDate(parameters);
+            if (pvr.ViewName == "~/Views/Shared/_ErrorMessage.cshtml")
+            {
+                //this is the case where there are no batches of that type
+                Assert.IsTrue(true);
+                return;
+            }
+
+            List<Batch> fetchedClosedBatches = ((List<Batch>)pvr.ViewData.Model).ToList();
+            List<Batch> dbClosedBatches = db.Batches.Where(x => x.CloseDate != null && x.CloseDate < DateTime.Parse("2017-01-01")).ToList();
+            int i = 0;
+            if (dbClosedBatches.Count() == 0 && fetchedClosedBatches.Count() == 0)
+            {
+                Assert.IsTrue(true);
+            }
+            else if (dbClosedBatches.Count() == fetchedClosedBatches.Count())
+            {
+                foreach (Batch b in dbClosedBatches)
+                {
+                    Assert.AreEqual(b.Id, fetchedClosedBatches.ElementAt(i).Id);
+                    Assert.AreEqual(b.CloseDate, fetchedClosedBatches.ElementAt(i).CloseDate);
+                    i++;
+                }
+            }
+        }
+
+        [TestMethod]
         //Tests fetching the list of all open batches
         public void TestFetchClosedBatches()
         {
@@ -81,8 +116,6 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("type", "closed");
             parameters.Add("date", "");
             parameters.Add("date-period", "");
-            parameters.Add("id", "");
-            //parameters.Add("postype", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -128,47 +161,11 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("type", "");
             parameters.Add("date", "");
             parameters.Add("date-period", "");
-            parameters.Add("id", "");
-            //parameters.Add("postype", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
             try
             {
                 Assert.AreEqual(dbBatches.Count, testBatches.Count);
                 Assert.AreEqual(dbBatches.First().Title, testBatches.First().Title);
-            }
-            finally
-            {
-                //remove testing batch
-                bc.Remove(b);
-            }
-        }
-
-        [TestMethod]
-        //Tests fetching a batch by dates before and after
-        public void TestFetchBatchById()
-        {
-            BatchController bc = new BatchController(db);
-            //adds a new testing batch to the db
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            Batch b = new Batch()
-            {
-                Title = "TestFetchBatchById",
-            };
-            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
-            try
-            {
-                //searches for that open batch made on a certain date
-                string id = b.Id.ToString();
-                parameters.Add("title", "");
-                parameters.Add("date", "");
-                parameters.Add("date-period", "");
-                parameters.Add("datetype", "");
-                parameters.Add("type", "");
-                parameters.Add("id", id);
-                //parameters.Add("posttype", "opened");
-                List<Batch> testBatches = bc.FindBatches(parameters);
-                Assert.AreEqual(1, testBatches.Count);
-                Assert.AreEqual(b.Title, testBatches.First().Title);
             }
             finally
             {
@@ -197,8 +194,6 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("date-period", "");
                 parameters.Add("datetype", "on");
                 parameters.Add("type", "open");
-                parameters.Add("id", "");
-                //parameters.Add("posttype", "opened");
                 List<Batch> testBatches = bc.FindBatches(parameters);
                 Assert.AreEqual(1, testBatches.Count);
                 Assert.AreEqual(b.Title, testBatches.First().Title);
@@ -212,8 +207,6 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("date-period", "");
                 parameters.Add("datetype", "after");
                 parameters.Add("type", "closed");
-                parameters.Add("id", "");
-                //parameters.Add("posttype", "closed");
                 testBatches = bc.FindBatches(parameters);
                 dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
                 Assert.AreEqual(dbBatches.Count, testBatches.Count);

@@ -150,8 +150,16 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_Modify.cshtml", donor);
         }
 
-        public ActionResult Modify(Donor donor)
+        public ActionResult Modify(Donor donor, [Bind(Prefix = "Type.Type")] DonorType type = DonorType.Individual)
         {
+            donor.Type = type;
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donor);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Modify(donor);
@@ -202,8 +210,16 @@ namespace DMSLite
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donor donor)
+        public ActionResult Add(Donor donor, [Bind(Prefix = "Type.Type")] DonorType type = DonorType.Individual)
         {
+            donor.Type = type;
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.Clear();
+                TryValidateModel(donor);
+            }
+
             if (ModelState.IsValid)
             {
                 //confirm with the person submitting the form whether a similar donor already exists
