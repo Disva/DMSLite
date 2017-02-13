@@ -150,21 +150,6 @@ namespace DMSLite.Tests.Controllers
             Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
         }
 
-
-        //INVALIDITY TESTS
-        [TestMethod]
-        //Tests that an invalid command returns an error.
-        public void TestInvalidCommand()
-        {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "This is not a real command.");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech;
-            //Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
-            Assert.IsNull(((ResponseModel)returnedView.Model).Instructions);
-        }
-
         [TestMethod]
         //Tests that searching for a donor with invalid criteria returns an error.
         public void TestViewInvalidDonorAndParameter()
