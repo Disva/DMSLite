@@ -46,7 +46,7 @@ namespace DMSLite.Controllers
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
                 DateRange convertedDate = DateFromRange(ref parameters);
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
@@ -68,10 +68,21 @@ namespace DMSLite.Controllers
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
-                || !String.IsNullOrEmpty(parameters["date-period"].ToString());
+                || !String.IsNullOrEmpty(parameters["date-period"].ToString())
+                || !String.IsNullOrEmpty(parameters["id"].ToString());
 
             if (!paramsExist)
                 return FetchAllBatches();
+
+            if (!String.IsNullOrEmpty(parameters["id"].ToString()))
+            {
+                int batchID = 0;
+                if (int.TryParse(parameters["id"].ToString(), out batchID))
+                {
+                    FetchByID(ref filteredBatches, batchID);
+                }
+                return filteredBatches;
+            }
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
@@ -96,14 +107,14 @@ namespace DMSLite.Controllers
         private DateRange DateFromRange(ref Dictionary<string, object> parameters)
         {
 
-            if (!String.IsNullOrWhiteSpace(parameters["date"].ToString()))
+            if (parameters.ContainsKey("date") && !String.IsNullOrWhiteSpace(parameters["date"].ToString()))
             {
                 DateTime dateValue = ConvertDate(parameters["date"].ToString());
 
                 return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
             }
 
-            if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
+            if (parameters.ContainsKey("date-period") && !String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
                 return Tuple.Create(
                     StartOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[0])),
                     EndOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[1]))
@@ -136,6 +147,18 @@ namespace DMSLite.Controllers
         private DateTime EndOfDay(DateTime dateTime)
         {
             return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
+        }
+
+        private void FetchByID(ref List<Batch> filteredBatches, int batchID)
+        {
+            if (filteredBatches.Count == 0)
+            {
+                filteredBatches.AddRange(db.Batches.Where(x => x.Id == batchID));
+            }
+            else
+            {
+                filteredBatches = filteredBatches.Where(x => x.Id == batchID).ToList();
+            }
         }
 
         // extract method
