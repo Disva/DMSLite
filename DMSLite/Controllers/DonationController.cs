@@ -120,7 +120,37 @@ namespace DMSLite.Controllers
 
         private void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
         {
-            returnedDonations = returnedDonations.Where(x=> x.DonationBatch.CreateDate.Date == dateRange.Item1.Date).ToList();
+            if (dateRange.Item1.Equals(dateRange.Item2))
+            {
+                switch (dateComparator)
+                {
+                    case "<":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date <= dateRange.Item1.Date).ToList();
+                        break;
+                    case ">":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date >= dateRange.Item1.Date).ToList();
+                        break;
+                    default:
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date == dateRange.Item1.Date).ToList();
+                        break;
+                }
+            }
+            //for a date range
+            else
+            {
+                switch (dateComparator)
+                {
+                    case "<":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate <= dateRange.Item1).ToList();
+                        break;
+                    case ">":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate >= dateRange.Item2).ToList();
+                        break;
+                    default:
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate >= dateRange.Item1 && x.DonationBatch.CreateDate <= dateRange.Item2).ToList();
+                        break;
+                }
+            }
         }
 
         public void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
@@ -175,16 +205,18 @@ namespace DMSLite.Controllers
         //refactor into a helper class
         private DateRange DateFromRange(string date, string datePeriod)
         {
-            if (!String.IsNullOrWhiteSpace(date));
+            if (!String.IsNullOrWhiteSpace(date))
             {
                 DateTime dateValue = ConvertDate(date);
                 return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
             }
             if (!String.IsNullOrWhiteSpace(datePeriod))
+            {
                 return Tuple.Create(
                     StartOfDay(ConvertDate(datePeriod.Split('/')[0])),
                     EndOfDay(ConvertDate(datePeriod.Split('/')[1]))
                     );
+            }
             return null;
         }
 
