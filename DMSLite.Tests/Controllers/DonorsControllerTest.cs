@@ -88,10 +88,10 @@ namespace DMSLite.Tests.Controllers
         {
             DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("donor-search", new List<String> { "phone-number", "555-555-5555" });
+            parameters.Add("donor-search", new List<String> { "phone-number", "5555555555" });
             parameters.Add("email-address", "");
             parameters.Add("name", "");
-            parameters.Add("phone-number", "555-555-5555");
+            parameters.Add("phone-number", "5555555555");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> steve = db.Donors.Where(x => x.PhoneNumber == "555-555-5555").ToList();

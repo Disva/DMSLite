@@ -49,16 +49,16 @@ namespace DMSLite
             {
                 string name1 = names[0], name2 = names[1];
 
-                predicate.Or(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                predicate.Or(x => x.FirstName != null && x.LastName != null && x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase));
 
-                predicate.Or(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                predicate.Or(x => x.FirstName != null && x.LastName != null && x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
-                predicate = PredicateBuilder.New<Donor>(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                predicate = PredicateBuilder.New<Donor>(x => (x.FirstName != null && x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) ||
+                    (x.LastName != null && x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
             }
 
             return predicate;
@@ -66,12 +66,12 @@ namespace DMSLite
 
         private Expression<Func<Donor, bool>> FetchByEmail(string email)
         {
-            return PredicateBuilder.New<Donor>(x => x.Email.Equals(email));
+            return PredicateBuilder.New<Donor>(x => x.Email != null && x.Email.Equals(email));
         }
 
         private Expression<Func<Donor, bool>> FetchByPhoneNumber(string phone)
         {
-            return PredicateBuilder.New<Donor>(x => x.PhoneNumber.Replace("-", "").Equals(phone));
+            return PredicateBuilder.New<Donor>(x => x.PhoneNumber != null && x.PhoneNumber.Replace("-", "").Equals(phone));
         }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
