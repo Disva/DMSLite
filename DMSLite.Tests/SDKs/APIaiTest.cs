@@ -285,6 +285,35 @@ namespace DMSLite.Tests.SDKs
                 new RequestExtras(contexts, null));
             Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
         }
+
+        [TestMethod]
+        public void APITestFilterDonorsByContext()
+        {
+            string[] inputs =
+            {
+                "filter by name {0}",
+                "donors with name {0}"
+            };
+
+            var noContext = RandomTextInput(inputs, "Denis");
+
+            Assert.AreEqual(noContext.Result.Action, "input.unknown");
+
+            var showAllDonors = apiAi.TextRequest("show donors");
+            Assert.AreEqual(showAllDonors.Result.Action, "ViewAllDonors");
+
+            List<AIContext> contexts = new List<AIContext>() {
+                    new AIContext()
+                    {
+                        Name = showAllDonors.Result.Contexts[0].Name,
+                        Lifespan = showAllDonors.Result.Contexts[0].Lifespan
+                    }
+                };
+
+            var response = apiAi.TextRequest("filter by name Denis",
+                new RequestExtras(contexts, null));
+            Assert.AreEqual(response.Result.Action, "FilterDonors");
+        }
         #endregion
 
         #region Donation

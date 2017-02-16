@@ -150,8 +150,8 @@ namespace DMSLite
 
         public ActionResult ViewAllDonors()
         {
-            List<Donor> allDonors = db.Donors.ToList();
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+            filteredDonors = db.Donors.ToList();
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
         }
 
         // Action to search for donors by name and obtain a json result
