@@ -21,6 +21,8 @@ namespace DMSLite
     {
         private OrganizationDb db;
 
+        private static List<Donor> filteredDonors;
+
         public DonorsController()
         {
             db = new OrganizationDb();
@@ -69,12 +71,12 @@ namespace DMSLite
 
         private Expression<Func<Donor, bool>> FetchByPhoneNumber(string phone)
         {
-            return PredicateBuilder.New<Donor>(x => x.PhoneNumber.Equals(phone));
+            return PredicateBuilder.New<Donor>(x => x.PhoneNumber.Replace("-", "").Equals(phone));
         }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> filteredDonors = FindDonors(parameters);
+            filteredDonors = FindDonors(parameters);
 
             if (filteredDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
@@ -110,6 +112,42 @@ namespace DMSLite
                 return null;
         }
 
+        public ActionResult FilterDonors(Dictionary<string, object> parameters)
+        {
+            if (filteredDonors == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredDonors.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "cannot filter an empty list");
+
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["name"].ToString())
+                || !String.IsNullOrEmpty(parameters["email-address"].ToString())
+                || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
+            if (paramsExist)
+                FilterDonorList(parameters);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
+        }
+
+        public void FilterDonorList(Dictionary<string, object> parameters)
+        {
+            var donorSearchPredicate = PredicateBuilder.New<Donor>();
+
+            if (!String.IsNullOrEmpty(parameters["name"].ToString()))
+                donorSearchPredicate.And(FetchByName(parameters["name"].ToString()));
+
+            if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
+                donorSearchPredicate.And(FetchByEmail(parameters["email-address"].ToString()));
+
+            if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
+                donorSearchPredicate.And(FetchByPhoneNumber(parameters["phone-number"].ToString()));
+
+            filteredDonors = filteredDonors.Where(donorSearchPredicate).ToList();
+        }
+
         public ActionResult ViewAllDonors()
         {
             List<Donor> allDonors = db.Donors.ToList();
@@ -119,13 +157,13 @@ namespace DMSLite
         // Action to search for donors by name and obtain a json result
         public ActionResult SearchDonors(string searchKey)
         {
-            if(string.IsNullOrEmpty(searchKey))
+            if (string.IsNullOrEmpty(searchKey))
             {
-                return new JsonResult { Data = new { results = new List<Donor>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+                return new JsonResult { Data = new { results = new List<Donor>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
 
             var donors = db.Donors.Where(x => x.FirstName.ToLower().StartsWith(searchKey.ToLower()) || x.LastName.ToLower().StartsWith(searchKey.ToLower()));
-            return new JsonResult { Data = new { results = donors.Select(x => new { firstName = x.FirstName, lastName = x.LastName, id = x.Id})}, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            return new JsonResult { Data = new { results = donors.Select(x => new { firstName = x.FirstName, lastName = x.LastName, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         #endregion

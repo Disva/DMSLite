@@ -57,6 +57,10 @@
   },
   "PrintReceipts": {
     "Item1": "Receipt",
-    "Item2":  "ReceiptMenu"
+    "Item2": "ReceiptMenu"
+  },
+  "FilterDonors": {
+    "Item1": "Donors",
+    "Item2": "FilterDonors"
   }
 }
