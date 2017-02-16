@@ -96,7 +96,7 @@ namespace DMSLite.Controllers
                 }
                 if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
                 {
-                    DateRange convertedDate = DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString());
+                    DateRange convertedDate = DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                     FetchByDate(ref returnedDonations, convertedDate, parameters["date-comparator"].ToString());
                 }
                 if (!String.IsNullOrEmpty(parameters["account-name"].ToString()))
@@ -120,6 +120,11 @@ namespace DMSLite.Controllers
 
         private void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
         {
+            if (dateRange == null)
+            {//if the date was converted to invalid, empty the list
+                returnedDonations = new List<Donation>();
+                return;                                                                                                                                                                                                                                                                                                                                                                                                                                   
+            }
             if (dateRange.Item1.Equals(dateRange.Item2))
             {
                 switch (dateComparator)
@@ -203,7 +208,7 @@ namespace DMSLite.Controllers
 
         //originally from batch controller
         //refactor into a helper class
-        private DateRange DateFromRange(string date, string datePeriod)
+        private DateRange DateFromRange(string date, string datePeriod, string dateComparator)
         {
             if (!String.IsNullOrWhiteSpace(date))
             {
@@ -212,9 +217,17 @@ namespace DMSLite.Controllers
             }
             if (!String.IsNullOrWhiteSpace(datePeriod))
             {
+                DateTime startOfDay = DateTime.ParseExact(datePeriod.Split('/')[0], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime endOfDay = DateTime.ParseExact(datePeriod.Split('/')[1], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+                if ((endOfDay - startOfDay).TotalDays >= 364 && !dateComparator.Equals("<"))
+                {
+                    //this is a full year, do not handle it unless the range is before
+                    return null;
+                }
                 return Tuple.Create(
-                    StartOfDay(ConvertDate(datePeriod.Split('/')[0])),
-                    EndOfDay(ConvertDate(datePeriod.Split('/')[1]))
+                    startOfDay,
+                    endOfDay
                     );
             }
             return null;
@@ -222,6 +235,7 @@ namespace DMSLite.Controllers
 
         private DateTime ConvertDate(string date)
         {
+            //adjusts date to match current date (for future dates)
             DateTime convertedDate;
             if (date.Length == 4)
                 convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
