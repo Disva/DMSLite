@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 
 namespace DMSLite.Helpers
 {
-    static class Log
+    public static class Log
     {
         public static void writeLog(string logMessage, string logSymbol)
         {
