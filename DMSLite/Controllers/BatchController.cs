@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    using Helpers;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
@@ -48,7 +49,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateFromRange(ref parameters);
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
             }
 
@@ -75,7 +76,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateFromRange(ref parameters);
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FetchByDate(convertedDate, parameters["datetype"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
@@ -93,58 +94,13 @@ namespace DMSLite.Controllers
             return filteredBatches;
         }
 
-        private DateRange DateFromRange(ref Dictionary<string, object> parameters)
-        {
-
-            if (!String.IsNullOrWhiteSpace(parameters["date"].ToString()))
-            {
-                DateTime dateValue = ConvertDate(parameters["date"].ToString());
-
-                return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
-            }
-
-            if (!String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
-                return Tuple.Create(
-                    StartOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[0])),
-                    EndOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[1]))
-                    );
-
-            return null;
-        }
-
-        // TODO: rebuff
-        private DateTime ConvertDate(string date)
-        {
-            DateTime convertedDate;
-            if (date.Length == 4)
-                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            else
-                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-
-            //If date in the future, send it into the past (only year for year basis)
-            if (convertedDate.CompareTo(DateTime.Today) > 0)
-                convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
-
-            return convertedDate;
-        }
-
-        private DateTime StartOfDay(DateTime dateTime)
-        {
-            return dateTime.Date;
-        }
-
-        private DateTime EndOfDay(DateTime dateTime)
-        {
-            return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
-        }
-
         // extract method
-        private void FetchByDate(DateRange searchRange, string datetype = "on")
+        private void FetchByDate(DateRange searchRange, string datetype = "==")
         {
             SEARCH_TYPE searchType;
-            if (datetype == "before")                      //True when searching before a certain date
+            if (datetype == "<")                      //True when searching before a certain date
                 searchType = SEARCH_TYPE.BEFORE;
-            else if (datetype == "after")                  //True when searching after a certain date
+            else if (datetype == ">")                  //True when searching after a certain date
                 searchType = SEARCH_TYPE.AFTER;
             else                                           //True when searching on a specific date
                 searchType = SEARCH_TYPE.ON;
@@ -160,13 +116,13 @@ namespace DMSLite.Controllers
         {
             switch (datetype)
             {
-                case "before": //Searching before a date
+                case "<": //Searching before a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item1) < 0).ToList(); //The closeDate is earlier than the searchDate
                     break;
-                case "after": //Searching after a date
+                case ">": //Searching after a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item2) > 0).ToList(); //The closeDate is later than the searchDate
                     break;
-                case "on":default:    //Searching on a date
+                case "==":default:    //Searching on a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item2) <= 0).ToList(); //The closeDate is the same as the searchDate
                     break;
             }
