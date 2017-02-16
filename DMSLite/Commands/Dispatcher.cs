@@ -49,6 +49,8 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
+            Helpers.Log.writeLog(response.Result.Fulfillment.Speech.ToString(), "-->");
+            Helpers.Log.writeLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"-->");
             //Search commands file for appropriate command instructions
            string thisPath = AppDomain.CurrentDomain.BaseDirectory;
             string path = "";

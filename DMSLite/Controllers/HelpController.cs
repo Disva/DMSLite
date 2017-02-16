@@ -9,5 +9,10 @@ namespace DMSLite.Controllers
         {
             return PartialView("_Help", msg);
         }
+
+        public void Log()
+        {
+            Helpers.Log.writeLog("User reported an error.", " ! ");
+        }
     }
 }
