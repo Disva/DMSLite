@@ -4,6 +4,7 @@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/notify.min.js"></script>
 
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
@@ -25,8 +26,10 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
+                <div id="flagInvalidContainer">
+                    @Ajax.ActionLink("Flag the interpretation as a mistake", "Log", "Help", null)
+                </div>
                 <div id="mainInputGroup" class="input-group">
-
                     <div id="search-container">
                         <input type="text" disabled="disabled" id="suggestion" />
                         @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })

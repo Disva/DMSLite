@@ -13,6 +13,7 @@ namespace DMSLite.Controllers
         public Dispatcher dispatcher;
         public HomeController()
         {
+            Helpers.Log.writeLog("User connected to DMSLite", " # ");
             dispatcher = Dispatcher.getDispatcher();
         }
 
@@ -24,6 +25,7 @@ namespace DMSLite.Controllers
         public ActionResult SendInput(FormCollection fc)
         {
             string inputText = fc["mainInput"];
+            Helpers.Log.writeLog(inputText, "<--");
             //string returnedText = dispatcher.Dispatch(inputText);
             //return Json(returnedText, JsonRequestBehavior.AllowGet);
             var responseModel = dispatcher.Dispatch(inputText);

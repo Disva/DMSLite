@@ -47,7 +47,7 @@ namespace DMSLite.Controllers
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
                 DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
@@ -69,10 +69,21 @@ namespace DMSLite.Controllers
                 !String.IsNullOrEmpty(parameters["type"].ToString())
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
-                || !String.IsNullOrEmpty(parameters["date-period"].ToString());
+                || !String.IsNullOrEmpty(parameters["date-period"].ToString())
+                || !String.IsNullOrEmpty(parameters["id"].ToString());
 
             if (!paramsExist)
                 return FetchAllBatches();
+
+            if (!String.IsNullOrEmpty(parameters["id"].ToString()))
+            {
+                int batchID = 0;
+                if (int.TryParse(parameters["id"].ToString(), out batchID))
+                {
+                    FetchByID(ref filteredBatches, batchID);
+                }
+                return filteredBatches;
+            }
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
