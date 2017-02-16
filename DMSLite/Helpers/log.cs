@@ -12,7 +12,7 @@ namespace DMSLite.Helpers
     {
         public static void writeLog(string logMessage, string logSymbol)
         {
-            using (StreamWriter w = File.AppendText("log.txt"))
+            using (StreamWriter w = File.AppendText(Path.GetTempPath().ToString()+"log.txt"))
             {
                 WriteLog(logMessage, logSymbol, w);
             }
