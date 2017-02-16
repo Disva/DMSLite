@@ -25,7 +25,7 @@ $(function () {
          [
              'donors',
              'batches',
-             'donations [value, donor name, or account]'
+             'donations [value, value range donor name, date, date range, or account]'
          ]
      ]
  ],
