@@ -50,15 +50,9 @@ namespace DMSLite.Commands
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
             //Search commands file for appropriate command instructions
-           string thisPath = AppDomain.CurrentDomain.BaseDirectory;
-            string path = "";
+            var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
-            if (thisPath.Contains("DMSLite\\"))//for the DMS project
-                path = Path.Combine(thisPath, @"Commands\", CommandsLocation);
-            else//for the testing project
-                path = Path.Combine("../../../DMSLite/", @"Commands\", CommandsLocation);
-
-            StreamReader r = new StreamReader(path);
+            StreamReader r = new StreamReader(path.Substring(6) + @"\Commands\" + CommandsLocation);
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 
