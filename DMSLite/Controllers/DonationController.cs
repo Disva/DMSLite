@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace DMSLite.Controllers
 {
+    using Helpers;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
@@ -96,7 +97,7 @@ namespace DMSLite.Controllers
                 }
                 if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
                 {
-                    DateRange convertedDate = DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                    DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                     FetchByDate(ref returnedDonations, convertedDate, parameters["date-comparator"].ToString());
                 }
                 if (!String.IsNullOrEmpty(parameters["account-name"].ToString()))
@@ -204,59 +205,6 @@ namespace DMSLite.Controllers
         public void FetchByValueClosedRange(ref List<Donation> filteredDonations, float valueMin, float valueMax)
         {
             filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
-        }
-
-        //originally from batch controller
-        //refactor into a helper class
-        private DateRange DateFromRange(string date, string datePeriod, string dateComparator)
-        {
-            if (!String.IsNullOrWhiteSpace(date))
-            {
-                DateTime dateValue = ConvertDate(date);
-                return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
-            }
-            if (!String.IsNullOrWhiteSpace(datePeriod))
-            {
-                DateTime startOfDay = DateTime.ParseExact(datePeriod.Split('/')[0], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                DateTime endOfDay = DateTime.ParseExact(datePeriod.Split('/')[1], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-
-                if ((endOfDay - startOfDay).TotalDays >= 364 && !dateComparator.Equals("<"))
-                {
-                    //this is a full year, do not handle it unless the range is before
-                    return null;
-                }
-                return Tuple.Create(
-                    startOfDay,
-                    endOfDay
-                    );
-            }
-            return null;
-        }
-
-        private DateTime ConvertDate(string date)
-        {
-            //adjusts date to match current date (for future dates)
-            DateTime convertedDate;
-            if (date.Length == 4)
-                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            else
-                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-
-            //If date in the future, send it into the past (only year for year basis)
-            if (convertedDate.CompareTo(DateTime.Today) > 0)
-                convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
-
-            return convertedDate;
-        }
-
-        private DateTime StartOfDay(DateTime dateTime)
-        {
-            return dateTime.Date;
-        }
-
-        private DateTime EndOfDay(DateTime dateTime)
-        {
-            return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
         }
 
         #endregion
