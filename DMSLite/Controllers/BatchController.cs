@@ -139,6 +139,18 @@ namespace DMSLite.Controllers
             }
         }
 
+        private void FetchByID(ref List<Batch> filteredBatches, int batchID)
+        {
+            if (filteredBatches.Count == 0)
+            {
+                filteredBatches.AddRange(db.Batches.Where(x => x.Id == batchID));
+            }
+            else
+            {
+                filteredBatches = filteredBatches.Where(x => x.Id == batchID).ToList();
+            }
+        }
+
         private void FilterByDate(DateRange searchRange, SEARCH_TYPE searchType)
         {
             switch (searchType)
