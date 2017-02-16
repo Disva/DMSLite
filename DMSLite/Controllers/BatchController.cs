@@ -49,7 +49,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date-period"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
             }
 
@@ -85,9 +85,9 @@ namespace DMSLite.Controllers
                 return filteredBatches;
             }
 
-            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["date-period"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date-period"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FetchByDate(convertedDate, parameters["datetype"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
