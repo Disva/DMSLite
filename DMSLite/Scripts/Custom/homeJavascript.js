@@ -275,7 +275,9 @@ function checkReceiptButton() {
     else
         receiptButton.attr("disabled", false);
 }
-
-/*$(function () {
-    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
-})*/
+$('#flagInvalidContainer').on('click', '*', function() {
+    $("#flagInvalidContainer").notify(
+  "Sorry for that! I will let my team of humans know for you!",
+  { position: "top right" }
+);
+});

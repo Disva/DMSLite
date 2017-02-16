@@ -10,10 +10,9 @@ namespace DMSLite.Controllers
             return PartialView("_Help", msg);
         }
 
-        public ActionResult Log()
+        public void Log()
         {
             Helpers.Log.writeLog("User reported an error.", " ! ");
-            return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
         }
     }
 }

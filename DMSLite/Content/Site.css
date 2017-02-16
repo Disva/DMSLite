@@ -36,12 +36,11 @@ textarea {
     position:fixed;
     bottom: 0;
     left:0;
-    height: 50px;
+    height: 60px;
     width:100%;
 }
 
 #mainInputGroup {
-    margin-top:8px;
 }
 
 #mainInput {
@@ -57,7 +56,7 @@ textarea {
 
 /* The chat output is set to appear directly above the chat box at all times */
 .content-box {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 110px);
     overflow-y: auto;
 }
 
@@ -237,4 +236,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     color: #ccc;
     background: transparent;
     border: 1px solid #fff;
+}
+
+#flagInvalidContainer {
+    text-align: right;
 }
