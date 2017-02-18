@@ -24,4 +24,18 @@
             ]
         </dd>
     </dl>
+@if (this.User.IsInRole("Admin"))
+{
+    <h4>Administrative Tools</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Download log:</dt>
+        <dd>
+            [
+            @Html.ActionLink("Download Log", "LogDownload", "Help")
+            ]
+        </dd>
+    </dl>
+}
+    
 </div>

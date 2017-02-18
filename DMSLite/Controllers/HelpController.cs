@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.IO;
+using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
@@ -13,6 +14,14 @@ namespace DMSLite.Controllers
         public void Log()
         {
             Helpers.Log.writeLog("User reported an error.", " ! ");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public FileResult LogDownload()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Path.GetTempPath().ToString() + "DMSLitelog.txt");
+            string fileName = "DMSLitelog-"+ System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }
