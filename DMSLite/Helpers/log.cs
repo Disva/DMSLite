@@ -10,25 +10,26 @@ namespace DMSLite.Helpers
 {
     public static class Log
     {
+        static private string path;
+
         public static void WriteLog(string logMessage, string logSymbol)
         {
-            using (StreamWriter w = File.AppendText(Path.GetTempPath().ToString()+"DMSLitelog.txt"))
-            {
-                WriteLog(logMessage, logSymbol, w);
-            }
-        }
+            //Singleton pattern
+            if (path == null)
+                path = Path.GetTempPath().ToString() + String.Format("DMSLitelog-{0}.txt", DateTime.Now.ToString("dd-MM-yyyy HH-mm"));
 
-        private static void WriteLog(string logMessage, string logSymbol, TextWriter w)
-        {
-            /*
-            logSymbol is 3 chars long; 
-            '<--' user input
-            '-->' output
-            '->>' returned/recognized parameters
-            ' ! ' user reported bug
-            ' # ' task
-            */
-            w.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
+            using (StreamWriter logWriter = File.AppendText(path))
+            {
+                /*
+                logSymbol is 3 chars long; 
+                '<--' user input
+                '-->' output
+                '->>' returned/recognized parameters
+                ' ! ' user reported bug
+                ' # ' task
+                */
+                logWriter.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
+            }
         }
     }
 }
