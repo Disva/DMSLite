@@ -49,7 +49,7 @@ namespace DMSLite.Controllers
 
             if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateHelper.DateFromRange(parameters["date-period"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
                 FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
             }
 
@@ -85,10 +85,10 @@ namespace DMSLite.Controllers
                 return filteredBatches;
             }
 
-            if (!String.IsNullOrEmpty(parameters["date-period"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateHelper.DateFromRange(parameters["date-period"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
-                FetchByDate(convertedDate, parameters["datetype"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                FetchByDate(convertedDate, parameters["date-comparator"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
@@ -106,12 +106,12 @@ namespace DMSLite.Controllers
         }
 
         // extract method
-        private void FetchByDate(DateRange searchRange, string datetype = "==")
+        private void FetchByDate(DateRange searchRange, string dateComparator)
         {
             SEARCH_TYPE searchType;
-            if (datetype == "<")                      //True when searching before a certain date
+            if (dateComparator == "<")                      //True when searching before a certain date
                 searchType = SEARCH_TYPE.BEFORE;
-            else if (datetype == ">")                  //True when searching after a certain date
+            else if (dateComparator == ">")                  //True when searching after a certain date
                 searchType = SEARCH_TYPE.AFTER;
             else                                           //True when searching on a specific date
                 searchType = SEARCH_TYPE.ON;
