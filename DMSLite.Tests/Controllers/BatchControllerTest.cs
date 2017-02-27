@@ -229,7 +229,7 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("title", "TestFetchBatchByDate");
                 parameters.Add("date", b.CreateDate.ToString("yyyy-MM-dd"));
                 parameters.Add("date-period", "");
-                parameters.Add("datetype", "on");
+                parameters.Add("date-comparator", "==");
                 parameters.Add("type", "open");
                 parameters.Add("id", "");
                 List<Batch> testBatches = bc.FindBatches(parameters);
@@ -243,7 +243,7 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("title", "TestFetchBatchByDate");
                 parameters.Add("date", b.CreateDate.AddDays(-5).ToString("yyyy-MM-dd"));
                 parameters.Add("date-period", "");
-                parameters.Add("datetype", "after");
+                parameters.Add("date-comparator", ">");
                 parameters.Add("type", "closed");
                 parameters.Add("id", "");
                 testBatches = bc.FindBatches(parameters);
