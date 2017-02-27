@@ -47,10 +47,10 @@ namespace DMSLite.Controllers
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["date-comparator"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
-                FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(null, parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                FilterByClosedDate(convertedDate, parameters["date-comparator"].ToString());
             }
 
             if (filteredBatches.Count == 0)
@@ -123,9 +123,9 @@ namespace DMSLite.Controllers
                 FilterByDate(searchRange, searchType);
         }
 
-        private void FilterByClosedDate(DateRange searchRange, string datetype = "on")
+        private void FilterByClosedDate(DateRange searchRange, string dateComparator)
         {
-            switch (datetype)
+            switch (dateComparator)
             {
                 case "<": //Searching before a date
                     filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item1) < 0).ToList(); //The closeDate is earlier than the searchDate

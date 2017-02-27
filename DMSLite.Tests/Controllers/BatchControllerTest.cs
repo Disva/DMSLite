@@ -77,7 +77,7 @@ namespace DMSLite.Tests.Controllers
         public void TestFetchBatchesClosedOnDate()
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("datetype", "before");
+            parameters.Add("date-comparator", "before");
             parameters.Add("date", "");
             parameters.Add("date-period", "2017-01-01/2017-12-31");
 
