@@ -24,7 +24,7 @@
                     @if(this.User.IsInRole("SPS"))
                     {
                         <li>@Html.ActionLink("Manage Organizations", "Index", "Organizations")</li>
-                        <li>@Html.ActionLink("Manage User Roles", "Index", "Organizations")</li>
+                        <li>@Html.ActionLink("Manage User Roles", "Index", "Roles")</li>
                     }
                     @if(this.User.IsInRole("Admin"))
                     {
