@@ -15,6 +15,7 @@ namespace DMSLite.Controllers
         private OrganizationDb db;
 
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
+        private enum COMPARE_TYPE { UNDER = -1, EQUAL, OVER };
 
         private static List<Batch> filteredBatches;
 
@@ -69,7 +70,8 @@ namespace DMSLite.Controllers
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
                 || !String.IsNullOrEmpty(parameters["date-period"].ToString())
-                || !String.IsNullOrEmpty(parameters["id"].ToString());
+                || !String.IsNullOrEmpty(parameters["id"].ToString())
+                || (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()));
 
             if (!paramsExist)
                 return FetchAllBatches();
@@ -82,6 +84,12 @@ namespace DMSLite.Controllers
                     FetchByID(ref filteredBatches, batchID);
                 }
                 return filteredBatches;
+            }
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["number-comparator"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
             }
 
             if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
@@ -177,6 +185,44 @@ namespace DMSLite.Controllers
                 AddByDate(searchRange, searchType);
             else
                 FilterByDate(searchRange, searchType);
+        }
+
+        private void FetchByTotal(string amount, string comparator)
+        {
+            int total = int.Parse(amount);
+            COMPARE_TYPE compareType;
+            if (comparator == "<")                      //True when searching before a certain date
+                compareType = COMPARE_TYPE.UNDER;
+            else if (comparator == ">")                  //True when searching after a certain date
+                compareType = COMPARE_TYPE.OVER;
+            else                                           //True when searching on a specific date
+                compareType = COMPARE_TYPE.EQUAL;
+            bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
+
+            List<int> matchingDonations = FindBatchKeysBySum(total, compareType);
+
+            if (emptyList)
+                filteredBatches.AddRange(db.Batches.Where(x => matchingDonations.Any(y => y == x.Id)));
+            else
+                filteredBatches = filteredBatches.Where(x => matchingDonations.Any(y => y == x.Id)).ToList();
+        }
+
+        private List<int> FindBatchKeysBySum(int amount, COMPARE_TYPE compareType)
+        {
+            List<int> matchingBatches = new List<int>();
+            switch (compareType)
+            {
+                case COMPARE_TYPE.UNDER: //Searching under a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) < amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.OVER:  //Searching over a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) > amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.EQUAL: //Searching equal to a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) == amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+            }
+            return matchingBatches;
         }
 
         private void FilterByClosedDate(DateRange searchRange, string datetype = "on")

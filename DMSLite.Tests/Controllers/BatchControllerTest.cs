@@ -45,7 +45,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("date", "");
             parameters.Add("date-period", "");
             parameters.Add("id", "");
-            //parameters.Add("postype", "");
+            parameters.Add("amount", "");
+            parameters.Add("number-comparator", "");
 
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
@@ -118,7 +119,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("date", "");
             parameters.Add("date-period", "");
             parameters.Add("id", "");
-
+            parameters.Add("amount", "");
+            parameters.Add("number-comparator", "");
             BatchController bc = new BatchController(db);
             PartialViewResult pvr = (PartialViewResult)bc.FetchBatches(parameters);
             if (pvr.ViewName == "~/Views/Shared/_ErrorMessage.cshtml")
@@ -198,6 +200,8 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("date", "");
             parameters.Add("date-period", "");
             parameters.Add("id", "");
+            parameters.Add("amount", "");
+            parameters.Add("number-comparator", "");
             List<Batch> testBatches = bc.FindBatches(parameters);
             try
             {
@@ -232,6 +236,8 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("datetype", "on");
                 parameters.Add("type", "open");
                 parameters.Add("id", "");
+                parameters.Add("amount", "");
+                parameters.Add("number-comparator", "");
                 List<Batch> testBatches = bc.FindBatches(parameters);
                 Assert.AreEqual(1, testBatches.Count);
                 Assert.AreEqual(b.Title, testBatches.First().Title);
@@ -246,6 +252,8 @@ namespace DMSLite.Tests.Controllers
                 parameters.Add("datetype", "after");
                 parameters.Add("type", "closed");
                 parameters.Add("id", "");
+                parameters.Add("amount", "");
+                parameters.Add("number-comparator", "");
                 testBatches = bc.FindBatches(parameters);
                 dbBatches = db.Batches.Where(x => x.Id == b.Id).ToList();
                 Assert.AreEqual(dbBatches.Count, testBatches.Count);
