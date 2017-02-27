@@ -13,7 +13,7 @@ namespace DMSLite.Controllers
 
         public void Log()
         {
-            Helpers.Log.WriteLog("User reported an error.", Helpers.Log.LogType.Bug);
+            Helpers.Log.WriteLog(Helpers.Log.LogType.Bug, "User reported an error.");
         }
 
         [Authorize(Roles = "Admin")]

@@ -32,7 +32,7 @@ namespace DMSLite.Helpers
 
         static private string path;
 
-        public static void WriteLog(string logMessage, LogType logSymbol)
+        public static void WriteLog(LogType logSymbol, string logMessage)
         {
             //Singleton pattern
             if (path == null)

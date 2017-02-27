@@ -50,8 +50,8 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            Helpers.Log.WriteLog(response.Result.Fulfillment.Speech.ToString(), Helpers.Log.LogType.Reply);
-            Helpers.Log.WriteLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters), Helpers.Log.LogType.ParamsFound);
+            Helpers.Log.WriteLog(Helpers.Log.LogType.Reply, response.Result.Fulfillment.Speech.ToString());
+            Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsFound, " " + response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters));
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
