@@ -17,7 +17,7 @@ namespace DMSLite.Tests.Log
             int uniqueID = rnd.Next(111111, 999999);
 
             //log it
-            Helpers.Log.writeLog("Testing with uniqueID "+ uniqueID, " T ");
+            Helpers.Log.WriteLog("Testing with uniqueID "+ uniqueID, " T ");
 
             //read the last line in the log and extract the uniqueID
             var lastLine = File.ReadLines("log.txt").Last();

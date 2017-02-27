@@ -40,7 +40,7 @@ namespace DMSLite.Commands
             {
                 ResponseModel emptyResponseModel = new ResponseModel()
                 {
-                    Speech = "Well, thats a whole lot of nothing. Try entering a command"
+                    Speech = "Well, thats a whole lot of nothing. Try entering a command."
                     //link to commands page later?
                 };
                 return emptyResponseModel;
@@ -49,8 +49,8 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            Helpers.Log.writeLog(response.Result.Fulfillment.Speech.ToString(), "-->");
-            Helpers.Log.writeLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"-->");
+            Helpers.Log.WriteLog(response.Result.Fulfillment.Speech.ToString(), "-->");
+            Helpers.Log.WriteLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"-->");
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 

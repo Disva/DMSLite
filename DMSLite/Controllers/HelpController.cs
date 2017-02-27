@@ -12,7 +12,7 @@ namespace DMSLite.Controllers
 
         public void Log()
         {
-            Helpers.Log.writeLog("User reported an error.", " ! ");
+            Helpers.Log.WriteLog("User reported an error.", " ! ");
         }
     }
 }
