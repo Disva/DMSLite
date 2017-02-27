@@ -22,9 +22,13 @@ $(function () {
       '*',
       [
           'donors',
+          'open batches [search]',
+          'closed batches [search]',
           'batches [search]',
+          'batch [search]',
           'donations [value, donor name, account or search]',
-          'accounts'
+          'accounts',
+          ''
       ]
   ]
 ],
