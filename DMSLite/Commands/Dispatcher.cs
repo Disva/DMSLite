@@ -12,6 +12,7 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string CommandsLocation = "Commands.json";
+        private const string CommandFolder = @"\Commands\";
 
         private static Dispatcher dispatcher;
         private ApiAi apiAi;
@@ -50,11 +51,11 @@ namespace DMSLite.Commands
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
             Helpers.Log.WriteLog(response.Result.Fulfillment.Speech.ToString(), "-->");
-            Helpers.Log.WriteLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"-->");
+            Helpers.Log.WriteLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"->>");
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
-            StreamReader r = new StreamReader(path.Substring(6) + @"\Commands\" + CommandsLocation);
+            StreamReader r = new StreamReader(path.Substring(6) + CommandFolder + CommandsLocation);
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 

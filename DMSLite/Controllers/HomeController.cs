@@ -26,8 +26,7 @@ namespace DMSLite.Controllers
         {
             string inputText = fc["mainInput"];
             Helpers.Log.WriteLog(inputText, "<--");
-            //string returnedText = dispatcher.Dispatch(inputText);
-            //return Json(returnedText, JsonRequestBehavior.AllowGet);
+
             var responseModel = dispatcher.Dispatch(inputText);
 
             return PartialView("~/Views/Home/_Response.cshtml", responseModel);

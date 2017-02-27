@@ -22,10 +22,11 @@ namespace DMSLite.Helpers
         {
             /*
             logSymbol is 3 chars long; 
-            '<--' for user input
-            '-->' for output
-            ' ! ' for user reported bug
-            ' # ' for task
+            '<--' user input
+            '-->' output
+            '->>' returned/recognized parameters
+            ' ! ' user reported bug
+            ' # ' task
             */
             w.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
         }
