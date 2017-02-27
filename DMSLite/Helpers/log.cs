@@ -10,9 +10,29 @@ namespace DMSLite.Helpers
 {
     public static class Log
     {
+        //Inner class for logging types
+        public class LogType
+        {
+            private LogType(string value) { Value = value; }
+
+            public string Value { get; set; }
+            public override string ToString()
+            {
+                return Value;
+            }
+
+            public static LogType UserIn { get { return new LogType("<--"); } }
+            public static LogType Reply { get { return new LogType("-->"); } }
+            public static LogType ParamsFound { get { return new LogType("->>"); } }
+            public static LogType ParamsSubmitted { get { return new LogType("<<-"); } }
+            public static LogType Bug { get { return new LogType("!"); } }
+            public static LogType Task { get { return new LogType("!"); } }
+            public static LogType Test { get { return new LogType(" T "); } }
+        }
+
         static private string path;
 
-        public static void WriteLog(string logMessage, string logSymbol)
+        public static void WriteLog(string logMessage, LogType logSymbol)
         {
             //Singleton pattern
             if (path == null)
@@ -20,14 +40,6 @@ namespace DMSLite.Helpers
 
             using (StreamWriter logWriter = File.AppendText(path))
             {
-                /*
-                logSymbol is 3 chars long; 
-                '<--' user input
-                '-->' output
-                '->>' returned/recognized parameters
-                ' ! ' user reported bug
-                ' # ' task
-                */
                 logWriter.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
             }
         }
