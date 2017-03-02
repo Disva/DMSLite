@@ -267,6 +267,135 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests fetching a batch by the title
+        public void TestFetchBatchByEqualSum()
+        {
+            //adds a new testing batch to the db
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("type", "");
+            parameters.Add("title", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("id", "");
+            parameters.Add("amount", "400");
+            parameters.Add("number-comparator", "==");
+
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation()
+            {
+                Value = 400,
+                ObjectDescription = "400Donation",
+                DonationDonor = db.Donors.First<Donor>(),
+                DonationBatch = b,
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            try
+            {
+                Assert.IsTrue(testBatches.Contains(b));
+            }
+            finally
+            {
+                //remove testing batch
+                dc.Remove(d);
+                bc.Remove(b);
+            }
+        }
+
+        [TestMethod]
+        //Tests fetching a batch by the title
+        public void TestFetchBatchByGreaterSum()
+        {
+            //adds a new testing batch to the db
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("type", "");
+            parameters.Add("title", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("id", "");
+            parameters.Add("amount", "300");
+            parameters.Add("number-comparator", ">");
+
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation()
+            {
+                Value = 400,
+                ObjectDescription = "400Donation",
+                DonationDonor = db.Donors.First<Donor>(),
+                DonationBatch = b,
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            try
+            {
+                Assert.IsTrue(testBatches.Contains(b));
+            }
+            finally
+            {
+                //remove testing batch
+                dc.Remove(d);
+                bc.Remove(b);
+            }
+        }
+
+        [TestMethod]
+        //Tests fetching a batch by the title
+        public void TestFetchBatchByLesserSum()
+        {
+            //adds a new testing batch to the db
+            BatchController bc = new BatchController(db);
+            Batch b = new Batch()
+            {
+                Title = "TestFetchBatch",
+            };
+            b = (Batch)(((PartialViewResult)(bc.Add(b))).Model);
+            List<Batch> dbBatches = db.Batches.Where(x => x.Title == "TestFetchBatch").ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("type", "");
+            parameters.Add("title", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("id", "");
+            parameters.Add("amount", "500");
+            parameters.Add("number-comparator", "<");
+
+            DonationController dc = new DonationController(db);
+            Donation d = new Donation()
+            {
+                Value = 400,
+                ObjectDescription = "400Donation",
+                DonationDonor = db.Donors.First<Donor>(),
+                DonationBatch = b,
+            };
+            d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            try
+            {
+                Assert.IsTrue(testBatches.Contains(b));
+            }
+            finally
+            {
+                //remove testing batch
+                dc.Remove(d);
+                bc.Remove(b);
+            }
+        }
+
+        [TestMethod]
         //Tests that viewing a fetced batch either returns a view of the batches donations or an error message if it has none
         public void TestViewFetchedBatch()
         {
