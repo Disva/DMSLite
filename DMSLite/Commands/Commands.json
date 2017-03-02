@@ -57,6 +57,10 @@
   },
   "PrintReceipts": {
     "Item1": "Receipt",
-    "Item2":  "ReceiptMenu"
+    "Item2": "ReceiptMenu"
+  },
+  "FilterBatchesBySum": {
+    "Item1": "Batch",
+    "Item2": "FilterBatchesBySum"
   }
 }
