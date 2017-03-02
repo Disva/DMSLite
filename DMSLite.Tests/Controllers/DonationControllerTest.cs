@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -29,6 +30,9 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("value", "");
             parameters.Add("value-range", "[]");
             parameters.Add("value-comparator", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("date-comparator", "");
             parameters.Add("account-name", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
@@ -148,7 +152,7 @@ namespace DMSLite.Tests.Controllers
             Donation d = new Donation()
             {
                 Value = testValue,
-                ObjectDescription = "FetchByValue",
+                ObjectDescription = "FetchByValueRange",
                 DonationDonor = don,
                 DonationBatch = db.Batches.First(),
             };
@@ -204,7 +208,7 @@ namespace DMSLite.Tests.Controllers
             Donation d = new Donation()
             {
                 Value = testValue,
-                ObjectDescription = "FetchByValue",
+                ObjectDescription = "FetchByValueRange",
                 DonationDonor = don,
                 DonationBatch = db.Batches.First(),
             };
@@ -218,6 +222,53 @@ namespace DMSLite.Tests.Controllers
             }
             finally
             {
+                dc.Remove(d);
+                doc.Remove(don);
+            }
+        }
+
+        [TestMethod]
+        //Tests DonationController method FetchByDate
+        public void TestFetchByDate()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> fetchedDonations = new List<Donation>();
+            DonorsController doc = new DonorsController(db);
+            Donor don = new Donor
+            {
+                FirstName = "fName_TestFetchByDate",
+                LastName = "lName_TestFetchByDate",
+                Email = "test_email@test.com",
+                PhoneNumber = "000-000-0000",
+            };
+            List<Donor> donList = new List<Donor>();
+            doc.Add(don);
+            donList.Add(don);
+            Donation d = new Donation();
+            float testValue = 123456789;
+            try
+            {
+                //create a new donation
+                d = new Donation()
+                {
+                    Value = testValue,
+                    ObjectDescription = "FetchByDate",
+                    DonationDonor = don,
+                    DonationBatch = db.Batches.First(),
+                };
+                d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+                //fetch on date
+                fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
+                dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate, d.DonationBatch.CreateDate), "==");
+                //fetch before range
+                fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
+                dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate.AddDays(1), d.DonationBatch.CreateDate.AddDays(1)), "<");
+                //fetch after range
+                fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
+                dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate.AddDays(-1), d.DonationBatch.CreateDate.AddDays(-1)), ">");
+                Assert.IsTrue(fetchedDonations.Contains(d));
+            }
+            finally{
                 dc.Remove(d);
                 doc.Remove(don);
             }

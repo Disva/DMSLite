@@ -13,6 +13,9 @@ using Newtonsoft.Json;
 
 namespace DMSLite.Controllers
 {
+    using Helpers;
+    using DateRange = Tuple<DateTime, DateTime>;
+
     [Authorize]
     public class DonationController : Controller
     {
@@ -77,11 +80,12 @@ namespace DMSLite.Controllers
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
         {
             List<Donation> returnedDonations = new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).Include(z => z.DonationAccount).ToList<Donation>());
-            bool paramsExist = (((((
+            bool paramsExist = ((((((
                 !String.IsNullOrEmpty(parameters["donor-name"].ToString()) || !String.IsNullOrEmpty(parameters["value"].ToString())) ||
                         JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString()).Any()) ||
-                            !String.IsNullOrEmpty(parameters["value-comparator"].ToString())) ||
-                                !String.IsNullOrEmpty(parameters["account-name"].ToString()))
+                                !String.IsNullOrEmpty(parameters["account-name"].ToString())) ||
+                                    !String.IsNullOrEmpty(parameters["date"].ToString())) ||
+                                        !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             );
             if(paramsExist)
             {
@@ -90,6 +94,11 @@ namespace DMSLite.Controllers
                     var donorPredicate = dc.FetchByName(parameters["donor-name"].ToString());
                     List<Donor> matchedDonors = db.Donors.AsExpandable().Where(donorPredicate).ToList();
                     FetchByDonor(ref returnedDonations, matchedDonors);
+                }
+                if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+                {
+                    DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                    FetchByDate(ref returnedDonations, convertedDate, parameters["date-comparator"].ToString());
                 }
                 if (!String.IsNullOrEmpty(parameters["account-name"].ToString()))
                 {
@@ -108,6 +117,46 @@ namespace DMSLite.Controllers
                 }                
             }
             return returnedDonations;
+        }
+
+        public void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
+        {
+            if (dateRange == null)
+            {//if the date was converted to invalid, empty the list
+                returnedDonations = new List<Donation>();
+                return;                                                                                                                                                                                                                                                                                                                                                                                                                                   
+            }
+            if (dateRange.Item1.Equals(dateRange.Item2))
+            {
+                switch (dateComparator)
+                {
+                    case "<":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date <= dateRange.Item1.Date).ToList();
+                        break;
+                    case ">":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date >= dateRange.Item1.Date).ToList();
+                        break;
+                    default:
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate.Date == dateRange.Item1.Date).ToList();
+                        break;
+                }
+            }
+            //for a date range
+            else
+            {
+                switch (dateComparator)
+                {
+                    case "<":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate <= dateRange.Item1).ToList();
+                        break;
+                    case ">":
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate >= dateRange.Item2).ToList();
+                        break;
+                    default:
+                        returnedDonations = returnedDonations.Where(x => x.DonationBatch.CreateDate >= dateRange.Item1 && x.DonationBatch.CreateDate <= dateRange.Item2).ToList();
+                        break;
+                }
+            }
         }
 
         public void FetchByAccount(ref List<Donation> returnedDonations, List<Account> accounts)
@@ -312,6 +361,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(donation);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
                     return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
                 }
             }

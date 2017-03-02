@@ -16,6 +16,16 @@ namespace DMSLite.Controllers
     {
         private OrganizationDb db = new OrganizationDb();
 
+        public OrganizationsController()
+        {
+
+        }
+
+        public OrganizationsController(OrganizationDb db)
+        {
+            this.db = db;
+        }
+
         // GET: Organizations
         public ActionResult Index()
         {
