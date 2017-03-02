@@ -62,5 +62,9 @@
   "FilterDonors": {
     "Item1": "Donors",
     "Item2": "FilterDonors"
+  },
+  "FilterBatchesBySum": {
+    "Item1": "Batch",
+    "Item2": "FilterBatchesBySum"
   }
 }

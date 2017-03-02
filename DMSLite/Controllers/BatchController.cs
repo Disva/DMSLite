@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    using Helpers;
+    using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
@@ -15,6 +17,8 @@ namespace DMSLite.Controllers
         private OrganizationDb db;
 
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
+        private enum COMPARE_TYPE { UNDER = -1, EQUAL, OVER };
+        private enum BATCH_TYPE {OPEN, CLOSED };
 
         private static List<Batch> filteredBatches;
 
@@ -46,16 +50,34 @@ namespace DMSLite.Controllers
             if (filteredBatches == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
 
-            if (!String.IsNullOrEmpty(parameters["datetype"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["date-comparator"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
             {
-                DateRange convertedDate = DateFromRange(ref parameters);
-                FilterByClosedDate(convertedDate, parameters["datetype"].ToString());
+                DateRange convertedDate = DateHelper.DateFromRange(null, parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                FilterByClosedDate(convertedDate, parameters["date-comparator"].ToString());
             }
 
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+        }
+
+        public ActionResult FilterBatchesBySum(Dictionary<string, object> parameters)
+        {
+            if (filteredBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["comparator"].ToString());
+
+                if (filteredBatches.Count == 0)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
+
+                return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "not all parameters recognized");            
         }
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
@@ -69,7 +91,8 @@ namespace DMSLite.Controllers
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
                 || !String.IsNullOrEmpty(parameters["date-period"].ToString())
-                || !String.IsNullOrEmpty(parameters["id"].ToString());
+                || !String.IsNullOrEmpty(parameters["id"].ToString())
+                || (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()));
 
             if (!paramsExist)
                 return FetchAllBatches();
@@ -84,10 +107,21 @@ namespace DMSLite.Controllers
                 return filteredBatches;
             }
 
-            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()))
             {
-                DateRange convertedDate = DateFromRange(ref parameters);
-                FetchByDate(convertedDate, parameters["datetype"].ToString());
+                FetchByTotal(parameters["amount"].ToString(), parameters["number-comparator"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
+
+            if (!String.IsNullOrEmpty(parameters["title"].ToString()))
+            {
+                FetchByTitle(parameters["title"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["number-comparator"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
@@ -97,56 +131,93 @@ namespace DMSLite.Controllers
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
-            if (!String.IsNullOrEmpty(parameters["title"].ToString()))
-                FetchByTitle(parameters["title"].ToString());
+            if (!String.IsNullOrEmpty(parameters["date"].ToString()) || !String.IsNullOrEmpty(parameters["date-period"].ToString()))
+            {
+                DateRange convertedDate = DateHelper.DateFromRange(parameters["date"].ToString(), parameters["date-period"].ToString(), parameters["date-comparator"].ToString());
+                FetchByDate(convertedDate, parameters["date-comparator"].ToString(), parameters["type"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
 
             Finish:
             return filteredBatches;
         }
 
-        private DateRange DateFromRange(ref Dictionary<string, object> parameters)
+        // extract method
+        private void FetchByDate(DateRange searchRange, string dateComparator, string type)
         {
+            SEARCH_TYPE searchType;
+            if (dateComparator == "<")                      //True when searching before a certain date
+                searchType = SEARCH_TYPE.BEFORE;
+            else if (dateComparator == ">")                  //True when searching after a certain date
+                searchType = SEARCH_TYPE.AFTER;
+            else                                           //True when searching on a specific date
+                searchType = SEARCH_TYPE.ON;
 
-            if (parameters.ContainsKey("date") && !String.IsNullOrWhiteSpace(parameters["date"].ToString()))
-            {
-                DateTime dateValue = ConvertDate(parameters["date"].ToString());
-
-                return Tuple.Create(StartOfDay(dateValue), EndOfDay(dateValue));
-            }
-
-            if (parameters.ContainsKey("date-period") && !String.IsNullOrWhiteSpace(parameters["date-period"].ToString()))
-                return Tuple.Create(
-                    StartOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[0])),
-                    EndOfDay(ConvertDate(parameters["date-period"].ToString().Split('/')[1]))
-                    );
-
-            return null;
-        }
-
-        // TODO: rebuff
-        private DateTime ConvertDate(string date)
-        {
-            DateTime convertedDate;
-            if (date.Length == 4)
-                convertedDate = DateTime.ParseExact((date + "-01-01"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            BATCH_TYPE batchType;
+            if (type == "closed")
+                batchType = BATCH_TYPE.CLOSED;
             else
-                convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                batchType = BATCH_TYPE.OPEN;
 
-            //If date in the future, send it into the past (only year for year basis)
-            if (convertedDate.CompareTo(DateTime.Today) > 0)
-                convertedDate = DateTime.Today.Year - convertedDate.Year == 0 ? convertedDate.AddYears(-1) : convertedDate.AddYears(DateTime.Today.Year - convertedDate.Year);
-
-            return convertedDate;
+            bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
+            if (emptyList)
+                AddByDate(searchRange, searchType, batchType);
+            else
+                FilterByDate(searchRange, searchType, batchType);
         }
 
-        private DateTime StartOfDay(DateTime dateTime)
+        private void FetchByTotal(string amount, string comparator)
         {
-            return dateTime.Date;
+            int total = int.Parse(amount);
+            COMPARE_TYPE compareType;
+            if (comparator == "<")                      //True when searching before a certain date
+                compareType = COMPARE_TYPE.UNDER;
+            else if (comparator == ">")                  //True when searching after a certain date
+                compareType = COMPARE_TYPE.OVER;
+            else                                           //True when searching on a specific date
+                compareType = COMPARE_TYPE.EQUAL;
+            bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
+
+            List<int> matchingDonations = FindBatchKeysBySum(total, compareType);
+
+            if (emptyList)
+                filteredBatches.AddRange(db.Batches.Where(x => matchingDonations.Any(y => y == x.Id)));
+            else
+                filteredBatches = filteredBatches.Where(x => matchingDonations.Any(y => y == x.Id)).ToList();
         }
 
-        private DateTime EndOfDay(DateTime dateTime)
+        private List<int> FindBatchKeysBySum(int amount, COMPARE_TYPE compareType)
         {
-            return StartOfDay(dateTime).AddDays(1).AddTicks(-1);
+            List<int> matchingBatches = new List<int>();
+            switch (compareType)
+            {
+                case COMPARE_TYPE.UNDER: //Searching under a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) < amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.OVER:  //Searching over a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) > amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.EQUAL: //Searching equal to a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) == amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+            }
+            return matchingBatches;
+        }
+
+        private void FilterByClosedDate(DateRange searchRange, string dateComparator = "==")
+        {
+            switch (dateComparator)
+            {
+                case "<": //Searching before a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item1) < 0).ToList(); //The closeDate is earlier than the searchDate
+                    break;
+                case ">": //Searching after a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item2) > 0).ToList(); //The closeDate is later than the searchDate
+                    break;
+                case "==":default:    //Searching on a date
+                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item2) <= 0).ToList(); //The closeDate is the same as the searchDate
+                    break;
+            }
         }
 
         private void FetchByID(ref List<Batch> filteredBatches, int batchID)
@@ -161,68 +232,54 @@ namespace DMSLite.Controllers
             }
         }
 
-        // extract method
-        private void FetchByDate(DateRange searchRange, string datetype = "on")
-        {
-            SEARCH_TYPE searchType;
-            if (datetype == "before")                      //True when searching before a certain date
-                searchType = SEARCH_TYPE.BEFORE;
-            else if (datetype == "after")                  //True when searching after a certain date
-                searchType = SEARCH_TYPE.AFTER;
-            else                                           //True when searching on a specific date
-                searchType = SEARCH_TYPE.ON;
-            bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
-
-            if (emptyList)
-                AddByDate(searchRange, searchType);
-            else
-                FilterByDate(searchRange, searchType);
-        }
-
-        private void FilterByClosedDate(DateRange searchRange, string datetype = "on")
-        {
-            switch (datetype)
-            {
-                case "before": //Searching before a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item1) < 0).ToList(); //The closeDate is earlier than the searchDate
-                    break;
-                case "after": //Searching after a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item2) > 0).ToList(); //The closeDate is later than the searchDate
-                    break;
-                case "on":default:    //Searching on a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CloseDate??DateTime.MinValue, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate??DateTime.MaxValue, searchRange.Item2) <= 0).ToList(); //The closeDate is the same as the searchDate
-                    break;
-            }
-        }
-
-        private void FilterByDate(DateRange searchRange, SEARCH_TYPE searchType)
+        private void FilterByDate(DateRange searchRange, SEARCH_TYPE searchType, BATCH_TYPE batchType)
         {
             switch (searchType)
             {
                 case SEARCH_TYPE.BEFORE: //Searching before a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) < 0).ToList(); //The createDate is earlier than the searchDate
+                    if (batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) < 0).ToList(); //The createDate is earlier than the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => x.CloseDate.HasValue && DateTime.Compare(x.CloseDate.Value, searchRange.Item1) < 0).ToList();
                     break;
                 case SEARCH_TYPE.AFTER: //Searching after a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item2) > 0).ToList(); //The createDate is later than the searchDate
+                    if (batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item2) > 0).ToList(); //The createDate is later than the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => x.CloseDate.HasValue && DateTime.Compare(x.CloseDate.Value, searchRange.Item2) > 0).ToList();
                     break;
                 case SEARCH_TYPE.ON:    //Searching on a date
-                    filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) >= 0 && DateTime.Compare(x.CreateDate, searchRange.Item2) <= 0).ToList(); //The createDate is the same as the searchDate
+                    if (batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches = filteredBatches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) >= 0 && DateTime.Compare(x.CreateDate, searchRange.Item2) <= 0).ToList(); //The createDate is the same as the searchDate
+                    else
+                        filteredBatches = filteredBatches.Where(x => x.CloseDate.HasValue && (DateTime.Compare(x.CloseDate.Value, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate.Value, searchRange.Item2) <= 0)).ToList(); //The createDate is the same as the searchDate
                     break;
             }
         }
 
-        private void AddByDate(DateRange searchRange, SEARCH_TYPE searchType)
+        private void AddByDate(DateRange searchRange, SEARCH_TYPE searchType, BATCH_TYPE batchType)
         {
             switch (searchType)
             {
                 case SEARCH_TYPE.BEFORE: //Searching before a date
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) < 0)); //The createDate is earlier than the searchDate
+                    if(batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) < 0)); //The createDate is earlier than the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => x.CloseDate.HasValue && DateTime.Compare(x.CloseDate.Value, searchRange.Item1) < 0)); //The closeDate is earlier than the searchDate
                     break;
                 case SEARCH_TYPE.AFTER:  //Searching after a date
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item2) > 0)); //The createDate is later than the searchDate
+                    if(batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item2) > 0)); //The createDate is later than the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => x.CloseDate.HasValue && DateTime.Compare(x.CloseDate.Value, searchRange.Item1) > 0));
+
                     break;
                 case SEARCH_TYPE.ON:     //Searching on a date
-                    filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) >= 0 && DateTime.Compare(x.CreateDate, searchRange.Item2) <= 0)); //The createDate is the same as the searchDate
+                    if (batchType.Equals(BATCH_TYPE.OPEN))
+                        filteredBatches.AddRange(db.Batches.Where(x => DateTime.Compare(x.CreateDate, searchRange.Item1) >= 0 && DateTime.Compare(x.CreateDate, searchRange.Item2) <= 0)); //The createDate is the same as the searchDate
+                    else
+                        filteredBatches.AddRange(db.Batches.Where(x => x.CloseDate.HasValue &&( DateTime.Compare(x.CloseDate.Value, searchRange.Item1) >= 0 && DateTime.Compare(x.CloseDate.Value, searchRange.Item2) <= 0)));
+
                     break;
             }
         }
@@ -331,6 +388,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }

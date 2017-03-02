@@ -13,6 +13,7 @@ using DMSLite.Models;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 using LinqKit;
+using Newtonsoft.Json;
 
 namespace DMSLite
 {
@@ -277,6 +278,7 @@ namespace DMSLite
                 else
                 {
                     db.Add(donor);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donor));
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
