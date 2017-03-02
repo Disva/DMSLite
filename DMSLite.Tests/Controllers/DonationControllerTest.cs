@@ -29,6 +29,9 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("value", "");
             parameters.Add("value-range", "[]");
             parameters.Add("value-comparator", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("date-comparator", "");
             parameters.Add("account-name", "");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
