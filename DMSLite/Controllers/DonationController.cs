@@ -361,6 +361,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(donation);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
                     return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
                 }
             }

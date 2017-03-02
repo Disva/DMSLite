@@ -12,6 +12,7 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string CommandsLocation = "Commands.json";
+        private const string CommandFolder = @"\Commands\";
 
         private static Dispatcher dispatcher;
         private ApiAi apiAi;
@@ -40,7 +41,7 @@ namespace DMSLite.Commands
             {
                 ResponseModel emptyResponseModel = new ResponseModel()
                 {
-                    Speech = "Well, thats a whole lot of nothing. Try entering a command"
+                    Speech = "Well, thats a whole lot of nothing. Try entering a command."
                     //link to commands page later?
                 };
                 return emptyResponseModel;
@@ -49,12 +50,12 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            Helpers.Log.writeLog(response.Result.Fulfillment.Speech.ToString(), "-->");
-            Helpers.Log.writeLog(" "+response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters),"-->");
+            Helpers.Log.WriteLog(Helpers.Log.LogType.Reply, response.Result.Fulfillment.Speech.ToString());
+            Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsFound, " " + response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters));
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
-            StreamReader r = new StreamReader(path.Substring(6) + @"\Commands\" + CommandsLocation);
+            StreamReader r = new StreamReader(path.Substring(6) + CommandFolder + CommandsLocation);
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 
