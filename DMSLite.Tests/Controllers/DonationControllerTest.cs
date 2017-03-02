@@ -257,8 +257,15 @@ namespace DMSLite.Tests.Controllers
                     DonationBatch = db.Batches.First(),
                 };
                 d = (Donation)(((PartialViewResult)(dc.Add(d, d.DonationDonor.Id, d.DonationBatch.Id))).Model);
+                //fetch on date
                 fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
                 dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate, d.DonationBatch.CreateDate), "==");
+                //fetch before range
+                fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
+                dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate.AddDays(1), d.DonationBatch.CreateDate.AddDays(1)), "<");
+                //fetch after range
+                fetchedDonations = db.Donations.Include(x => x.DonationBatch).ToList();
+                dc.FetchByDate(ref fetchedDonations, new Tuple<DateTime, DateTime>(d.DonationBatch.CreateDate.AddDays(-1), d.DonationBatch.CreateDate.AddDays(-1)), ">");
                 Assert.IsTrue(fetchedDonations.Contains(d));
             }
             finally{
