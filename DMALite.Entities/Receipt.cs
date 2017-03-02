@@ -14,5 +14,8 @@ namespace DMSLite.Entities
 
         [Required]
         public DateTime IssueDate { get; set; }
+
+        [Required]
+        public int TenantOrganizationId { get; set; }
     }
 }
