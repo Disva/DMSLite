@@ -17,10 +17,10 @@ namespace DMSLite.Tests.Log
             int uniqueID = rnd.Next(111111, 999999);
 
             //log it
-            Helpers.Log.WriteLog(Helpers.Log.LogType.Test, "Testing with uniqueID " + uniqueID);
+            var path = Helpers.Log.WriteLog(Helpers.Log.LogType.Test, "Testing with uniqueID " + uniqueID);
 
             //read the last line in the log and extract the uniqueID
-            var lastLine = File.ReadLines(Path.GetTempPath().ToString()+"DMSLitelog.txt").Last();
+            var lastLine = File.ReadLines(Path.GetTempPath().ToString() + path).Last();
             var retrievedId = lastLine.Substring(lastLine.Length - 6);
 
             //compare the random number to that found in the log file

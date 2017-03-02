@@ -32,16 +32,19 @@ namespace DMSLite.Helpers
 
         static private string path;
 
-        public static void WriteLog(LogType logSymbol, string logMessage)
+        public static string WriteLog(LogType logSymbol, string logMessage)
         {
+            var fileLocation = String.Format("DMSLitelog-{0}.txt", DateTime.Now.ToString("dd-MM-yyyy HH-mm"));
             //Singleton pattern
             if (path == null)
-                path = Path.GetTempPath().ToString() + String.Format("DMSLitelog-{0}.txt", DateTime.Now.ToString("dd-MM-yyyy HH-mm"));
+                path = Path.GetTempPath().ToString() + fileLocation;
 
             using (StreamWriter logWriter = File.AppendText(path))
             {
                 logWriter.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
             }
+
+            return fileLocation;
         }
     }
 }
