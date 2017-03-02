@@ -10,6 +10,8 @@ namespace DMSLite.Helpers
 {
     public static class Log
     {
+        const string fileLocation = "DMSLitelog.txt";
+
         //Inner class for logging types
         public class LogType
         {
@@ -34,7 +36,6 @@ namespace DMSLite.Helpers
 
         public static string WriteLog(LogType logSymbol, string logMessage)
         {
-            var fileLocation = String.Format("DMSLitelog-{0}.txt", DateTime.Now.ToString("dd-MM-yyyy HH-mm"));
             //Singleton pattern
             if (path == null)
                 path = Path.GetTempPath().ToString() + fileLocation;
