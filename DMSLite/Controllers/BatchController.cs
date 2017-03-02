@@ -59,6 +59,24 @@ namespace DMSLite.Controllers
             return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
         }
 
+        public ActionResult FilterBatchesBySum(Dictionary<string, object> parameters)
+        {
+            if (filteredBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["comparator"].ToString());
+
+                if (filteredBatches.Count == 0)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
+
+                return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "not all parameters recognized");            
+        }
+
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
         {
             filteredBatches = new List<Batch>();
