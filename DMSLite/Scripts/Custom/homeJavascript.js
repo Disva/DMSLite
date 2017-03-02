@@ -107,6 +107,9 @@ function checkShowModal() {
 }
 
 
+// Check if a modal wants to be hidden
+// and whether it has content to copy
+// into the chat box
 function checkHideModal() {
     var node = $("#outputContainer").find(".close-modal");
     if (node.length > 0) {
