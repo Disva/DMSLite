@@ -65,5 +65,33 @@ namespace DMSLite.Tests.Controllers
                 db.SaveChanges();
             }
         }
+
+        [TestMethod]
+        public void TestDeleteOrganization()
+        {
+            OrganizationsController oc = new OrganizationsController(db);
+
+            Organization org = new Organization()
+            {
+                Name = "TestOrganization3"
+            };
+
+            try
+            {
+                oc.Create(org);
+
+                Assert.AreEqual(1, db.Organizations.Where(x => x.Name == "TestOrganization3").Count());
+            }
+            finally
+            {
+                db.Organizations.Remove(org);
+                db.SaveChanges();
+            }
+
+            oc.DeleteConfirmed(org.Id);
+
+            Assert.AreEqual(0, db.Organizations.Where(x => x.Name == "TestOrganization3").Count());
+        }
+
     }
 }
