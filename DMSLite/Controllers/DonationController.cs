@@ -119,7 +119,7 @@ namespace DMSLite.Controllers
             return returnedDonations;
         }
 
-        private void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
+        public void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
         {
             if (dateRange == null)
             {//if the date was converted to invalid, empty the list
