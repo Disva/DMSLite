@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
+    using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
@@ -331,6 +332,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }
