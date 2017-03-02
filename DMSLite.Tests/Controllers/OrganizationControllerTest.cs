@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Tests.Controllers
 {
+    // Tests to verify crud functionality of organizations
     [TestClass]
     public class OrganizationControllerTest
     {
@@ -76,17 +77,9 @@ namespace DMSLite.Tests.Controllers
                 Name = "TestOrganization3"
             };
 
-            try
-            {
-                oc.Create(org);
+            oc.Create(org);
 
-                Assert.AreEqual(1, db.Organizations.Where(x => x.Name == "TestOrganization3").Count());
-            }
-            finally
-            {
-                db.Organizations.Remove(org);
-                db.SaveChanges();
-            }
+            Assert.AreEqual(1, db.Organizations.Where(x => x.Name == "TestOrganization3").Count());
 
             oc.DeleteConfirmed(org.Id);
 
