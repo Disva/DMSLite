@@ -299,8 +299,8 @@ namespace DMSLite.Tests.SDKs
 
             Assert.AreEqual(noContext.Result.Action, "input.unknown");
 
-            var showAllDonors = apiAi.TextRequest("show donors");
-            //Assert.AreEqual(showAllDonors.Result.Action, "ViewAllDonors");
+            var showAllDonors = apiAi.TextRequest("show all donors");
+            Assert.AreEqual(showAllDonors.Result.Action, "ViewAllDonors");
 
             List<AIContext> contexts = new List<AIContext>() {
                     new AIContext()
