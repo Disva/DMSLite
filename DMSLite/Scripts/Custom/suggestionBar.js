@@ -2,76 +2,81 @@
 $(function () {
 
     var allData = [
- [
-     'show',
-     'show me',
-     'view',
-     'display',
-     [
-         'donor',
-         [
-             '[name or email or phoneNumber]'
-         ]
-     ]
- ],
- [
-     'show',
-     'show me',
-     'view',
-     'display',
-     [
-         'all',
-         '*',
-         [
-             'donors',
-             'batches',
-             'donations [value, value range donor name, date, date range, or account]'
-         ]
-     ]
- ],
- [
-     'edit',
-     'modify',
-     [
-         '[donor name or search]'
-     ]
- ],
- [
-     'add',
-     'add new',
-     'create',
-     'create new',
-     'new',
-     [
-         '[donor name, email or phoneNumber]',
-         'donor',
-         'donation',
-         'batch [batch name]',
-         'account'
-     ]
- ],
- [
-     'close',
-     [
-         'batch',
-         [
-             '[batch name]'
-         ]
-     ]
- ],
- [
-     'help',
-     'sos',
-     'help me',
-     'list of commands'
- ],
- [
-     'print',
-     'make',
-     [
-         'receipts'
-     ]
- ]
+[
+  'show',
+  'show me',
+  'view',
+  'display',
+  [
+      'donor [name or email or phoneNumber]',
+      'account [title]'
+  ]
+],
+[
+  'show',
+  'show me',
+  'view',
+  'display',
+  [
+      'all',
+      '*',
+      [
+          'donors',
+          'open batches [search]',
+          'closed batches [search]',
+          'batches [search]',
+          'batch [search]',
+          'donations [value, donor name, account or search]',
+          'accounts',
+          ''
+      ]
+  ]
+],
+[
+  'edit',
+  'modify',
+  [
+      '[donor name or search]'
+  ]
+],
+[
+  'add',
+  'add new',
+  'create',
+  'create new',
+  'new',
+  'make',
+  [
+      '[donor name, email or phoneNumber]',
+      'donor [donor name, email or phoneNumber]',
+      'donation [donation name]',
+      'batch [batch name]',
+      'account'
+  ]
+],
+[
+  'close',
+  'post',
+  [
+      'batch',
+      [
+          '[batch name]'
+      ]
+  ]
+],
+[
+  'help',
+  'sos',
+  'help me',
+  'list of commands'
+],
+[
+  'print',
+  'make',
+  [
+      'receipts'
+  ]
+]
     ];
     var haystack = [];
     for (outer = 0; outer < allData.length; outer++) {
