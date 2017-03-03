@@ -27,8 +27,7 @@ $(function () {
           'batches [search]',
           'batch [search]',
           'donations [value, donor name, account or search]',
-          'accounts',
-          ''
+          'accounts'
       ]
   ]
 ],
