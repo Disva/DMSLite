@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DMSLite.Models;
+using DMSLite.DataContexts;
 
 namespace DMSLite.Controllers
 {
@@ -17,9 +18,11 @@ namespace DMSLite.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private OrganizationDb db;
 
         public AccountController()
         {
+            db = new OrganizationDb();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -139,6 +142,7 @@ namespace DMSLite.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
+            ViewBag.Organizations = db.Organizations.ToList();
             return View();
         }
 
@@ -147,11 +151,19 @@ namespace DMSLite.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, int? Organizations)
         {
+            ViewBag.Organizations = db.Organizations.ToList();
+
+            // If no organization is set, set the tenant id to match the current user
+            if (!Organizations.HasValue)
+            {
+                Organizations = db.GetTenantId();
+            }
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, TenantId = Organizations.Value };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
