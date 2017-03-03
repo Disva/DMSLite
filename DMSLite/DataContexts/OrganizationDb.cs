@@ -50,7 +50,7 @@ namespace DMSLite.DataContexts
         }
         
         // Retrieve the tenant id of the currently logged in user
-        protected virtual int GetTenantId()
+        public virtual int GetTenantId()
         {
             return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(Thread.CurrentPrincipal.Identity.GetUserId()).TenantId;
         }
@@ -59,5 +59,7 @@ namespace DMSLite.DataContexts
         public DbSet<Donor> Donors { get; set; }
         public DbSet<Batch> Batches { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
     }
 }

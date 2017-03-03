@@ -29,6 +29,15 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+    if (this.User.IsInRole("SPS"))
+    {
+        <div class="form-group">
+            <label class="col-md-2 control-label">Select Organization</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Organizations", new SelectList(ViewBag.Organizations, "Id", "Name"), new { @class = "form-control" })
+            </div>
+        </div>
+    }
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />

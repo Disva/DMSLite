@@ -88,10 +88,10 @@ namespace DMSLite.Tests.Controllers
         {
             DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("donor-search", new List<String> { "phone-number", "555-555-5555" });
+            parameters.Add("donor-search", new List<String> { "phone-number", "5555555555" });
             parameters.Add("email-address", "");
             parameters.Add("name", "");
-            parameters.Add("phone-number", "555-555-5555");
+            parameters.Add("phone-number", "5555555555");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> steve = db.Donors.Where(x => x.PhoneNumber == "555-555-5555").ToList();
@@ -114,6 +114,66 @@ namespace DMSLite.Tests.Controllers
             List<Donor> steve = db.Donors.Where(x => x.Email == "steve@stevemail.com").ToList();
             Assert.AreEqual(steve.Count(), returnedModel.Count());
             Assert.IsTrue(steve[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByEmailContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "steve@stevemail.com");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.Email != null && x.Email.Equals("steve@stevemail.com")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByPhoneNumberContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "5555555555");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.PhoneNumber != null && x.PhoneNumber.Equals("555-555-5555")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByNameContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "");
+            parameters.Add("name", "Denis");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.FirstName != null && x.FirstName.Equals("Denis")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
@@ -148,21 +208,6 @@ namespace DMSLite.Tests.Controllers
             List<Donor> squids = db.Donors.Where(x => x.FirstName == "Squidward").ToList();
             Assert.AreEqual(squids.Count(), returnedModel.Count());
             Assert.AreEqual(squids[0].FirstName, returnedModel[0].FirstName);
-        }
-
-
-        //INVALIDITY TESTS
-        [TestMethod]
-        //Tests that an invalid command returns an error.
-        public void TestInvalidCommand()
-        {
-            HomeController hc = new HomeController();
-            FormCollection fc = new FormCollection();
-            fc.Add("mainInput", "This is not a real command.");
-            PartialViewResult returnedView = (PartialViewResult)hc.SendInput(fc);
-            string returnedSpeech = ((ResponseModel)returnedView.ViewData.Model).Speech;
-            //Assert.IsTrue(returnedSpeech.Equals("It seems we ran into an error: No command found."));
-            Assert.IsNull(((ResponseModel)returnedView.Model).Instructions);
         }
 
         [TestMethod]
@@ -202,6 +247,7 @@ namespace DMSLite.Tests.Controllers
                 Email = "test_email@test.com",
                 PhoneNumber = "000-000-0000",
             };
+            
             var arReturned = dc.Add(d);
             if ((arReturned.GetType().ToString().Equals("System.Web.Mvc.PartialViewResult"))
                 && (((PartialViewResult)arReturned).ViewName.Equals("~/Views/Donors/_AddSimilar.cshtml")))
@@ -217,8 +263,10 @@ namespace DMSLite.Tests.Controllers
                 return;
             }
             else
+            {
+                dc.Remove(d);
                 Assert.Fail();
-            dc.Remove(d);
+            }
         }
 
         [TestMethod]
@@ -265,6 +313,7 @@ namespace DMSLite.Tests.Controllers
             catch (Exception e)
             {
                 //The duplicate was not added which passes the test
+                dc.Remove(d1);
                 Assert.IsTrue(true);
                 return;
             }
@@ -289,37 +338,43 @@ namespace DMSLite.Tests.Controllers
                 Email = "email@testmodify.com",
                 PhoneNumber = "000-111-9191",
             };
+            Donor fetchedAgain = new Donor();
 
-            //Add the donor to the db
-            dc.Add(d1);
-            //Fetch the donor
-            Dictionary<string, object> fetchParameters = new Dictionary<string, object>();
-            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor lName_TestModifyDonor" });
-            fetchParameters.Add("email-address", "");
-            fetchParameters.Add("name", "fName_TestModifyDonor lName_TestModifyDonor");
-            fetchParameters.Add("phone-number", "");
+            try { 
+                //Add the donor to the db
+                dc.Add(d1);
+                //Fetch the donor
+                Dictionary<string, object> fetchParameters = new Dictionary<string, object>();
+                fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor lName_TestModifyDonor" });
+                fetchParameters.Add("email-address", "");
+                fetchParameters.Add("name", "fName_TestModifyDonor lName_TestModifyDonor");
+                fetchParameters.Add("phone-number", "");
 
-            PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
-            Donor fetched = ((List<Donor>)pvr.ViewData.Model).ToList().First();
+                PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+                Donor fetched = ((List<Donor>)pvr.ViewData.Model).ToList().First();
 
-            //Modify it
-            fetched.FirstName = "fName_TestModifyDonor_MODIFIED";
-            //Indicate change and Save it
-            dc.Modify(fetched);
-            //Fetch it and compare it to the previous version
-            fetchParameters = new Dictionary<string, object>();
-            fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor_MODIFIED" });
-            fetchParameters.Add("email-address", "");
-            fetchParameters.Add("name", "fName_TestModifyDonor_MODIFIED");
-            fetchParameters.Add("phone-number", "");
+                //Modify it
+                fetched.FirstName = "fName_TestModifyDonor_MODIFIED";
+                //Indicate change and Save it
+                dc.Modify(fetched);
+                //Fetch it and compare it to the previous version
+                fetchParameters = new Dictionary<string, object>();
+                fetchParameters.Add("donor-search", new List<String> { "name", "fName_TestModifyDonor_MODIFIED" });
+                fetchParameters.Add("email-address", "");
+                fetchParameters.Add("name", "fName_TestModifyDonor_MODIFIED");
+                fetchParameters.Add("phone-number", "");
 
-            pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
-            Donor fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
+                pvr = (PartialViewResult)dc.FetchDonor(fetchParameters);
+                fetchedAgain = ((List<Donor>)pvr.ViewData.Model).ToList()[0];
 
-            Assert.IsNotNull(fetchedAgain);
-            Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
-            //delete test users
-            dc.Remove(fetchedAgain);
+                Assert.IsNotNull(fetchedAgain);
+                Assert.IsFalse(fetchedAgain.FirstName.Equals(oldName));
+            }
+            finally
+            {
+                //delete test users
+                dc.Remove(fetchedAgain);
+            }
         }
 
     }

@@ -13,33 +13,59 @@ namespace DMSLite.Entities
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Donor")]
         public Donor DonationDonor { get; set; }
 
-        [ForeignKey("DonationDonor")]
+        [ForeignKey("DonationDonor")]        
         public int DonationDonor_Id { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Description")]
         public string ObjectDescription { get; set; }
 
         [Required]
         public double Value { get; set; }
 
         [Required]
+        [Display(Name = "Batch")]
         public Batch DonationBatch { get; set; }
+
+        [Display(Name = "Account")]
+        public Account DonationAccount { get; set; }
+
+        [ForeignKey("DonationAccount")]
+        public int? DonationAccount_Id { get; set; }
 
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }
+
+        [Display(Name = "Receipt")]
+        public Receipt DonationReceipt { get; set; }
+
+        [ForeignKey("DonationReceipt")]
+        public int DonationReceipt_Id { get; set; }
 
         [Required]
         public int TenantOrganizationId {get; set; }
 
         public bool isEqualTo(Donation otherDonation)
         {
+            if (DonationAccount != null)
+            {
+                if (otherDonation.DonationAccount != null)
+                {
+                    if (!DonationAccount.isEqualTo(otherDonation.DonationAccount))
+                        return false;
+                }
+                else return false;
+            }
+            else if (otherDonation.DonationAccount != null)
+                return false;
             if (Id.Equals(otherDonation.Id) &&
-                DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
-                DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
-                ObjectDescription.Equals(otherDonation.ObjectDescription) &&
-                Value.Equals(otherDonation.Value))
+            DonationDonor.isEqualTo(otherDonation.DonationDonor) &&
+            DonationBatch.isEqualTo(otherDonation.DonationBatch) &&
+            ObjectDescription.Equals(otherDonation.ObjectDescription) &&
+            Value.Equals(otherDonation.Value))
             {
                 return true;
             }

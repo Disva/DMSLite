@@ -21,7 +21,7 @@ namespace DMSLite.Entities
     {
         public int Id { get; set; }
 
-        [Required]
+        //not required due to companies
         [StringLength(255)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -34,6 +34,10 @@ namespace DMSLite.Entities
         [StringLength(255)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [StringLength(255)]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
 
         private string _phoneNumber;
 

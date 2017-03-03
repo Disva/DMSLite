@@ -27,6 +27,10 @@
     "Item1": "Batch",
     "Item2": "FetchBatches"
   },
+  "FilterForClosedBatches": {
+    "Item1": "Batch",
+    "Item2": "FetchClosedBatchesByDate"
+  },
   "ModifyDonation": {
     "Item1": "Donation",
     "Item2": "ModifyForm"
@@ -34,5 +38,33 @@
   "CloseBatch": {
     "Item1": "Batch",
     "Item2": "CloseBatch"
+  },
+  "ViewDonations": {
+    "Item1": "Donation",
+    "Item2": "FetchDonations"
+  },
+  "Help": {
+    "Item1": "Help",
+    "Item2": "returnHelp"
+  },
+  "AddAccount": {
+    "Item1": "DonationAccount",
+    "Item2": "AddMenu"
+  },
+  "ViewAccounts": {
+    "Item1": "DonationAccount",
+    "Item2": "FetchAccounts"
+  },
+  "PrintReceipts": {
+    "Item1": "Receipt",
+    "Item2": "ReceiptMenu"
+  },
+  "FilterDonors": {
+    "Item1": "Donors",
+    "Item2": "FilterDonors"
+  },
+  "FilterBatchesBySum": {
+    "Item1": "Batch",
+    "Item2": "FilterBatchesBySum"
   }
 }

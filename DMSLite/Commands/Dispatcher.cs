@@ -4,6 +4,7 @@ using ApiAiSDK;
 using DMSLite.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Web.Configuration;
 
 namespace DMSLite.Commands
 {
@@ -11,6 +12,7 @@ namespace DMSLite.Commands
     public class Dispatcher
     {
         private const string CommandsLocation = "Commands.json";
+        private const string CommandFolder = @"\Commands\";
 
         private static Dispatcher dispatcher;
         private ApiAi apiAi;
@@ -29,7 +31,7 @@ namespace DMSLite.Commands
 
         private void InitAPIAI()
         {
-            var config = new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English);
+            var config = new AIConfiguration(WebConfigurationManager.AppSettings["APIAIKey"], SupportedLanguage.English);
             apiAi = new ApiAi(config);
         }
 
@@ -39,7 +41,7 @@ namespace DMSLite.Commands
             {
                 ResponseModel emptyResponseModel = new ResponseModel()
                 {
-                    Speech = "Well, thats a whole lot of nothing. Try entering a command"
+                    Speech = "Well, thats a whole lot of nothing. Try entering a command."
                     //link to commands page later?
                 };
                 return emptyResponseModel;
@@ -48,16 +50,12 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
+            Helpers.Log.WriteLog(Helpers.Log.LogType.Reply, response.Result.Fulfillment.Speech.ToString());
+            Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsFound, " " + response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters));
             //Search commands file for appropriate command instructions
-           string thisPath = AppDomain.CurrentDomain.BaseDirectory;
-            string path = "";
+            var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
-            if (thisPath.Contains("DMSLite\\"))//for the DMS project
-                path = Path.Combine(thisPath, @"Commands\", CommandsLocation);
-            else//for the testing project
-                path = Path.Combine("../../../DMSLite/", @"Commands\", CommandsLocation);
-
-            StreamReader r = new StreamReader(path);
+            StreamReader r = new StreamReader(path.Substring(6) + CommandFolder + CommandsLocation);
             string json = r.ReadToEnd();
             var data = JsonConvert.DeserializeObject<Dictionary<string, Tuple<string, string>>>(json);
 

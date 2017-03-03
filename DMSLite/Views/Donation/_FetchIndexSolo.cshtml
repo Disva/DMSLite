@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DMSLite.Entities.Donation>
+<div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                Donation ID
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationDonor)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.ObjectDescription)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.Value)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationAccount)
+            </div>
+            <div class="cell">
+                <!-- Left Empty for receipt column -->
+            </div>
+            <div class="cell">
+                <!-- Left Empty for edit column -->
+            </div>
+            <div class="cell">
+                <!-- Left Empty for delete column -->
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="tableRow">
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.ObjectDescription)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.Value)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationBatch.Title)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationAccount.Title)
+                </div>
+                @{ var buttonId = Guid.NewGuid().ToString(); }
+                <div class="cell">
+                    @if (item.DonationReceipt_Id != 0)
+                    {
+                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                    }
+                </div>
+                <div class="cell">
+                @if (item.DonationBatch.CloseDate == null)
+                {
+                    @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
+                    {
+                        InsertionMode = InsertionMode.InsertAfter,
+                        UpdateTargetId = "outputContainer",
+                        OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
+                        OnBegin = "return bounceInput('" + buttonId + "')"
+                    }, new { @class = "glyphicon pencil" })
+                }
+                else
+                {
+                    <div class="glyphicon lock">🔒</div>
+                }
+                </div>
+                <div class="cell">
+                    @if (item.DonationBatch.CloseDate == null)
+                    {
+                        @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
+                        {
+                            InsertionMode = InsertionMode.InsertAfter,
+                            UpdateTargetId = "outputContainer",
+                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                            OnBegin = "return bounceInput('" + buttonId + "')"
+                        }, new { @class = "glyphicon remove" })
+                    }
+                    else
+                    {
+                        <div class="glyphicon lock">🔒</div>
+                    }
+                </div>
+            </div>
+                    }
+    </div>
+</div>

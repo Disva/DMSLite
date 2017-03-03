@@ -60,6 +60,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit.EntityFramework, Version=1.1.8.0, Culture=neutral, PublicKeyToken=b6c8cfc71f7a6a80, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.EntityFramework.1.1.8.0\lib\net452\LinqKit.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -82,9 +86,18 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,12 +216,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DonationAccountController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
       <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
@@ -223,6 +240,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateHelper.cs" />
+    <Compile Include="Helpers\Log.cs" />
+    <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Migrations\201610071735228_a.cs" />
     <Compile Include="Migrations\201610071735228_a.Designer.cs">
       <DependentUpon>201610071735228_a.cs</DependentUpon>
@@ -247,26 +267,47 @@
     <Compile Include="Migrations\201611151903300_GlobalTenantFilter.Designer.cs">
       <DependentUpon>201611151903300_GlobalTenantFilter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701192123346_DonorAddress.cs" />
+    <Compile Include="Migrations\201701192123346_DonorAddress.Designer.cs">
+      <DependentUpon>201701192123346_DonorAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701302144372_Account.cs" />
+    <Compile Include="Migrations\201701302144372_Account.Designer.cs">
+      <DependentUpon>201701302144372_Account.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702021911046_DonnorAccount.cs" />
+    <Compile Include="Migrations\201702021911046_DonnorAccount.Designer.cs">
+      <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702061943139_Donor.cs" />
+    <Compile Include="Migrations\201702061943139_Donor.Designer.cs">
+      <DependentUpon>201702061943139_Donor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703022048428_DonationReceipt.cs" />
+    <Compile Include="Migrations\201703022048428_DonationReceipt.Designer.cs">
+      <DependentUpon>201703022048428_DonationReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703022221119_ReceiptTenantId.cs" />
+    <Compile Include="Migrations\201703022221119_ReceiptTenantId.Designer.cs">
+      <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AddDonationViewModel.cs" />
+    <Compile Include="Models\ReceiptFormModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="MySqlInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ring-alt.svg" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
@@ -275,13 +316,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Commands\Commands.json" />
+    <Content Include="Commands\Commands.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\homeJavascript.js" />
+    <Content Include="Scripts\Custom\suggestionBar.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
     <Content Include="Scripts\i18n\bg.js" />
@@ -339,6 +380,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
@@ -349,9 +391,15 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Base.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -414,6 +462,17 @@
     <Content Include="Views\Donation\_ModifySuccess.cshtml" />
     <Content Include="Views\Batch\_CloseBatch.cshtml" />
     <Content Include="Views\Batch\_CloseSuccess.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\SetRoles.cshtml" />
+    <Content Include="Views\Donation\_FetchIndexSolo.cshtml" />
+    <Content Include="Views\DonationAccount\_FetchIndex.cshtml" />
+    <Content Include="Views\DonationAccount\_Add.cshtml" />
+    <Content Include="Views\DonationAccount\_AddForm.cshtml" />
+    <Content Include="Views\DonationAccount\_AddSuccess.cshtml" />
+    <Content Include="Views\Shared\_Help.cshtml" />
+    <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
+    <Content Include="Views\Receipt\_Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -459,6 +518,24 @@
     <EmbeddedResource Include="Migrations\201611151903300_GlobalTenantFilter.resx">
       <DependentUpon>201611151903300_GlobalTenantFilter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701192123346_DonorAddress.resx">
+      <DependentUpon>201701192123346_DonorAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701302144372_Account.resx">
+      <DependentUpon>201701302144372_Account.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702021911046_DonnorAccount.resx">
+      <DependentUpon>201702021911046_DonnorAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702061943139_Donor.resx">
+      <DependentUpon>201702061943139_Donor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022048428_DonationReceipt.resx">
+      <DependentUpon>201703022048428_DonationReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022221119_ReceiptTenantId.resx">
+      <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -501,4 +578,8 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" />
+  <Target Name="BeforeBuild" Condition="'$(PublishProfileName)' == '' And '$(WebPublishProfileFile)' == ''">
+    <TransformXml Source="Web.Base.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>
 </Project>

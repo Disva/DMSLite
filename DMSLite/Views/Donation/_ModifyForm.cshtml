@@ -1,5 +1,4 @@
 ﻿@model DMSLite.Entities.Donation
-
 @{ var id = Guid.NewGuid().ToString(); }
 <div id="@id">
     @using (Ajax.BeginForm("Modify", "Donation", new AjaxOptions()
@@ -48,6 +47,18 @@
                         @Html.ValidationMessageFor(model => model.DonationBatch_Id, "", new { @class = "text-danger" })
                         <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch">
                             <option value="@Model.DonationBatch_Id" selected="selected">@Model.DonationBatch.Title</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonationAccount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.DonationAccount_Id, "", new { @class = "text-danger" })
+                        <select class="donors-selector format-account-select2" style="width:100%;" name="DonationAccount">
+                            @if (Model.DonationAccount_Id.HasValue)
+                            {
+                                <option value="@Model.DonationAccount_Id" selected="selected">@Model.DonationAccount.Title</option>
+                            }
                         </select>
                     </div>
                 </div>

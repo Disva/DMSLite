@@ -2,9 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApiAiSDK;
 using ApiAiSDK.Model;
+using System.Configuration;
+using System.Collections.Generic;
 
 namespace DMSLite.Tests.SDKs
 {
+
+
     [TestClass]
     public class APIaiTest
     {
@@ -15,10 +19,21 @@ namespace DMSLite.Tests.SDKs
          * Include varied input to test for robustness
          **/
 
-        private static ApiAi apiAi = new ApiAi(new AIConfiguration(Properties.Settings.Default.APIaiKey, SupportedLanguage.English));
+        private static ApiAi apiAi;
         private Random rand = new Random();
 
-        /**
+        [TestInitialize]
+        public void APIAIInit()
+        {
+            string key = "";
+#if DEBUG
+            key = ConfigurationManager.AppSettings["APIAIKey-Debug"];
+#else
+            key = ConfigurationManager.AppSettings["APIAIKey-Release"];
+#endif
+            apiAi = new ApiAi(new AIConfiguration(key, SupportedLanguage.English));
+        }
+
         [TestMethod]
         public void APITestContextConversation()
         {
@@ -31,28 +46,22 @@ namespace DMSLite.Tests.SDKs
             response = apiAi.TextRequest("my batch title");
             Assert.IsFalse(response.Result.ActionIncomplete);
         }
-        **/
 
         [TestMethod]
-        public void APITestAddBatch()
+        public void APITestHelp()
         {
-            string batchTitle = "Birthday Party";
-
             string[] inputs =
             {
-                "add a batch {0}",
-                "add new batch {0}"
+                "help",
+                "help me",
+                "sos"
             };
 
-            var response = apiAi.TextRequest("add new batch");
-            Assert.AreEqual(response.Result.Action, "AddBatch");
-            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
-
-            var nameResponse = RandomTextInput(inputs, batchTitle);
-            Assert.AreEqual(response.Result.Action, "AddBatch");
-            Assert.AreEqual(nameResponse.Result.Parameters["title"].ToString(), batchTitle);
+            var response = RandomTextInput(inputs);
+            Assert.AreEqual(response.Result.Action, "Help");
         }
 
+        #region Donor
         [TestMethod]
         public void APITestAddDonor()
         {
@@ -68,7 +77,7 @@ namespace DMSLite.Tests.SDKs
 
             //With No params
             var blankResponse = apiAi.TextRequest("create new donor");
-            Assert.AreEqual(blankResponse.Result.Action,  "AddDonor");
+            Assert.AreEqual(blankResponse.Result.Action, "AddDonor");
             Assert.IsTrue(String.IsNullOrWhiteSpace(blankResponse.Result.Parameters["name"].ToString()));
 
             //By name
@@ -79,25 +88,13 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower().Replace("-", ""));
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower().Replace("-", ""), phoneNumber.ToLower().Replace("-", ""));
 
             //By email
             var emailResponse = RandomTextInput(inputs, email);
             Assert.AreEqual(emailResponse.Result.Action, "AddDonor");
             Assert.AreEqual(emailResponse.Result.Parameters["email-address"].ToString(), email);
 
-        }
-
-        [TestMethod]
-        public void APITestAddDonation()
-        {
-            string[] inputs =
-            {
-                "add a donation {0}",
-            };
-
-            var response = apiAi.TextRequest("add new donation");
-            Assert.AreEqual(response.Result.Action, "AddDonation");
         }
 
         [TestMethod]
@@ -126,7 +123,7 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             response = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(response.Result.Action, "ViewDonors");
-            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
+            Assert.AreEqual(response.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-", ""), true);
 
         }
 
@@ -155,13 +152,13 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "ModifyDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-",""), true);
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString(), phoneNumber.Replace("-", ""), true);
         }
 
         [TestMethod]
         public void APITestViewDonors()
         {
-            
+
             string[] inputs =
             {
                 "show donors",
@@ -171,6 +168,28 @@ namespace DMSLite.Tests.SDKs
             //test Action
             var response = RandomTextInput(inputs);
             Assert.AreEqual(response.Result.Action, "ViewAllDonors");
+        }
+        #endregion
+
+        #region Batch
+        [TestMethod]
+        public void APITestAddBatch()
+        {
+            string batchTitle = "Birthday Party";
+
+            string[] inputs =
+            {
+                "add a batch {0}",
+                "add new batch {0}"
+            };
+
+            var response = apiAi.TextRequest("add new batch");
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.IsTrue(String.IsNullOrWhiteSpace(response.Result.Parameters["title"].ToString()));
+
+            var nameResponse = RandomTextInput(inputs, batchTitle);
+            Assert.AreEqual(response.Result.Action, "AddBatch");
+            Assert.AreEqual(nameResponse.Result.Parameters["title"].ToString(), batchTitle);
         }
 
         [TestMethod]
@@ -186,7 +205,7 @@ namespace DMSLite.Tests.SDKs
 
             var response = RandomTextInput(inputs, "");
             Assert.AreEqual(response.Result.Action, "ViewBatches");
-           
+
             response = RandomTextInput(inputs, open);
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), open, true);
 
@@ -237,6 +256,76 @@ namespace DMSLite.Tests.SDKs
 
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
         }
+
+        [TestMethod]
+        public void APITestShowByClosedDate()
+        {
+            string[] inputs =
+            {
+                "closed {0} {1}",
+                "show closed {0} {1}"
+            };
+            
+            var noContext = RandomTextInput(inputs, "before", "june");
+
+            Assert.AreEqual(noContext.Result.Action, "input.unknown");
+
+            var showAllBatches = apiAi.TextRequest("show all batches");
+            Assert.AreEqual(showAllBatches.Result.Action, "ViewBatches");
+
+            List<AIContext> contexts = new List<AIContext>() {
+                    new AIContext()
+                    {
+                        Name = showAllBatches.Result.Contexts[0].Name,
+                        Lifespan = showAllBatches.Result.Contexts[0].Lifespan
+                    }
+                };
+
+            var response = apiAi.TextRequest("show closed after 2016",
+                new RequestExtras(contexts, null));
+            Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
+        }
+
+        #endregion
+
+        #region Donation
+        [TestMethod]
+        public void APITestAddDonation()
+        {
+            string[] inputs =
+            {
+                "add a donation {0}",
+            };
+
+            var response = apiAi.TextRequest("add new donation");
+            Assert.AreEqual(response.Result.Action, "AddDonation");
+        }
+        
+        [TestMethod]
+        public void APITestViewDonations()
+        {
+            string donor = "from James Bond", value = "over 100$", account = "from the Phoenix Convention Account";
+
+            string[] inputs =
+            {
+                "view donations {0}",
+                "show all donations {0}"
+            };
+
+            var response = RandomTextInput(inputs, "");
+            Assert.AreEqual(response.Result.Action, "ViewDonations");
+
+            response = RandomTextInput(inputs, donor);
+            Assert.AreEqual(response.Result.Parameters["donor-name"].ToString(), "James Bond", true);
+
+            response = RandomTextInput(inputs, value);
+            Assert.AreEqual(response.Result.Parameters["value"].ToString(), "100", true);
+            Assert.AreEqual(response.Result.Parameters["value-comparator"].ToString(), ">", true);
+
+            response = RandomTextInput(inputs, account);
+            Assert.AreEqual(response.Result.Parameters["account-name"].ToString(), "Phoenix Convention", true);
+        }
+        #endregion
 
         //Sends a randomly selected NL request to API.ai
         private AIResponse RandomTextInput(string[] inputs, params string[] values)

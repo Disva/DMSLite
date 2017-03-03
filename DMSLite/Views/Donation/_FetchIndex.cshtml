@@ -6,16 +6,22 @@
                 Donation ID
             </div>
             <div class="cell">
-                Donor
+                @Html.DisplayNameFor(model => model.DonationDonor)
             </div>
             <div class="cell">
-                Description
+                @Html.DisplayNameFor(model => model.ObjectDescription)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.Value)
             </div>
             <div class="cell">
-                Batch
+                @Html.DisplayNameFor(model => model.DonationBatch)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationAccount)
+            </div>
+            <div class="cell">
+                <!-- Left Empty for receipt column -->
             </div>
             <div class="cell">
                 <!-- Left Empty for edit column -->
@@ -41,6 +47,15 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationAccount.Title)
+                </div>
+                <div class="cell">
+                    @if (item.DonationReceipt_Id != 0)
+                    {
+                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                    }
                 </div>
 		        @{ var buttonId = Guid.NewGuid().ToString(); }
                 <div class="cell">

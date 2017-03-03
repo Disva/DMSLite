@@ -11,10 +11,20 @@ using DMSLite.Entities;
 
 namespace DMSLite.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SPS")]
     public class OrganizationsController : Controller
     {
         private OrganizationDb db = new OrganizationDb();
+
+        public OrganizationsController()
+        {
+
+        }
+
+        public OrganizationsController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         // GET: Organizations
         public ActionResult Index()

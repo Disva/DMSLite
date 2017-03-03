@@ -1,76 +1,71 @@
 ﻿@model DMSLite.Entities.Donor
 
 @{ var id = Guid.NewGuid().ToString(); }
-
-<div id="@id">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Added New Donor</h4>
-    </div>
-    <div class="modal-body">
-        <dl class="dl-horizontal">
-            <dt>
-                Donor ID
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.FirstName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.LastName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.LastName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-        </dl>
-    </div>
-    @using (Ajax.BeginForm("AddForm", "Donors", new AjaxOptions()
-    {
-        InsertionMode = InsertionMode.ReplaceWith,
-        UpdateTargetId = id
-    }))
-    {
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10" id="createButton">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Add Another Donor" class="btn btn-primary" />
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Added New Donor</h4>
+</div>
+<div class="modal-body">
+    <div class="hidden close-modal">
+        <div class="copy-to-chat">
+            <div class="bubbleLine"><div class="bubble leftBubble">Created the following donor:</div></div>
+            <div class="divTableWrapper">
+                <div class="divTable">
+                    <div class="tableRow header green">
+                        <div class="cell">
+                            Donor ID
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.Address)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.Type)
+                        </div>
+                    </div>
+                    <div class="tableRow">
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.Id)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.FirstName)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.LastName)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.PhoneNumber)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.Address)
+                        </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.Type)
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" id="createButton">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
 </div>

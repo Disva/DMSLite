@@ -13,12 +13,14 @@
     FirstName = Model.newDonor.FirstName,
     LastName = Model.newDonor.LastName,
     Email = Model.newDonor.Email,
-    PhoneNumber = Model.newDonor.PhoneNumber
+    PhoneNumber = Model.newDonor.PhoneNumber,
+    Address = Model.newDonor.Address,
 }, new AjaxOptions()
 {
     InsertionMode = InsertionMode.ReplaceWith,
     UpdateTargetId = id,
-    OnBegin = "showLoadingButton(\"" + id + "\")"
+    OnBegin = "showLoadingButton(\"" + id + "\");",
+    OnSuccess = "checkHideModal();"
 }))
 {
     <div class="modal-body">
@@ -41,6 +43,9 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayNameFor(model => model.newDonor.PhoneNumber)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.newDonor.Address)
                 </div>
             </div>
             @foreach (var item in Model.similarDonors)
