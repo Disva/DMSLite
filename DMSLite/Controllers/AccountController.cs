@@ -25,10 +25,15 @@ namespace DMSLite.Controllers
             db = new OrganizationDb();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager ) : this()
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        public AccountController(OrganizationDb db)
+        {
+            this.db = db;
         }
 
         public ApplicationSignInManager SignInManager
