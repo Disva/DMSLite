@@ -106,6 +106,27 @@ function checkShowModal() {
     }
 }
 
+
+// Check if a modal wants to be hidden
+// and whether it has content to copy
+// into the chat box
+function checkHideModal() {
+    var node = $("#outputContainer").find(".close-modal");
+    if (node.length > 0) {
+        var modal = node.parents(".modal");
+        modal.modal('hide');
+
+        var content = node.find(".copy-to-chat");
+
+        if (content.length > 0)
+        {
+            content.appendTo("#outputContainer");
+
+            scrollToBottom();
+        }        
+    }
+}
+
 function checkFormatSelect2() {
     checkFormatSelect2Donor();
     checkFormatSelect2Batch();
