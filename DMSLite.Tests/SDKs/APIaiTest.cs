@@ -88,7 +88,7 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower().Replace("-", ""));
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower().Replace("-", ""), phoneNumber.ToLower().Replace("-", ""));
 
             //By email
             var emailResponse = RandomTextInput(inputs, email);
@@ -285,6 +285,7 @@ namespace DMSLite.Tests.SDKs
                 new RequestExtras(contexts, null));
             Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
         }
+
         #endregion
 
         #region Donation

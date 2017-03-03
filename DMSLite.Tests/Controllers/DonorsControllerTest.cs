@@ -88,10 +88,10 @@ namespace DMSLite.Tests.Controllers
         {
             DonorsController dc = new DonorsController(db);
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("donor-search", new List<String> { "phone-number", "555-555-5555" });
+            parameters.Add("donor-search", new List<String> { "phone-number", "5555555555" });
             parameters.Add("email-address", "");
             parameters.Add("name", "");
-            parameters.Add("phone-number", "555-555-5555");
+            parameters.Add("phone-number", "5555555555");
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonor(parameters);
             List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
             List<Donor> steve = db.Donors.Where(x => x.PhoneNumber == "555-555-5555").ToList();
@@ -114,6 +114,66 @@ namespace DMSLite.Tests.Controllers
             List<Donor> steve = db.Donors.Where(x => x.Email == "steve@stevemail.com").ToList();
             Assert.AreEqual(steve.Count(), returnedModel.Count());
             Assert.IsTrue(steve[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByEmailContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "steve@stevemail.com");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.Email != null && x.Email.Equals("steve@stevemail.com")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByPhoneNumberContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "");
+            parameters.Add("name", "");
+            parameters.Add("phone-number", "5555555555");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.PhoneNumber != null && x.PhoneNumber.Equals("555-555-5555")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
+        }
+
+        [TestMethod]
+        //Tests searching for a donor by Email.
+        public void TestViewByNameContext()
+        {
+            DonorsController dc = new DonorsController(db);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("email-address", "");
+            parameters.Add("name", "Denis");
+            parameters.Add("phone-number", "");
+            PartialViewResult pvr = (PartialViewResult)dc.ViewAllDonors();
+            List<Donor> returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            List<Donor> dbDonors = db.Donors.ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            pvr = (PartialViewResult)dc.FilterDonors(parameters);
+            returnedModel = ((List<Donor>)pvr.ViewData.Model).ToList();
+            dbDonors = dbDonors.Where(x => x.FirstName != null && x.FirstName.Equals("Denis")).ToList();
+            Assert.AreEqual(dbDonors.Count(), returnedModel.Count());
+            Assert.IsTrue(dbDonors[0].isEqualTo(returnedModel[0]));
         }
 
         [TestMethod]
