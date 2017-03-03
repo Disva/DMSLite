@@ -39,6 +39,12 @@ namespace DMSLite.Entities
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }
 
+        [Display(Name = "Receipt")]
+        public Receipt DonationReceipt { get; set; }
+
+        [ForeignKey("DonationReceipt")]
+        public int DonationReceipt_Id { get; set; }
+
         [Required]
         public int TenantOrganizationId {get; set; }
 

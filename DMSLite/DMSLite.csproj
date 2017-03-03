@@ -283,6 +283,14 @@
     <Compile Include="Migrations\201702061943139_Donor.Designer.cs">
       <DependentUpon>201702061943139_Donor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703022048428_DonationReceipt.cs" />
+    <Compile Include="Migrations\201703022048428_DonationReceipt.Designer.cs">
+      <DependentUpon>201703022048428_DonationReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703022221119_ReceiptTenantId.cs" />
+    <Compile Include="Migrations\201703022221119_ReceiptTenantId.Designer.cs">
+      <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -521,6 +529,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702061943139_Donor.resx">
       <DependentUpon>201702061943139_Donor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022048428_DonationReceipt.resx">
+      <DependentUpon>201703022048428_DonationReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022221119_ReceiptTenantId.resx">
+      <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

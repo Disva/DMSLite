@@ -38,8 +38,25 @@ namespace DMSLite.Tests.Controllers
 
             //make the receipts
             FileContentResult fcr = (FileContentResult)rc.ZipReceipts(donorIds, batchIds);
-            ZipArchive za = new ZipArchive(new MemoryStream(fcr.FileContents), ZipArchiveMode.Read);
-            Assert.IsTrue(za.Entries.ToList().Count > 0);
+
+            // check that the donations have been reeipted by checking their DonationReceipt_Id
+            List<Donation> donations = new List<Donation>();
+            foreach(int donorId in donorIds)
+            {
+                foreach(int batchId in batchIds)
+                {
+                    donations.AddRange(db.Donations.Where(x => x.DonationBatch_Id == batchId && x.DonationDonor_Id == donorId));
+                }
+            }
+
+            /* this operation seems to work outside of tests and could theoretically replace the above heavy foreach,
+             *  but the testrunner doesn't like the depth added by .Any...
+            List<Donation> donations = db.Donations.Where(x => donorIds.Any(y => y.Equals(x.DonationDonor_Id)
+                                                            && batchIds.Any(z => z.Equals(x.DonationBatch_Id)))).ToList();
+            */
+
+            foreach(var donation in donations)
+                Assert.IsTrue(donation.DonationReceipt_Id != 0);
         }
 
         [TestMethod]
