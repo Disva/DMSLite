@@ -52,6 +52,17 @@ namespace DMSLite.Controllers
         }
         
         [HttpGet]
+        public ActionResult FetchReceiptByDonation(Donation donation)
+        {
+            // get donor
+            Donor donor = db.Donors.Where(x => x.Id.Equals(donation.DonationDonor_Id)).First();
+            // get list of donations
+            List<Donation> donations = db.Donations.Where(x => x.DonationReceipt_Id.Equals(donation.DonationReceipt_Id)).ToList();
+
+            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf");
+        }
+
+        [HttpGet]
         public ActionResult ZipReceipts(int[] donors, int[] batches)
         {
             //generate ReceiptFormModel from the form
@@ -69,13 +80,28 @@ namespace DMSLite.Controllers
                     foreach (var donor in rfm.donors)
                     {
                         //compile a list of all donations made by that donor for the selected batches
-                        List<Donation> donations = db.Donations.Where(x => x.DonationDonor_Id.Equals(donor.Id)
-                                                                        && batches.Any(y => y.Equals(x.DonationBatch_Id))).ToList();
+                        List<Donation> donations = db.Donations.Where(x => x.DonationDonor_Id.Equals(donor.Id)              // match donor ID
+                                                                        && batches.Any(y => y.Equals(x.DonationBatch_Id))   // match batch ID
+                                                                        && x.DonationReceipt_Id.Equals(0)).ToList();        // only add unreceipted donations
 
-                        //only create the PDF if they have made donations to the selected batches
+                        //only create the PDF if the donor has made donations to the selected batches
                         if(donations.Count() > 0)
-                        { 
-                            string filename = donor.FirstName + "_" + donor.LastName + ".pdf";
+                        {
+                            // Create receipt object with current date and time
+                            Receipt receipt = new Receipt
+                            {
+                                IssueDate = DateTime.Now
+                            };
+                            db.Add(receipt);
+
+                            // Add receipt's ID to each donation
+                            foreach (var donation in donations)
+                            { 
+                                donation.DonationReceipt_Id = receipt.Id;
+                                db.Modify(donation);
+                            }
+
+                            string filename = donor.FirstName + "_" + donor.LastName + "_" + receipt.Id + ".pdf";
                             ZipArchiveEntry file = archive.CreateEntry(filename);
                             using (BinaryWriter bw = new BinaryWriter(file.Open()))
                                 bw.Write(PrintReceipt(donor, donations).ToArray());
@@ -90,10 +116,17 @@ namespace DMSLite.Controllers
         {
             // Create output string
             List<string> outputString = new List<string>();
-            
+            var d = donations[0];
+
+            Receipt receipt = db.Receipts.Where(x => x.Id.Equals(d.DonationReceipt_Id)).First();
+            outputString.Add("Receipt ID: " + receipt.Id);
+            outputString.Add("Issued on: " + receipt.IssueDate.ToShortDateString());
+            outputString.Add("\n");
+
             outputString.Add(donor.FirstName + " " + donor.LastName);
             outputString.Add(donor.Address);
             outputString.Add("\n");
+
             outputString.Add("Donations:");
             outputString.Add("\n");
 

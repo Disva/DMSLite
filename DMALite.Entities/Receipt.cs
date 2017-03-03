@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DMSLite.Entities
 {
-    public class Receipt
+    public class Receipt : IHaveTenant
     {
         public int Id { get; set; }
 

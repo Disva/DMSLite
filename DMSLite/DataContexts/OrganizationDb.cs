@@ -60,5 +60,6 @@ namespace DMSLite.DataContexts
         public DbSet<Batch> Batches { get; set; }
         public DbSet<Donation> Donations { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
     }
 }

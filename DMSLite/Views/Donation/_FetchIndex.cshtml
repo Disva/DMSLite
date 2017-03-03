@@ -21,6 +21,9 @@
                 @Html.DisplayNameFor(model => model.DonationAccount)
             </div>
             <div class="cell">
+                <!-- Left Empty for receipt column -->
+            </div>
+            <div class="cell">
                 <!-- Left Empty for edit column -->
             </div>
             <div class="cell">
@@ -47,6 +50,12 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationAccount.Title)
+                </div>
+                <div class="cell">
+                    @if (item.DonationReceipt_Id != 0)
+                    {
+                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                    }
                 </div>
 		        @{ var buttonId = Guid.NewGuid().ToString(); }
                 <div class="cell">
