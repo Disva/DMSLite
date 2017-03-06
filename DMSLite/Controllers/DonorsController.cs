@@ -248,6 +248,12 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_AddForm.cshtml", newDonor);
         }
 
+        // Show an add form for a donor
+        public ActionResult ShowAddForm(Donor donor)
+        {
+            return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
+        }
+
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor, [Bind(Prefix = "Type.Type")] DonorType type = DonorType.Individual)
         {
