@@ -473,6 +473,7 @@
     <Content Include="Views\Shared\_Help.cshtml" />
     <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
     <Content Include="Views\Receipt\_Receipt.cshtml" />
+    <Content Include="Views\Donation\_ToggleDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
