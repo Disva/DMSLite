@@ -331,9 +331,13 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult CloseBatch(Dictionary<string, object> parameters)
         {
-            String title = parameters["title"].ToString();
-            Batch batchToClose = db.Batches.First(x => x.Title == title);
-            return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            int batchId = Int32.Parse(parameters["batchId"].ToString());
+            Batch batchToClose = db.Batches.FirstOrDefault(x => x.Id == batchId);
+            if (batchToClose != null)
+                return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + batchId);
+
         }
 
         public ActionResult CloseBatchFromList(int id)
