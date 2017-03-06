@@ -24,18 +24,44 @@
             ]
         </dd>
     </dl>
-@if (this.User.IsInRole("Admin"))
-{
-    <h4>Administrative Tools</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Download log:</dt>
-        <dd>
-            [
-            @Html.ActionLink("Download Log", "LogDownload", "Help")
-            ]
-        </dd>
-    </dl>
-}
-    
+    @if (this.User.IsInRole("SPS"))
+    {
+        <h4>SPS Administrative Tools</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Download log:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Download Log", "LogDownload", "Help")
+                ]
+            </dd>
+            <dt>Manage Organizations:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Manage Organizations", "Index", "Organizations")
+                ]
+            </dd>
+            <dt>Manage User Roles:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Manage User Roles", "Index", "Roles")
+                ]
+            </dd>
+        </dl>
+    }
+
+    @if (this.User.IsInRole("Admin"))
+    {
+        <h4>Organization Administrative Tools</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Register a New User:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Register a New User", "Register", "Account")
+                ]
+            </dd>
+        </dl>
+    }
+
 </div>
