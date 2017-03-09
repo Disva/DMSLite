@@ -323,7 +323,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     position: absolute;
     top: 0;
     left: 0;
-    background: #76b852; /* fallback for old browsers */
+    background: #439539; /* fallback for old browsers */
     background: -webkit-linear-gradient(right, #439539, #32a362);
     background: -moz-linear-gradient(right, #439539, #32a362);
     background: -o-linear-gradient(right, #439539, #32a362);
