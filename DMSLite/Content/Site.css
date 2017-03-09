@@ -100,14 +100,18 @@ textarea {
     }
 
 .leftBubble {
-    background-color: #27ae60;
+    background-color: white;
     border-top-left-radius: 0px;
+    color: #27ae60;
+    box-shadow: 0 1px 3px #3b3b3b;
 }
 
 .rightBubble {
-    background-color: #3b3b3b;
+    background-color: white;
+    color: #3b3b3b;
     border-top-right-radius: 0px;
     float: right;
+    box-shadow: 0 1px 3px #3b3b3b;
 }
 
 .bubbleLine {
