@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace DMSLite.Controllers
 {
     using Helpers;
+    using Models;
     using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
 
@@ -42,7 +43,7 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
         }
 
         public ActionResult FetchClosedBatchesByDate(Dictionary<string, object> parameters)
@@ -59,7 +60,7 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
         }
 
         public ActionResult FilterBatchesBySum(Dictionary<string, object> parameters)
@@ -74,10 +75,27 @@ namespace DMSLite.Controllers
                 if (filteredBatches.Count == 0)
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-                return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+                return DisplayBatches(filteredBatches);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "not all parameters recognized");            
+        }
+
+        public ActionResult DisplayBatches(List<Batch> batches)
+        {
+            List<BatchViewModel> viewableBatches = new List<BatchViewModel>();
+            for(int i = 0; i < batches.Count; i++)
+            {
+                BatchViewModel tempModel = new BatchViewModel();
+                tempModel.batch = batches.ElementAt(i);
+                tempModel.count = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Count();
+                if (tempModel.count != 0)
+                    tempModel.sum = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Sum(y => y.Value);
+                else
+                    tempModel.sum = 0;
+                viewableBatches.Add(tempModel);
+            }
+            return PartialView("~/Views/Batch/_FetchIndex.cshtml", viewableBatches);
         }
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
