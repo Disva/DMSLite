@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DMSLite.Entities.ComplexTypes;
 
 namespace DMSLite.Entities
 {
@@ -15,6 +16,13 @@ namespace DMSLite.Entities
         [Required]
         public string Name { get; set; }
 
+        [StringLength(255)]
+        public string DBA { get; set; }
 
+        public Address Address { get; set; } 
+
+        [StringLength(255)]
+        [Display(Name = "Registration Numer")]
+        public string RegistrationNumer { get; set; }
     }
 }

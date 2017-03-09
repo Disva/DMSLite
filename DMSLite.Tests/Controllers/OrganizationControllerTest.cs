@@ -1,5 +1,6 @@
 ﻿using DMSLite.Controllers;
 using DMSLite.Entities;
+using DMSLite.Entities.ComplexTypes;
 using DMSLite.Tests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -22,7 +23,8 @@ namespace DMSLite.Tests.Controllers
             OrganizationsController oc = new OrganizationsController(db);
 
             Organization org = new Organization() {
-                Name = "TestOrganization1"
+                Name = "TestOrganization1",
+                Address = new Address()
             };
 
             try
@@ -39,13 +41,46 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        public void TestNewOrganizationAddress()
+        {
+            OrganizationsController oc = new OrganizationsController(db);
+
+            Address address = new Address()
+            {
+                AddressLineOne = "2589 Adelaide St",
+                City = "Toronto",
+                Province = "Ontario",
+                PostalCode = "M5H 1P6"
+            };
+
+            Organization org = new Organization()
+            {
+                Name = "TestOrganizationADdress",
+                Address = address
+            };
+
+            try
+            {
+                oc.Create(org);
+
+                Assert.AreEqual(1, db.Organizations.Where(x => x.Name == "TestOrganizationADdress" && x.Address.AddressLineOne == "2589 Adelaide St").Count());
+            }
+            finally
+            {
+                db.Organizations.Remove(org);
+                db.SaveChanges();
+            }
+        }
+
+        [TestMethod]
         public void TestEditOrganization()
         {
             OrganizationsController oc = new OrganizationsController(db);
 
             Organization org = new Organization()
             {
-                Name = "TestOrganization2"
+                Name = "TestOrganization2",
+                Address = new Address()
             };
 
             try
@@ -74,7 +109,8 @@ namespace DMSLite.Tests.Controllers
 
             Organization org = new Organization()
             {
-                Name = "TestOrganization3"
+                Name = "TestOrganization3",
+                Address = new Address()
             };
 
             oc.Create(org);
