@@ -12,9 +12,11 @@ namespace DMSLite.Entities.ComplexTypes
     public class Address
     {
         [StringLength(255)]
+        [Display(Name = "Address Line 1")]
         public string AddressLineOne { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Address Line 2")]
         public string AddressLineTwo { get; set; }
 
         [StringLength(255)]
@@ -27,6 +29,7 @@ namespace DMSLite.Entities.ComplexTypes
         public string Country { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace DMSLite.Entities
         public Address Address { get; set; } 
 
         [StringLength(255)]
+        [Display(Name = "Registration Numer")]
         public string RegistrationNumer { get; set; }
     }
 }

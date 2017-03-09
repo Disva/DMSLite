@@ -477,6 +477,7 @@
     <Content Include="Views\Shared\_Help.cshtml" />
     <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
     <Content Include="Views\Receipt\_Receipt.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
