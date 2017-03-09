@@ -7,12 +7,12 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="mailto:dmslite@silentpartnersoftware.com?subject=Customer%20Feedback&amp;body=Please%20complete%20the%20following%3A%0A%0AWhat%20I%20typed%3A%0A%0AWhat%20I%20got%3A%0A%0AWhat%20I%20wanted%20instead%3A%0A%0ACustomer%20Notes%3A" target="_blank">Feedback</a>
+            <a href="mailto:dmslite@silentpartnersoftware.com?subject=Customer%20Feedback&amp;body=Please%20complete%20the%20following%3A%0A%0AWhat%20I%20typed%3A%0A%0AWhat%20I%20got%3A%0A%0AWhat%20I%20wanted%20instead%3A%0A%0ACustomer%20Notes%3A" target="_blank"><i class="fa fa-paper-plane" aria-hidden="true"></i> Feedback</a>
         </li>
         <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <a href="@Url.Action("Index","Manage")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> @User.Identity.GetUserName()</a>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log off</a></li>
     </ul>
     }
 }
