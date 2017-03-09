@@ -265,7 +265,7 @@ namespace DMSLite.Controllers
         #region Add
         public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            if (parameters.ContainsKey("batchId"))
+            if (!String.IsNullOrEmpty(parameters["batchId"].ToString()))
             {
                 int batchId = Int32.Parse(parameters["batchId"].ToString());
                 Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
@@ -289,12 +289,15 @@ namespace DMSLite.Controllers
                 Double.TryParse(parameters["value"].ToString(), out donationValue);
                 newDonation.Value = donationValue;
             }
-            if (parameters.ContainsKey("batchId"))
+
+            //id here is batchId
+            if (!String.IsNullOrEmpty(parameters["id"].ToString()))
             {
                 //guaranteed to be valid at this point
-                int batchId = Int32.Parse(parameters["batchId"].ToString());
+                int batchId = Int32.Parse(parameters["id"].ToString());
                 Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
                 newDonation.DonationBatch = batch;
+                newDonation.DonationBatch_Id = batch.Id;
             }
                 //found this, its not used in api.ai - DK
                 if (parameters.ContainsKey("description"))
