@@ -16,8 +16,10 @@ namespace DMSLite.Entities
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Date Created")]
         public DateTime CreateDate { get; set; }
 
+        [Display(Name = "Date Closed")]
         public DateTime? CloseDate { get; set; }
 
         [Required]
