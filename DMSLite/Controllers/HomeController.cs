@@ -13,12 +13,12 @@ namespace DMSLite.Controllers
         public Dispatcher dispatcher;
         public HomeController()
         {
-            Helpers.Log.WriteLog(Helpers.Log.LogType.Task, "User connected to DMSLite");
             dispatcher = Dispatcher.getDispatcher();
         }
 
         public ActionResult Index()
         {
+            Helpers.Log.WriteLog(Helpers.Log.LogType.Task, "User connected to DMSLite.");
             return View();
         }
 
