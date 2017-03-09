@@ -1,25 +1,27 @@
 ﻿@model DMSLite.Entities.ComplexTypes.Address
 
-<strong>@Html.DisplayNameFor(model => model.AddressLineOne):</strong>
+<dl class="dl-horizontal">
+    <dt>@Html.DisplayNameFor(model => model.AddressLineOne)</dt>
 
-@Html.DisplayFor(model => model.AddressLineOne)</br>
+    <dd>@Html.DisplayFor(model => model.AddressLineOne)</dd>
 
-<strong>@Html.DisplayNameFor(model => model.AddressLineTwo):</strong>
+    <dt>@Html.DisplayNameFor(model => model.AddressLineTwo)</dt>
 
-@Html.DisplayFor(model => model.AddressLineTwo)</br>
+    <dd>@Html.DisplayFor(model => model.AddressLineTwo)</dd>
 
-<strong>@Html.DisplayNameFor(model => model.City):</strong>
+    <dt>@Html.DisplayNameFor(model => model.City)</dt>
 
-@Html.DisplayFor(model => model.City)</br>
+    <dd>@Html.DisplayFor(model => model.City)</dd>
 
-<strong>@Html.DisplayNameFor(model => model.Province):</strong>
+    <dt>@Html.DisplayNameFor(model => model.Province)</dt>
 
-@Html.DisplayFor(model => model.Province)</br>
+    <dd>@Html.DisplayFor(model => model.Province)</dd>
 
-<strong>@Html.DisplayNameFor(model => model.Country):</strong>
+    <dt>@Html.DisplayNameFor(model => model.Country)</dt>
 
-@Html.DisplayFor(model => model.Country)</br>
+    <dd>@Html.DisplayFor(model => model.Country)</dd>
 
-<strong>@Html.DisplayNameFor(model => model.PostalCode):</strong>
+    <dt>@Html.DisplayNameFor(model => model.PostalCode)</dt>
 
-@Html.DisplayFor(model => model.PostalCode)</br>
+    <dd>@Html.DisplayFor(model => model.PostalCode)</dd>
+</dl>
