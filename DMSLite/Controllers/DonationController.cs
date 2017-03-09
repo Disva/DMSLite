@@ -265,6 +265,15 @@ namespace DMSLite.Controllers
         #region Add
         public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
+            if (parameters.ContainsKey("batchId"))
+            {
+                int batchId = Int32.Parse(parameters["batchId"].ToString());
+                Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
+                if (batch == null)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + parameters["batchId"].ToString());
+                else if (batch.CloseDate != null)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "Batch " + batch.Id + " has already been posted. Can't add a new donation to it.");
+            }
             return PartialView("~/Views/Donation/_Add.cshtml", parameters);
         }
 
@@ -273,34 +282,33 @@ namespace DMSLite.Controllers
             Donation newDonation = new Donation();
             AddDonationViewModel viewModel = new AddDonationViewModel { Donation = newDonation };
 
+            //found this, its not used in api.ai - DK
             if (parameters.ContainsKey("value"))
             {
                 double donationValue;
                 Double.TryParse(parameters["value"].ToString(), out donationValue);
                 newDonation.Value = donationValue;
             }
-            if (parameters.ContainsKey("batch"))
+            if (parameters.ContainsKey("batchId"))
             {
-                var batches = db.Batches.Where(x => x.Title.Equals(parameters["batch"].ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
-                if(batches.Count == 1)
-                {
-                    newDonation.DonationBatch = batches[0];
-                }
-                else if(batches.Count > 1)
-                {
-                    viewModel.SimilarBatches = batches;
-                }
+                //guaranteed to be valid at this point
+                int batchId = Int32.Parse(parameters["batchId"].ToString());
+                Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
+                newDonation.DonationBatch = batch;
             }
-            if (parameters.ContainsKey("description"))
+                //found this, its not used in api.ai - DK
+                if (parameters.ContainsKey("description"))
             {
                 newDonation.ObjectDescription = parameters["description"].ToString();
             }
+            //found this, its not used in api.ai - DK
             if (parameters.ContainsKey("orgId"))
             {
                 int orgId;
                 Int32.TryParse(parameters["orgId"].ToString(), out orgId);
                 newDonation.Value = orgId;
             }
+            //found this, its not used in api.ai - DK
             if (parameters.ContainsKey("donor"))
             {
                 string donorName = parameters["donor"].ToString();
@@ -368,6 +376,14 @@ namespace DMSLite.Controllers
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
+        }
+
+        public ActionResult AddFromBatch(Batch batch)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("batchId", batch.Id);
+            parameters.Add("title", "");
+            return AddMenu(parameters);
         }
 
         private void FetchByName(ref List<Donor> list, string name)

@@ -20,6 +20,9 @@
             <div class="cell">
                 <!-- Left Empty for post column -->
             </div>
+            <div class="cell">
+                <!-- Left Empty for add column -->
+            </div>
         </div>
         @foreach (var item in Model)
         {
@@ -47,9 +50,22 @@
                     }, new { @class = "glyphicon search" })
                 </div>
                 <div class="cell">
+                    <!--an add button that adds a donation to this batch-->
                     @if (item.CloseDate == null)
                     {
-                        @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+                        @Ajax.ActionLink("+", "AddFromBatch", "Donation", item, new AjaxOptions()
+                        {
+                           InsertionMode = InsertionMode.InsertAfter,
+                           UpdateTargetId = "outputContainer",
+                           OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                           OnBegin = "return bounceInput('" + buttonId + "')"
+                        }, new { @class = "glyphicon plus" })
+                    }
+                </div>
+                <div class="cell">
+                    @if (item.CloseDate == null)
+                    {
+                       @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
                        {
                            InsertionMode = InsertionMode.InsertAfter,
                            UpdateTargetId = "outputContainer",
