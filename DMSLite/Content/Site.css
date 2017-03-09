@@ -43,6 +43,10 @@ textarea {
 #mainInputGroup {
 }
 
+#outputOuter{
+    margin-top: 10px;
+}
+
 #mainInput {
     max-width: none;
     transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, end);
@@ -56,7 +60,7 @@ textarea {
 
 /* The chat output is set to appear directly above the chat box at all times */
 .content-box {
-    height: calc(100vh - 110px);
+    height: calc(100vh - 120px);
     overflow-y: auto;
 }
 
@@ -330,4 +334,16 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     background: linear-gradient(to left, #439539, #32a362);
     width: 100vw;
     height: 100vh;
+}
+
+/* Navbar*/
+.navbar{
+    background-color:#32a362;
+    box-shadow: 0px 5px 5px #888888;
+}
+.navbar a{
+    color: white;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: inherit;
 }
