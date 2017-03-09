@@ -334,6 +334,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     background: linear-gradient(to left, #439539, #32a362);
     width: 100vw;
     height: 100vh;
+    z-index: 3;
 }
 
 /* Navbar*/
@@ -344,6 +345,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     background: -o-linear-gradient(right, #439539, #32a362);
     background: linear-gradient(to left, #439539, #32a362);
     box-shadow: 0px 5px 5px #888888;
+    z-index: 2;
 }
 .navbar a{
     color: white;
