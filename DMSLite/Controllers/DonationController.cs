@@ -331,6 +331,7 @@ namespace DMSLite.Controllers
             }
             else
             {
+                ViewBag.Donors = db.Donors.ToList();
                 return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
             }            
         }

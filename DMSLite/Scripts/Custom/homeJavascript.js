@@ -138,7 +138,7 @@ function checkFormatSelect2Donor() {
     if (node.length > 0) {
 
         $(node).select2({
-            ajax: {
+            /*ajax: {
                 url: "/Donors/SearchDonors/",
                 dataType: 'json',
                 delay: 500,
@@ -148,9 +148,9 @@ function checkFormatSelect2Donor() {
                     };
                 },
                 cache: true
-            },
-            placeholder: { id: -1, text: "Select a donor" },
-            templateResult: function (state) {
+            },*/
+            placeholder: "Select a donor",
+            /*templateResult: function (state) {
                 if (state.id === undefined) {
                     return 'Searching...';
                 }
@@ -163,8 +163,8 @@ function checkFormatSelect2Donor() {
                     return state.text;
                 }
                 return state.lastName + " (ID: " + state.id + ")" || state.text;
-            },
-            minimumInputLength: 1,
+            },*/
+            //minimumInputLength: 1,
             dropdownParent: $(node).parents(".modal")
         });
 
