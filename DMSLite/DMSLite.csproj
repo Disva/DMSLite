@@ -298,9 +298,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddDonationViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\AddDonationViewModel.cs" />
     <Compile Include="Models\ReceiptFormModel.cs" />
     <Compile Include="Models\SimilarDonorModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
