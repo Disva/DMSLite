@@ -1,0 +1,9 @@
+﻿@model DMSLite.Entities.Account
+
+<select class="donors-selector format-account-select2" style="width:100%;" name="DonationDonor">
+    <option></option>
+    @foreach (var account in ViewBag.Accounts)
+    {
+        <option value="@account.Id" @(Model != null && account.Id == account.Id ? "selected='selected'" : "")>@account.Title (ID: @account.Id)</option>
+    }
+</select>

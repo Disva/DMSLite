@@ -478,6 +478,9 @@
     <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
     <Content Include="Views\Receipt\_Receipt.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Donor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

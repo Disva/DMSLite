@@ -1,0 +1,9 @@
+﻿@model DMSLite.Entities.Batch
+
+<select class="donors-selector format-batch-select2" style="width:100%;" name="DonationDonor">
+    <option></option>
+    @foreach (var batch in ViewBag.Batches)
+    {
+        <option value="@batch.Id" @(Model != null && Model.Id == batch.Id ? "selected='selected'" : "")>@batch.Title (ID: @batch.Id)</option>
+    }
+</select>

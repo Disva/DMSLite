@@ -31,6 +31,14 @@ namespace DMSLite.Controllers
             this.db = db;
         }
 
+        // Populate the viewbag with data from database for use in the view
+        private void PopulateViewBag()
+        {
+            ViewBag.Donors = db.Donors.ToList();
+            ViewBag.Batches = db.Batches.ToList();
+            ViewBag.Accounts = db.Accounts.ToList();
+        }
+
         #region Fetch
         public ActionResult FetchByBatchId(Batch batch)
         {
@@ -219,6 +227,7 @@ namespace DMSLite.Controllers
 
             if (donation.DonationBatch.CloseDate == null)
             {
+                PopulateViewBag();
                 return PartialView("~/Views/Donation/_Modify.cshtml", donation);
             }
             else
@@ -255,6 +264,8 @@ namespace DMSLite.Controllers
                     db.Modify(donation);
                     return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
                 }
+
+                PopulateViewBag();
                 return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
             }
             else
@@ -315,11 +326,13 @@ namespace DMSLite.Controllers
                     viewModel.SimilarDonors = donors;
                 }
             }
-            
+
+            PopulateViewBag();
+
             // When api.ai can parse out the donor and batch names, we can test a flow
             // for similar objects. We can store the viewModel in a session, and pass
             // the session through the flow, for now just show the new donation form
-            if(viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
+            if (viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
             {
                 //return PartialView("~/Views/Donation/_AddDonationSimilarDonor.cshtml", viewModel);
                 return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
@@ -331,7 +344,6 @@ namespace DMSLite.Controllers
             }
             else
             {
-                ViewBag.Donors = db.Donors.ToList();
                 return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
             }            
         }
@@ -368,6 +380,8 @@ namespace DMSLite.Controllers
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
+
+            PopulateViewBag();
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 

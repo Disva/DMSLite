@@ -182,7 +182,7 @@ function checkFormatSelect2Batch() {
     if (node.length > 0) {
 
         $(node).select2({
-            ajax: {
+            /*ajax: {
                 url: searchOpenBatches ? "/Batch/SearchBatches/" : "/Batch/SearchClosedBatches/",
                 dataType: 'json',
                 delay: 500,
@@ -192,9 +192,9 @@ function checkFormatSelect2Batch() {
                     };
                 },
                 cache: true
-            },
-            placeholder: { id: -1, text: "Select a batch" },
-            templateResult: function (state) {
+            },*/
+            placeholder: "Select a batch"
+            /*templateResult: function (state) {
                 if (state.id === undefined) {
                     return 'Searching...';
                 }
@@ -208,7 +208,7 @@ function checkFormatSelect2Batch() {
                 return state.title || state.text;
             },
             minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
+            dropdownParent: $(node).parents(".modal")*/
         });
 
         $(node).removeClass(searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
@@ -220,7 +220,7 @@ function checkFormatSelect2Account() {
     if (node.length > 0) {
 
         $(node).select2({
-            ajax: {
+            /*ajax: {
                 url: "/DonationAccount/SearchAccounts/",
                 dataType: 'json',
                 delay: 500,
@@ -230,9 +230,9 @@ function checkFormatSelect2Account() {
                     };
                 },
                 cache: true
-            },
-            placeholder: { id: -1, text: "Select an account" },
-            templateResult: function (state) {
+            },*/
+            placeholder: "Select an account"
+            /*templateResult: function (state) {
                 if (state.id === undefined) {
                     return 'Searching...';
                 }
@@ -246,7 +246,7 @@ function checkFormatSelect2Account() {
                 return state.title || state.text;
             },
             minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
+            dropdownParent: $(node).parents(".modal")*/
         });
 
         $(node).removeClass("format-account-select2");
