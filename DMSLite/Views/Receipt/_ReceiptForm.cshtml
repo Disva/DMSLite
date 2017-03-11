@@ -22,7 +22,7 @@
                 @Html.LabelFor(model => model.donors, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.donors, "", new { @class = "text-danger" })
-                    <select id="receiptDonors" onchange="checkReceiptButton()" class="donors-selector format-select2" multiple="multiple" style="width:100%;" name="donors" data-select2-placeholder="Select a donor">
+                    <select id="receiptDonors" onchange="checkReceiptButton()" class="format-select2" multiple="multiple" style="width:100%;" name="donors" data-select2-placeholder="Select a donor">
                         <option></option>
                         @foreach (var donor in Model.donors)
                         {
@@ -35,7 +35,7 @@
                 @Html.LabelFor(model => model.batches, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.batches, "", new { @class = "text-danger" })
-                    <select id="receiptBatches" onchange="checkReceiptButton()" class="donors-selector format-select2" multiple="multiple" style="width:100%;" name="batches" data-select2-placeholder="Select a batch">
+                    <select id="receiptBatches" onchange="checkReceiptButton()" class="format-select2" multiple="multiple" style="width:100%;" name="batches" data-select2-placeholder="Select a batch">
                         <option></option>
                         @foreach (var batch in Model.batches)
                         {
