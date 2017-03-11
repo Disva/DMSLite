@@ -1,4 +1,4 @@
-﻿@model DMSLite.Entities.Donation
+﻿@model DMSLite.Models.DonationFormViewModel
 
 @{ var id = Guid.NewGuid().ToString(); }
 
@@ -20,38 +20,56 @@
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.donation.Value, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.donation.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.donation.Value, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ObjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.donation.ObjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ObjectDescription, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ObjectDescription, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.donation.ObjectDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.donation.ObjectDescription, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.donation.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
-                        @Html.EditorFor(model => model.DonationDonor)
+                        @Html.ValidationMessageFor(model => model.donation.DonationDonor, "", new { @class = "text-danger" })
+                        <select class="format-select2" style="width:100%;" name="donationDonorId" data-select2-placeholder="Select a donor">
+                            <option></option>
+                            @foreach (var donor in Model.donors)
+                            {
+                                <option value="@donor.Id" @(Model != null && Model.donationDonorId == donor.Id ? "selected='selected'" : "")>@donor.FirstName @donor.LastName (ID: @donor.Id)</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.donation.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.DonationBatch, "", new { @class = "text-danger" })
-                        @Html.EditorFor(model => model.DonationBatch)
+                        @Html.ValidationMessageFor(model => model.donation.DonationBatch, "", new { @class = "text-danger" })
+                        <select class="format-select2" style="width:100%;" name="donationBatchId" data-select2-placeholder="Select a batch">
+                            <option></option>
+                            @foreach (var batch in Model.batches)
+                            {
+                                <option value="@batch.Id" @(Model != null && Model.donationBatchId == batch.Id ? "selected='selected'" : "")>@batch.Title (ID: @batch.Id)</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DonationAccount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.donation.DonationAccount, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.DonationAccount, "", new { @class = "text-danger" })
-                        @Html.EditorFor(model => model.DonationAccount)
+                        @Html.ValidationMessageFor(model => model.donation.DonationAccount, "", new { @class = "text-danger" })
+                        <select class="format-select2" style="width:100%;" name="donationAccountId" data-select2-placeholder="Select an account">
+                            <option></option>
+                            @foreach (var account in Model.accounts)
+                            {
+                                <option value="@account.Id" @(Model != null && Model.donationAccountId == account.Id ? "selected='selected'" : "")>@account.Title (ID: @account.Id)</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>

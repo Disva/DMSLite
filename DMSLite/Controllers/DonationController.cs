@@ -338,51 +338,52 @@ namespace DMSLite.Controllers
             if (viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
             {
                 //return PartialView("~/Views/Donation/_AddDonationSimilarDonor.cshtml", viewModel);
-                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+                return PartialView("~/Views/Donation/_AddForm.cshtml", new DonationFormViewModel(newDonation, db));
             }
             else if (viewModel.SimilarBatches != null && viewModel.SimilarBatches.Count > 1)
             {
                 //return PartialView("~/Views/Donation/_AddDonationSimilarBatch.cshtml", viewModel);
-                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+                return PartialView("~/Views/Donation/_AddForm.cshtml", new DonationFormViewModel(newDonation, db));
             }
             else
             {
-                return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
+                return PartialView("~/Views/Donation/_AddForm.cshtml", new DonationFormViewModel(newDonation, db));
             }            
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
+        public ActionResult Add(DonationFormViewModel donationFormVM)
         {
-            Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
-            Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
-            Account actualAccount = null;
-            if (donationAccount.HasValue)
+            if(ModelState.IsValid)
             {
-                actualAccount = db.Accounts.First(x => x.Id == donationAccount);
-            }
-            if (actualBatch.CloseDate == null)
-            {
-                donation.DonationDonor = actualDonor;
-                donation.DonationBatch = actualBatch;
-                if (donationAccount.HasValue)
+                Donor actualDonor = db.Donors.First(x => x.Id == donationFormVM.donationDonorId);
+                Batch actualBatch = db.Batches.First(x => x.Id == donationFormVM.donationBatchId);
+                Account actualAccount = actualAccount = db.Accounts.First(x => x.Id == donationFormVM.donationAccountId);
+
+                if (actualBatch.CloseDate == null)
                 {
-                    donation.DonationAccount = actualAccount;
-                }                    
-                if (!ModelState.IsValid)
-                {
-                    ModelState.Clear();
-                    TryValidateModel(donation);
+                    donation.DonationDonor = actualDonor;
+                    donation.DonationBatch = actualBatch;
+                    if (donationAccount.HasValue)
+                    {
+                        donation.DonationAccount = actualAccount;
+                    }
+                    if (!ModelState.IsValid)
+                    {
+                        ModelState.Clear();
+                        TryValidateModel(donation);
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        db.Add(donation);
+                        Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
+                        return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
+                    }
                 }
-                if (ModelState.IsValid)
-                {
-                    db.Add(donation);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
-                    return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
-                }
+                else
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
             }
-            else
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
+            
 
             PopulateViewBag();
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
