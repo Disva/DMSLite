@@ -237,8 +237,20 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be edited: batch \"" + donation.DonationBatch.Title + "\"is closed.");
         }
 
-        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
+        public ActionResult Modify(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
         {
+            if(!donationDonor.HasValue || !donationBatch.HasValue)
+            {
+                if (!donationDonor.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A donor is required");
+
+                if (!donationBatch.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A batch is required");
+
+                PopulateViewBag();
+                return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
+            }
+
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;
@@ -251,7 +263,7 @@ namespace DMSLite.Controllers
                 donation.DonationDonor = actualDonor;
                 donation.DonationDonor_Id = actualDonor.Id;
                 donation.DonationBatch = actualBatch;
-                donation.DonationBatch_Id = donationBatch;
+                donation.DonationBatch_Id = actualBatch.Id;
                 if (donationAccount.HasValue)
                 {
                     donation.DonationAccount = actualAccount;
@@ -352,8 +364,20 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
+        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
         {
+            if (!donationDonor.HasValue || !donationBatch.HasValue)
+            {
+                if (!donationDonor.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A donor is required");
+
+                if (!donationBatch.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A batch is required");
+
+                PopulateViewBag();
+                return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
+            }
+
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;
