@@ -35,7 +35,10 @@ namespace DMSLite.Controllers
         private void PopulateViewBag()
         {
             ViewBag.Donors = db.Donors.ToList();
-            ViewBag.Batches = db.Batches.ToList();
+
+            // Only populate open batches
+            ViewBag.Batches = db.Batches.Where(x => x.CloseDate == null).ToList();
+
             ViewBag.Accounts = db.Accounts.ToList();
         }
 

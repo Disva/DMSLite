@@ -401,19 +401,10 @@ namespace DMSLite.Controllers
         }
 
         // Action to search for batches by name and obtain a json result
-        public ActionResult SearchBatches(string searchKey)
-        {
-            if (string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate == null));
-            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        // Action to search for batches by name and obtain a json result
         // TODO: this is duplicate code and needs refactoring.
+
+            // TAGGED: DO NOT APPROVE PULL IF THIS COMMENT IS STILL HERE
+
         public ActionResult SearchClosedBatches(string searchKey)
         {
             if (string.IsNullOrEmpty(searchKey))
