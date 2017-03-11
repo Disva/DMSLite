@@ -1,6 +1,6 @@
 ﻿@model DMSLite.Entities.Account
 
-<select class="donors-selector format-account-select2" style="width:100%;" name="DonationAccount">
+<select class="donors-selector format-select2" style="width:100%;" name="DonationAccount" data-select2-placeholder="Select an account">
     <option></option>
     @foreach (var account in ViewBag.Accounts)
     {

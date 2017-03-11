@@ -128,50 +128,17 @@ function checkHideModal() {
 }
 
 function checkFormatSelect2() {
-    checkFormatSelect2Donor();
-    checkFormatSelect2Batch();
-    checkFormatSelect2Account();
-}
 
-function checkFormatSelect2Donor() {
-    var node = $("#outputContainer").find(".format-donor-select2");
-    if (node.length > 0) {
+    var selectboxes = $("#outputContainer").find(".format-select2");
 
-        $(node).select2({
-            placeholder: "Select a donor",
-            dropdownParent: $(node).parents(".modal")
+    for (var i = 0; i < selectboxes.length; i++)
+    {
+        $(selectboxes[i]).select2({
+            placeholder: $(selectboxes[i]).data("select2-placeholder"),
+            dropdownParent: $(selectboxes[i]).parents(".modal")
         });
 
-        $(node).removeClass("format-donor-select2");
-    }
-}
-
-function checkFormatSelect2Batch() {
-    var searchOpenBatches = true;
-    var node = $("#outputContainer").find(".format-batch-select2");
-    if (node.length == 0) {
-        node = $("#outputContainer").find(".format-closed-batch-select2");
-        searchOpenBatches = false;
-    }
-    if (node.length > 0) {
-
-        $(node).select2({
-            placeholder: "Select a batch"
-        });
-
-        $(node).removeClass(searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
-    }
-}
-
-function checkFormatSelect2Account() {
-    var node = $("#outputContainer").find(".format-account-select2");
-    if (node.length > 0) {
-
-        $(node).select2({
-            placeholder: "Select an account"
-        });
-
-        $(node).removeClass("format-account-select2");
+        $(selectboxes[i]).removeClass(parent);
     }
 }
 

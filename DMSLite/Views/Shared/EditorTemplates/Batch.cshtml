@@ -1,6 +1,6 @@
 ﻿@model DMSLite.Entities.Batch
 
-<select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch">
+<select class="donors-selector format-select2" style="width:100%;" name="DonationBatch" data-select2-placeholder="Select a batch">
     <option></option>
     @foreach (var batch in ViewBag.Batches)
     {
