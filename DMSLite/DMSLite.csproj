@@ -298,6 +298,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AddDonationViewModel.cs" />
@@ -481,6 +482,7 @@
     <Content Include="Views\Shared\EditorTemplates\Donor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Account.cshtml" />
+    <Content Include="Views\Account\AddSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

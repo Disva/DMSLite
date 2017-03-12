@@ -56,7 +56,12 @@ namespace DMSLite.Tests.Controllers
                 Assert.IsTrue(true);
                 return;
             }
-            List<Batch> fetchedOpenBatches = ((List<Batch>)pvr.ViewData.Model).ToList();
+            List<BatchViewModel> fetchedOpenBatchViewModels = ((List<BatchViewModel>)pvr.ViewData.Model).ToList();
+            List<Batch> fetchedOpenBatches = new List<Batch>();
+            for(int j = 0; j < fetchedOpenBatchViewModels.Count; j++)
+            {
+                fetchedOpenBatches.Add(fetchedOpenBatchViewModels.ElementAt(j).batch);
+            }
             List<Batch> dbOpenBatches = db.Batches.Where(x => x.CloseDate == null).ToList();
             int i = 0;
             if (dbOpenBatches.Count() == 0 && fetchedOpenBatches.Count() == 0)
