@@ -291,9 +291,14 @@
     <Compile Include="Migrations\201703022221119_ReceiptTenantId.Designer.cs">
       <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703062154058_OrganizationAddressFields.cs" />
+    <Compile Include="Migrations\201703062154058_OrganizationAddressFields.Designer.cs">
+      <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AddDonationViewModel.cs" />
@@ -474,6 +479,11 @@
     <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
     <Content Include="Views\Receipt\_Receipt.cshtml" />
     <Content Include="Views\Donation\_ToggleDisplay.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Donor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Account.cshtml" />
+    <Content Include="Views\Account\AddSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -536,6 +546,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703022221119_ReceiptTenantId.resx">
       <DependentUpon>201703022221119_ReceiptTenantId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703062154058_OrganizationAddressFields.resx">
+      <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

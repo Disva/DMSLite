@@ -18,6 +18,12 @@
                 @Html.DisplayNameFor(model => model.DonationBatch)
             </div>
             <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CreateDate)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CloseDate)
+            </div>
+            <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationAccount)
             </div>
             <div class="cell">
@@ -52,6 +58,12 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CreateDate)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CloseDate)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationAccount.Title)

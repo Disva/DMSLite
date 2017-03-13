@@ -128,128 +128,17 @@ function checkHideModal() {
 }
 
 function checkFormatSelect2() {
-    checkFormatSelect2Donor();
-    checkFormatSelect2Batch();
-    checkFormatSelect2Account();
-}
 
-function checkFormatSelect2Donor() {
-    var node = $("#outputContainer").find(".format-donor-select2");
-    if (node.length > 0) {
+    var selectboxes = $("#outputContainer").find(".format-select2");
 
-        $(node).select2({
-            ajax: {
-                url: "/Donors/SearchDonors/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select a donor" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-                if (state.firstName == null)
-                    return state.lastName + " (ID: " + state.id + ")"
-                return state.firstName + " " + state.lastName + " (ID: " + state.id + ")";
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.lastName + " (ID: " + state.id + ")" || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
+    for (var i = 0; i < selectboxes.length; i++)
+    {
+        $(selectboxes[i]).select2({
+            placeholder: $(selectboxes[i]).data("select2-placeholder"),
+            dropdownParent: $(selectboxes[i]).parents(".modal")
         });
 
-        $(node).removeClass("format-donor-select2");
-    }
-}
-
-function checkFormatSelect2Batch() {
-    var searchOpenBatches = true;
-    var node = $("#outputContainer").find(".format-batch-select2");
-    if (node.length == 0) {
-        node = $("#outputContainer").find(".format-closed-batch-select2");
-        searchOpenBatches = false;
-    }
-    if (node.length > 0) {
-
-        $(node).select2({
-            ajax: {
-                url: searchOpenBatches ? "/Batch/SearchBatches/" : "/Batch/SearchClosedBatches/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select a batch" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-
-                return state.title;
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.title || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
-        });
-
-        $(node).removeClass(searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
-    }
-}
-
-function checkFormatSelect2Account() {
-    var node = $("#outputContainer").find(".format-account-select2");
-    if (node.length > 0) {
-
-        $(node).select2({
-            ajax: {
-                url: "/DonationAccount/SearchAccounts/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select an account" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-
-                return state.title;
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.title || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
-        });
-
-        $(node).removeClass("format-account-select2");
+        $(selectboxes[i]).removeClass(parent);
     }
 }
 
