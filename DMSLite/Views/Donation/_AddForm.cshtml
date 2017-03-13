@@ -44,12 +44,8 @@
                     @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationBatch, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch">
-                            @if (Model.DonationBatch != null)
-                            {
-                                <option value="@Model.DonationBatch_Id" selected="selected">@Model.DonationBatch.Title</option>
-                            }
-                        </select>
+                        @Html.EditorFor(model => model.DonationBatch)
+                        
                     </div>
                 </div>
                 <div class="form-group">
