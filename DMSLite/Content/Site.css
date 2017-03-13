@@ -1,6 +1,6 @@
 ﻿body {
     font-family: "Helvetica Neue", Helvetica, Arial;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     font-weight: 400;
     color: #3b3b3b;
@@ -101,7 +101,7 @@ textarea {
 .bubble {
     padding: 10px;
     margin: 5px;
-    margin-top:25px;
+    margin-top:15px;
     display: inline-block;
     border-radius: 5px;
     color: white;
@@ -313,7 +313,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin: 0 0 15px;
     padding: 15px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 #loginButton {
@@ -325,7 +325,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     border: 0;
     padding: 15px;
     color: #FFFFFF;
-    font-size: 14px;
+    font-size: 16px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
@@ -384,7 +384,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin-left: 5px;
     vertical-align: top;
     position:relative;
-    top:10px;
+    top:0px;
 }
 
 #outputContainer{
