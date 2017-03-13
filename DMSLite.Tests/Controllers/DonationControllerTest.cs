@@ -34,7 +34,6 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("date-period", "");
             parameters.Add("date-comparator", "");
             parameters.Add("account-name", "");
-            dc.TogglePostedDisplay();
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
             Assert.AreEqual(testDonations.Count(), dbDonations.Count());
@@ -65,15 +64,16 @@ namespace DMSLite.Tests.Controllers
             parameters.Add("account-name", "");
             List<int> postedBatchKeys = db.Batches.Where(x => x.CloseDate.HasValue).Select(x => x.Id).ToList();
             List<Donation> dbPostedDonations = dbDonations.Where(x => postedBatchKeys.Contains(x.DonationBatch_Id)).ToList();
+            dc.TogglePostedDisplay();
             PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
             List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
-            Assert.AreEqual(testDonations.Count(), dbDonations.Count());
+            Assert.AreEqual(testDonations.Count(), dbPostedDonations.Count());
             int i = 0;
             foreach (Donation d in testDonations)
             {
-                Assert.AreEqual(d.Id, dbDonations.ElementAt(i).Id);
-                Assert.AreEqual(d.DonationDonor_Id, dbDonations.ElementAt(i).DonationDonor_Id);
-                Assert.AreEqual(d.Value, dbDonations.ElementAt(i).Value);
+                Assert.AreEqual(d.Id, dbPostedDonations.ElementAt(i).Id);
+                Assert.AreEqual(d.DonationDonor_Id, dbPostedDonations.ElementAt(i).DonationDonor_Id);
+                Assert.AreEqual(d.Value, dbPostedDonations.ElementAt(i).Value);
                 i++;
             }
         }

@@ -20,7 +20,7 @@ namespace DMSLite.Controllers
     public class DonationController : Controller
     {
         private OrganizationDb db;
-        private static bool postedOnly = true;
+        private static bool postedOnly = false;
 
         public DonationController()
         {
