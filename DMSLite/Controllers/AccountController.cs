@@ -9,23 +9,31 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DMSLite.Models;
+using DMSLite.DataContexts;
 
 namespace DMSLite.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private OrganizationDb db;
 
         public AccountController()
         {
+            db = new OrganizationDb();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager ) : this()
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        public AccountController(OrganizationDb db)
+        {
+            this.db = db;
         }
 
         public ApplicationSignInManager SignInManager
@@ -139,6 +147,7 @@ namespace DMSLite.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
+            ViewBag.Organizations = db.Organizations.ToList();
             return View();
         }
 
@@ -147,23 +156,32 @@ namespace DMSLite.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, int? Organizations)
         {
+            ViewBag.Organizations = db.Organizations.ToList();
+
+            // If no organization is set, set the tenant id to match the current user
+            if (!Organizations.HasValue)
+            {
+                Organizations = db.GetTenantId();
+            }
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, TenantId = Organizations.Value };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
+                   return View("~/Views/Account/AddSuccess.cshtml", user);
                 }
                 AddErrors(result);
             }

@@ -8,6 +8,8 @@ using System.Web.Mvc;
 namespace DMSLite.Controllers
 {
     using Helpers;
+    using Models;
+    using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
@@ -16,6 +18,7 @@ namespace DMSLite.Controllers
         private OrganizationDb db;
 
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
+        private enum COMPARE_TYPE { UNDER = -1, EQUAL, OVER };
         private enum BATCH_TYPE {OPEN, CLOSED };
 
         private static List<Batch> filteredBatches;
@@ -40,7 +43,7 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
         }
 
         public ActionResult FetchClosedBatchesByDate(Dictionary<string, object> parameters)
@@ -57,7 +60,42 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
+        }
+
+        public ActionResult FilterBatchesBySum(Dictionary<string, object> parameters)
+        {
+            if (filteredBatches == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["comparator"].ToString());
+
+                if (filteredBatches.Count == 0)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
+
+                return DisplayBatches(filteredBatches);
+            }
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "not all parameters recognized");            
+        }
+
+        public ActionResult DisplayBatches(List<Batch> batches)
+        {
+            List<BatchViewModel> viewableBatches = new List<BatchViewModel>();
+            for(int i = 0; i < batches.Count; i++)
+            {
+                BatchViewModel tempModel = new BatchViewModel();
+                tempModel.batch = batches.ElementAt(i);
+                tempModel.count = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Count();
+                if (tempModel.count != 0)
+                    tempModel.sum = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Sum(y => y.Value);
+                else
+                    tempModel.sum = 0;
+                viewableBatches.Add(tempModel);
+            }
+            return PartialView("~/Views/Batch/_FetchIndex.cshtml", viewableBatches);
         }
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
@@ -71,7 +109,8 @@ namespace DMSLite.Controllers
                 || !String.IsNullOrEmpty(parameters["title"].ToString())
                 || !String.IsNullOrEmpty(parameters["date"].ToString())
                 || !String.IsNullOrEmpty(parameters["date-period"].ToString())
-                || !String.IsNullOrEmpty(parameters["id"].ToString());
+                || !String.IsNullOrEmpty(parameters["id"].ToString())
+                || (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()));
 
             if (!paramsExist)
                 return FetchAllBatches();
@@ -86,9 +125,21 @@ namespace DMSLite.Controllers
                 return filteredBatches;
             }
 
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["number-comparator"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
+
             if (!String.IsNullOrEmpty(parameters["title"].ToString()))
             {
                 FetchByTitle(parameters["title"].ToString());
+                if (filteredBatches.Count == 0) goto Finish;
+            }
+
+            if (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()))
+            {
+                FetchByTotal(parameters["amount"].ToString(), parameters["number-comparator"].ToString());
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
@@ -133,7 +184,45 @@ namespace DMSLite.Controllers
                 FilterByDate(searchRange, searchType, batchType);
         }
 
-        private void FilterByClosedDate(DateRange searchRange, string dateComparator)
+        private void FetchByTotal(string amount, string comparator)
+        {
+            int total = int.Parse(amount);
+            COMPARE_TYPE compareType;
+            if (comparator == "<")                      //True when searching before a certain date
+                compareType = COMPARE_TYPE.UNDER;
+            else if (comparator == ">")                  //True when searching after a certain date
+                compareType = COMPARE_TYPE.OVER;
+            else                                           //True when searching on a specific date
+                compareType = COMPARE_TYPE.EQUAL;
+            bool emptyList = (filteredBatches.Count == 0); //True if the list is empty
+
+            List<int> matchingDonations = FindBatchKeysBySum(total, compareType);
+
+            if (emptyList)
+                filteredBatches.AddRange(db.Batches.Where(x => matchingDonations.Any(y => y == x.Id)));
+            else
+                filteredBatches = filteredBatches.Where(x => matchingDonations.Any(y => y == x.Id)).ToList();
+        }
+
+        private List<int> FindBatchKeysBySum(int amount, COMPARE_TYPE compareType)
+        {
+            List<int> matchingBatches = new List<int>();
+            switch (compareType)
+            {
+                case COMPARE_TYPE.UNDER: //Searching under a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) < amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.OVER:  //Searching over a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) > amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+                case COMPARE_TYPE.EQUAL: //Searching equal to a value
+                    matchingBatches.AddRange(db.Donations.GroupBy(x => x.DonationBatch_Id).Where(x => x.Sum(y => y.Value) == amount).Select(x => x.Key)); //The sum is under the amount
+                    break;
+            }
+            return matchingBatches;
+        }
+
+        private void FilterByClosedDate(DateRange searchRange, string dateComparator = "==")
         {
             switch (dateComparator)
             {
@@ -260,9 +349,13 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult CloseBatch(Dictionary<string, object> parameters)
         {
-            String title = parameters["title"].ToString();
-            Batch batchToClose = db.Batches.First(x => x.Title == title);
-            return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            int batchId = Int32.Parse(parameters["batchId"].ToString());
+            Batch batchToClose = db.Batches.FirstOrDefault(x => x.Id == batchId);
+            if (batchToClose != null)
+                return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + batchId);
+
         }
 
         public ActionResult CloseBatchFromList(int id)
@@ -317,36 +410,12 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Batch/_AddForm.cshtml", batch);
-        }
-
-        // Action to search for batches by name and obtain a json result
-        public ActionResult SearchBatches(string searchKey)
-        {
-            if (string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate == null));
-            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        // Action to search for batches by name and obtain a json result
-        // TODO: this is duplicate code and needs refactoring.
-        public ActionResult SearchClosedBatches(string searchKey)
-        {
-            if (string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate != null));
-            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         #endregion
 

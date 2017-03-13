@@ -10,24 +10,42 @@ namespace DMSLite.Helpers
 {
     public static class Log
     {
-        public static void writeLog(string logMessage, string logSymbol)
+        const string fileLocation = "DMSLitelog.txt";
+
+        //Inner class for logging types
+        public class LogType
         {
-            using (StreamWriter w = File.AppendText(Path.GetTempPath().ToString()+"DMSLitelog.txt"))
+            private LogType(string value) { Value = value; }
+
+            public string Value { get; set; }
+            public override string ToString()
             {
-                WriteLog(logMessage, logSymbol, w);
+                return Value;
             }
+
+            public static LogType UserIn { get { return new LogType("<--"); } }
+            public static LogType Reply { get { return new LogType("-->"); } }
+            public static LogType ParamsFound { get { return new LogType("->>"); } }
+            public static LogType ParamsSubmitted { get { return new LogType("<<-"); } }
+            public static LogType Bug { get { return new LogType("!"); } }
+            public static LogType Task { get { return new LogType("#"); } }
+            public static LogType Test { get { return new LogType(" T "); } }
         }
 
-        private static void WriteLog(string logMessage, string logSymbol, TextWriter w)
+        static private string path;
+
+        public static string WriteLog(LogType logSymbol, string logMessage)
         {
-            /*
-            logSymbol is 3 chars long; 
-            '<--' for user input
-            '-->' for output
-            ' ! ' for user reported bug
-            ' # ' for task
-            */
-            w.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
+            //Singleton pattern
+            if (path == null)
+                path = Path.GetTempPath().ToString() + fileLocation;
+
+            using (StreamWriter logWriter = File.AppendText(path))
+            {
+                logWriter.WriteLine("{0} : {1} : {2} : {3}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), Thread.CurrentPrincipal.Identity.GetUserId(), logSymbol, logMessage);
+            }
+
+            return fileLocation;
         }
     }
 }

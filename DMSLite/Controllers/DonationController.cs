@@ -31,6 +31,17 @@ namespace DMSLite.Controllers
             this.db = db;
         }
 
+        // Populate the viewbag with data from database for use in the view
+        private void PopulateViewBag()
+        {
+            ViewBag.Donors = db.Donors.ToList();
+
+            // Only populate open batches
+            ViewBag.Batches = db.Batches.Where(x => x.CloseDate == null).ToList();
+
+            ViewBag.Accounts = db.Accounts.ToList();
+        }
+
         #region Fetch
         public ActionResult FetchByBatchId(Batch batch)
         {
@@ -119,7 +130,7 @@ namespace DMSLite.Controllers
             return returnedDonations;
         }
 
-        private void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
+        public void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)
         {
             if (dateRange == null)
             {//if the date was converted to invalid, empty the list
@@ -219,14 +230,27 @@ namespace DMSLite.Controllers
 
             if (donation.DonationBatch.CloseDate == null)
             {
+                PopulateViewBag();
                 return PartialView("~/Views/Donation/_Modify.cshtml", donation);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be edited: batch \"" + donation.DonationBatch.Title + "\"is closed.");
         }
 
-        public ActionResult Modify(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
+        public ActionResult Modify(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
         {
+            if(!donationDonor.HasValue || !donationBatch.HasValue)
+            {
+                if (!donationDonor.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A donor is required");
+
+                if (!donationBatch.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A batch is required");
+
+                PopulateViewBag();
+                return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
+            }
+
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;
@@ -239,7 +263,7 @@ namespace DMSLite.Controllers
                 donation.DonationDonor = actualDonor;
                 donation.DonationDonor_Id = actualDonor.Id;
                 donation.DonationBatch = actualBatch;
-                donation.DonationBatch_Id = donationBatch;
+                donation.DonationBatch_Id = actualBatch.Id;
                 if (donationAccount.HasValue)
                 {
                     donation.DonationAccount = actualAccount;
@@ -255,6 +279,8 @@ namespace DMSLite.Controllers
                     db.Modify(donation);
                     return PartialView("~/Views/Donation/_ModifySuccess.cshtml", donation);
                 }
+
+                PopulateViewBag();
                 return PartialView("~/Views/Donation/_ModifyForm.cshtml", donation);
             }
             else
@@ -315,11 +341,13 @@ namespace DMSLite.Controllers
                     viewModel.SimilarDonors = donors;
                 }
             }
-            
+
+            PopulateViewBag();
+
             // When api.ai can parse out the donor and batch names, we can test a flow
             // for similar objects. We can store the viewModel in a session, and pass
             // the session through the flow, for now just show the new donation form
-            if(viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
+            if (viewModel.SimilarDonors != null && viewModel.SimilarDonors.Count > 1)
             {
                 //return PartialView("~/Views/Donation/_AddDonationSimilarDonor.cshtml", viewModel);
                 return PartialView("~/Views/Donation/_AddForm.cshtml", newDonation);
@@ -336,8 +364,20 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int donationDonor, int donationBatch, int? donationAccount = null)
+        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
         {
+            if (!donationDonor.HasValue || !donationBatch.HasValue)
+            {
+                if (!donationDonor.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A donor is required");
+
+                if (!donationBatch.HasValue)
+                    ModelState.AddModelError("DonationDonor", "A batch is required");
+
+                PopulateViewBag();
+                return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
+            }
+
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;
@@ -361,11 +401,14 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(donation);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
                     return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
                 }
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "This donation cannot be added: batch \"" + donation.DonationBatch.Title + "\"is closed.");
+
+            PopulateViewBag();
             return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
         }
 

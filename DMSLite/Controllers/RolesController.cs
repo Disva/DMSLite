@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace DMSLite.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "SPS")]
     public class RolesController : Controller
     {
         ApplicationDbContext context;
@@ -64,6 +64,31 @@ namespace DMSLite.Controllers
         {
             ViewBag.Roles = context.Roles.ToDictionary(k => k.Id, v => v.Name);
             return View(context.Users.ToList());
+        }
+
+        public ActionResult MakeSPS(string userId)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            userManager.AddToRole(userId, "SPS");
+
+            TempData["ResultMessage"] = "User added to role";
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveSPS(string userId)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            if (userManager.IsInRole(userId, "SPS"))
+            {
+                userManager.RemoveFromRole(userId, "SPS");
+                TempData["ResultMessage"] = "User removed from role";
+            }
+            else
+            {
+                TempData["ResultMessage"] = "User was not a silent partner";
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult MakeAdmin(string userId)

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Batch.cs" />
+    <Compile Include="ComplexTypes\Address.cs" />
     <Compile Include="Donation.cs" />
     <Compile Include="Donor.cs" />
     <Compile Include="IHaveTenant.cs" />

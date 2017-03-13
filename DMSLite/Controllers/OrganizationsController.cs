@@ -11,10 +11,20 @@ using DMSLite.Entities;
 
 namespace DMSLite.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "SPS")]
     public class OrganizationsController : Controller
     {
         private OrganizationDb db = new OrganizationDb();
+
+        public OrganizationsController()
+        {
+
+        }
+
+        public OrganizationsController(OrganizationDb db)
+        {
+            this.db = db;
+        }
 
         // GET: Organizations
         public ActionResult Index()
@@ -48,7 +58,7 @@ namespace DMSLite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Organization organization)
+        public ActionResult Create([Bind(Include = "Id,Name,DBA,Address,RegistrationNumer")] Organization organization)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +90,7 @@ namespace DMSLite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Organization organization)
+        public ActionResult Edit([Bind(Include = "Id,Name,DBA,Address,RegistrationNumer")] Organization organization)
         {
             if (ModelState.IsValid)
             {

@@ -13,6 +13,7 @@ using DMSLite.Models;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 using LinqKit;
+using Newtonsoft.Json;
 
 namespace DMSLite
 {
@@ -20,6 +21,8 @@ namespace DMSLite
     public class DonorsController : Controller
     {
         private OrganizationDb db;
+
+        private static List<Donor> filteredDonors;
 
         public DonorsController()
         {
@@ -47,16 +50,16 @@ namespace DMSLite
             {
                 string name1 = names[0], name2 = names[1];
 
-                predicate.Or(x => x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
+                predicate.Or(x => x.FirstName != null && x.LastName != null && x.FirstName.Equals(name1, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name2, StringComparison.InvariantCultureIgnoreCase));
 
-                predicate.Or(x => x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
+                predicate.Or(x => x.FirstName != null && x.LastName != null && x.FirstName.Equals(name2, StringComparison.InvariantCultureIgnoreCase) &&
                     x.LastName.Equals(name1, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
-                predicate = PredicateBuilder.New<Donor>(x => x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+                predicate = PredicateBuilder.New<Donor>(x => (x.FirstName != null && x.FirstName.Equals(name, StringComparison.InvariantCultureIgnoreCase)) ||
+                    (x.LastName != null && x.LastName.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
             }
 
             return predicate;
@@ -64,17 +67,17 @@ namespace DMSLite
 
         private Expression<Func<Donor, bool>> FetchByEmail(string email)
         {
-            return PredicateBuilder.New<Donor>(x => x.Email.Equals(email));
+            return PredicateBuilder.New<Donor>(x => x.Email != null && x.Email.Equals(email));
         }
 
         private Expression<Func<Donor, bool>> FetchByPhoneNumber(string phone)
         {
-            return PredicateBuilder.New<Donor>(x => x.PhoneNumber.Equals(phone));
+            return PredicateBuilder.New<Donor>(x => x.PhoneNumber != null && x.PhoneNumber.Replace("-", "").Equals(phone));
         }
 
         public ActionResult FetchDonor(Dictionary<string, object> parameters) //Main method to search for donors, parameters may or may not be used
         {
-            List<Donor> filteredDonors = FindDonors(parameters);
+            filteredDonors = FindDonors(parameters);
 
             if (filteredDonors == null)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
@@ -110,22 +113,46 @@ namespace DMSLite
                 return null;
         }
 
-        public ActionResult ViewAllDonors()
+        public ActionResult FilterDonors(Dictionary<string, object> parameters)
         {
-            List<Donor> allDonors = db.Donors.ToList();
-            return PartialView("~/Views/Donors/_FetchIndex.cshtml", allDonors);
+            if (filteredDonors == null)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            if (filteredDonors.Count == 0)
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "cannot filter an empty list");
+
+            bool paramsExist =
+                !String.IsNullOrEmpty(parameters["name"].ToString())
+                || !String.IsNullOrEmpty(parameters["email-address"].ToString())
+                || !String.IsNullOrEmpty(parameters["phone-number"].ToString());
+            if (paramsExist)
+                FilterDonorList(parameters);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
         }
 
-        // Action to search for donors by name and obtain a json result
-        public ActionResult SearchDonors(string searchKey)
+        public void FilterDonorList(Dictionary<string, object> parameters)
         {
-            if(string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Donor>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
-            }
+            var donorSearchPredicate = PredicateBuilder.New<Donor>();
 
-            var donors = db.Donors.Where(x => x.FirstName.ToLower().StartsWith(searchKey.ToLower()) || x.LastName.ToLower().StartsWith(searchKey.ToLower()));
-            return new JsonResult { Data = new { results = donors.Select(x => new { firstName = x.FirstName, lastName = x.LastName, id = x.Id})}, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            if (!String.IsNullOrEmpty(parameters["name"].ToString()))
+                donorSearchPredicate.And(FetchByName(parameters["name"].ToString()));
+
+            if (!String.IsNullOrEmpty(parameters["email-address"].ToString()))
+                donorSearchPredicate.And(FetchByEmail(parameters["email-address"].ToString()));
+
+            if (!String.IsNullOrEmpty(parameters["phone-number"].ToString()))
+                donorSearchPredicate.And(FetchByPhoneNumber(parameters["phone-number"].ToString()));
+
+            filteredDonors = filteredDonors.Where(donorSearchPredicate).ToList();
+        }
+
+        public ActionResult ViewAllDonors()
+        {
+            filteredDonors = db.Donors.ToList();
+            return PartialView("~/Views/Donors/_FetchIndex.cshtml", filteredDonors);
         }
 
         #endregion
@@ -209,6 +236,12 @@ namespace DMSLite
             return PartialView("~/Views/Donors/_AddForm.cshtml", newDonor);
         }
 
+        // Show an add form for a donor
+        public ActionResult ShowAddForm(Donor donor)
+        {
+            return PartialView("~/Views/Donors/_AddForm.cshtml", donor);
+        }
+
         // TODO: Anti-forgery
         public ActionResult Add(Donor donor, [Bind(Prefix = "Type.Type")] DonorType type = DonorType.Individual)
         {
@@ -239,6 +272,7 @@ namespace DMSLite
                 else
                 {
                     db.Add(donor);
+                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donor));
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }

@@ -24,7 +24,7 @@ namespace DMSLite.Tests.Mocks
             _tenantId = id;
         }
 
-        protected override int GetTenantId()
+        public override int GetTenantId()
         {
             return _tenantId;
         }

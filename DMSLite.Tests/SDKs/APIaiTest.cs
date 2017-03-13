@@ -88,7 +88,7 @@ namespace DMSLite.Tests.SDKs
             //By phone number
             var phoneResponse = RandomTextInput(inputs, phoneNumber);
             Assert.AreEqual(phoneResponse.Result.Action, "AddDonor");
-            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower(), phoneNumber.ToLower().Replace("-", ""));
+            Assert.AreEqual(phoneResponse.Result.Parameters["phone-number"].ToString().ToLower().Replace("-", ""), phoneNumber.ToLower().Replace("-", ""));
 
             //By email
             var emailResponse = RandomTextInput(inputs, email);
@@ -237,6 +237,24 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
+        public void APITestCloseBatch()
+        {
+
+            string batchId = "1";
+
+            string[] inputs =
+            {
+                "close batch {0}",
+                "post batches {0}",
+                "submit batches {0}"
+            };
+
+            var response = RandomTextInput(inputs, batchId);
+            Assert.AreEqual(response.Result.Action, "CloseBatch");
+            Assert.AreEqual(response.Result.Parameters["batchId"].ToString(), batchId);
+        }
+
+        [TestMethod]
         public void APITestFilterBatches()
         {
 
@@ -285,6 +303,7 @@ namespace DMSLite.Tests.SDKs
                 new RequestExtras(contexts, null));
             Assert.AreEqual(response.Result.Action, "FilterForClosedBatches");
         }
+
         #endregion
 
         #region Donation
