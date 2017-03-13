@@ -275,6 +275,16 @@ function checkReceiptButton() {
     else
         receiptButton.attr("disabled", false);
 }
+
+function toggleBatchSelect(input) {
+    console.log(input.id)
+    var receiptBatches = input.closest(".modal-body").find("#receiptBatches");
+}
+
+function toggleDonorSelect(input) {
+    console.log("lmao");
+}
+
 $('#flagInvalidContainer').on('click', '*', function() {
     $("#flagInvalidContainer").notify(
   "Sorry for that! I will let my team of humans know for you!",
