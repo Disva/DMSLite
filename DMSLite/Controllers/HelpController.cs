@@ -16,7 +16,7 @@ namespace DMSLite.Controllers
             Helpers.Log.WriteLog(Helpers.Log.LogType.Bug, "User reported an error.");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SPS")]
         public FileResult LogDownload()
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.GetTempPath().ToString() + "DMSLitelog.txt");

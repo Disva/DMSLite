@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - DMS Lite</title>
+    <title>DMS Lite</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -20,17 +21,6 @@
                 @Html.ActionLink("DMS Lite", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if(this.User.IsInRole("SPS"))
-                    {
-                        <li>@Html.ActionLink("Manage Organizations", "Index", "Organizations")</li>
-                        <li>@Html.ActionLink("Manage User Roles", "Index", "Roles")</li>
-                    }
-                    @if(this.User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("Register a New User", "Register", "Account")</li>
-                    }
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
