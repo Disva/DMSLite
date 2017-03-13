@@ -291,7 +291,7 @@ namespace DMSLite.Controllers
             }
 
             //id here is batchId
-            if (!String.IsNullOrEmpty(parameters["id"].ToString()))
+            if (parameters.ContainsKey("id") && !String.IsNullOrEmpty(parameters["id"].ToString()))
             {
                 //guaranteed to be valid at this point
                 int batchId = Int32.Parse(parameters["id"].ToString());
@@ -299,8 +299,17 @@ namespace DMSLite.Controllers
                 newDonation.DonationBatch = batch;
                 newDonation.DonationBatch_Id = batch.Id;
             }
-                //found this, its not used in api.ai - DK
-                if (parameters.ContainsKey("description"))
+            //batchId here is batchId, same behavior as above, unsure as to why api.ai ir returning these keys
+            if (parameters.ContainsKey("batchId") && !String.IsNullOrEmpty(parameters["batchId"].ToString()))
+            {
+                //guaranteed to be valid at this point
+                int batchId = Int32.Parse(parameters["batchId"].ToString());
+                Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
+                newDonation.DonationBatch = batch;
+                newDonation.DonationBatch_Id = batch.Id;
+            }
+            //found this, its not used in api.ai - DK
+            if (parameters.ContainsKey("description"))
             {
                 newDonation.ObjectDescription = parameters["description"].ToString();
             }
