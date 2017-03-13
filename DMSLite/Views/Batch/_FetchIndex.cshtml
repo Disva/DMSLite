@@ -53,7 +53,7 @@
                 </div>
                 <div class="cell">
                     @{ var buttonId = Guid.NewGuid().ToString(); }
-                    @Ajax.ActionLink("", "FetchByBatchId", "Donation", item, new AjaxOptions()
+                    @Ajax.ActionLink("", "FetchByBatchId", "Donation", item.batch, new AjaxOptions()
                     {
                         InsertionMode = InsertionMode.InsertAfter,
                         UpdateTargetId = "outputContainer",
@@ -65,7 +65,7 @@
                     <!--an add button that adds a donation to this batch-->
                     @if (item.batch.CloseDate == null)
                     {
-                        @Ajax.ActionLink("+", "AddFromBatch", "Donation", item, new AjaxOptions()
+                        @Ajax.ActionLink("+", "AddFromBatch", "Donation", item.batch, new AjaxOptions()
                         {
                            InsertionMode = InsertionMode.InsertAfter,
                            UpdateTargetId = "outputContainer",
@@ -77,7 +77,7 @@
                 <div class="cell">
                     @if (item.batch.CloseDate == null)
                     {
-                       @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
+                       @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item.batch, new AjaxOptions()
                        {
                            InsertionMode = InsertionMode.InsertAfter,
                            UpdateTargetId = "outputContainer",
