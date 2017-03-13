@@ -63,7 +63,7 @@
                 </div>
                 <div class="cell">
                     <!--an add button that adds a donation to this batch-->
-                    @if (item.CloseDate == null)
+                    @if (item.batch.CloseDate == null)
                     {
                         @Ajax.ActionLink("+", "AddFromBatch", "Donation", item, new AjaxOptions()
                         {
@@ -75,7 +75,7 @@
                     }
                 </div>
                 <div class="cell">
-                    @if (item.CloseDate == null)
+                    @if (item.batch.CloseDate == null)
                     {
                        @Ajax.ActionLink("", "CloseBatchFromList", "Batch", item, new AjaxOptions()
                        {
