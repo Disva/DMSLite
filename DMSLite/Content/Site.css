@@ -394,3 +394,15 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .icon-bar{
     background-color:white;
 }
+
+#pagebackground{
+    background-color:white;
+    min-height:calc(100vh - 70px);
+    padding-bottom:0px;
+    margin-bottom:0px;
+}
+
+dt{
+    width:200px !important;
+    text-align:left !important;
+}

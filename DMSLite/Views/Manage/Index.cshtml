@@ -1,67 +1,65 @@
 ﻿@model DMSLite.Models.IndexViewModel
-@{
-    ViewBag.Title = "Manage";
-}
 
-<h2>@ViewBag.Title.</h2>
-
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-    </dl>
-    @if (this.User.IsInRole("SPS"))
-    {
-        <h4>SPS Administrative Tools</h4>
+<div class="container body-content" id="pagebackground">
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <div>
+        <br />
+        <h4>Change Your Account Settings</h4>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Download log:</dt>
+            <dt>Password:</dt>
             <dd>
                 [
-                @Html.ActionLink("Download Log", "LogDownload", "Help")
-                ]
-            </dd>
-            <dt>Manage Organizations:</dt>
-            <dd>
-                [
-                @Html.ActionLink("Manage Organizations", "Index", "Organizations")
-                ]
-            </dd>
-            <dt>Manage User Roles:</dt>
-            <dd>
-                [
-                @Html.ActionLink("Manage User Roles", "Index", "Roles")
+                @if (Model.HasPassword)
+            {
+                    @Html.ActionLink("Change your password", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Create", "SetPassword")
+                }
                 ]
             </dd>
         </dl>
-    }
+        @if (this.User.IsInRole("SPS"))
+        {
+            <h4>SPS Administrative Tools</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Download log:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink("Download Log", "LogDownload", "Help")
+                    ]
+                </dd>
+                <dt>Manage Organizations:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink("Manage Organizations", "Index", "Organizations")
+                    ]
+                </dd>
+                <dt>Manage User Roles:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink("Manage User Roles", "Index", "Roles")
+                    ]
+                </dd>
+            </dl>
+        }
 
-    @if (this.User.IsInRole("Admin"))
-    {
-        <h4>Organization Administrative Tools</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>Register a New User:</dt>
-            <dd>
-                [
-                @Html.ActionLink("Register a New User", "Register", "Account")
-                ]
-            </dd>
-        </dl>
-    }
+        @if (this.User.IsInRole("Admin"))
+        {
+            <h4>Organization Administrative Tools</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Register a New User:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink("Register a New User", "Register", "Account")
+                    ]
+                </dd>
+            </dl>
+        }
 
+    </div>
 </div>
