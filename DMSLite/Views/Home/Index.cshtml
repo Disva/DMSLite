@@ -2,9 +2,10 @@
     ViewBag.Title = "Home Page";
 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/notify.min.js"></script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jquery-unobtrusive")
+@Scripts.Render("~/bundles/notify")
 
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
@@ -44,5 +45,5 @@
 </div>
 }
 
-<script src="~/Scripts/Custom/homeJavascript.js"></script>
-<script src="~/Scripts/Custom/suggestionbar.js"></script>
+@Scripts.Render("~/bundles/home")
+@Scripts.Render("~/bundles/suggestionBar")
