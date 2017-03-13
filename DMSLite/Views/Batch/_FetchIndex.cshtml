@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DMSLite.Entities.Batch>
+﻿@model IEnumerable<DMSLite.Models.BatchViewModel>
 <div class="divTableWrapper">
     <div class="divTable">
         <div class="tableRow header green">
@@ -6,13 +6,19 @@
                 Batch ID
             </div>
             <div class="cell">
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.batch.Title)
             </div>
             <div class="cell">
-                @Html.DisplayNameFor(model => model.CreateDate)
+                @Html.DisplayNameFor(model => model.batch.CreateDate)
             </div>
             <div class="cell">
-                @Html.DisplayNameFor(model => model.CloseDate)
+                @Html.DisplayNameFor(model => model.batch.CloseDate)
+            </div>
+            <div class="cell">
+                Number of Donations
+            </div>
+            <div class="cell">
+                Sum of Donations
             </div>
             <div class="cell">
                 <!-- Left Empty for edit column -->
@@ -28,16 +34,22 @@
         {
             <div class="tableRow">
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.batch.Id)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => item.batch.Title)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.CreateDate)
+                    @Html.DisplayFor(modelItem => item.batch.CreateDate)
                 </div>
                 <div class="cell">
-                    @Html.DisplayFor(modelItem => item.CloseDate)
+                    @Html.DisplayFor(modelItem => item.batch.CloseDate)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.count)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.sum)
                 </div>
                 <div class="cell">
                     @{ var buttonId = Guid.NewGuid().ToString(); }
