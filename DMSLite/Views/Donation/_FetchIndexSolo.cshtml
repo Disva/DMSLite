@@ -39,11 +39,11 @@
         @foreach (var item in Model)
         {
             string rowClass = "tableRow";
-            if (item.DonationBatch.CloseDate == null)
+            if (item.DonationBatch.CloseDate != null)
             {
-                rowClass = rowClass + " closed";
+                rowClass = "tableRow dark";
             }
-            <div class=@rowClass>
+            <div class="@rowClass">
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
