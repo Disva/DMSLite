@@ -9,6 +9,7 @@
     height: 100%;
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #F1F1F1;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -43,10 +44,6 @@ textarea {
 #mainInputGroup {
 }
 
-#outputOuter{
-    margin-top: 10px;
-}
-
 #mainInput {
     max-width: none;
     transition: background-image 0.3s linear, background-color 0.3s linear, padding-left 0.3s steps(1, end);
@@ -57,6 +54,8 @@ textarea {
     z-index: 10;
     background: transparent;
 }
+
+
 
 /* The chat output is set to appear directly above the chat box at all times */
 .content-box {
@@ -83,13 +82,26 @@ textarea {
 }
 
 #submitBtn {
+    position: relative;
+    top: -5px;
     -webkit-transition: opacity 0.3s linear;
+    border-radius:5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #32a362;
+    color: white;
+}
+#submitBtn:hover {
+    background-color: #439539;
 }
 
 /* The css for the beautiful chat interface*/
 .bubble {
     padding: 10px;
     margin: 5px;
+    margin-top:25px;
     display: inline-block;
     border-radius: 5px;
     color: white;
@@ -102,13 +114,13 @@ textarea {
 .leftBubble {
     background-color: white;
     border-top-left-radius: 0px;
-    color: #27ae60;
+    color: black;
     box-shadow: 0 1px 3px #3b3b3b;
 }
 
 .rightBubble {
     background-color: white;
-    color: #3b3b3b;
+    color: black;
     border-top-right-radius: 0px;
     float: right;
     box-shadow: 0 1px 3px #3b3b3b;
@@ -147,11 +159,11 @@ textarea {
 
     .tableRow.header {
         color: #ffffff;
-        background: #ea6153;
+        background: #439539;
     }
 
     .tableRow.green {
-        background: #27ae60;
+        background: #439539;
     }
 
 @media screen and (max-width: 580px) {
@@ -195,7 +207,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 
     .pencil:hover {
-        color: #27ae60;
+        color: #439539;
         text-decoration: none;
         cursor: pointer;
     }
@@ -239,6 +251,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 
 #search-container {
     position: relative;
+    margin-right:10px;
 }
 
     #search-container input {
@@ -246,9 +259,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
         font-size: 1.2em;
         width: 100%;
         max-width: none;
-        border-radius: 0px;
-        border-bottom-left-radius: 5px;
-        border-top-left-radius: 5px;
+        border-radius: 5px;
     }
 
 #search {
@@ -265,7 +276,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     left: 0;
     z-index: 0;
     color: #ccc;
-    background: transparent;
+    background: white;
     border: 1px solid #fff;
 }
 
@@ -356,4 +367,24 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 }
 .nav > li > a:hover, .nav > li > a:focus {
     background-color: inherit;
+}
+
+.robotlogo{
+    background-color:white;
+    font-size:20px;
+    border-radius: 50%;
+    width:30px;
+    height:30px;
+    text-align:center;
+    padding-top:5px;
+    box-shadow: 0px 1px 5px #888888;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: top;
+    position:relative;
+    top:10px;
+}
+
+#outputContainer{
+    padding:0px;
 }
