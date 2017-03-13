@@ -282,6 +282,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 
 #flagInvalidContainer {
     text-align: right;
+    position:relative;
+    left:-90px;
 }
 
 /* For the login page*/
@@ -387,4 +389,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 
 #outputContainer{
     padding:0px;
+}
+
+.icon-bar{
+    background-color:white;
 }
