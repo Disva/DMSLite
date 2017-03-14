@@ -10,6 +10,9 @@
 <tr><td><b>Test Suite</b></td></tr>
 <tr><td><a href="logintest.html">logintest</a></td></tr>
 <tr><td><a href="test_donors_showall.html">test_donors_showall</a></td></tr>
+<tr><td><a href="test_donors_showbyname.html">test_donors_showbyname</a></td></tr>
+<tr><td><a href="test_donors_showbyemail.html">test_donors_showbyemail</a></td></tr>
+<tr><td><a href="test_donors_adddonor.html">test_donors_adddonor</a></td></tr>
 </tbody></table>
 </body>
 </html>
