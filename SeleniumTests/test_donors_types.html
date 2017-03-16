@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://ec2-54-87-164-104.compute-1.amazonaws.com/" />
-<title>test_donors_adddonor</title>
+<title>test_donors_types</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">test_donors_adddonor</td></tr>
+<tr><td rowspan="1" colspan="3">test_donors_types</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -34,17 +34,17 @@
 <tr>
 	<td>type</td>
 	<td>id=FirstName</td>
-	<td>TestAddDonor</td>
+	<td>TestAddDonorType</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=LastName</td>
-	<td>TestLast</td>
+	<td>TestTypeLast</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Email</td>
-	<td>testaddme@test.com</td>
+	<td>select</td>
+	<td>id=Type_Type</td>
+	<td>label=Other</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -73,8 +73,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
-	<td>TestAddDonor</td>
+	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[7]</td>
+	<td>Other</td>
 </tr>
 
 </tbody></table>

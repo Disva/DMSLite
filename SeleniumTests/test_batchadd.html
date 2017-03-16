@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://ec2-54-87-164-104.compute-1.amazonaws.com/" />
-<title>test_donors_adddonor</title>
+<title>test_batchadd</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">test_donors_adddonor</td></tr>
+<tr><td rowspan="1" colspan="3">test_batchadd</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -19,7 +19,22 @@
 <tr>
 	<td>type</td>
 	<td>id=mainInput</td>
-	<td>add donor</td>
+	<td>add batch</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[4]/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>TestAddBatch</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -32,49 +47,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=FirstName</td>
-	<td>TestAddDonor</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=LastName</td>
-	<td>TestLast</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=Email</td>
-	<td>testaddme@test.com</td>
-</tr>
-<tr>
 	<td>click</td>
-	<td>//button[@type='submit']</td>
+	<td>css=input.btn.btn-primary</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>id=myModalLabel</td>
-	<td>Similar Donor Found</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.copy-to-chat &gt; div.bubbleLine &gt; div.bubble.leftBubble</td>
-	<td>Created the following donor:</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
-	<td></td>
+	<td>//form[@id='form0']/div/div/div[2]/div/span</td>
+	<td>An existing batch has this title.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
-	<td>TestAddDonor</td>
+	<td>//form[@id='form0']/div/div/div[2]/div/span</td>
+	<td>An existing batch has this title.</td>
 </tr>
 
 </tbody></table>
