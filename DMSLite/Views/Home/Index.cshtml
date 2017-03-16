@@ -2,14 +2,16 @@
     ViewBag.Title = "Home Page";
 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/notify.min.js"></script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jquery-unobtrusive")
+@Scripts.Render("~/bundles/notify")
 
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
-        <div class="bubbleLine"><div class="bubble leftBubble">Welcome to DMS Lite!<br />You can always type help if you are feeling stuck!</div></div>
-        <div class="bubbleLine"><div class="bubble leftBubble">What would you like to do?</div></div>
+        <br />
+        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Welcome to DMS Lite!<br />You can always type help if you are feeling stuck!</div></div>
+        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">What would you like to do?</div></div>
     </div>
 </div>
 
@@ -44,5 +46,5 @@
 </div>
 }
 
-<script src="~/Scripts/Custom/homeJavascript.js"></script>
-<script src="~/Scripts/Custom/suggestionbar.js"></script>
+@Scripts.Render("~/bundles/home")
+@Scripts.Render("~/bundles/suggestionBar")

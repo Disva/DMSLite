@@ -27,8 +27,8 @@ namespace DMSLite.Helpers
             public static LogType Reply { get { return new LogType("-->"); } }
             public static LogType ParamsFound { get { return new LogType("->>"); } }
             public static LogType ParamsSubmitted { get { return new LogType("<<-"); } }
-            public static LogType Bug { get { return new LogType("!"); } }
-            public static LogType Task { get { return new LogType("#"); } }
+            public static LogType Bug { get { return new LogType(" ! "); } }
+            public static LogType Task { get { return new LogType(" # "); } }
             public static LogType Test { get { return new LogType(" T "); } }
         }
 
