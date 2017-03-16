@@ -166,6 +166,10 @@ textarea {
         background: #439539;
     }
 
+    .tableRow.dark {
+        background: #c3c3c3;
+    }
+
 @media screen and (max-width: 580px) {
     .tableRow {
         padding: 8px 0;

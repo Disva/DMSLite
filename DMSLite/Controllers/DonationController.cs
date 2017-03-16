@@ -20,6 +20,7 @@ namespace DMSLite.Controllers
     public class DonationController : Controller
     {
         private OrganizationDb db;
+        private static bool postedOnly = false;
 
         public DonationController()
         {
@@ -127,7 +128,21 @@ namespace DMSLite.Controllers
                     FetchByValueClosedRange(ref returnedDonations, float.Parse(valueRangeList[0]), float.Parse(valueRangeList[1]));
                 }                
             }
+            if (postedOnly)
+                FetchPostedDonations(ref returnedDonations);
             return returnedDonations;
+        }
+
+        public ActionResult TogglePostedDisplay()
+        {
+            postedOnly = !postedOnly;
+            return PartialView("~/Views/Donation/_ToggleDisplay.cshtml", postedOnly);
+        }
+
+        public void FetchPostedDonations(ref List<Donation> returnedDonations)
+        {
+            List<int> postedBatches = db.Batches.Where(x => x.CloseDate.HasValue).Select(x => x.Id).ToList();
+            returnedDonations = returnedDonations.Where(x => postedBatches.Contains(x.DonationBatch_Id)).ToList();
         }
 
         public void FetchByDate(ref List<Donation> returnedDonations, DateRange dateRange, string dateComparator)

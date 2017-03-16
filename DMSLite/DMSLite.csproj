@@ -478,6 +478,7 @@
     <Content Include="Views\Shared\_Help.cshtml" />
     <Content Include="Views\Receipt\_ReceiptForm.cshtml" />
     <Content Include="Views\Receipt\_Receipt.cshtml" />
+    <Content Include="Views\Donation\_ToggleDisplay.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Donor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
