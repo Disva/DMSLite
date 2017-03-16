@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
+using NLog;
+
 namespace DMSLite.Controllers
 {
     using Helpers;
@@ -22,6 +24,8 @@ namespace DMSLite.Controllers
         private enum BATCH_TYPE {OPEN, CLOSED };
 
         private static List<Batch> filteredBatches;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public BatchController()
         {
@@ -410,7 +414,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
+                    logger.Info(JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }
