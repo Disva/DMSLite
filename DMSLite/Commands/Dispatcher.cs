@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ApiAiSDK;
 using DMSLite.Models;
+using NLog;
 using Newtonsoft.Json;
 using System.IO;
 using System.Web.Configuration;
@@ -16,6 +17,8 @@ namespace DMSLite.Commands
 
         private static Dispatcher dispatcher;
         private ApiAi apiAi;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public static Dispatcher getDispatcher()
         {
@@ -50,8 +53,9 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            Helpers.Log.WriteLog(Helpers.Log.LogType.Reply, response.Result.Fulfillment.Speech.ToString());
-            Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsFound, " " + response.Result.Action.ToString() + " : " + JsonConvert.SerializeObject(response.Result.Parameters));
+            logger.Info(response.Result.Fulfillment.Speech.ToString());
+            logger.Info(response.Result.Action.ToString() + JsonConvert.SerializeObject(response.Result.Parameters));
+
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 

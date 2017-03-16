@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Globalization;
 using LinqKit;
 using Newtonsoft.Json;
+using NLog;
 
 namespace DMSLite.Controllers
 {
@@ -21,6 +22,7 @@ namespace DMSLite.Controllers
     {
         private OrganizationDb db;
         private static bool postedOnly = false;
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public DonationController()
         {
@@ -436,7 +438,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(donation);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
+                    logger.Info(JsonConvert.SerializeObject(donation));
                     return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
                 }
             }
