@@ -13,6 +13,7 @@ namespace DMSLite.Entities
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "AccountTitle", ResourceType = typeof(Resources.Resources))]
         public string Title { get; set; }
 
         [Required]

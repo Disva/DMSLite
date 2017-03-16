@@ -14,15 +14,18 @@ namespace DMSLite.Entities
 
         [StringLength(255)]
         [Required]
+        [Display(Name = "OrgName", ResourceType = typeof(Resources.Resources))]
         public string Name { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "DBA", ResourceType = typeof(Resources.Resources))]
         public string DBA { get; set; }
 
+        [Display(Name = "OrgAddress", ResourceType = typeof(Resources.Resources))]
         public Address Address { get; set; } 
 
         [StringLength(255)]
-        [Display(Name = "Registration Numer")]
+        [Display(Name = "RegistrationNumer", ResourceType = typeof(Resources.Resources))]
         public string RegistrationNumer { get; set; }
     }
 }
