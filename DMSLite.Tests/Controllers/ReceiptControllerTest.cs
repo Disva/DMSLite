@@ -75,5 +75,51 @@ namespace DMSLite.Tests.Controllers
             ZipArchive za = new ZipArchive(new MemoryStream(fcr.FileContents), ZipArchiveMode.Read);
             Assert.IsTrue(za.Entries.ToList().Count == 0);
         }
+
+        [TestMethod]
+        // test to see if a receipt printed for a donor in the past stores a different address than that donor's current address
+        public void TestPrintReceiptNewAddress()
+        {
+            Donor donor = new Donor
+            {
+                FirstName = "X",
+                LastName = "Y",
+                Address = "Z"
+            };
+            db.Add(donor);
+            Batch batch = new Batch
+            {
+                CreateDate = DateTime.Now,
+                Title = "AAA"
+            };
+            db.Add(batch);
+            Donation donation = new Donation
+            {
+                DonationBatch_Id = batch.Id,
+                DonationDonor_Id = donor.Id,
+            };
+            db.Add(donation);
+            batch.CloseDate = DateTime.Now;
+            db.Modify(batch);
+
+            ReceiptController rc = new ReceiptController(db);
+            int[] da = { donor.Id };
+            int[] ba = { batch.Id };
+            rc.ZipReceipts(da, ba);
+
+            donor.Address = "W";
+            db.Modify(donor);
+
+            rc.FetchReceiptByDonation(donation);
+            Receipt receipt = db.Receipts.Single(x => x.Id == donation.DonationReceipt_Id);
+
+            Assert.IsFalse(receipt.Address == donor.Address);
+
+            db.Donors.Remove(donor);
+            db.Batches.Remove(batch);
+            db.Donations.Remove(donation);
+            db.Receipts.Remove(receipt);
+
+        }
     }
 }
