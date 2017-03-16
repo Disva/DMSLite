@@ -515,6 +515,10 @@
       <Project>{cc80aff3-7d09-4a0d-a889-68057d44d21d}</Project>
       <Name>DMSLite.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{ED5BBDA3-C26E-4092-8B09-4AC0D8407F63}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.resx">
