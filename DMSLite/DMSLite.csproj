@@ -295,6 +295,10 @@
     <Compile Include="Migrations\201703062154058_OrganizationAddressFields.Designer.cs">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.cs" />
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.Designer.cs">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -557,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703062154058_OrganizationAddressFields.resx">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161747320_BatchDonorAddress.resx">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
