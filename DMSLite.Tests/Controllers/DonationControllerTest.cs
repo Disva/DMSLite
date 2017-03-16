@@ -48,6 +48,37 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests that fetching posted donations works
+        public void TestFetchPostedDonations()
+        {
+            DonationController dc = new DonationController(db);
+            List<Donation> dbDonations = db.Donations.ToList();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("donor-name", "");
+            parameters.Add("value", "");
+            parameters.Add("value-range", "[]");
+            parameters.Add("value-comparator", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("date-comparator", "");
+            parameters.Add("account-name", "");
+            List<int> postedBatchKeys = db.Batches.Where(x => x.CloseDate.HasValue).Select(x => x.Id).ToList();
+            List<Donation> dbPostedDonations = dbDonations.Where(x => postedBatchKeys.Contains(x.DonationBatch_Id)).ToList();
+            dc.TogglePostedDisplay();
+            PartialViewResult pvr = (PartialViewResult)dc.FetchDonations(parameters);
+            List<Donation> testDonations = ((List<Donation>)pvr.ViewData.Model).ToList();
+            Assert.AreEqual(testDonations.Count(), dbPostedDonations.Count());
+            int i = 0;
+            foreach (Donation d in testDonations)
+            {
+                Assert.AreEqual(d.Id, dbPostedDonations.ElementAt(i).Id);
+                Assert.AreEqual(d.DonationDonor_Id, dbPostedDonations.ElementAt(i).DonationDonor_Id);
+                Assert.AreEqual(d.Value, dbPostedDonations.ElementAt(i).Value);
+                i++;
+            }
+        }
+
+        [TestMethod]
         //Tests DonationController method FetchByDonor
         public void TestFetchByDonor()
         {
