@@ -18,14 +18,14 @@
     {
         @Html.AntiForgeryToken()
         <div class="modal-body">
-            <div class="form-group row">
-                @Html.CheckBox("allBatches", false, htmlAttributes: new { @onchange = "toggleBatchSelect(this)"})
+            <!--<div class="form-group row">
+                Html.CheckBox("allBatches", false, htmlAttributes: new { onchange = "toggleBatchSelect(this)"})
                 <label>Select all batches</label>
             </div>
             <div class="form-group row">
-                @Html.CheckBox("allDonors", false, htmlAttributes: new { @onchange = "toggleDonorSelect(this)" })
+                Html.CheckBox("allDonors", false, htmlAttributes: new { onchange = "toggleDonorSelect(this)" })
                 <label>Select all donors</label>
-            </div>
+            </div>-->
             <div class="form-group row">
                 @Html.LabelFor(model => model.donors, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
