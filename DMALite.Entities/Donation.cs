@@ -13,24 +13,25 @@ namespace DMSLite.Entities
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Donor")]
+        [Display(Name = "DonationDonor", ResourceType = typeof(Resources.Resources))]
         public Donor DonationDonor { get; set; }
 
         [ForeignKey("DonationDonor")]        
         public int DonationDonor_Id { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "Description")]
+        [Display(Name = "ObjectDescription", ResourceType = typeof(Resources.Resources))]
         public string ObjectDescription { get; set; }
 
         [Required]
+        [Display(Name = "Value", ResourceType = typeof(Resources.Resources))]
         public double Value { get; set; }
 
         [Required]
-        [Display(Name = "Batch")]
+        [Display(Name = "DonationBatch", ResourceType = typeof(Resources.Resources))]
         public Batch DonationBatch { get; set; }
 
-        [Display(Name = "Account")]
+        [Display(Name = "DonationAccount", ResourceType = typeof(Resources.Resources))]
         public Account DonationAccount { get; set; }
 
         [ForeignKey("DonationAccount")]
@@ -39,7 +40,7 @@ namespace DMSLite.Entities
         [ForeignKey("DonationBatch")]
         public int DonationBatch_Id { get; set; }
 
-        [Display(Name = "Receipt")]
+        [Display(Name = "DonationReceipt", ResourceType = typeof(Resources.Resources))]
         public Receipt DonationReceipt { get; set; }
 
         [ForeignKey("DonationReceipt")]

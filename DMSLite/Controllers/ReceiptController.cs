@@ -87,10 +87,11 @@ namespace DMSLite.Controllers
                         //only create the PDF if the donor has made donations to the selected batches
                         if(donations.Count() > 0)
                         {
-                            // Create receipt object with current date and time
+                            // Create receipt object with current date and time, as well as donor's current address
                             Receipt receipt = new Receipt
                             {
-                                IssueDate = DateTime.Now
+                                IssueDate = DateTime.Now,
+                                Address = donor.Address
                             };
                             db.Add(receipt);
 
@@ -124,7 +125,7 @@ namespace DMSLite.Controllers
             outputString.Add("\n");
 
             outputString.Add(donor.FirstName + " " + donor.LastName);
-            outputString.Add(donor.Address);
+            outputString.Add(receipt.Address);
             outputString.Add("\n");
 
             outputString.Add("Donations:");

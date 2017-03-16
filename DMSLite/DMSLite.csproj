@@ -298,6 +298,10 @@
     <Compile Include="Migrations\201703062154058_OrganizationAddressFields.Designer.cs">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.cs" />
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.Designer.cs">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -520,6 +524,10 @@
       <Project>{cc80aff3-7d09-4a0d-a889-68057d44d21d}</Project>
       <Name>DMSLite.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{ED5BBDA3-C26E-4092-8B09-4AC0D8407F63}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.resx">
@@ -566,6 +574,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703062154058_OrganizationAddressFields.resx">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161747320_BatchDonorAddress.resx">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
