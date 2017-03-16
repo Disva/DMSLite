@@ -130,7 +130,6 @@
     <Compile Include="Controllers\MultiTenancyTest.cs" />
     <Compile Include="Controllers\OrganizationControllerTest.cs" />
     <Compile Include="Controllers\ReceiptControllerTest.cs" />
-    <Compile Include="Log\LogTest.cs" />
     <Compile Include="Mocks\FakeOrganizationDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
