@@ -1,4 +1,5 @@
 ﻿using DMSLite.Entities;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +10,10 @@ namespace DMSLite.Models
 {
     public class SimilarDonorModel
     {
-        [Display(Name = "New Donor")]
+        [Display(Name = "NewDonor", ResourceType = typeof(Resources.Resources))]
         public Donor newDonor { get; set; }
 
-        [Display(Name = "Similar Donors")]
+        [Display(Name = "SimilarDonors", ResourceType = typeof(Resources.Resources))]
         public List<Donor> similarDonors { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DMSLite.Entities;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +10,10 @@ namespace DMSLite.Models
 {
     public class ReceiptFormModel
     {
-        [Display(Name = "Donors")]
+        [Display(Name = "Donors", ResourceType = typeof(Resources.Resources))]
         public List<Donor> donors { get; set; }
 
-        [Display(Name = "Batches")]
+        [Display(Name = "Batches", ResourceType = typeof(Resources.Resources))]
         public List<Batch> batches { get; set; }
     }
 }

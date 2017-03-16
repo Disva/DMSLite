@@ -10,15 +10,15 @@ namespace DMSLite.Models
     public class BatchViewModel
     {
         [Required]
-        [Display(Name = "Batch")]
+        [Display(Name = "Batch", ResourceType = typeof(Resources.Resources))]
         public Batch batch { get; set; }
 
         [Required]
-        [Display(Name = "Number Of Donations")]
+        [Display(Name = "Count", ResourceType = typeof(Resources.Resources))]
         public int count { get; set; }
 
         [Required]
-        [Display(Name = "Total Amount Donated")]
+        [Display(Name = "Sum", ResourceType = typeof(Resources.Resources))]
         public double sum { get; set; }
     }
 }
