@@ -30,7 +30,7 @@ namespace DMSLite.Controllers
         public ActionResult SendInput(FormCollection fc)
         {
             string inputText = fc["mainInput"];
-            logger.Info(inputText);
+            logger.Info("User: \"{0}\"", inputText);
 
             var responseModel = dispatcher.Dispatch(inputText);
 

@@ -54,7 +54,7 @@ namespace DMSLite.Commands
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
             logger.Info(response.Result.Fulfillment.Speech.ToString());
-            logger.Info(response.Result.Action.ToString() + JsonConvert.SerializeObject(response.Result.Parameters));
+            logger.Info("{0} : {1}", response.Result.Action.ToString(), JsonConvert.SerializeObject(response.Result.Parameters));
 
             //Search commands file for appropriate command instructions
             var path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
