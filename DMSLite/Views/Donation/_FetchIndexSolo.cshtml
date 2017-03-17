@@ -55,6 +55,10 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Value)
+                    @if(!item.Gift)
+                    {
+                        <label>(not a gift)</label>
+                    }
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
