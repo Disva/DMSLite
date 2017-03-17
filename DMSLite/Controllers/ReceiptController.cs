@@ -62,6 +62,12 @@ namespace DMSLite.Controllers
             return File(PrintReceipt(donor, donations).ToArray(), donor.FirstName + "_" + donor.LastName + "_" + donations[0].DonationReceipt_Id + ".pdf", "application/pdf");
         }
 
+        // pass ajax form data nowhere!
+        public ActionResult ZipRequest(int[] donors, int[] batches, bool allDonors = false, bool allBatches = false)
+        {
+            return null;
+        }
+
         [HttpGet]
         public ActionResult ZipReceipts(int[] donors, int[] batches, bool allDonors = false, bool allBatches = false)
         {

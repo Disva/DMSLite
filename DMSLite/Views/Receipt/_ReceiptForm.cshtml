@@ -1,18 +1,16 @@
 ﻿@model DMSLite.Models.ReceiptFormModel
 
-@{ var id = Guid.NewGuid().ToString(); }
-
-<div id="@id">
+<div id="printReceiptForm">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Print Receipts</h4>
     </div>
-    @using (Ajax.BeginForm("ZipReceipts", "Receipt", new AjaxOptions()
+    @using (Ajax.BeginForm("ZipRequest", "Receipt", new AjaxOptions()
     {
         HttpMethod = "get",
         OnComplete = "checkFormatSelect2",
-        OnBegin = "showLoadingButton(\"" + id + "\")",
-        OnSuccess = "downloadZipFile(this); hideLoadingButton(\"" + id + "\")"
+        OnBegin = "showLoadingButton('printReceiptForm')",
+        OnSuccess = "downloadZipFile(this)"
     }
     , new{ @dataType = "application/zip" }))
     {

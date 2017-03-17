@@ -209,7 +209,6 @@ function toggleDonorSelect(input) {
 
 function toggleCheck(input) {
     var butt = $(document.getElementById(input.id));
-    console.log(butt.attr("value"));
     if (butt.val() == "true")
         butt.val("false");
     else
