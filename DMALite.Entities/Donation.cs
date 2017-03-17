@@ -49,6 +49,8 @@ namespace DMSLite.Entities
         [Required]
         public int TenantOrganizationId {get; set; }
 
+        public bool Gift { get; set; }
+
         public bool isEqualTo(Donation otherDonation)
         {
             if (DonationAccount != null)
