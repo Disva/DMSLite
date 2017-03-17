@@ -189,6 +189,15 @@ function checkReceiptButton() {
         receiptButton.attr("disabled", false);
 }
 
+function toggleGiftSelect(input) {
+    var valueBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#valueBlock");
+    if (valueBlock.css("display") == "none")
+        valueBlock.css("display", "block");
+    else
+        valueBlock.css("display", "none");
+    toggleCheck(input);
+}
+
 function toggleBatchSelect(input) {
     var batchBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#batchBlock");
     if (batchBlock.css("display") == "none")

@@ -401,7 +401,7 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
+        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null, bool isGift = false)
         {
             if (!donationDonor.HasValue || !donationBatch.HasValue)
             {
@@ -414,6 +414,9 @@ namespace DMSLite.Controllers
                 PopulateViewBag();
                 return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
             }
+
+            if (isGift)
+                donation.Value = 0;
 
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
