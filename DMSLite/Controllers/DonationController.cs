@@ -415,9 +415,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
             }
 
-            if (isGift)
-                donation.Value = 0;
-
+            donation.Gift = isGift;
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;

@@ -21,11 +21,11 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input type="checkbox" name="isGift" id="isGift" onchange="toggleGiftSelect(this)" value="false" />
+                        <input type="checkbox" name="isGift" id="isGift" onchange="toggleCheck(this)" value="true" checked />
                         <label>This donation is a gift</label>
                     </div>
                 </div>
-                <div class="form-group" id="valueBlock">
+                <div class="form-group">
                     @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
