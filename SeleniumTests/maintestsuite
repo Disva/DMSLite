@@ -21,6 +21,8 @@
 <tr><td><a href="test_donations_add.html">test_donations_add</a></td></tr>
 <tr><td><a href="test_donations_showall.html">test_donations_showall</a></td></tr>
 <tr><td><a href="test_donations_edit.html">test_donations_edit</a></td></tr>
+<tr><td><a href="test_batch_viewdonations.html">test_batch_viewdonations</a></td></tr>
+<tr><td><a href="test_batch_adddonation.html">test_batch_adddonation</a></td></tr>
 </tbody></table>
 </body>
 </html>

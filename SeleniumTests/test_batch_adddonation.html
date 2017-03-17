@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://ec2-54-87-164-104.compute-1.amazonaws.com/" />
+<title>test_batch_adddonation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">test_batch_adddonation</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all batches</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=+</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//div[4]/div/select</td>
+	<td>2248</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ObjectDescription</td>
+	<td>test added from batch</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css=input.select2-search__field</td>
+	<td>3005</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//*[@id=&quot;outputContainer&quot;]/div[6]/span/span/span[2]/ul/li[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Added New Donation</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[4]</td>
+	<td>test added from batch</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.btn.btn-default</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
