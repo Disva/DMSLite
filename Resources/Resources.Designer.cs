@@ -196,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donor ID.
+        /// </summary>
+        public static string DonorID {
+            get {
+                return ResourceManager.GetString("DonorID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Donors.
         /// </summary>
         public static string Donors {

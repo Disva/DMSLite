@@ -17,7 +17,7 @@ namespace DMSLite.Entities
         public Donor DonationDonor { get; set; }
 
         [ForeignKey("DonationDonor")]
-        [Display(Name = "Donor ID")]
+        [Display(Name = "DonorID", ResourceType = typeof(Resources.Resources))]
         public int DonationDonor_Id { get; set; }
 
         [StringLength(255)]
