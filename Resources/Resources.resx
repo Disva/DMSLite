@@ -162,6 +162,9 @@
   <data name="DonationReceipt" xml:space="preserve">
     <value>Receipt</value>
   </data>
+  <data name="DonorID" xml:space="preserve">
+    <value>Donor ID</value>
+  </data>
   <data name="Donors" xml:space="preserve">
     <value>Donors</value>
   </data>

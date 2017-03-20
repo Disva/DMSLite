@@ -9,6 +9,9 @@
                 @Html.DisplayNameFor(model => model.DonationDonor)
             </div>
             <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationDonor_Id)
+            </div>
+            <div class="cell">
                 @Html.DisplayNameFor(model => model.ObjectDescription)
             </div>
             <div class="cell">
@@ -49,6 +52,9 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationDonor_Id)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
