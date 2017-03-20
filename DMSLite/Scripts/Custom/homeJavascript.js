@@ -56,7 +56,8 @@ function startLoading() {
     //store the history
     var inputVal= $("#mainInput").val();
     if (historyStack.length == 0 || historyStack[historyStack.length - 1] !== inputVal) {
-        if (inputVal.replace(/^\s+|\s+$/gm, '').length>0){
+        inputVal = inputVal.replace(/^\s+|\s+$/gm, '');
+        if (inputVal.length>0){
             historyStack.push(inputVal);
         }
     }

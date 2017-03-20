@@ -135,16 +135,36 @@ $(function () {
         }
         //detect the up
         if (code == 38) {
-            if (prevHistoryStackVal != historyStack.length) {
+            console.log(prevHistoryStackVal);
+            if (prevHistoryStackVal < historyStack.length) {
                 prevHistoryStackVal++;
                 $("#mainInput").val(historyStack[historyStack.length - prevHistoryStackVal]);
-
+                setTimeout((function (el) {
+                    var strLength = el.value.length;
+                    return function () {
+                        if (el.setSelectionRange !== undefined) {
+                            el.setSelectionRange(strLength, strLength);
+                        } else {
+                            $(el).val(el.value);
+                        }
+                    }
+                }(this)), 5);
             }
         } //detect the down
         else if (code == 40) {
             if (prevHistoryStackVal != 0) {
                 prevHistoryStackVal--;
                 $("#mainInput").val(historyStack[historyStack.length - prevHistoryStackVal]);
+                setTimeout((function (el) {
+                    var strLength = el.value.length;
+                    return function () {
+                        if (el.setSelectionRange !== undefined) {
+                            el.setSelectionRange(strLength, strLength);
+                        } else {
+                            $(el).val(el.value);
+                        }
+                    }
+                }(this)), 5);
             }
         } else if (code == 37 || code == 39) {
             //do nothing if left or right arrow
