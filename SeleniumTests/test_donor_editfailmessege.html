@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://ec2-54-87-164-104.compute-1.amazonaws.com/" />
-<title>test_batch_adddonation</title>
+<title>test_donor_editfailmessege</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">test_batch_adddonation</td></tr>
+<tr><td rowspan="1" colspan="3">test_donor_editfailmessege</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -19,7 +19,7 @@
 <tr>
 	<td>type</td>
 	<td>id=mainInput</td>
-	<td>show all batches</td>
+	<td>show all donors</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=+</td>
+	<td>link=✏</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,49 +42,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//div[5]/div/select</td>
-	<td>2248</td>
-</tr>
-<tr>
 	<td>type</td>
-	<td>id=ObjectDescription</td>
-	<td>test added from batch</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>css=b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>sendKeys</td>
-	<td>css=input.select2-search__field</td>
-	<td>3005</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//*[@id=&quot;outputContainer&quot;]/div[6]/span/span/span[2]/ul/li[1]</td>
+	<td>id=LastName</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=input.btn.btn-primary</td>
+	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>id=myModalLabel</td>
-	<td>Added New Donation</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//dd[4]</td>
-	<td>test added from batch</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=button.btn.btn-default</td>
-	<td></td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
 </tr>
 
 </tbody></table>

@@ -23,6 +23,10 @@
 <tr><td><a href="test_donations_edit.html">test_donations_edit</a></td></tr>
 <tr><td><a href="test_batch_viewdonations.html">test_batch_viewdonations</a></td></tr>
 <tr><td><a href="test_batch_adddonation.html">test_batch_adddonation</a></td></tr>
+<tr><td><a href="test_donor_failmessage.html">test_donor_failmessage</a></td></tr>
+<tr><td><a href="test_donor_editfailmessege.html">test_donor_editfailmessege</a></td></tr>
+<tr><td><a href="test_batch_namefail.html">test_batch_namefail</a></td></tr>
+<tr><td><a href="test_donations_addfail.html">test_donations_addfail</a></td></tr>
 </tbody></table>
 </body>
 </html>
