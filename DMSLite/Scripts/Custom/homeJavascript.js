@@ -180,11 +180,41 @@ function checkReceiptButton() {
     var receiptButton = $("#submitReceiptForm");
     var donorSelect = $("#receiptDonors").next();
     var batchSelect = $("#receiptBatches").next();
-    if (donorSelect.find(".select2-selection__choice").length == 0 || batchSelect.find(".select2-selection__choice").length == 0)
+    var allBatches = $("#allBatches");
+    var allDonors = $("#allDonors");
+    if ((donorSelect.find(".select2-selection__choice").length == 0 && allDonors.val() == "false")
+     || (batchSelect.find(".select2-selection__choice").length == 0 && allBatches.val() == "false"))
         receiptButton.attr("disabled", true);
     else
         receiptButton.attr("disabled", false);
 }
+
+function toggleBatchSelect(input) {
+    var batchBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#batchBlock");
+    if (batchBlock.css("display") == "none")
+        batchBlock.css("display", "block");
+    else
+        batchBlock.css("display", "none");
+    toggleCheck(input);
+}
+
+function toggleDonorSelect(input) {
+    var donorBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#donorBlock");
+    if (donorBlock.css("display") == "none")
+        donorBlock.css("display", "block");
+    else
+        donorBlock.css("display", "none");
+    toggleCheck(input);
+}
+
+function toggleCheck(input) {
+    var butt = $(document.getElementById(input.id));
+    if (butt.val() == "true")
+        butt.val("false");
+    else
+        butt.val("true");
+}
+
 $('#flagInvalidContainer').on('click', '*', function() {
     $("#flagInvalidContainer").notify(
   "Sorry for that! I will let my team of humans know for you!",

@@ -41,7 +41,12 @@
         </div>
         @foreach (var item in Model)
         {
-            <div class="tableRow">
+            string rowClass = "tableRow";
+            if (item.DonationBatch.CloseDate != null)
+            {
+                rowClass = "tableRow dark";
+            }
+            <div class="@rowClass">
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
@@ -56,6 +61,10 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Value)
+                    @if(!item.Gift)
+                    {
+                        <label>(not a gift)</label>
+                    }
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
@@ -109,6 +118,6 @@
                     }
                 </div>
             </div>
-                    }
+        }
     </div>
 </div>

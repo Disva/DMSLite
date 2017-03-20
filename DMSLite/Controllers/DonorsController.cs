@@ -15,6 +15,8 @@ using System.Linq.Expressions;
 using LinqKit;
 using Newtonsoft.Json;
 
+using NLog;
+
 namespace DMSLite
 {
     [Authorize]
@@ -23,6 +25,8 @@ namespace DMSLite
         private OrganizationDb db;
 
         private static List<Donor> filteredDonors;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public DonorsController()
         {
@@ -272,7 +276,7 @@ namespace DMSLite
                 else
                 {
                     db.Add(donor);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donor));
+                    logger.Info(JsonConvert.SerializeObject(donor));
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }
