@@ -124,8 +124,6 @@ $(function () {
         while (true);
         $.merge(haystack, tempArray);
     }
-    //console.log(haystack);
-
     
     $('#mainInput').keydown(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
