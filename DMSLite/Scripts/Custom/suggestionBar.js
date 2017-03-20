@@ -135,7 +135,6 @@ $(function () {
         }
         //detect the up
         if (code == 38) {
-            console.log(prevHistoryStackVal);
             if (prevHistoryStackVal < historyStack.length) {
                 prevHistoryStackVal++;
                 $("#mainInput").val(historyStack[historyStack.length - prevHistoryStackVal]);
@@ -149,6 +148,8 @@ $(function () {
                         }
                     }
                 }(this)), 5);
+            } else {
+                return false;
             }
         } //detect the down
         else if (code == 40) {
