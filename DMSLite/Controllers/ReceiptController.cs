@@ -59,7 +59,7 @@ namespace DMSLite.Controllers
             // get list of donations
             List<Donation> donations = db.Donations.Where(x => x.DonationReceipt_Id.Equals(donation.DonationReceipt_Id)).ToList();
 
-            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf");
+            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf", donor.FirstName + "_" + donor.LastName + "_" + donations[0].DonationReceipt_Id + ".pdf");
         }
 
         [HttpGet]
