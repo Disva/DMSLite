@@ -58,8 +58,7 @@ namespace DMSLite.Controllers
             Donor donor = db.Donors.Where(x => x.Id.Equals(donation.DonationDonor_Id)).First();
             // get list of donations
             List<Donation> donations = db.Donations.Where(x => x.DonationReceipt_Id.Equals(donation.DonationReceipt_Id)).ToList();
-
-            return File(PrintReceipt(donor, donations).ToArray(), donor.FirstName + "_" + donor.LastName + "_" + donations[0].DonationReceipt_Id + ".pdf", "application/pdf");
+            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf", donor.FirstName + "_" + donor.LastName + "_" + donations[0].DonationReceipt_Id + ".pdf");
         }
 
         // pass ajax form data nowhere!
