@@ -86,6 +86,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
       <Private>True</Private>
@@ -241,7 +245,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateHelper.cs" />
-    <Compile Include="Helpers\Log.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Migrations\201610071735228_a.cs" />
     <Compile Include="Migrations\201610071735228_a.Designer.cs">
@@ -299,6 +302,10 @@
     <Compile Include="Migrations\201703161747320_BatchDonorAddress.Designer.cs">
       <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703171943225_DonationGift.cs" />
+    <Compile Include="Migrations\201703171943225_DonationGift.Designer.cs">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -336,6 +343,12 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\homeJavascript.js" />
@@ -515,6 +528,10 @@
       <Project>{cc80aff3-7d09-4a0d-a889-68057d44d21d}</Project>
       <Name>DMSLite.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{ED5BBDA3-C26E-4092-8B09-4AC0D8407F63}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.resx">
@@ -564,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703161747320_BatchDonorAddress.resx">
       <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703171943225_DonationGift.resx">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
