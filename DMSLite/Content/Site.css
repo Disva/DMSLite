@@ -410,3 +410,11 @@ dt{
     width:200px !important;
     text-align:left !important;
 }
+
+.fixLeftAlignDD{
+    margin-left:200px !important;
+}
+
+.fixTopPaddingEditAddress{
+    padding-top: 7px;
+}
