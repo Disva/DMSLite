@@ -53,6 +53,15 @@ function startLoading() {
     $("#mainInput").prop("disabled", true);
     $("#submitBtn").prop("disabled", true);
 
+    //store the history
+    var inputVal= $("#mainInput").val();
+    if (historyStack.length == 0 || historyStack[historyStack.length - 1] !== inputVal) {
+        if (inputVal.replace(/^\s+|\s+$/gm, '').length>0){
+            historyStack.push(inputVal);
+        }
+    }
+    prevHistoryStackVal = 0;
+
     // Clear the textbox
     $("#mainInput").val("");
     $("#suggestion").val("");
