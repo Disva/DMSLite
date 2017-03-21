@@ -220,3 +220,8 @@ $(function () {
 var historyStack = [];
 var prevHistoryStackVal = 0;
 
+$("#outputContainer").on('click', '.rightBubble', function () {
+    $("#suggestion").val("");
+    $("#mainInput").val(this.innerHTML);
+    $("#mainInput").focus();
+});

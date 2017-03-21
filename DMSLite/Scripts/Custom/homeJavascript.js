@@ -64,8 +64,8 @@ function startLoading() {
     prevHistoryStackVal = 0;
 
     // Clear the textbox
-    $("#mainInput").val("");
     $("#suggestion").val("");
+    $("#mainInput").val("");
 
     // Format the textbox
     $("#mainInput").toggleClass("loading-background");
