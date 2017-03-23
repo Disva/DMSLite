@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="logintest.html">logintest</a></td></tr>
+<tr><td><a href="test_donors_showall.html">test_donors_showall</a></td></tr>
+<tr><td><a href="test_donors_showbyname.html">test_donors_showbyname</a></td></tr>
+<tr><td><a href="test_donors_showbyemail.html">test_donors_showbyemail</a></td></tr>
+<tr><td><a href="test_donors_adddonor.html">test_donors_adddonor</a></td></tr>
+<tr><td><a href="test_donors_types.html">test_donors_types</a></td></tr>
+<tr><td><a href="test_batch_showall.html">test_batch_showall</a></td></tr>
+<tr><td><a href="test_batch_showbyname.html">test_batch_showbyname</a></td></tr>
+<tr><td><a href="test_batch_showbyid.html">test_batch_showbyid</a></td></tr>
+<tr><td><a href="test_batchadd.html">test_batchadd</a></td></tr>
+<tr><td><a href="test_donations_add.html">test_donations_add</a></td></tr>
+<tr><td><a href="test_donations_showall.html">test_donations_showall</a></td></tr>
+<tr><td><a href="test_donations_edit.html">test_donations_edit</a></td></tr>
+<tr><td><a href="test_batch_viewdonations.html">test_batch_viewdonations</a></td></tr>
+<tr><td><a href="test_batch_adddonation.html">test_batch_adddonation</a></td></tr>
+<tr><td><a href="test_donor_failmessage.html">test_donor_failmessage</a></td></tr>
+<tr><td><a href="test_donor_editfailmessege.html">test_donor_editfailmessege</a></td></tr>
+<tr><td><a href="test_batch_namefail.html">test_batch_namefail</a></td></tr>
+<tr><td><a href="test_donations_addfail.html">test_donations_addfail</a></td></tr>
+</tbody></table>
+</body>
+</html>
