@@ -9,6 +9,9 @@
                 @Html.DisplayNameFor(model => model.DonationDonor)
             </div>
             <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationDonor_Id)
+            </div>
+            <div class="cell">
                 @Html.DisplayNameFor(model => model.ObjectDescription)
             </div>
             <div class="cell">
@@ -51,10 +54,17 @@
                     @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
                 </div>
                 <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationDonor_Id)
+                </div>
+                <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Value)
+                    @if(!item.Gift)
+                    {
+                        <label>(not a gift)</label>
+                    }
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)

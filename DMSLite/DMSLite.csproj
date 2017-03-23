@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201703161747320_BatchDonorAddress.Designer.cs">
       <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703171943225_DonationGift.cs" />
+    <Compile Include="Migrations\201703171943225_DonationGift.Designer.cs">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -577,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703161747320_BatchDonorAddress.resx">
       <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703171943225_DonationGift.resx">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
