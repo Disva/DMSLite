@@ -171,7 +171,8 @@ namespace DMSLite
             else if (matchingDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
             else if (matchingDonors.Count > 1)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+                //return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+                return FetchDonor(parameters);
             else
                 return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
         }
