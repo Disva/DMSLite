@@ -53,7 +53,7 @@ namespace DMSLite.Commands
 
             Console.WriteLine(response.Result.Fulfillment.Speech);
 
-            logger.Info(response.Result.Fulfillment.Speech.ToString());
+            logger.Info("DMS: \"{0}\"", response.Result.Fulfillment.Speech.ToString());
             logger.Info("{0} : {1}", response.Result.Action.ToString(), JsonConvert.SerializeObject(response.Result.Parameters));
 
             //Search commands file for appropriate command instructions
