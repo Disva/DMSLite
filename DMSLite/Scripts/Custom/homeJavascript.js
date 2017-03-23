@@ -53,9 +53,19 @@ function startLoading() {
     $("#mainInput").prop("disabled", true);
     $("#submitBtn").prop("disabled", true);
 
+    //store the history
+    var inputVal= $("#mainInput").val();
+    if (historyStack.length == 0 || historyStack[historyStack.length - 1] !== inputVal) {
+        inputVal = inputVal.replace(/^\s+|\s+$/gm, '');
+        if (inputVal.length>0){
+            historyStack.push(inputVal);
+        }
+    }
+    prevHistoryStackVal = 0;
+
     // Clear the textbox
-    $("#mainInput").val("");
     $("#suggestion").val("");
+    $("#mainInput").val("");
 
     // Format the textbox
     $("#mainInput").toggleClass("loading-background");

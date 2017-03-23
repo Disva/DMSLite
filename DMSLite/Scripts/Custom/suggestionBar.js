@@ -124,13 +124,51 @@ $(function () {
         while (true);
         $.merge(haystack, tempArray);
     }
-    console.log(haystack);
-
-    //use the KEYDOWN to cancel out the tab key in the #search interface
+    
     $('#mainInput').keydown(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
+        //use the KEYDOWN to cancel out the tab key in the #search interface
         if (code == 9) {
             return false;
+        }
+        //detect the up
+        if (code == 38) {
+            if (prevHistoryStackVal < historyStack.length) {
+                prevHistoryStackVal++;
+                $("#mainInput").val(historyStack[historyStack.length - prevHistoryStackVal]);
+                setTimeout((function (el) {
+                    var strLength = el.value.length;
+                    return function () {
+                        if (el.setSelectionRange !== undefined) {
+                            el.setSelectionRange(strLength, strLength);
+                        } else {
+                            $(el).val(el.value);
+                        }
+                    }
+                }(this)), 5);
+            } else {
+                return false;
+            }
+        } //detect the down
+        else if (code == 40) {
+            if (prevHistoryStackVal != 0) {
+                prevHistoryStackVal--;
+                $("#mainInput").val(historyStack[historyStack.length - prevHistoryStackVal]);
+                setTimeout((function (el) {
+                    var strLength = el.value.length;
+                    return function () {
+                        if (el.setSelectionRange !== undefined) {
+                            el.setSelectionRange(strLength, strLength);
+                        } else {
+                            $(el).val(el.value);
+                        }
+                    }
+                }(this)), 5);
+            }
+        } else if (code == 37 || code == 39) {
+            //do nothing if left or right arrow
+        } else {
+            prevHistoryStackVal = 0;
         }
     });
 
@@ -177,4 +215,13 @@ $(function () {
         });
     });
 
+});
+
+var historyStack = [];
+var prevHistoryStackVal = 0;
+
+$("#outputContainer").on('click', '.rightBubble', function () {
+    $("#suggestion").val("");
+    $("#mainInput").val(this.innerHTML);
+    $("#mainInput").focus();
 });
