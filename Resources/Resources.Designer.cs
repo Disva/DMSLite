@@ -88,6 +88,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thinking....
+        /// </summary>
+        public static string Bot_Thinking {
+            get {
+                return ResourceManager.GetString("Bot_Thinking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to DMS Lite!.
+        /// </summary>
+        public static string Bot_Welcome1 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can always type help if you are feeling stuck!.
+        /// </summary>
+        public static string Bot_Welcome2 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What would you like to do?.
+        /// </summary>
+        public static string Bot_Welcome3 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Closed.
         /// </summary>
         public static string CloseDate {
@@ -363,6 +399,51 @@ namespace Resources {
         public static string Sum {
             get {
                 return ResourceManager.GetString("Sum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to Log in.
+        /// </summary>
+        public static string UI_ClickLogin {
+            get {
+                return ResourceManager.GetString("UI_ClickLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Email.
+        /// </summary>
+        public static string UI_ConfirmEmail {
+            get {
+                return ResourceManager.GetString("UI_ConfirmEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for confirming your email. Please.
+        /// </summary>
+        public static string UI_ConfirmThanks {
+            get {
+                return ResourceManager.GetString("UI_ConfirmThanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Did something break?.
+        /// </summary>
+        public static string UI_HelpButton {
+            get {
+                return ResourceManager.GetString("UI_HelpButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Page.
+        /// </summary>
+        public static string UI_HomeTitle {
+            get {
+                return ResourceManager.GetString("UI_HomeTitle", resourceCulture);
             }
         }
         
