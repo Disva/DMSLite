@@ -59,7 +59,6 @@ namespace DMSLite.Tests.Controllers
             db.Donors.Remove(donor);
             db.Batches.Remove(batch);
             db.Donations.Remove(donation);
-            db.Receipts.Remove(receipt);
         }
 
         [TestMethod]
