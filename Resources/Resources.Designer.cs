@@ -421,11 +421,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added New Account.
+        /// </summary>
+        public static string UI_AddAccountSuc {
+            get {
+                return ResourceManager.GetString("UI_AddAccountSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Account.
+        /// </summary>
+        public static string UI_AddANewAccount {
+            get {
+                return ResourceManager.GetString("UI_AddANewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a New Donation.
         /// </summary>
         public static string UI_AddANewDonation {
             get {
                 return ResourceManager.GetString("UI_AddANewDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Another Account.
+        /// </summary>
+        public static string UI_AddAnoAccount {
+            get {
+                return ResourceManager.GetString("UI_AddAnoAccount", resourceCulture);
             }
         }
         
@@ -840,6 +867,15 @@ namespace Resources {
         public static string UI_Send {
             get {
                 return ResourceManager.GetString("UI_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send verification code.
+        /// </summary>
+        public static string UI_SendVerCode {
+            get {
+                return ResourceManager.GetString("UI_SendVerCode", resourceCulture);
             }
         }
         

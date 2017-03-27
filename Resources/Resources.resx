@@ -408,4 +408,16 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="UI_AddAccountSuc" xml:space="preserve">
+    <value>Added New Account</value>
+  </data>
+  <data name="UI_AddANewAccount" xml:space="preserve">
+    <value>Add a New Account</value>
+  </data>
+  <data name="UI_AddAnoAccount" xml:space="preserve">
+    <value>Add Another Account</value>
+  </data>
+  <data name="UI_SendVerCode" xml:space="preserve">
+    <value>Send verification code</value>
+  </data>
 </root>
