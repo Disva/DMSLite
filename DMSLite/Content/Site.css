@@ -180,6 +180,9 @@ textarea {
 .cell {
     padding: 6px 12px;
     display: table-cell;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 580px) {
