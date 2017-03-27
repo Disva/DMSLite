@@ -26,6 +26,7 @@ namespace DMSLite.Entities
 
         [Required]
         [Display(Name = "Value", ResourceType = typeof(Resources.Resources))]
+        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
         public double Value { get; set; }
 
         [Required]
