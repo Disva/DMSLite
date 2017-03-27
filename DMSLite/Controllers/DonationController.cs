@@ -235,6 +235,16 @@ namespace DMSLite.Controllers
             filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
         }
 
+        public double SumNonReceiptedDonations()
+        {
+            double value = 0;
+            List<Donation> donations = db.Donations.Where(x => x.Gift
+                && (x.DonationDonor.Type == DonorType.Individual || x.DonationDonor.Type == DonorType.Business) ).ToList();
+            foreach(var donation in donations)
+                value += donation.Value;
+            return value;
+        }
+
         #endregion
 
         #region Modify

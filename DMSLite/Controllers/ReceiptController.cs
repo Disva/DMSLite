@@ -95,6 +95,7 @@ namespace DMSLite.Controllers
                         //compile a list of all donations made by that donor for the selected batches
                         List<Donation> donations = db.Donations.Where(x => x.DonationDonor_Id.Equals(donor.Id)              // match donor ID
                                                                         && batches.Any(y => y.Equals(x.DonationBatch_Id))   // match batch ID
+                                                                        && !x.Gift                                          // non-gifts are non-receiptable
                                                                         && x.DonationReceipt_Id.Equals(0)).ToList();        // only add unreceipted donations
 
                         //only create the PDF if the donor has made donations to the selected batches
