@@ -238,7 +238,7 @@ namespace DMSLite.Controllers
         public double SumNonReceiptedDonations()
         {
             double value = 0;
-            List<Donation> donations = db.Donations.Where(x => x.Gift
+            List<Donation> donations = db.Donations.Where(x => x.Gift && x.DonationReceipt_Id == 0
                 && (x.DonationDonor.Type == DonorType.Individual || x.DonationDonor.Type == DonorType.Business) ).ToList();
             foreach(var donation in donations)
                 value += donation.Value;

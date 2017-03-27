@@ -7,6 +7,11 @@
 @Scripts.Render("~/bundles/jquery-unobtrusive")
 @Scripts.Render("~/bundles/notify")
 
+<div id="testy" style="position: absolute; z-index: 9999; width: 100px; height: 100px; left: 100px; top: 100px;">
+    Lol testy
+    @Html.Action("SumNonReceiptedDonations", "Donation")
+</div>
+
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
         <br />
