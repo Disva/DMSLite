@@ -5,7 +5,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm(Resources.Resources.UI_Register, Resources.Resources.UI_Account, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>@Resources.Resources.UI_CreateNewAccount</h4>

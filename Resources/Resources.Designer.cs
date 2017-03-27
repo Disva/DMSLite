@@ -475,6 +475,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter verification code.
+        /// </summary>
+        public static string UI_EnterVerCode {
+            get {
+                return ResourceManager.GetString("UI_EnterVerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot your password?.
         /// </summary>
         public static string UI_ForgotPassword {
@@ -556,6 +565,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string UI_Reset {
+            get {
+                return ResourceManager.GetString("UI_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your password has been reset. Please.
         /// </summary>
         public static string UI_ResetConfirm {
@@ -583,11 +601,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset your password..
+        /// </summary>
+        public static string UI_ResetYourPass {
+            get {
+                return ResourceManager.GetString("UI_ResetYourPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Two-Factor Authentication Provider:.
+        /// </summary>
+        public static string UI_Select2FAuthProvider {
+            get {
+                return ResourceManager.GetString("UI_Select2FAuthProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Organization.
         /// </summary>
         public static string UI_SelectOrg {
             get {
                 return ResourceManager.GetString("UI_SelectOrg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string UI_Send {
+            get {
+                return ResourceManager.GetString("UI_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string UI_Submit {
+            get {
+                return ResourceManager.GetString("UI_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string UI_Verify {
+            get {
+                return ResourceManager.GetString("UI_Verify", resourceCulture);
             }
         }
         

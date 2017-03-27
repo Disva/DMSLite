@@ -255,6 +255,9 @@
   <data name="UI_EnterEmail" xml:space="preserve">
     <value>Enter your email.</value>
   </data>
+  <data name="UI_EnterVerCode" xml:space="preserve">
+    <value>Enter verification code</value>
+  </data>
   <data name="UI_ForgotPassword" xml:space="preserve">
     <value>Forgot your password?</value>
   </data>
@@ -282,6 +285,9 @@
   <data name="UI_Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="UI_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="UI_ResetConfirm" xml:space="preserve">
     <value>Your password has been reset. Please</value>
   </data>
@@ -291,8 +297,23 @@
   <data name="UI_ResetPasswordConfirmation" xml:space="preserve">
     <value>Reset password confirmation</value>
   </data>
+  <data name="UI_ResetYourPass" xml:space="preserve">
+    <value>Reset your password.</value>
+  </data>
+  <data name="UI_Select2FAuthProvider" xml:space="preserve">
+    <value>Select Two-Factor Authentication Provider:</value>
+  </data>
   <data name="UI_SelectOrg" xml:space="preserve">
     <value>Select Organization</value>
+  </data>
+  <data name="UI_Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="UI_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="UI_Verify" xml:space="preserve">
+    <value>Verify</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

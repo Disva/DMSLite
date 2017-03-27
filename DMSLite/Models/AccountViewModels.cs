@@ -77,7 +77,7 @@ namespace DMSLite.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Resources))]
-        [Compare("Password", ErrorMessageResourceName = "The password and confirmation password do not match.", ErrorMessageResourceType = typeof(Resources.Resources))]
+        [Compare("Password", ErrorMessageResourceName = "ConfirmPassError", ErrorMessageResourceType = typeof(Resources.Resources))]
         public string ConfirmPassword { get; set; }
     }
 
