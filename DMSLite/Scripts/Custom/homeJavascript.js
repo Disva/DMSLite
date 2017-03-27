@@ -9,8 +9,16 @@ function scrollToBottom() {
         scrollTop: $("#outputOuter").prop("scrollHeight")
     }, 350);
 }
+
 // Remove loading styling
 function updateContainer() {
+
+    //Clear old text in the chat box
+    var maxNumOfElems = 100;
+    var numOfElems = $("#outputContainer > div").length;
+    if (numOfElems > maxNumOfElems) {
+        $('#outputContainer').find('.bubbleLine:lt(' + (numOfElems - maxNumOfElems) + ')').remove();
+    }
 
     scrollToBottom();
 
