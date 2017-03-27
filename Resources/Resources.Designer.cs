@@ -412,6 +412,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string UI_Add {
+            get {
+                return ResourceManager.GetString("UI_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Another Batch.
+        /// </summary>
+        public static string UI_AddAnoBatch {
+            get {
+                return ResourceManager.GetString("UI_AddAnoBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Batch.
+        /// </summary>
+        public static string UI_AddBatch {
+            get {
+                return ResourceManager.GetString("UI_AddBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Batch.
+        /// </summary>
+        public static string UI_AddBatchSuc {
+            get {
+                return ResourceManager.GetString("UI_AddBatchSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add one?.
+        /// </summary>
+        public static string UI_AddOne {
+            get {
+                return ResourceManager.GetString("UI_AddOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch ID.
+        /// </summary>
+        public static string UI_BatchID {
+            get {
+                return ResourceManager.GetString("UI_BatchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string UI_Cancel {
+            get {
+                return ResourceManager.GetString("UI_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please check your email to reset your password..
         /// </summary>
         public static string UI_CheckEmail {
@@ -426,6 +489,33 @@ namespace Resources {
         public static string UI_ClickLogin {
             get {
                 return ResourceManager.GetString("UI_ClickLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string UI_Close {
+            get {
+                return ResourceManager.GetString("UI_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close A Batch.
+        /// </summary>
+        public static string UI_CloseBatch {
+            get {
+                return ResourceManager.GetString("UI_CloseBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close This Batch.
+        /// </summary>
+        public static string UI_CloseThisBatch {
+            get {
+                return ResourceManager.GetString("UI_CloseThisBatch", resourceCulture);
             }
         }
         
@@ -453,6 +543,15 @@ namespace Resources {
         public static string UI_CreateNewAccount {
             get {
                 return ResourceManager.GetString("UI_CreateNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has no donations. Would you like to.
+        /// </summary>
+        public static string UI_DonWouldYouLikeTo {
+            get {
+                return ResourceManager.GetString("UI_DonWouldYouLikeTo", resourceCulture);
             }
         }
         
@@ -498,6 +597,15 @@ namespace Resources {
         public static string UI_ForgotPasswordConfirmation {
             get {
                 return ResourceManager.GetString("UI_ForgotPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has been closed..
+        /// </summary>
+        public static string UI_HasBeenClosed {
+            get {
+                return ResourceManager.GetString("UI_HasBeenClosed", resourceCulture);
             }
         }
         
@@ -642,6 +750,33 @@ namespace Resources {
         public static string UI_Submit {
             get {
                 return ResourceManager.GetString("UI_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The batch.
+        /// </summary>
+        public static string UI_TheBatch {
+            get {
+                return ResourceManager.GetString("UI_TheBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now showing both posted and open batches!.
+        /// </summary>
+        public static string UI_ToggleAllBatches {
+            get {
+                return ResourceManager.GetString("UI_ToggleAllBatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now only showing open batches!.
+        /// </summary>
+        public static string UI_ToggleOpenBatches {
+            get {
+                return ResourceManager.GetString("UI_ToggleOpenBatches", resourceCulture);
             }
         }
         
