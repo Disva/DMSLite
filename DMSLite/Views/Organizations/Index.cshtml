@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DMSLite.Entities.Organization>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Resources.Resources.UI_Index;
 }
 
-<h2>Index</h2>
+<h2>@Resources.Resources.UI_Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Resources.Resources.UI_CreateNew, "Create")
 </p>
 <table class="table">
     <tr>
@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.RegistrationNumer)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink(Resources.Resources.UI_Edit, "Edit", new { id=item.Id }) |
+            @Html.ActionLink(Resources.Resources.UI_Details, "Details", new { id=item.Id }) |
+            @Html.ActionLink(Resources.Resources.UI_Delete, "Delete", new { id=item.Id })
         </td>
     </tr>
 }
