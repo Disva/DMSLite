@@ -457,6 +457,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this?.
+        /// </summary>
+        public static string UI_AreYouSureDelete {
+            get {
+                return ResourceManager.GetString("UI_AreYouSureDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to List.
+        /// </summary>
+        public static string UI_BackToList {
+            get {
+                return ResourceManager.GetString("UI_BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Batch ID.
         /// </summary>
         public static string UI_BatchID {
@@ -538,6 +556,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string UI_Create {
+            get {
+                return ResourceManager.GetString("UI_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New.
+        /// </summary>
+        public static string UI_CreateNew {
+            get {
+                return ResourceManager.GetString("UI_CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a new account..
         /// </summary>
         public static string UI_CreateNewAccount {
@@ -547,11 +583,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string UI_Delete {
+            get {
+                return ResourceManager.GetString("UI_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string UI_Details {
+            get {
+                return ResourceManager.GetString("UI_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to has no donations. Would you like to.
         /// </summary>
         public static string UI_DonWouldYouLikeTo {
             get {
                 return ResourceManager.GetString("UI_DonWouldYouLikeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string UI_Edit {
+            get {
+                return ResourceManager.GetString("UI_Edit", resourceCulture);
             }
         }
         
@@ -637,6 +700,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        public static string UI_Index {
+            get {
+                return ResourceManager.GetString("UI_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string UI_LogIn {
@@ -660,6 +732,15 @@ namespace Resources {
         public static string UI_Name {
             get {
                 return ResourceManager.GetString("UI_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organization.
+        /// </summary>
+        public static string UI_Organization {
+            get {
+                return ResourceManager.GetString("UI_Organization", resourceCulture);
             }
         }
         
@@ -732,6 +813,15 @@ namespace Resources {
         public static string UI_ResetYourPass {
             get {
                 return ResourceManager.GetString("UI_ResetYourPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string UI_Save {
+            get {
+                return ResourceManager.GetString("UI_Save", resourceCulture);
             }
         }
         
