@@ -75,6 +75,22 @@ $(function () {
   [
       'receipts'
   ]
+],
+[
+    'toggle',
+    [
+        'showing',
+        'viewing',
+        'displaying',
+        [
+            'open',
+            'closed',
+            'posted',
+            [
+                'batches'
+            ]
+        ]
+    ]
 ]
     ];
     var haystack = [];

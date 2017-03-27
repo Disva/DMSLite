@@ -509,6 +509,7 @@
     <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Account.cshtml" />
     <Content Include="Views\Account\AddSuccess.cshtml" />
+    <Content Include="Views\Batch\_ToggleDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
