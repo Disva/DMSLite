@@ -6,7 +6,8 @@
     {
         InsertionMode = InsertionMode.ReplaceWith,
         UpdateTargetId = id,
-        OnBegin = "showLoadingButton(\"" + id + "\")"
+        OnBegin = "showLoadingButton(\"" + id + "\")",
+        OnSuccess = "checkHideModal();"
     }))
     {
         @Html.AntiForgeryToken()
