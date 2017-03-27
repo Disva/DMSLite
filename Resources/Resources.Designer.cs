@@ -403,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string UI_Account {
+            get {
+                return ResourceManager.GetString("UI_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please check your email to reset your password..
         /// </summary>
         public static string UI_CheckEmail {
@@ -435,6 +444,33 @@ namespace Resources {
         public static string UI_ConfirmThanks {
             get {
                 return ResourceManager.GetString("UI_ConfirmThanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new account..
+        /// </summary>
+        public static string UI_CreateNewAccount {
+            get {
+                return ResourceManager.GetString("UI_CreateNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Link.
+        /// </summary>
+        public static string UI_EmailLink {
+            get {
+                return ResourceManager.GetString("UI_EmailLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email..
+        /// </summary>
+        public static string UI_EnterEmail {
+            get {
+                return ResourceManager.GetString("UI_EnterEmail", resourceCulture);
             }
         }
         
@@ -475,6 +511,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string UI_Id {
+            get {
+                return ResourceManager.GetString("UI_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string UI_LogIn {
+            get {
+                return ResourceManager.GetString("UI_LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string UI_Name {
+            get {
+                return ResourceManager.GetString("UI_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organizations.
+        /// </summary>
+        public static string UI_Organizations {
+            get {
+                return ResourceManager.GetString("UI_Organizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string UI_Register {
@@ -507,6 +579,15 @@ namespace Resources {
         public static string UI_ResetPasswordConfirmation {
             get {
                 return ResourceManager.GetString("UI_ResetPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Organization.
+        /// </summary>
+        public static string UI_SelectOrg {
+            get {
+                return ResourceManager.GetString("UI_SelectOrg", resourceCulture);
             }
         }
         

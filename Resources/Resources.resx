@@ -231,6 +231,9 @@
   <data name="Sum" xml:space="preserve">
     <value>Total Amount Donated</value>
   </data>
+  <data name="UI_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
   <data name="UI_CheckEmail" xml:space="preserve">
     <value>Please check your email to reset your password.</value>
   </data>
@@ -242,6 +245,15 @@
   </data>
   <data name="UI_ConfirmThanks" xml:space="preserve">
     <value>Thank you for confirming your email. Please</value>
+  </data>
+  <data name="UI_CreateNewAccount" xml:space="preserve">
+    <value>Create a new account.</value>
+  </data>
+  <data name="UI_EmailLink" xml:space="preserve">
+    <value>Email Link</value>
+  </data>
+  <data name="UI_EnterEmail" xml:space="preserve">
+    <value>Enter your email.</value>
   </data>
   <data name="UI_ForgotPassword" xml:space="preserve">
     <value>Forgot your password?</value>
@@ -255,6 +267,18 @@
   <data name="UI_HomeTitle" xml:space="preserve">
     <value>Home Page</value>
   </data>
+  <data name="UI_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="UI_LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="UI_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UI_Organizations" xml:space="preserve">
+    <value>Organizations</value>
+  </data>
   <data name="UI_Register" xml:space="preserve">
     <value>Register</value>
   </data>
@@ -266,6 +290,9 @@
   </data>
   <data name="UI_ResetPasswordConfirmation" xml:space="preserve">
     <value>Reset password confirmation</value>
+  </data>
+  <data name="UI_SelectOrg" xml:space="preserve">
+    <value>Select Organization</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

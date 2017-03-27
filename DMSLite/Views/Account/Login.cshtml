@@ -15,7 +15,7 @@
                         @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                         @Html.PasswordFor(m => m.Password, new { @placeholder = "Password" })
-                        <input type="submit" value="Log in" id="loginButton" />
+                        <input type="submit" value="@Resources.Resources.UI_LogIn" id="loginButton" />
                     </form>
                 </div>
             </div>
