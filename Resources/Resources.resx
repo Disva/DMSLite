@@ -231,6 +231,9 @@
   <data name="Sum" xml:space="preserve">
     <value>Total Amount Donated</value>
   </data>
+  <data name="UI_CheckEmail" xml:space="preserve">
+    <value>Please check your email to reset your password.</value>
+  </data>
   <data name="UI_ClickLogin" xml:space="preserve">
     <value>Click here to Log in</value>
   </data>
@@ -240,11 +243,29 @@
   <data name="UI_ConfirmThanks" xml:space="preserve">
     <value>Thank you for confirming your email. Please</value>
   </data>
+  <data name="UI_ForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="UI_ForgotPasswordConfirmation" xml:space="preserve">
+    <value>Forgot Password Confirmation</value>
+  </data>
   <data name="UI_HelpButton" xml:space="preserve">
     <value>Did something break?</value>
   </data>
   <data name="UI_HomeTitle" xml:space="preserve">
     <value>Home Page</value>
+  </data>
+  <data name="UI_Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="UI_ResetConfirm" xml:space="preserve">
+    <value>Your password has been reset. Please</value>
+  </data>
+  <data name="UI_ResetPassword" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="UI_ResetPasswordConfirmation" xml:space="preserve">
+    <value>Reset password confirmation</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

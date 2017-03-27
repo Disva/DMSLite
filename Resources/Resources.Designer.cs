@@ -403,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please check your email to reset your password..
+        /// </summary>
+        public static string UI_CheckEmail {
+            get {
+                return ResourceManager.GetString("UI_CheckEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click here to Log in.
         /// </summary>
         public static string UI_ClickLogin {
@@ -430,6 +439,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forgot your password?.
+        /// </summary>
+        public static string UI_ForgotPassword {
+            get {
+                return ResourceManager.GetString("UI_ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot Password Confirmation.
+        /// </summary>
+        public static string UI_ForgotPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("UI_ForgotPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Did something break?.
         /// </summary>
         public static string UI_HelpButton {
@@ -444,6 +471,42 @@ namespace Resources {
         public static string UI_HomeTitle {
             get {
                 return ResourceManager.GetString("UI_HomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string UI_Register {
+            get {
+                return ResourceManager.GetString("UI_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been reset. Please.
+        /// </summary>
+        public static string UI_ResetConfirm {
+            get {
+                return ResourceManager.GetString("UI_ResetConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password.
+        /// </summary>
+        public static string UI_ResetPassword {
+            get {
+                return ResourceManager.GetString("UI_ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password confirmation.
+        /// </summary>
+        public static string UI_ResetPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("UI_ResetPasswordConfirmation", resourceCulture);
             }
         }
         
