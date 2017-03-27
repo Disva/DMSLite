@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a New Donation.
+        /// </summary>
+        public static string UI_AddANewDonation {
+            get {
+                return ResourceManager.GetString("UI_AddANewDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Another Batch.
         /// </summary>
         public static string UI_AddAnoBatch {
@@ -430,7 +439,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a New Batch.
+        ///   Looks up a localized string similar to Add Another Donation.
+        /// </summary>
+        public static string UI_AddAnoDonation {
+            get {
+                return ResourceManager.GetString("UI_AddAnoDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New {0} Batch.
         /// </summary>
         public static string UI_AddBatch {
             get {
@@ -444,6 +462,15 @@ namespace Resources {
         public static string UI_AddBatchSuc {
             get {
                 return ResourceManager.GetString("UI_AddBatchSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Donation.
+        /// </summary>
+        public static string UI_AddDonationSucc {
+            get {
+                return ResourceManager.GetString("UI_AddDonationSucc", resourceCulture);
             }
         }
         
@@ -511,6 +538,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The batch {0} has been closed..
+        /// </summary>
+        public static string UI_ClosedBatchConfirm {
+            get {
+                return ResourceManager.GetString("UI_ClosedBatchConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close This Batch.
         /// </summary>
         public static string UI_CloseThisBatch {
@@ -547,11 +583,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donation Edited.
+        /// </summary>
+        public static string UI_DonationEditSuc {
+            get {
+                return ResourceManager.GetString("UI_DonationEditSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation ID.
+        /// </summary>
+        public static string UI_DonationID {
+            get {
+                return ResourceManager.GetString("UI_DonationID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation successfully updated..
+        /// </summary>
+        public static string UI_DonationUpdateSuc {
+            get {
+                return ResourceManager.GetString("UI_DonationUpdateSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to has no donations. Would you like to.
         /// </summary>
         public static string UI_DonWouldYouLikeTo {
             get {
                 return ResourceManager.GetString("UI_DonWouldYouLikeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit a Donation.
+        /// </summary>
+        public static string UI_EditDonation {
+            get {
+                return ResourceManager.GetString("UI_EditDonation", resourceCulture);
             }
         }
         
@@ -601,15 +673,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to has been closed..
-        /// </summary>
-        public static string UI_HasBeenClosed {
-            get {
-                return ResourceManager.GetString("UI_HasBeenClosed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Did something break?.
         /// </summary>
         public static string UI_HelpButton {
@@ -655,11 +718,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (not a gift).
+        /// </summary>
+        public static string UI_NotAGift {
+            get {
+                return ResourceManager.GetString("UI_NotAGift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string UI_Ok {
+            get {
+                return ResourceManager.GetString("UI_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organizations.
         /// </summary>
         public static string UI_Organizations {
             get {
                 return ResourceManager.GetString("UI_Organizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt.
+        /// </summary>
+        public static string UI_Receipt {
+            get {
+                return ResourceManager.GetString("UI_Receipt", resourceCulture);
             }
         }
         
@@ -718,6 +808,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string UI_Save {
+            get {
+                return ResourceManager.GetString("UI_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Two-Factor Authentication Provider:.
         /// </summary>
         public static string UI_Select2FAuthProvider {
@@ -763,6 +862,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This donation is a gift.
+        /// </summary>
+        public static string UI_ThisDonIsAGift {
+            get {
+                return ResourceManager.GetString("UI_ThisDonIsAGift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now showing both posted and open batches!.
         /// </summary>
         public static string UI_ToggleAllBatches {
@@ -772,11 +880,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Now showing both posted and open donations!.
+        /// </summary>
+        public static string UI_ToggleAllDonations {
+            get {
+                return ResourceManager.GetString("UI_ToggleAllDonations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now only showing open batches!.
         /// </summary>
         public static string UI_ToggleOpenBatches {
             get {
                 return ResourceManager.GetString("UI_ToggleOpenBatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now only showing posted donations!.
+        /// </summary>
+        public static string UI_TogglePostedDonations {
+            get {
+                return ResourceManager.GetString("UI_TogglePostedDonations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to true.
+        /// </summary>
+        public static string UI_True {
+            get {
+                return ResourceManager.GetString("UI_True", resourceCulture);
             }
         }
         
