@@ -276,11 +276,17 @@
   <data name="UI_LogIn" xml:space="preserve">
     <value>Log in</value>
   </data>
+  <data name="UI_MakeReceipts" xml:space="preserve">
+    <value>Make Receipts</value>
+  </data>
   <data name="UI_Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="UI_Organizations" xml:space="preserve">
     <value>Organizations</value>
+  </data>
+  <data name="UI_PrintReceipts" xml:space="preserve">
+    <value>Print Receipts</value>
   </data>
   <data name="UI_Register" xml:space="preserve">
     <value>Register</value>
@@ -303,6 +309,18 @@
   <data name="UI_Select2FAuthProvider" xml:space="preserve">
     <value>Select Two-Factor Authentication Provider:</value>
   </data>
+  <data name="UI_SelectABatch" xml:space="preserve">
+    <value>Select a batch</value>
+  </data>
+  <data name="UI_SelectADonor" xml:space="preserve">
+    <value>Select a donor</value>
+  </data>
+  <data name="UI_SelectAllBatches" xml:space="preserve">
+    <value>Select all batches</value>
+  </data>
+  <data name="UI_SelectAllDonors" xml:space="preserve">
+    <value>Select all donors</value>
+  </data>
   <data name="UI_SelectOrg" xml:space="preserve">
     <value>Select Organization</value>
   </data>
@@ -314,8 +332,5 @@
   </data>
   <data name="UI_Verify" xml:space="preserve">
     <value>Verify</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
   </data>
 </root>

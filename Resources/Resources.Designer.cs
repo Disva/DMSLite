@@ -538,6 +538,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make Receipts.
+        /// </summary>
+        public static string UI_MakeReceipts {
+            get {
+                return ResourceManager.GetString("UI_MakeReceipts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string UI_Name {
@@ -552,6 +561,15 @@ namespace Resources {
         public static string UI_Organizations {
             get {
                 return ResourceManager.GetString("UI_Organizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Receipts.
+        /// </summary>
+        public static string UI_PrintReceipts {
+            get {
+                return ResourceManager.GetString("UI_PrintReceipts", resourceCulture);
             }
         }
         
@@ -619,6 +637,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select a batch.
+        /// </summary>
+        public static string UI_SelectABatch {
+            get {
+                return ResourceManager.GetString("UI_SelectABatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a donor.
+        /// </summary>
+        public static string UI_SelectADonor {
+            get {
+                return ResourceManager.GetString("UI_SelectADonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all batches.
+        /// </summary>
+        public static string UI_SelectAllBatches {
+            get {
+                return ResourceManager.GetString("UI_SelectAllBatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all donors.
+        /// </summary>
+        public static string UI_SelectAllDonors {
+            get {
+                return ResourceManager.GetString("UI_SelectAllDonors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Organization.
         /// </summary>
         public static string UI_SelectOrg {
@@ -651,15 +705,6 @@ namespace Resources {
         public static string UI_Verify {
             get {
                 return ResourceManager.GetString("UI_Verify", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        public static string Value {
-            get {
-                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
     }
