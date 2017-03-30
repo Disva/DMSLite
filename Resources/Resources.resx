@@ -247,7 +247,7 @@
     <value>Add Another Donation</value>
   </data>
   <data name="UI_AddBatch" xml:space="preserve">
-    <value>Add a New {0} Batch</value>
+    <value>Add a New Batch</value>
   </data>
   <data name="UI_AddBatchSuc" xml:space="preserve">
     <value>Added New Batch</value>

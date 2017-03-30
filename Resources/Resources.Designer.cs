@@ -493,7 +493,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a New {0} Batch.
+        ///   Looks up a localized string similar to Add a New Batch.
         /// </summary>
         public static string UI_AddBatch {
             get {

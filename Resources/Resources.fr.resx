@@ -247,61 +247,61 @@
     <value>Ajouter un autre don</value>
   </data>
   <data name="UI_AddBatch" xml:space="preserve">
-    <value>Add a New {0} Batch</value>
+    <value>Ajouter un nouveau lot</value>
   </data>
   <data name="UI_AddBatchSuc" xml:space="preserve">
-    <value>Added New Batch</value>
+    <value>Nouveau lot ajouté</value>
   </data>
   <data name="UI_AddDonationSucc" xml:space="preserve">
-    <value>Added New Donation</value>
+    <value>Nouveau don ajouté</value>
   </data>
   <data name="UI_AddOne" xml:space="preserve">
-    <value>add one?</value>
+    <value>ajouté un?</value>
   </data>
   <data name="UI_AddPhoneNumber" xml:space="preserve">
-    <value>Add a phone number</value>
+    <value>Ajouter un numéro de téléphone</value>
   </data>
   <data name="UI_AreYouSureDelete" xml:space="preserve">
-    <value>Are you sure you want to delete this?</value>
+    <value>Supprimer cette option?</value>
   </data>
   <data name="UI_BackToList" xml:space="preserve">
-    <value>Back to List</value>
+    <value>Retour à la liste</value>
   </data>
   <data name="UI_BatchID" xml:space="preserve">
-    <value>Batch ID</value>
+    <value>ID du lot</value>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler</value>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Changer le mot de passe</value>
   </data>
   <data name="UI_ChangePasswordForm" xml:space="preserve">
-    <value>Change Password Form</value>
+    <value>Formulaire de Changement de Mot de Passe</value>
   </data>
   <data name="UI_ChangeYourAccountSettings" xml:space="preserve">
-    <value>Change Your Account Settings</value>
+    <value>Modifier les paramètres de votre compte</value>
   </data>
   <data name="UI_ChangeYourPassword" xml:space="preserve">
-    <value>Change your password</value>
+    <value>Modifier votre mot de passe</value>
   </data>
   <data name="UI_CheckEmail" xml:space="preserve">
-    <value>Please check your email to reset your password.</value>
+    <value>Veuillez vérifier votre courriel pour réinitialiser votre mot de passe.</value>
   </data>
   <data name="UI_ClickLogin" xml:space="preserve">
-    <value>Click here to Log in</value>
+    <value>Cliquez ici pour vous connecter</value>
   </data>
   <data name="UI_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Fermer</value>
   </data>
   <data name="UI_CloseBatch" xml:space="preserve">
-    <value>Close A Batch</value>
+    <value>Fermer un Lot</value>
   </data>
   <data name="UI_ClosedBatchConfirm" xml:space="preserve">
-    <value>The batch {0} has been closed.</value>
+    <value>Le lot {0} a été fermé</value>
   </data>
   <data name="UI_CloseThisBatch" xml:space="preserve">
-    <value>Close This Batch</value>
+    <value>Fermer ce lot</value>
   </data>
   <data name="UI_ConfirmEmail" xml:space="preserve">
     <value>Confirm Email</value>
