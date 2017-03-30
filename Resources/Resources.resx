@@ -474,4 +474,25 @@
   <data name="UI_SendVerCode" xml:space="preserve">
     <value>Send verification code</value>
   </data>
+  <data name="UI_CreateLocalLogin" xml:space="preserve">
+    <value>Create Local Login</value>
+  </data>
+  <data name="UI_CreatePassword" xml:space="preserve">
+    <value>Create Password</value>
+  </data>
+  <data name="UI_EnterVerificationCode" xml:space="preserve">
+    <value>Enter verification code</value>
+  </data>
+  <data name="UI_ManageYourExternalLogins" xml:space="preserve">
+    <value>Manage your external logins</value>
+  </data>
+  <data name="UI_NoLocalUserPass" xml:space="preserve">
+    <value>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</value>
+  </data>
+  <data name="UI_SetPassword" xml:space="preserve">
+    <value>Set Password</value>
+  </data>
+  <data name="UI_VerifyPhoneNumber" xml:space="preserve">
+    <value>Verify Phone Number</value>
+  </data>
 </root>

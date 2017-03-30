@@ -673,11 +673,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Local Login.
+        /// </summary>
+        public static string UI_CreateLocalLogin {
+            get {
+                return ResourceManager.GetString("UI_CreateLocalLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a new account..
         /// </summary>
         public static string UI_CreateNewAccount {
             get {
                 return ResourceManager.GetString("UI_CreateNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Password.
+        /// </summary>
+        public static string UI_CreatePassword {
+            get {
+                return ResourceManager.GetString("UI_CreatePassword", resourceCulture);
             }
         }
         
@@ -772,6 +790,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter verification code.
+        /// </summary>
+        public static string UI_EnterVerificationCode {
+            get {
+                return ResourceManager.GetString("UI_EnterVerificationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot your password?.
         /// </summary>
         public static string UI_ForgotPassword {
@@ -853,11 +880,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage your external logins.
+        /// </summary>
+        public static string UI_ManageYourExternalLogins {
+            get {
+                return ResourceManager.GetString("UI_ManageYourExternalLogins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string UI_Name {
             get {
                 return ResourceManager.GetString("UI_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have a local username/password for this site. Add a local account so you can log in without an external login..
+        /// </summary>
+        public static string UI_NoLocalUserPass {
+            get {
+                return ResourceManager.GetString("UI_NoLocalUserPass", resourceCulture);
             }
         }
         
@@ -1042,6 +1087,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        public static string UI_SetPassword {
+            get {
+                return ResourceManager.GetString("UI_SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SPS Administrative Tools.
         /// </summary>
         public static string UI_SPSAdministrativeTools {
@@ -1128,6 +1182,15 @@ namespace Resources {
         public static string UI_Verify {
             get {
                 return ResourceManager.GetString("UI_Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Phone Number.
+        /// </summary>
+        public static string UI_VerifyPhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_VerifyPhoneNumber", resourceCulture);
             }
         }
     }
