@@ -235,6 +235,7 @@
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="CSVMaps\DonationClassMap.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
       <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
