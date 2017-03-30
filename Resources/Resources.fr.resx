@@ -513,4 +513,7 @@
   <data name="UI_LogOff" xml:space="preserve">
     <value>Déconnecter</value>
   </data>
+  <data name="UI_Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
 </root>
