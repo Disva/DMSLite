@@ -507,4 +507,7 @@
   <data name="UI_Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="UI_LogOff" xml:space="preserve">
+    <value>Déconnecter</value>
+  </data>
 </root>

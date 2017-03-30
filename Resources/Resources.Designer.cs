@@ -970,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Off.
+        /// </summary>
+        public static string UI_LogOff {
+            get {
+                return ResourceManager.GetString("UI_LogOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Make Receipts.
         /// </summary>
         public static string UI_MakeReceipts {
