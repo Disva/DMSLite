@@ -307,70 +307,70 @@
     <value>Confirm Email</value>
   </data>
   <data name="UI_ConfirmThanks" xml:space="preserve">
-    <value>Thank you for confirming your email. Please</value>
+    <value>Merci d'avoir confirmé votre courriel. Veuillez</value>
   </data>
   <data name="UI_CreateNewAccount" xml:space="preserve">
-    <value>Create a new account.</value>
+    <value>Créer un Nouveau Compte</value>
   </data>
   <data name="UI_DonationEditSuc" xml:space="preserve">
-    <value>Donation Edited</value>
+    <value>Votre Don a été modifié avec succès</value>
   </data>
   <data name="UI_DonationID" xml:space="preserve">
-    <value>Donation ID</value>
+    <value>ID du Don</value>
   </data>
   <data name="UI_DonationUpdateSuc" xml:space="preserve">
-    <value>Donation successfully updated.</value>
+    <value>Votre don a été modifié avec succès</value>
   </data>
   <data name="UI_DonWouldYouLikeTo" xml:space="preserve">
-    <value>has no donations. Would you like to</value>
+    <value>n'a pas de dons. Voulez-vous</value>
   </data>
   <data name="UI_DownloadLog" xml:space="preserve">
-    <value>Download Log</value>
+    <value>Télécharger registre</value>
   </data>
   <data name="UI_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Modifier</value>
   </data>
   <data name="UI_EditDonation" xml:space="preserve">
-    <value>Edit a Donation</value>
+    <value>Modifier un don</value>
   </data>
   <data name="UI_EmailLink" xml:space="preserve">
     <value>Email Link</value>
   </data>
   <data name="UI_EnterEmail" xml:space="preserve">
-    <value>Enter your email.</value>
+    <value>Veuillez entrer votre courriel</value>
   </data>
   <data name="UI_EnterVerCode" xml:space="preserve">
-    <value>Enter verification code</value>
+    <value>Veuillez entrer le code de vérification</value>
   </data>
   <data name="UI_ForgotPassword" xml:space="preserve">
-    <value>Forgot your password?</value>
+    <value>Mot de passe oublié?</value>
   </data>
   <data name="UI_ForgotPasswordConfirmation" xml:space="preserve">
-    <value>Forgot Password Confirmation</value>
+    <value>Confirmation du mot de passe oublié</value>
   </data>
   <data name="UI_HelpButton" xml:space="preserve">
-    <value>Did something break?</value>
+    <value>Quelque-chose de cassé?</value>
   </data>
   <data name="UI_HomeTitle" xml:space="preserve">
-    <value>Home Page</value>
+    <value>Accueil</value>
   </data>
   <data name="UI_Id" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="UI_LogIn" xml:space="preserve">
-    <value>Log in</value>
+    <value>Connexion</value>
   </data>
   <data name="UI_MakeReceipts" xml:space="preserve">
-    <value>Make Receipts</value>
+    <value>Créer des Reçus</value>
   </data>
   <data name="UI_ManageOrganizations" xml:space="preserve">
-    <value>Manage Organizations</value>
+    <value>Gérer les organisations</value>
   </data>
   <data name="UI_ManageUserRoles" xml:space="preserve">
-    <value>Manage User Roles</value>
+    <value>Gérer les Roles des Utilisateurs</value>
   </data>
   <data name="UI_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
   </data>
   <data name="UI_NotAGift" xml:space="preserve">
     <value>(not a gift)</value>
@@ -460,7 +460,7 @@
     <value>Verify</value>
   </data>
   <data name="UI_Create" xml:space="preserve">
-    <value>Create</value>
+    <value>Créer</value>
   </data>
   <data name="UI_AddAccountSuc" xml:space="preserve">
     <value>Nouveau compte ajouté</value>
@@ -478,10 +478,10 @@
     <value>Create Local Login</value>
   </data>
   <data name="UI_CreatePassword" xml:space="preserve">
-    <value>Create Password</value>
+    <value>Créer votre mot de passe</value>
   </data>
   <data name="UI_EnterVerificationCode" xml:space="preserve">
-    <value>Enter verification code</value>
+    <value>Veuillez entrer le code de vérification</value>
   </data>
   <data name="UI_ManageYourExternalLogins" xml:space="preserve">
     <value>Manage your external logins</value>
