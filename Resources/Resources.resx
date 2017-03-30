@@ -237,14 +237,23 @@
   <data name="UI_Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="UI_AddANewDonation" xml:space="preserve">
+    <value>Add a New Donation</value>
+  </data>
   <data name="UI_AddAnoBatch" xml:space="preserve">
     <value>Add Another Batch</value>
   </data>
+  <data name="UI_AddAnoDonation" xml:space="preserve">
+    <value>Add Another Donation</value>
+  </data>
   <data name="UI_AddBatch" xml:space="preserve">
-    <value>Add a New Batch</value>
+    <value>Add a New {0} Batch</value>
   </data>
   <data name="UI_AddBatchSuc" xml:space="preserve">
     <value>Added New Batch</value>
+  </data>
+  <data name="UI_AddDonationSucc" xml:space="preserve">
+    <value>Added New Donation</value>
   </data>
   <data name="UI_AddOne" xml:space="preserve">
     <value>add one?</value>
@@ -288,6 +297,9 @@
   <data name="UI_CloseBatch" xml:space="preserve">
     <value>Close A Batch</value>
   </data>
+  <data name="UI_ClosedBatchConfirm" xml:space="preserve">
+    <value>The batch {0} has been closed.</value>
+  </data>
   <data name="UI_CloseThisBatch" xml:space="preserve">
     <value>Close This Batch</value>
   </data>
@@ -297,20 +309,17 @@
   <data name="UI_ConfirmThanks" xml:space="preserve">
     <value>Thank you for confirming your email. Please</value>
   </data>
-  <data name="UI_Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="UI_CreateNew" xml:space="preserve">
-    <value>Create New</value>
-  </data>
   <data name="UI_CreateNewAccount" xml:space="preserve">
     <value>Create a new account.</value>
   </data>
-  <data name="UI_Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="UI_DonationEditSuc" xml:space="preserve">
+    <value>Donation Edited</value>
   </data>
-  <data name="UI_Details" xml:space="preserve">
-    <value>Details</value>
+  <data name="UI_DonationID" xml:space="preserve">
+    <value>Donation ID</value>
+  </data>
+  <data name="UI_DonationUpdateSuc" xml:space="preserve">
+    <value>Donation successfully updated.</value>
   </data>
   <data name="UI_DonWouldYouLikeTo" xml:space="preserve">
     <value>has no donations. Would you like to</value>
@@ -320,6 +329,9 @@
   </data>
   <data name="UI_Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="UI_EditDonation" xml:space="preserve">
+    <value>Edit a Donation</value>
   </data>
   <data name="UI_EmailLink" xml:space="preserve">
     <value>Email Link</value>
@@ -336,9 +348,6 @@
   <data name="UI_ForgotPasswordConfirmation" xml:space="preserve">
     <value>Forgot Password Confirmation</value>
   </data>
-  <data name="UI_HasBeenClosed" xml:space="preserve">
-    <value>has been closed.</value>
-  </data>
   <data name="UI_HelpButton" xml:space="preserve">
     <value>Did something break?</value>
   </data>
@@ -347,9 +356,6 @@
   </data>
   <data name="UI_Id" xml:space="preserve">
     <value>Id</value>
-  </data>
-  <data name="UI_Index" xml:space="preserve">
-    <value>Index</value>
   </data>
   <data name="UI_LogIn" xml:space="preserve">
     <value>Log in</value>
@@ -366,8 +372,11 @@
   <data name="UI_Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="UI_Organization" xml:space="preserve">
-    <value>Organization</value>
+  <data name="UI_NotAGift" xml:space="preserve">
+    <value>(not a gift)</value>
+  </data>
+  <data name="UI_Ok" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="UI_OrganizationAdministrativeTools" xml:space="preserve">
     <value>Organization Administrative Tools</value>
@@ -383,6 +392,9 @@
   </data>
   <data name="UI_PrintReceipts" xml:space="preserve">
     <value>Print Receipts</value>
+  </data>
+  <data name="UI_Receipt" xml:space="preserve">
+    <value>Receipt</value>
   </data>
   <data name="UI_Register" xml:space="preserve">
     <value>Register</value>
@@ -411,18 +423,6 @@
   <data name="UI_Select2FAuthProvider" xml:space="preserve">
     <value>Select Two-Factor Authentication Provider:</value>
   </data>
-  <data name="UI_SelectABatch" xml:space="preserve">
-    <value>Select a batch</value>
-  </data>
-  <data name="UI_SelectADonor" xml:space="preserve">
-    <value>Select a donor</value>
-  </data>
-  <data name="UI_SelectAllBatches" xml:space="preserve">
-    <value>Select all batches</value>
-  </data>
-  <data name="UI_SelectAllDonors" xml:space="preserve">
-    <value>Select all donors</value>
-  </data>
   <data name="UI_SelectOrg" xml:space="preserve">
     <value>Select Organization</value>
   </data>
@@ -438,13 +438,40 @@
   <data name="UI_TheBatch" xml:space="preserve">
     <value>The batch</value>
   </data>
+  <data name="UI_ThisDonIsAGift" xml:space="preserve">
+    <value>This donation is a gift</value>
+  </data>
   <data name="UI_ToggleAllBatches" xml:space="preserve">
     <value>Now showing both posted and open batches!</value>
+  </data>
+  <data name="UI_ToggleAllDonations" xml:space="preserve">
+    <value>Now showing both posted and open donations!</value>
   </data>
   <data name="UI_ToggleOpenBatches" xml:space="preserve">
     <value>Now only showing open batches!</value>
   </data>
+  <data name="UI_TogglePostedDonations" xml:space="preserve">
+    <value>Now only showing posted donations!</value>
+  </data>
+  <data name="UI_True" xml:space="preserve">
+    <value>true</value>
+  </data>
   <data name="UI_Verify" xml:space="preserve">
     <value>Verify</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="UI_AddAccountSuc" xml:space="preserve">
+    <value>Added New Account</value>
+  </data>
+  <data name="UI_AddANewAccount" xml:space="preserve">
+    <value>Add a New Account</value>
+  </data>
+  <data name="UI_AddAnoAccount" xml:space="preserve">
+    <value>Add Another Account</value>
+  </data>
+  <data name="UI_SendVerCode" xml:space="preserve">
+    <value>Send verification code</value>
   </data>
 </root>
