@@ -121,10 +121,10 @@
     <value>Titre</value>
   </data>
   <data name="Batch" xml:space="preserve">
-    <value>Batch</value>
+    <value>Lot</value>
   </data>
   <data name="Batches" xml:space="preserve">
-    <value>Batches</value>
+    <value>Lots</value>
   </data>
   <data name="Bot_Thinking" xml:space="preserve">
     <value>Thinking...</value>
@@ -139,112 +139,112 @@
     <value>What would you like to do?</value>
   </data>
   <data name="CloseDate" xml:space="preserve">
-    <value>Date Closed</value>
+    <value>Date de Fermeture</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="ConfirmPassError" xml:space="preserve">
-    <value>The new password and confirmation password do not match.</value>
+    <value>Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm new password</value>
+    <value>Confirmer le nouveau mot de passe</value>
   </data>
   <data name="Count" xml:space="preserve">
-    <value>Number Of Donations</value>
+    <value>Nombre de dons</value>
   </data>
   <data name="CreateDate" xml:space="preserve">
-    <value>Date Created</value>
+    <value>Date de Création</value>
   </data>
   <data name="DBA" xml:space="preserve">
     <value>DBA</value>
   </data>
   <data name="DonAddress" xml:space="preserve">
-    <value>Address</value>
+    <value>Adresse</value>
   </data>
   <data name="DonationAccount" xml:space="preserve">
-    <value>Account</value>
+    <value>Compte</value>
   </data>
   <data name="DonationBatch" xml:space="preserve">
-    <value>Batch</value>
+    <value>Lot</value>
   </data>
   <data name="DonationDonor" xml:space="preserve">
-    <value>Donor</value>
+    <value>Donneur</value>
   </data>
   <data name="DonationReceipt" xml:space="preserve">
-    <value>Receipt</value>
+    <value>Reçu</value>
   </data>
   <data name="DonorID" xml:space="preserve">
-    <value>Donor ID</value>
+    <value>ID du Donneur</value>
   </data>
   <data name="Donors" xml:space="preserve">
-    <value>Donors</value>
+    <value>Donneurs</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Courriel</value>
   </data>
   <data name="FirstName" xml:space="preserve">
-    <value>First Name</value>
+    <value>Prénom</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Nom</value>
   </data>
   <data name="NewDonor" xml:space="preserve">
-    <value>New Donor</value>
+    <value>Nouveau Donneur</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New password</value>
+    <value>Nouveau Mot de Passe</value>
   </data>
   <data name="ObjectDescription" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="OldPassword" xml:space="preserve">
-    <value>Current password</value>
+    <value>Mot de Passe Actuel</value>
   </data>
   <data name="OrgAddress" xml:space="preserve">
-    <value>Organization Address</value>
+    <value>Adresse de l'Organisation</value>
   </data>
   <data name="OrgName" xml:space="preserve">
-    <value>Organization Name</value>
+    <value>Nom de l'Organisation</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de Passe</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone Number</value>
+    <value>Numéro de Téléphone</value>
   </data>
   <data name="ReceiptFrequency" xml:space="preserve">
-    <value>Receipt Frequency</value>
+    <value>Fréquence des Reçus</value>
   </data>
   <data name="RegistrationNumer" xml:space="preserve">
-    <value>Registration Number</value>
+    <value>Numéro d'Enregistrement</value>
   </data>
   <data name="RememberBrowser" xml:space="preserve">
-    <value>Remember This Browser?</value>
+    <value>Mémoriser mon Navigateur Web</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>Remember Me?</value>
+    <value>Mémoriser info</value>
   </data>
   <data name="SimilarDonors" xml:space="preserve">
-    <value>Similar Donors</value>
+    <value>Donneurs Similaires</value>
   </data>
   <data name="Sum" xml:space="preserve">
-    <value>Total Amount Donated</value>
+    <value>Montant Total donné</value>
   </data>
   <data name="UI_Account" xml:space="preserve">
-    <value>Account</value>
+    <value>Compte</value>
   </data>
   <data name="UI_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Ajouter</value>
   </data>
   <data name="UI_AddANewDonation" xml:space="preserve">
-    <value>Add a New Donation</value>
+    <value>Ajouter un nouveau don</value>
   </data>
   <data name="UI_AddAnoBatch" xml:space="preserve">
-    <value>Add Another Batch</value>
+    <value>Ajouter un autre lot</value>
   </data>
   <data name="UI_AddAnoDonation" xml:space="preserve">
-    <value>Add Another Donation</value>
+    <value>Ajouter un autre don</value>
   </data>
   <data name="UI_AddBatch" xml:space="preserve">
     <value>Add a New {0} Batch</value>
@@ -463,13 +463,13 @@
     <value>Create</value>
   </data>
   <data name="UI_AddAccountSuc" xml:space="preserve">
-    <value>Added New Account</value>
+    <value>Nouveau compte ajouté</value>
   </data>
   <data name="UI_AddANewAccount" xml:space="preserve">
-    <value>Add a New Account</value>
+    <value>Ajouter un nouveau compte</value>
   </data>
   <data name="UI_AddAnoAccount" xml:space="preserve">
-    <value>Add Another Account</value>
+    <value>Ajouter un autre compte</value>
   </data>
   <data name="UI_SendVerCode" xml:space="preserve">
     <value>Send verification code</value>
