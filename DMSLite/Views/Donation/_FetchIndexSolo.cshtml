@@ -39,9 +39,11 @@
                 <!-- Left Empty for delete column -->
             </div>
         </div>
+        @{decimal total = 0M;}
         @foreach (var item in Model)
         {
             string rowClass = "tableRow";
+            total += (decimal)(item.Value);
             if (item.DonationBatch.CloseDate != null)
             {
                 rowClass = "tableRow dark";
@@ -61,7 +63,7 @@
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Value)
-                    @if(!item.Gift)
+                    @if (!item.Gift)
                     {
                         <label>(not a gift)</label>
                     }
@@ -89,12 +91,12 @@
                 @if (item.DonationBatch.CloseDate == null)
                 {
                     @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                        OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
-                        OnBegin = "return bounceInput('" + buttonId + "')"
-                    }, new { @class = "glyphicon pencil" })
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
+                   OnBegin = "return bounceInput('" + buttonId + "')"
+               }, new { @class = "glyphicon pencil" })
                 }
                 else
                 {
@@ -105,12 +107,12 @@
                     @if (item.DonationBatch.CloseDate == null)
                     {
                         @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.InsertAfter,
-                            UpdateTargetId = "outputContainer",
-                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                            OnBegin = "return bounceInput('" + buttonId + "')"
-                        }, new { @class = "glyphicon remove" })
+                   {
+                       InsertionMode = InsertionMode.InsertAfter,
+                       UpdateTargetId = "outputContainer",
+                       OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                       OnBegin = "return bounceInput('" + buttonId + "')"
+                   }, new { @class = "glyphicon remove" })
                     }
                     else
                     {
@@ -118,6 +120,12 @@
                     }
                 </div>
             </div>
-        }
+                    }
+        <div class="cell">
+            @Resources.Resources.UI_Total
+        </div>
+        <div class="cell">
+            @total.ToString("C")
+        </div>
     </div>
 </div>
