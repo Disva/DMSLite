@@ -781,7 +781,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donor Edited.
+        ///   Looks up a localized string similar to Modified New Donor.
         /// </summary>
         public static string UI_DonorEdited {
             get {

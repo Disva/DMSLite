@@ -502,7 +502,7 @@
     <value>Donor</value>
   </data>
   <data name="UI_DonorEdited" xml:space="preserve">
-    <value>Donor Edited</value>
+    <value>Modified New Donor</value>
   </data>
   <data name="UI_SuccessfullyUpdated" xml:space="preserve">
     <value>successfully updated</value>
