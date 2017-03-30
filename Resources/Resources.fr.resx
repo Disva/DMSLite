@@ -373,91 +373,91 @@
     <value>Nom</value>
   </data>
   <data name="UI_NotAGift" xml:space="preserve">
-    <value>(not a gift)</value>
+    <value>(pas un cadeau)</value>
   </data>
   <data name="UI_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="UI_OrganizationAdministrativeTools" xml:space="preserve">
-    <value>Organization Administrative Tools</value>
+    <value>Outil administratif d'organization</value>
   </data>
   <data name="UI_Organizations" xml:space="preserve">
     <value>Organizations</value>
   </data>
   <data name="UI_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="UI_PhoneNumber" xml:space="preserve">
-    <value>Phone Number</value>
+    <value>Numéro de téléphone</value>
   </data>
   <data name="UI_PrintReceipts" xml:space="preserve">
-    <value>Print Receipts</value>
+    <value>Imprimer un reçu</value>
   </data>
   <data name="UI_Receipt" xml:space="preserve">
-    <value>Receipt</value>
+    <value>Reçu</value>
   </data>
   <data name="UI_Register" xml:space="preserve">
-    <value>Register</value>
+    <value>Enregistrer</value>
   </data>
   <data name="UI_RegisterNewUser" xml:space="preserve">
-    <value>Register a New User</value>
+    <value>Enregistrer un nouveau utilisateur</value>
   </data>
   <data name="UI_Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>Réinitialiser</value>
   </data>
   <data name="UI_ResetConfirm" xml:space="preserve">
-    <value>Your password has been reset. Please</value>
+    <value>Votre mot de passe est réinitializé</value>
   </data>
   <data name="UI_ResetPassword" xml:space="preserve">
-    <value>Reset password</value>
+    <value>Réinitialiser votre mot de passe</value>
   </data>
   <data name="UI_ResetPasswordConfirmation" xml:space="preserve">
-    <value>Reset password confirmation</value>
+    <value>Réinitialiser votre confirmation de mot de passe</value>
   </data>
   <data name="UI_ResetYourPass" xml:space="preserve">
-    <value>Reset your password.</value>
+    <value>Réinitialiser votre mot de passe</value>
   </data>
   <data name="UI_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Enregistrer</value>
   </data>
   <data name="UI_Select2FAuthProvider" xml:space="preserve">
-    <value>Select Two-Factor Authentication Provider:</value>
+    <value>Sélectionner une action de double authentification:</value>
   </data>
   <data name="UI_SelectOrg" xml:space="preserve">
-    <value>Select Organization</value>
+    <value>Choisissez une Organization</value>
   </data>
   <data name="UI_Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Envoyer</value>
   </data>
   <data name="UI_SPSAdministrativeTools" xml:space="preserve">
-    <value>SPS Administrative Tools</value>
+    <value>Outils Administratif SPS</value>
   </data>
   <data name="UI_Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Soumettre </value>
   </data>
   <data name="UI_TheBatch" xml:space="preserve">
-    <value>The batch</value>
+    <value>Le lot</value>
   </data>
   <data name="UI_ThisDonIsAGift" xml:space="preserve">
-    <value>This donation is a gift</value>
+    <value>Ce don est un cadeau</value>
   </data>
   <data name="UI_ToggleAllBatches" xml:space="preserve">
-    <value>Now showing both posted and open batches!</value>
+    <value>Tous les Lots sont visible</value>
   </data>
   <data name="UI_ToggleAllDonations" xml:space="preserve">
-    <value>Now showing both posted and open donations!</value>
+    <value>Tous les Dons sont visible</value>
   </data>
   <data name="UI_ToggleOpenBatches" xml:space="preserve">
-    <value>Now only showing open batches!</value>
+    <value>Juste les Lots overtes sont visible</value>
   </data>
   <data name="UI_TogglePostedDonations" xml:space="preserve">
-    <value>Now only showing posted donations!</value>
+    <value>Juste les Dons affiché sont visible</value>
   </data>
   <data name="UI_True" xml:space="preserve">
-    <value>true</value>
+    <value>Vrai</value>
   </data>
   <data name="UI_Verify" xml:space="preserve">
-    <value>Verify</value>
+    <value>Vérifier</value>
   </data>
   <data name="UI_Create" xml:space="preserve">
     <value>Créer</value>
@@ -472,7 +472,7 @@
     <value>Ajouter un autre compte</value>
   </data>
   <data name="UI_SendVerCode" xml:space="preserve">
-    <value>Send verification code</value>
+    <value>Envoyer un code de vérification</value>
   </data>
   <data name="UI_CreateLocalLogin" xml:space="preserve">
     <value>Create Local Login</value>
@@ -490,9 +490,9 @@
     <value>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</value>
   </data>
   <data name="UI_SetPassword" xml:space="preserve">
-    <value>Set Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="UI_VerifyPhoneNumber" xml:space="preserve">
-    <value>Verify Phone Number</value>
+    <value>Verifier Numéro de Téléphone</value>
   </data>
 </root>
