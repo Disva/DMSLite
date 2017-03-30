@@ -403,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string UI_About {
+            get {
+                return ResourceManager.GetString("UI_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string UI_Account {
@@ -723,6 +732,24 @@ namespace Resources {
         public static string UI_DonationUpdateSuc {
             get {
                 return ResourceManager.GetString("UI_DonationUpdateSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donor.
+        /// </summary>
+        public static string UI_Donor {
+            get {
+                return ResourceManager.GetString("UI_Donor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donor Edited.
+        /// </summary>
+        public static string UI_DonorEdited {
+            get {
+                return ResourceManager.GetString("UI_DonorEdited", resourceCulture);
             }
         }
         
@@ -1114,6 +1141,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to successfully updated.
+        /// </summary>
+        public static string UI_SuccessfullyUpdated {
+            get {
+                return ResourceManager.GetString("UI_SuccessfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The batch.
         /// </summary>
         public static string UI_TheBatch {
@@ -1173,6 +1209,15 @@ namespace Resources {
         public static string UI_True {
             get {
                 return ResourceManager.GetString("UI_True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this area to provide additional information..
+        /// </summary>
+        public static string UI_UseThisArea {
+            get {
+                return ResourceManager.GetString("UI_UseThisArea", resourceCulture);
             }
         }
         

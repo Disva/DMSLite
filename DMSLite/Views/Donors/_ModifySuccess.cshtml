@@ -1,13 +1,13 @@
 ﻿@model DMSLite.Entities.Donor
 <div class="modal-header">
     <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">Donor Edited</h4>
+    <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_DonorEdited</h4>
 </div>
 <div class="modal-body">
-    Donor @Model.FirstName successfully updated.
+    @Resources.Resources.UI_Donor @Model.FirstName @Resources.Resources.UI_SuccessfullyUpdated.
     <dl class="dl-horizontal">
         <dt>
-            Donor ID
+            @Resources.Resources.DonorID
         </dt>
 
         <dd>
