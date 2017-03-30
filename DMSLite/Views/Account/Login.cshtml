@@ -12,10 +12,12 @@
                         <img src="http://www.silentpartnersoftware.com/wp-content/uploads/2016/08/SilentPartner-LOGO-colors-500-04.png" id="spsLogo" />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = Resources.Resources.Email })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Password" })
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = Resources.Resources.Password })
                         <input type="submit" value="@Resources.Resources.UI_LogIn" id="loginButton" />
+                        <a href="/fr/Account/Login">Fr</a> / 
+                        <a href="/en/Account/Login">En</a>
                     </form>
                 </div>
             </div>
