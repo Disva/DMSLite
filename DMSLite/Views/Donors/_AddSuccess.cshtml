@@ -3,17 +3,17 @@
 @{ var id = Guid.NewGuid().ToString(); }
 <div class="modal-header">
     <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">Added New Donor</h4>
+    <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_AddedNewDonor</h4>
 </div>
 <div class="modal-body">
     <div class="hidden close-modal">
         <div class="copy-to-chat">
-            <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Created the following donor:</div></div>
+            <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">@Resources.Resources.UI_CreatedDonor</div></div>
             <div class="divTableWrapper">
                 <div class="divTable">
                     <div class="tableRow header green">
                         <div class="cell">
-                            Donor ID
+                            @Resources.Resources.DonorID
                         </div>
                         <div class="cell">
                             @Html.DisplayNameFor(model => model.FirstName)
@@ -65,7 +65,7 @@
 <div class="modal-footer">
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10" id="createButton">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resources.UI_Close</button>
         </div>
     </div>
 </div>

@@ -510,4 +510,25 @@
   <data name="UI_UseThisArea" xml:space="preserve">
     <value>Use this area to provide additional information.</value>
   </data>
+  <data name="UI_AddANewDonor" xml:space="preserve">
+    <value>Add a New Donor</value>
+  </data>
+  <data name="UI_AddDonorConfirm" xml:space="preserve">
+    <value>Are you sure you want to add your donor?</value>
+  </data>
+  <data name="UI_AddedNewDonor" xml:space="preserve">
+    <value>Added New Donor</value>
+  </data>
+  <data name="UI_CreatedDonor" xml:space="preserve">
+    <value>Created the following donor:</value>
+  </data>
+  <data name="UI_EditADonor" xml:space="preserve">
+    <value>Edit a Donor</value>
+  </data>
+  <data name="UI_FoundSomeSimilarDonors" xml:space="preserve">
+    <value>Found some similar donors:</value>
+  </data>
+  <data name="UI_SimilarDonorFound" xml:space="preserve">
+    <value>Similar Donor Found</value>
+  </data>
 </root>

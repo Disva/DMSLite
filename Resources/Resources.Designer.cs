@@ -457,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a New Donor.
+        /// </summary>
+        public static string UI_AddANewDonor {
+            get {
+                return ResourceManager.GetString("UI_AddANewDonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Another Account.
         /// </summary>
         public static string UI_AddAnoAccount {
@@ -507,6 +516,24 @@ namespace Resources {
         public static string UI_AddDonationSucc {
             get {
                 return ResourceManager.GetString("UI_AddDonationSucc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to add your donor?.
+        /// </summary>
+        public static string UI_AddDonorConfirm {
+            get {
+                return ResourceManager.GetString("UI_AddDonorConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Donor.
+        /// </summary>
+        public static string UI_AddedNewDonor {
+            get {
+                return ResourceManager.GetString("UI_AddedNewDonor", resourceCulture);
             }
         }
         
@@ -682,6 +709,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created the following donor:.
+        /// </summary>
+        public static string UI_CreatedDonor {
+            get {
+                return ResourceManager.GetString("UI_CreatedDonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Local Login.
         /// </summary>
         public static string UI_CreateLocalLogin {
@@ -781,6 +817,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit a Donor.
+        /// </summary>
+        public static string UI_EditADonor {
+            get {
+                return ResourceManager.GetString("UI_EditADonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit a Donation.
         /// </summary>
         public static string UI_EditDonation {
@@ -840,6 +885,15 @@ namespace Resources {
         public static string UI_ForgotPasswordConfirmation {
             get {
                 return ResourceManager.GetString("UI_ForgotPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found some similar donors:.
+        /// </summary>
+        public static string UI_FoundSomeSimilarDonors {
+            get {
+                return ResourceManager.GetString("UI_FoundSomeSimilarDonors", resourceCulture);
             }
         }
         
@@ -1119,6 +1173,15 @@ namespace Resources {
         public static string UI_SetPassword {
             get {
                 return ResourceManager.GetString("UI_SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Similar Donor Found.
+        /// </summary>
+        public static string UI_SimilarDonorFound {
+            get {
+                return ResourceManager.GetString("UI_SimilarDonorFound", resourceCulture);
             }
         }
         
