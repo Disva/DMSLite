@@ -549,7 +549,16 @@
   <data name="UI_LogOff" xml:space="preserve">
     <value>Log Off</value>
   </data>
+  <data name="UI_CreateNew" xml:space="preserve">
+    <value>Create new</value>
+  </data>
+  <data name="UI_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UI_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="UI_Index" xml:space="preserve">
-    <value>Index</value>
+    <value>DMS Lite</value>
   </data>
 </root>

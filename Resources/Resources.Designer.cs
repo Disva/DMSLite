@@ -736,6 +736,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new.
+        /// </summary>
+        public static string UI_CreateNew {
+            get {
+                return ResourceManager.GetString("UI_CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a new account..
         /// </summary>
         public static string UI_CreateNewAccount {
@@ -750,6 +759,24 @@ namespace Resources {
         public static string UI_CreatePassword {
             get {
                 return ResourceManager.GetString("UI_CreatePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string UI_Delete {
+            get {
+                return ResourceManager.GetString("UI_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string UI_Details {
+            get {
+                return ResourceManager.GetString("UI_Details", resourceCulture);
             }
         }
         
@@ -961,7 +988,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Index.
+        ///   Looks up a localized string similar to DMS Lite.
         /// </summary>
         public static string UI_Index {
             get {
