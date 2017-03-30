@@ -493,26 +493,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a phone number.
-        /// </summary>
-        public static string UI_AddPhoneNumber {
-            get {
-                return ResourceManager.GetString("UI_AddPhoneNumber", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this?.
-        /// </summary>
-        public static string UI_AreYouSureDelete
-        {
-            get
-            {
-                return ResourceManager.GetString("UI_AreYouSureDelete", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Added New Donation.
         /// </summary>
         public static string UI_AddDonationSucc {
@@ -527,6 +507,33 @@ namespace Resources {
         public static string UI_AddOne {
             get {
                 return ResourceManager.GetString("UI_AddOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a phone number.
+        /// </summary>
+        public static string UI_AddPhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_AddPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this?.
+        /// </summary>
+        public static string UI_AreYouSureDelete {
+            get {
+                return ResourceManager.GetString("UI_AreYouSureDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to List.
+        /// </summary>
+        public static string UI_BackToList {
+            get {
+                return ResourceManager.GetString("UI_BackToList", resourceCulture);
             }
         }
         
@@ -657,6 +664,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string UI_Create {
+            get {
+                return ResourceManager.GetString("UI_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a new account..
         /// </summary>
         public static string UI_CreateNewAccount {
@@ -709,18 +725,16 @@ namespace Resources {
                 return ResourceManager.GetString("UI_DownloadLog", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        public static string UI_Edit
-        {
-            get
-            {
+        public static string UI_Edit {
+            get {
                 return ResourceManager.GetString("UI_Edit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit a Donation.
         /// </summary>
@@ -812,11 +826,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Make Receipts.
         /// </summary>
-        public static string UI_Name {
+        public static string UI_MakeReceipts {
             get {
-                return ResourceManager.GetString("UI_Name", resourceCulture);
+                return ResourceManager.GetString("UI_MakeReceipts", resourceCulture);
             }
         }
         
@@ -837,18 +851,16 @@ namespace Resources {
                 return ResourceManager.GetString("UI_ManageUserRoles", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string UI_Name
-        {
-            get
-            {
+        public static string UI_Name {
+            get {
                 return ResourceManager.GetString("UI_Name", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to (not a gift).
         /// </summary>
@@ -902,18 +914,16 @@ namespace Resources {
                 return ResourceManager.GetString("UI_PhoneNumber", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Print Receipts.
         /// </summary>
-        public static string UI_PrintReceipts
-        {
-            get
-            {
+        public static string UI_PrintReceipts {
+            get {
                 return ResourceManager.GetString("UI_PrintReceipts", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Receipt.
         /// </summary>
@@ -1032,6 +1042,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SPS Administrative Tools.
+        /// </summary>
+        public static string UI_SPSAdministrativeTools {
+            get {
+                return ResourceManager.GetString("UI_SPSAdministrativeTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string UI_Submit {
@@ -1067,26 +1086,6 @@ namespace Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to SPS Administrative Tools.
-        /// </summary>
-        public static string UI_SPSAdministrativeTools {
-            get {
-                return ResourceManager.GetString("UI_SPSAdministrativeTools", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Submit.
-        /// </summary>
-        public static string UI_Submit
-        {
-            get
-            {
-                return ResourceManager.GetString("UI_Submit", resourceCulture);
-            }
-        }
-
         /// <summary>
         ///   Looks up a localized string similar to Now showing both posted and open donations!.
         /// </summary>
@@ -1129,15 +1128,6 @@ namespace Resources {
         public static string UI_Verify {
             get {
                 return ResourceManager.GetString("UI_Verify", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        public static string Value {
-            get {
-                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
     }

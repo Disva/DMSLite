@@ -459,8 +459,8 @@
   <data name="UI_Verify" xml:space="preserve">
     <value>Verify</value>
   </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
+  <data name="UI_Create" xml:space="preserve">
+    <value>Create</value>
   </data>
   <data name="UI_AddAccountSuc" xml:space="preserve">
     <value>Added New Account</value>
