@@ -421,3 +421,7 @@ dt{
 .fixTopPaddingEditAddress{
     padding-top: 7px;
 }
+
+.modal-dialog{
+    width:auto;
+}
