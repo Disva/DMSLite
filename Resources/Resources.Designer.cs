@@ -457,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a phone number.
+        /// </summary>
+        public static string UI_AddPhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_AddPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this?.
         /// </summary>
         public static string UI_AreYouSureDelete {
@@ -489,6 +498,42 @@ namespace Resources {
         public static string UI_Cancel {
             get {
                 return ResourceManager.GetString("UI_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string UI_ChangePassword {
+            get {
+                return ResourceManager.GetString("UI_ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password Form.
+        /// </summary>
+        public static string UI_ChangePasswordForm {
+            get {
+                return ResourceManager.GetString("UI_ChangePasswordForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Your Account Settings.
+        /// </summary>
+        public static string UI_ChangeYourAccountSettings {
+            get {
+                return ResourceManager.GetString("UI_ChangeYourAccountSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change your password.
+        /// </summary>
+        public static string UI_ChangeYourPassword {
+            get {
+                return ResourceManager.GetString("UI_ChangeYourPassword", resourceCulture);
             }
         }
         
@@ -610,6 +655,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Log.
+        /// </summary>
+        public static string UI_DownloadLog {
+            get {
+                return ResourceManager.GetString("UI_DownloadLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string UI_Edit {
@@ -727,6 +781,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Organizations.
+        /// </summary>
+        public static string UI_ManageOrganizations {
+            get {
+                return ResourceManager.GetString("UI_ManageOrganizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage User Roles.
+        /// </summary>
+        public static string UI_ManageUserRoles {
+            get {
+                return ResourceManager.GetString("UI_ManageUserRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string UI_Name {
@@ -745,11 +817,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organization Administrative Tools.
+        /// </summary>
+        public static string UI_OrganizationAdministrativeTools {
+            get {
+                return ResourceManager.GetString("UI_OrganizationAdministrativeTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organizations.
         /// </summary>
         public static string UI_Organizations {
             get {
                 return ResourceManager.GetString("UI_Organizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string UI_Password {
+            get {
+                return ResourceManager.GetString("UI_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number.
+        /// </summary>
+        public static string UI_PhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_PhoneNumber", resourceCulture);
             }
         }
         
@@ -768,6 +867,15 @@ namespace Resources {
         public static string UI_Register {
             get {
                 return ResourceManager.GetString("UI_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register a New User.
+        /// </summary>
+        public static string UI_RegisterNewUser {
+            get {
+                return ResourceManager.GetString("UI_RegisterNewUser", resourceCulture);
             }
         }
         
@@ -885,6 +993,15 @@ namespace Resources {
         public static string UI_Send {
             get {
                 return ResourceManager.GetString("UI_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SPS Administrative Tools.
+        /// </summary>
+        public static string UI_SPSAdministrativeTools {
+            get {
+                return ResourceManager.GetString("UI_SPSAdministrativeTools", resourceCulture);
             }
         }
         
