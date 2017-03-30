@@ -487,7 +487,7 @@
     <value>Manage your external logins</value>
   </data>
   <data name="UI_NoLocalUserPass" xml:space="preserve">
-    <value>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</value>
+    <value>Vous n'avez pas de nom d'utilisateur / mot de passe local pour ce site. Ajoutez un compte local afin que vous puissiez vous connecter sans connexion externe.</value>
   </data>
   <data name="UI_SetPassword" xml:space="preserve">
     <value>Mot de passe</value>
