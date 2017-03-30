@@ -531,4 +531,7 @@
   <data name="UI_SimilarDonorFound" xml:space="preserve">
     <value>Similar Donor Found</value>
   </data>
+  <data name="UI_LogOff" xml:space="preserve">
+    <value>Log off</value>
+  </data>
 </root>
