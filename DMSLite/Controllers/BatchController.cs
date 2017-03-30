@@ -13,7 +13,7 @@ namespace DMSLite.Controllers
     using Models;
     using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
-
+    
     [Authorize]
     public class BatchController : Controller
     {
