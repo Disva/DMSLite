@@ -49,8 +49,7 @@ namespace DMSLite.Tests.Controllers
             ReceiptController rc = new ReceiptController(db);
             int[] da = { donor.Id };
             int[] ba = { batch.Id };
-            rc.ZipReceipts(da, ba);
-
+            
             //make the receipt
             FileContentResult fcr = (FileContentResult)rc.ZipReceipts(da, ba);
             ZipArchive za = new ZipArchive(new MemoryStream(fcr.FileContents), ZipArchiveMode.Read);
