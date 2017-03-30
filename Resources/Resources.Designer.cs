@@ -871,6 +871,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string UI_Error {
+            get {
+                return ResourceManager.GetString("UI_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request..
+        /// </summary>
+        public static string UI_ErrorOccurred {
+            get {
+                return ResourceManager.GetString("UI_ErrorOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot your password?.
         /// </summary>
         public static string UI_ForgotPassword {
@@ -921,6 +939,15 @@ namespace Resources {
         public static string UI_Id {
             get {
                 return ResourceManager.GetString("UI_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked Out.
+        /// </summary>
+        public static string UI_LockedOut {
+            get {
+                return ResourceManager.GetString("UI_LockedOut", resourceCulture);
             }
         }
         
@@ -1218,6 +1245,15 @@ namespace Resources {
         public static string UI_TheBatch {
             get {
                 return ResourceManager.GetString("UI_TheBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This account has been locked out, please try again later..
+        /// </summary>
+        public static string UI_ThisAccountLockedOut {
+            get {
+                return ResourceManager.GetString("UI_ThisAccountLockedOut", resourceCulture);
             }
         }
         

@@ -531,4 +531,16 @@
   <data name="UI_SimilarDonorFound" xml:space="preserve">
     <value>Similar Donor Found</value>
   </data>
+  <data name="UI_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="UI_ErrorOccurred" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
+  <data name="UI_LockedOut" xml:space="preserve">
+    <value>Locked Out</value>
+  </data>
+  <data name="UI_ThisAccountLockedOut" xml:space="preserve">
+    <value>This account has been locked out, please try again later.</value>
+  </data>
 </root>
