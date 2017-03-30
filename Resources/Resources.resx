@@ -531,4 +531,16 @@
   <data name="UI_SimilarDonorFound" xml:space="preserve">
     <value>Similar Donor Found</value>
   </data>
+  <data name="UI_AccountSettings" xml:space="preserve">
+    <value>Change Your Account Settings</value>
+  </data>
+  <data name="UI_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="UI_French" xml:space="preserve">
+    <value>Francais</value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
 </root>

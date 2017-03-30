@@ -4,7 +4,7 @@
     <p class="text-success">@ViewBag.StatusMessage</p>
     <div>
         <br />
-        <h4>Change Your Account Settings</h4>
+        <h4>@Resources.Resources.UI_AccountSettings</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>@Resources.Resources.UI_Password:</dt>
@@ -19,6 +19,11 @@
                     @Html.ActionLink(Resources.Resources.UI_Create, "SetPassword")
                 }
                 ]
+            </dd>
+            <dt>@Resources.Resources.UI_Language:</dt>
+            <dd>
+                [<a href="/en">@Resources.Resources.UI_English</a> / 
+                <a href="/fr">@Resources.Resources.UI_French</a> ]
             </dd>
         </dl>
         @if (this.User.IsInRole("SPS"))

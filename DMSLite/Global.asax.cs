@@ -19,5 +19,10 @@ namespace DMSLite
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        void Session_Start(object sender, EventArgs e)
+        {
+            //set english as default startup language
+            Session["MyCulture"] = "en-CA";
+        }
     }
 }

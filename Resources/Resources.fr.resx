@@ -495,4 +495,16 @@
   <data name="UI_VerifyPhoneNumber" xml:space="preserve">
     <value>Verifier Numéro de Téléphone</value>
   </data>
+  <data name="UI_AccountSettings" xml:space="preserve">
+    <value>Modifier les paramètres de votre compte</value>
+  </data>
+  <data name="UI_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="UI_French" xml:space="preserve">
+    <value>Francais</value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
 </root>
