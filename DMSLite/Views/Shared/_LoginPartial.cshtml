@@ -12,7 +12,7 @@
         <li>
             <a href="@Url.Action("Index","Manage")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> @User.Identity.GetUserName()</a>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log off</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i> @Resources.Resources.UI_LogOff</a></li>
     </ul>
     }
 }

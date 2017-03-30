@@ -33,6 +33,12 @@
                         <div class="cell">
                             @Html.DisplayNameFor(model => model.Type)
                         </div>
+                        <div class="cell">
+                            @Html.DisplayNameFor(model => model.ReceiptFrequency)
+                        </div>
+                        <div class="cell">
+                            <!-- Left Empty for edit column -->
+                        </div>
                     </div>
                     <div class="tableRow">
                         <div class="cell">
@@ -56,12 +62,27 @@
                         <div class="cell">
                             @Html.DisplayFor(model => model.Type)
                         </div>
+                        <div class="cell">
+                            @Html.DisplayFor(model => model.ReceiptFrequency)
+                        </div>
+                        <div class="cell">
+                            @{ var buttonId = Guid.NewGuid().ToString();
+                                }
+                            @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", Model, new AjaxOptions()
+                            {
+                               InsertionMode = InsertionMode.InsertAfter,
+                               UpdateTargetId = "outputContainer",
+                               OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                               OnBegin = "return bounceInput('" + buttonId + "')"
+                           }, new { @class = "glyphicon pencil" })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="modal-footer">
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10" id="createButton">

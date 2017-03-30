@@ -1,4 +1,6 @@
 ﻿@model DMSLite.Entities.Donor
+
+@{ var id = Guid.NewGuid().ToString(); }
 <div class="modal-header">
     <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_DonorEdited</h4>
@@ -66,15 +68,10 @@
             @Html.DisplayNameFor(model => model.Archived)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Archived)
-        </dd>
-    </dl>
-</div>
 <div class="modal-footer">
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10" id="createButton">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
     </div>
 </div>

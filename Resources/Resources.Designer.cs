@@ -493,7 +493,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a New {0} Batch.
+        ///   Looks up a localized string similar to Add a New Batch.
         /// </summary>
         public static string UI_AddBatch {
             get {
@@ -781,7 +781,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Donor Edited.
+        ///   Looks up a localized string similar to Modified New Donor.
         /// </summary>
         public static string UI_DonorEdited {
             get {
@@ -957,6 +957,15 @@ namespace Resources {
         public static string UI_LogIn {
             get {
                 return ResourceManager.GetString("UI_LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log off.
+        /// </summary>
+        public static string UI_LogOff {
+            get {
+                return ResourceManager.GetString("UI_LogOff", resourceCulture);
             }
         }
         
