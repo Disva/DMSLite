@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string Accounts {
+            get {
+                return ResourceManager.GetString("Accounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string AccountTitle {
@@ -84,6 +93,42 @@ namespace Resources {
         public static string Batches {
             get {
                 return ResourceManager.GetString("Batches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thinking....
+        /// </summary>
+        public static string Bot_Thinking {
+            get {
+                return ResourceManager.GetString("Bot_Thinking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to DMS Lite!.
+        /// </summary>
+        public static string Bot_Welcome1 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can always type help if you are feeling stuck!.
+        /// </summary>
+        public static string Bot_Welcome2 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What would you like to do?.
+        /// </summary>
+        public static string Bot_Welcome3 {
+            get {
+                return ResourceManager.GetString("Bot_Welcome3", resourceCulture);
             }
         }
         
@@ -192,6 +237,15 @@ namespace Resources {
         public static string DonationReceipt {
             get {
                 return ResourceManager.GetString("DonationReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donations.
+        /// </summary>
+        public static string Donations {
+            get {
+                return ResourceManager.GetString("Donations", resourceCulture);
             }
         }
         
@@ -367,11 +421,1037 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total:.
+        ///   Looks up a localized string similar to About.
         /// </summary>
-        public static string UI_Total {
+        public static string UI_About {
             get {
-                return ResourceManager.GetString("UI_Total", resourceCulture);
+                return ResourceManager.GetString("UI_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string UI_Account {
+            get {
+                return ResourceManager.GetString("UI_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Your Account Settings.
+        /// </summary>
+        public static string UI_AccountSettings {
+            get {
+                return ResourceManager.GetString("UI_AccountSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string UI_Add {
+            get {
+                return ResourceManager.GetString("UI_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Account.
+        /// </summary>
+        public static string UI_AddAccountSuc {
+            get {
+                return ResourceManager.GetString("UI_AddAccountSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Account.
+        /// </summary>
+        public static string UI_AddANewAccount {
+            get {
+                return ResourceManager.GetString("UI_AddANewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Donation.
+        /// </summary>
+        public static string UI_AddANewDonation {
+            get {
+                return ResourceManager.GetString("UI_AddANewDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Donor.
+        /// </summary>
+        public static string UI_AddANewDonor {
+            get {
+                return ResourceManager.GetString("UI_AddANewDonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Another Account.
+        /// </summary>
+        public static string UI_AddAnoAccount {
+            get {
+                return ResourceManager.GetString("UI_AddAnoAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Another Batch.
+        /// </summary>
+        public static string UI_AddAnoBatch {
+            get {
+                return ResourceManager.GetString("UI_AddAnoBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Another Donation.
+        /// </summary>
+        public static string UI_AddAnoDonation {
+            get {
+                return ResourceManager.GetString("UI_AddAnoDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a New Batch.
+        /// </summary>
+        public static string UI_AddBatch {
+            get {
+                return ResourceManager.GetString("UI_AddBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Batch.
+        /// </summary>
+        public static string UI_AddBatchSuc {
+            get {
+                return ResourceManager.GetString("UI_AddBatchSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Donation.
+        /// </summary>
+        public static string UI_AddDonationSucc {
+            get {
+                return ResourceManager.GetString("UI_AddDonationSucc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to add your donor?.
+        /// </summary>
+        public static string UI_AddDonorConfirm {
+            get {
+                return ResourceManager.GetString("UI_AddDonorConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added New Donor.
+        /// </summary>
+        public static string UI_AddedNewDonor {
+            get {
+                return ResourceManager.GetString("UI_AddedNewDonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add one?.
+        /// </summary>
+        public static string UI_AddOne {
+            get {
+                return ResourceManager.GetString("UI_AddOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a phone number.
+        /// </summary>
+        public static string UI_AddPhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_AddPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this?.
+        /// </summary>
+        public static string UI_AreYouSureDelete {
+            get {
+                return ResourceManager.GetString("UI_AreYouSureDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to List.
+        /// </summary>
+        public static string UI_BackToList {
+            get {
+                return ResourceManager.GetString("UI_BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch ID.
+        /// </summary>
+        public static string UI_BatchID {
+            get {
+                return ResourceManager.GetString("UI_BatchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string UI_Cancel {
+            get {
+                return ResourceManager.GetString("UI_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string UI_ChangePassword {
+            get {
+                return ResourceManager.GetString("UI_ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password Form.
+        /// </summary>
+        public static string UI_ChangePasswordForm {
+            get {
+                return ResourceManager.GetString("UI_ChangePasswordForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Your Account Settings.
+        /// </summary>
+        public static string UI_ChangeYourAccountSettings {
+            get {
+                return ResourceManager.GetString("UI_ChangeYourAccountSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change your password.
+        /// </summary>
+        public static string UI_ChangeYourPassword {
+            get {
+                return ResourceManager.GetString("UI_ChangeYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please check your email to reset your password..
+        /// </summary>
+        public static string UI_CheckEmail {
+            get {
+                return ResourceManager.GetString("UI_CheckEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to Log in.
+        /// </summary>
+        public static string UI_ClickLogin {
+            get {
+                return ResourceManager.GetString("UI_ClickLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string UI_Close {
+            get {
+                return ResourceManager.GetString("UI_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close A Batch.
+        /// </summary>
+        public static string UI_CloseBatch {
+            get {
+                return ResourceManager.GetString("UI_CloseBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The batch {0} has been closed..
+        /// </summary>
+        public static string UI_ClosedBatchConfirm {
+            get {
+                return ResourceManager.GetString("UI_ClosedBatchConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close This Batch.
+        /// </summary>
+        public static string UI_CloseThisBatch {
+            get {
+                return ResourceManager.GetString("UI_CloseThisBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Email.
+        /// </summary>
+        public static string UI_ConfirmEmail {
+            get {
+                return ResourceManager.GetString("UI_ConfirmEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for confirming your email. Please.
+        /// </summary>
+        public static string UI_ConfirmThanks {
+            get {
+                return ResourceManager.GetString("UI_ConfirmThanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string UI_Create {
+            get {
+                return ResourceManager.GetString("UI_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created the following donor:.
+        /// </summary>
+        public static string UI_CreatedDonor {
+            get {
+                return ResourceManager.GetString("UI_CreatedDonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Local Login.
+        /// </summary>
+        public static string UI_CreateLocalLogin {
+            get {
+                return ResourceManager.GetString("UI_CreateLocalLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new.
+        /// </summary>
+        public static string UI_CreateNew {
+            get {
+                return ResourceManager.GetString("UI_CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new account..
+        /// </summary>
+        public static string UI_CreateNewAccount {
+            get {
+                return ResourceManager.GetString("UI_CreateNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Password.
+        /// </summary>
+        public static string UI_CreatePassword {
+            get {
+                return ResourceManager.GetString("UI_CreatePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string UI_Delete {
+            get {
+                return ResourceManager.GetString("UI_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string UI_Details {
+            get {
+                return ResourceManager.GetString("UI_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation Edited.
+        /// </summary>
+        public static string UI_DonationEditSuc {
+            get {
+                return ResourceManager.GetString("UI_DonationEditSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation ID.
+        /// </summary>
+        public static string UI_DonationID {
+            get {
+                return ResourceManager.GetString("UI_DonationID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donation successfully updated..
+        /// </summary>
+        public static string UI_DonationUpdateSuc {
+            get {
+                return ResourceManager.GetString("UI_DonationUpdateSuc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donor.
+        /// </summary>
+        public static string UI_Donor {
+            get {
+                return ResourceManager.GetString("UI_Donor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified New Donor.
+        /// </summary>
+        public static string UI_DonorEdited {
+            get {
+                return ResourceManager.GetString("UI_DonorEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has no donations. Would you like to.
+        /// </summary>
+        public static string UI_DonWouldYouLikeTo {
+            get {
+                return ResourceManager.GetString("UI_DonWouldYouLikeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Log.
+        /// </summary>
+        public static string UI_DownloadLog {
+            get {
+                return ResourceManager.GetString("UI_DownloadLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string UI_Edit {
+            get {
+                return ResourceManager.GetString("UI_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit a Donor.
+        /// </summary>
+        public static string UI_EditADonor {
+            get {
+                return ResourceManager.GetString("UI_EditADonor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit a Donation.
+        /// </summary>
+        public static string UI_EditDonation {
+            get {
+                return ResourceManager.GetString("UI_EditDonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Link.
+        /// </summary>
+        public static string UI_EmailLink {
+            get {
+                return ResourceManager.GetString("UI_EmailLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string UI_English {
+            get {
+                return ResourceManager.GetString("UI_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email..
+        /// </summary>
+        public static string UI_EnterEmail {
+            get {
+                return ResourceManager.GetString("UI_EnterEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter verification code.
+        /// </summary>
+        public static string UI_EnterVerCode {
+            get {
+                return ResourceManager.GetString("UI_EnterVerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter verification code.
+        /// </summary>
+        public static string UI_EnterVerificationCode {
+            get {
+                return ResourceManager.GetString("UI_EnterVerificationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export All {0}.
+        /// </summary>
+        public static string UI_ExportAll_X {
+            get {
+                return ResourceManager.GetString("UI_ExportAll_X", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback.
+        /// </summary>
+        public static string UI_Feedback {
+            get {
+                return ResourceManager.GetString("UI_Feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot your password?.
+        /// </summary>
+        public static string UI_ForgotPassword {
+            get {
+                return ResourceManager.GetString("UI_ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot Password Confirmation.
+        /// </summary>
+        public static string UI_ForgotPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("UI_ForgotPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found some similar donors:.
+        /// </summary>
+        public static string UI_FoundSomeSimilarDonors {
+            get {
+                return ResourceManager.GetString("UI_FoundSomeSimilarDonors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Francais.
+        /// </summary>
+        public static string UI_French {
+            get {
+                return ResourceManager.GetString("UI_French", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Did something break?.
+        /// </summary>
+        public static string UI_HelpButton {
+            get {
+                return ResourceManager.GetString("UI_HelpButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Page.
+        /// </summary>
+        public static string UI_HomeTitle {
+            get {
+                return ResourceManager.GetString("UI_HomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string UI_Id {
+            get {
+                return ResourceManager.GetString("UI_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import {0}.
+        /// </summary>
+        public static string UI_Import_X {
+            get {
+                return ResourceManager.GetString("UI_Import_X", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import/Export CSV.
+        /// </summary>
+        public static string UI_ImportExportCSV {
+            get {
+                return ResourceManager.GetString("UI_ImportExportCSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSV Import and Export.
+        /// </summary>
+        public static string UI_ImportExportCSV_2 {
+            get {
+                return ResourceManager.GetString("UI_ImportExportCSV_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DMS Lite.
+        /// </summary>
+        public static string UI_Index {
+            get {
+                return ResourceManager.GetString("UI_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string UI_Language {
+            get {
+                return ResourceManager.GetString("UI_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string UI_LogIn {
+            get {
+                return ResourceManager.GetString("UI_LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Off.
+        /// </summary>
+        public static string UI_LogOff {
+            get {
+                return ResourceManager.GetString("UI_LogOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Receipts.
+        /// </summary>
+        public static string UI_MakeReceipts {
+            get {
+                return ResourceManager.GetString("UI_MakeReceipts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Organizations.
+        /// </summary>
+        public static string UI_ManageOrganizations {
+            get {
+                return ResourceManager.GetString("UI_ManageOrganizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage User Roles.
+        /// </summary>
+        public static string UI_ManageUserRoles {
+            get {
+                return ResourceManager.GetString("UI_ManageUserRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your external logins.
+        /// </summary>
+        public static string UI_ManageYourExternalLogins {
+            get {
+                return ResourceManager.GetString("UI_ManageYourExternalLogins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string UI_Name {
+            get {
+                return ResourceManager.GetString("UI_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have a local username/password for this site. Add a local account so you can log in without an external login..
+        /// </summary>
+        public static string UI_NoLocalUserPass {
+            get {
+                return ResourceManager.GetString("UI_NoLocalUserPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (not a gift).
+        /// </summary>
+        public static string UI_NotAGift {
+            get {
+                return ResourceManager.GetString("UI_NotAGift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string UI_Ok {
+            get {
+                return ResourceManager.GetString("UI_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organization Administrative Tools.
+        /// </summary>
+        public static string UI_OrganizationAdministrativeTools {
+            get {
+                return ResourceManager.GetString("UI_OrganizationAdministrativeTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organizations.
+        /// </summary>
+        public static string UI_Organizations {
+            get {
+                return ResourceManager.GetString("UI_Organizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string UI_Password {
+            get {
+                return ResourceManager.GetString("UI_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number.
+        /// </summary>
+        public static string UI_PhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Receipts.
+        /// </summary>
+        public static string UI_PrintReceipts {
+            get {
+                return ResourceManager.GetString("UI_PrintReceipts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt.
+        /// </summary>
+        public static string UI_Receipt {
+            get {
+                return ResourceManager.GetString("UI_Receipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string UI_Register {
+            get {
+                return ResourceManager.GetString("UI_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register a New User.
+        /// </summary>
+        public static string UI_RegisterNewUser {
+            get {
+                return ResourceManager.GetString("UI_RegisterNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string UI_Reset {
+            get {
+                return ResourceManager.GetString("UI_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been reset. Please.
+        /// </summary>
+        public static string UI_ResetConfirm {
+            get {
+                return ResourceManager.GetString("UI_ResetConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password.
+        /// </summary>
+        public static string UI_ResetPassword {
+            get {
+                return ResourceManager.GetString("UI_ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password confirmation.
+        /// </summary>
+        public static string UI_ResetPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("UI_ResetPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset your password..
+        /// </summary>
+        public static string UI_ResetYourPass {
+            get {
+                return ResourceManager.GetString("UI_ResetYourPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string UI_Save {
+            get {
+                return ResourceManager.GetString("UI_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Two-Factor Authentication Provider:.
+        /// </summary>
+        public static string UI_Select2FAuthProvider {
+            get {
+                return ResourceManager.GetString("UI_Select2FAuthProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Organization.
+        /// </summary>
+        public static string UI_SelectOrg {
+            get {
+                return ResourceManager.GetString("UI_SelectOrg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string UI_Send {
+            get {
+                return ResourceManager.GetString("UI_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send verification code.
+        /// </summary>
+        public static string UI_SendVerCode {
+            get {
+                return ResourceManager.GetString("UI_SendVerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        public static string UI_SetPassword {
+            get {
+                return ResourceManager.GetString("UI_SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Similar Donor Found.
+        /// </summary>
+        public static string UI_SimilarDonorFound {
+            get {
+                return ResourceManager.GetString("UI_SimilarDonorFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SPS Administrative Tools.
+        /// </summary>
+        public static string UI_SPSAdministrativeTools {
+            get {
+                return ResourceManager.GetString("UI_SPSAdministrativeTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string UI_Submit {
+            get {
+                return ResourceManager.GetString("UI_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to successfully updated.
+        /// </summary>
+        public static string UI_SuccessfullyUpdated {
+            get {
+                return ResourceManager.GetString("UI_SuccessfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The batch.
+        /// </summary>
+        public static string UI_TheBatch {
+            get {
+                return ResourceManager.GetString("UI_TheBatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This donation is a gift.
+        /// </summary>
+        public static string UI_ThisDonIsAGift {
+            get {
+                return ResourceManager.GetString("UI_ThisDonIsAGift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now showing both posted and open batches!.
+        /// </summary>
+        public static string UI_ToggleAllBatches {
+            get {
+                return ResourceManager.GetString("UI_ToggleAllBatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now showing both posted and open donations!.
+        /// </summary>
+        public static string UI_ToggleAllDonations {
+            get {
+                return ResourceManager.GetString("UI_ToggleAllDonations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now only showing open batches!.
+        /// </summary>
+        public static string UI_ToggleOpenBatches {
+            get {
+                return ResourceManager.GetString("UI_ToggleOpenBatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now only showing posted donations!.
+        /// </summary>
+        public static string UI_TogglePostedDonations {
+            get {
+                return ResourceManager.GetString("UI_TogglePostedDonations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To upload entries, export an entity first and delete all entries to create a blank template file..
+        /// </summary>
+        public static string UI_ToUploadEntries {
+            get {
+                return ResourceManager.GetString("UI_ToUploadEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to true.
+        /// </summary>
+        public static string UI_True {
+            get {
+                return ResourceManager.GetString("UI_True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this area to provide additional information..
+        /// </summary>
+        public static string UI_UseThisArea {
+            get {
+                return ResourceManager.GetString("UI_UseThisArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string UI_Verify {
+            get {
+                return ResourceManager.GetString("UI_Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Phone Number.
+        /// </summary>
+        public static string UI_VerifyPhoneNumber {
+            get {
+                return ResourceManager.GetString("UI_VerifyPhoneNumber", resourceCulture);
             }
         }
         

@@ -3,85 +3,70 @@
 @{ var id = Guid.NewGuid().ToString(); }
 <div class="modal-header">
     <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">Modified New Donor</h4>
+    <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_DonorEdited</h4>
 </div>
 <div class="modal-body">
-    <div class="hidden close-modal">
-        <div class="copy-to-chat">
-            <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Modified donor:</div></div>
-            <div class="divTableWrapper">
-                <div class="divTable">
-                    <div class="tableRow header green">
-                        <div class="cell">
-                            Donor ID
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.FirstName)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.LastName)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.Email)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.Address)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.Type)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayNameFor(model => model.ReceiptFrequency)
-                        </div>
-                        <div class="cell">
-                            <!-- Left Empty for edit column -->
-                        </div>
-                    </div>
-                    <div class="tableRow">
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.Id)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.FirstName)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.LastName)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.Email)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.PhoneNumber)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.Address)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.Type)
-                        </div>
-                        <div class="cell">
-                            @Html.DisplayFor(model => model.ReceiptFrequency)
-                        </div>
-                        <div class="cell">
-                            @{ var buttonId = Guid.NewGuid().ToString();
-                            }
-                            @Ajax.ActionLink("✏", "ModifyFromDonor", "Donors", Model, new AjaxOptions()
-                       {
-                           InsertionMode = InsertionMode.InsertAfter,
-                           UpdateTargetId = "outputContainer",
-                           OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                           OnBegin = "return bounceInput('" + buttonId + "')"
-                       }, new { @class = "glyphicon pencil" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    @Resources.Resources.UI_Donor @Model.FirstName @Resources.Resources.UI_SuccessfullyUpdated.
+    <dl class="dl-horizontal">
+        <dt>
+            @Resources.Resources.DonorID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Archived)
+        </dt>
 
 <div class="modal-footer">
     <div class="form-group">

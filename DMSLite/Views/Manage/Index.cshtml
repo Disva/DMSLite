@@ -4,44 +4,49 @@
     <p class="text-success">@ViewBag.StatusMessage</p>
     <div>
         <br />
-        <h4>Change Your Account Settings</h4>
+        <h4>@Resources.Resources.UI_AccountSettings</h4>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Password:</dt>
+            <dt>@Resources.Resources.UI_Password:</dt>
             <dd>
                 [
                 @if (Model.HasPassword)
             {
-                    @Html.ActionLink("Change your password", "ChangePassword")
+                    @Html.ActionLink(Resources.Resources.UI_ChangeYourPassword, "ChangePassword")
                 }
                 else
                 {
-                    @Html.ActionLink("Create", "SetPassword")
+                    @Html.ActionLink(Resources.Resources.UI_Create, "SetPassword")
                 }
                 ]
+            </dd>
+            <dt>@Resources.Resources.UI_Language:</dt>
+            <dd>
+                [<a href="/en">@Resources.Resources.UI_English</a> / 
+                <a href="/fr">@Resources.Resources.UI_French</a> ]
             </dd>
         </dl>
         @if (this.User.IsInRole("SPS"))
         {
-            <h4>SPS Administrative Tools</h4>
+            <h4>@Resources.Resources.UI_SPSAdministrativeTools</h4>
             <hr />
             <dl class="dl-horizontal">
-                <dt>Download log:</dt>
+                <dt>@Resources.Resources.UI_DownloadLog:</dt>
                 <dd>
                     [
-                    @Html.ActionLink("Download Log", "LogDownload", "Help")
+                    @Html.ActionLink(Resources.Resources.UI_DownloadLog, "LogDownload", "Help")
                     ]
                 </dd>
-                <dt>Manage Organizations:</dt>
+                <dt>@Resources.Resources.UI_ManageOrganizations:</dt>
                 <dd>
                     [
-                    @Html.ActionLink("Manage Organizations", "Index", "Organizations")
+                    @Html.ActionLink(Resources.Resources.UI_ManageOrganizations, "Index", "Organizations")
                     ]
                 </dd>
-                <dt>Manage User Roles:</dt>
+                <dt>@Resources.Resources.UI_ManageUserRoles:</dt>
                 <dd>
                     [
-                    @Html.ActionLink("Manage User Roles", "Index", "Roles")
+                    @Html.ActionLink(Resources.Resources.UI_ManageUserRoles, "Index", "Roles")
                     ]
                 </dd>
             </dl>
@@ -49,19 +54,19 @@
 
         @if (this.User.IsInRole("Admin"))
         {
-            <h4>Organization Administrative Tools</h4>
+            <h4>@Resources.Resources.UI_OrganizationAdministrativeTools</h4>
             <hr />
             <dl class="dl-horizontal">
-                <dt>Register a New User:</dt>
+                <dt>@Resources.Resources.UI_RegisterNewUser:</dt>
                 <dd>
                     [
-                    @Html.ActionLink("Register a New User", "Register", "Account")
+                    @Html.ActionLink(Resources.Resources.UI_RegisterNewUser, "Register", "Account")
                     ]
                 </dd>
-                <dt>Import/Export CSV</dt>
+                <dt>@Resources.Resources.UI_ImportExportCSV</dt>
                 <dd>
                     [
-                    @Html.ActionLink("Import/Export CSV", "Index", "CSV")
+                    @Html.ActionLink(Resources.Resources.UI_ImportExportCSV, "Index", "CSV")
                     ]
                 </dd>
             </dl>

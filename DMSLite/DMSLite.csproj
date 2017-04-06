@@ -252,6 +252,7 @@
     </Compile>
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
+    <Compile Include="LocalizationAttribute.cs" />
     <Compile Include="Migrations\201610071735228_a.cs" />
     <Compile Include="Migrations\201610071735228_a.Designer.cs">
       <DependentUpon>201610071735228_a.cs</DependentUpon>

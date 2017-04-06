@@ -3,7 +3,7 @@
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Donation ID
+                @Resources.Resources.UI_DonationID
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationDonor)
@@ -65,7 +65,7 @@
                     @Html.DisplayFor(modelItem => item.Value)
                     @if (!item.Gift)
                     {
-                        <label>(not a gift)</label>
+                        <label>@Resources.Resources.UI_NotAGift</label>
                     }
                 </div>
                 <div class="cell">
@@ -84,7 +84,7 @@
                 <div class="cell">
                     @if (item.DonationReceipt_Id != 0)
                     {
-                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                        @Html.ActionLink(Resources.Resources.UI_Receipt, "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
                     }
                 </div>
                 <div class="cell">

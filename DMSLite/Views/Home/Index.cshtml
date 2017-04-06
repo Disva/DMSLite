@@ -1,13 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = Resources.Resources.UI_HomeTitle;
 }
 
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
         <br />
-        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Welcome to DMS Lite!<br />You can always type help if you are feeling stuck!</div></div>
-        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Your unreceipted donations add up to @Html.Action("SumNonReceiptedDonations", "Donation") dollars.</div></div>
-        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">What would you like to do?</div></div>
+        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">@Resources.Resources.Bot_Welcome1<br />@Resources.Resources.Bot_Welcome2</div></div>
+        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">@Resources.Resources.Bot_Welcome3</div></div>
     </div>
 </div>
 
@@ -25,15 +24,15 @@
         <div class="row">
             <div class="form-group">
                 <div id="flagInvalidContainer">
-                    @Ajax.ActionLink("Did something break?", "Log", "Help", null)
+                    @Ajax.ActionLink(Resources.Resources.UI_HelpButton, "Log", "Help", null)
                 </div>
                 <div id="mainInputGroup" class="input-group">
                     <div id="search-container">
                         <input type="text" disabled="disabled" id="suggestion" />
-                        @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = "Thinking..." })
+                        @Html.TextBox("mainInput", null, new { @class = "form-control", @autocomplete = "off", @placeholder = Resources.Resources.Bot_Thinking })
                     </div>
                     <span class="input-group-btn">
-                        <input id="submitBtn" class="btn btn-default" type="submit" value="Send" />
+                        <input id="submitBtn" class="btn btn-default" type="submit" value="@Resources.Resources.UI_Send" />
                     </span>
                 </div>
             </div>
