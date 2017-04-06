@@ -58,19 +58,32 @@ namespace DMSLite.Controllers
             Donor donor = db.Donors.Where(x => x.Id.Equals(donation.DonationDonor_Id)).First();
             // get list of donations
             List<Donation> donations = db.Donations.Where(x => x.DonationReceipt_Id.Equals(donation.DonationReceipt_Id)).ToList();
+            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf", donor.FirstName + "_" + donor.LastName + "_" + donations[0].DonationReceipt_Id + ".pdf");
+        }
 
-            return File(PrintReceipt(donor, donations).ToArray(), "application/pdf");
+        // pass ajax form data nowhere!
+        public ActionResult ZipRequest(int[] donors, int[] batches, bool allDonors = false, bool allBatches = false)
+        {
+            return null;
         }
 
         [HttpGet]
-        public ActionResult ZipReceipts(int[] donors, int[] batches)
+        public ActionResult ZipReceipts(int[] donors, int[] batches, bool allDonors = false, bool allBatches = false)
         {
             //generate ReceiptFormModel from the form
             ReceiptFormModel rfm = new ReceiptFormModel()
             {
-                donors = db.Donors.Where(x => donors.Contains(x.Id)).ToList(),
-                batches = db.Batches.Where(x => batches.Contains(x.Id)).ToList()
+                donors = allDonors ? db.Donors.ToList() : db.Donors.Where(x => donors.Contains(x.Id)).ToList(),
+                batches = allBatches ? db.Batches.Where(x => x.CloseDate != null).ToList() : db.Batches.Where(x => batches.Contains(x.Id)).ToList()
             };
+
+            // rebuild the int[] batches list if necessary
+            if(allBatches)
+            {
+                batches = new int[rfm.batches.Count()];
+                for (int i = 0; i < rfm.batches.Count(); i++)
+                    batches[i] = rfm.batches[i].Id;
+            }
 
             using (MemoryStream outputZip = new MemoryStream())
             {
@@ -82,15 +95,17 @@ namespace DMSLite.Controllers
                         //compile a list of all donations made by that donor for the selected batches
                         List<Donation> donations = db.Donations.Where(x => x.DonationDonor_Id.Equals(donor.Id)              // match donor ID
                                                                         && batches.Any(y => y.Equals(x.DonationBatch_Id))   // match batch ID
+                                                                        && !x.Gift                                          // non-gifts are non-receiptable
                                                                         && x.DonationReceipt_Id.Equals(0)).ToList();        // only add unreceipted donations
 
                         //only create the PDF if the donor has made donations to the selected batches
                         if(donations.Count() > 0)
                         {
-                            // Create receipt object with current date and time
+                            // Create receipt object with current date and time, as well as donor's current address
                             Receipt receipt = new Receipt
                             {
-                                IssueDate = DateTime.Now
+                                IssueDate = DateTime.Now,
+                                Address = donor.Address
                             };
                             db.Add(receipt);
 
@@ -124,7 +139,7 @@ namespace DMSLite.Controllers
             outputString.Add("\n");
 
             outputString.Add(donor.FirstName + " " + donor.LastName);
-            outputString.Add(donor.Address);
+            outputString.Add(receipt.Address);
             outputString.Add("\n");
 
             outputString.Add("Donations:");
@@ -137,7 +152,7 @@ namespace DMSLite.Controllers
                 {
                     outputString.Add(donation.DonationBatch.CreateDate.ToShortDateString() + " : "
                         + "$" + donation.Value + " to " + donation.DonationBatch.Title);
-                    if (donation.ObjectDescription != "")
+                    if (!string.IsNullOrWhiteSpace(donation.ObjectDescription))
                         outputString.Add("     Description: " + donation.ObjectDescription);
                 }
                 else if (donation.ObjectDescription != "")

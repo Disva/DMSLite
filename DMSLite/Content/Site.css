@@ -180,6 +180,9 @@ textarea {
 .cell {
     padding: 6px 12px;
     display: table-cell;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 580px) {
@@ -409,4 +412,16 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 dt{
     width:200px !important;
     text-align:left !important;
+}
+
+.fixLeftAlignDD{
+    margin-left:200px !important;
+}
+
+.fixTopPaddingEditAddress{
+    padding-top: 7px;
+}
+
+.modal-dialog{
+    width:auto;
 }

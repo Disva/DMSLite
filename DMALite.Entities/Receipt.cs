@@ -17,5 +17,8 @@ namespace DMSLite.Entities
 
         [Required]
         public int TenantOrganizationId { get; set; }
+
+        [StringLength(255)]
+        public string Address { get; set; }
     }
 }

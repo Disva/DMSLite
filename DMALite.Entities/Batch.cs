@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,8 +17,10 @@ namespace DMSLite.Entities
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "CreateDate", ResourceType = typeof(Resources.Resources))]
         public DateTime CreateDate { get; set; }
 
+        [Display(Name = "CloseDate", ResourceType = typeof(Resources.Resources))]
         public DateTime? CloseDate { get; set; }
 
         [Required]

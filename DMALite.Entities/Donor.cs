@@ -23,26 +23,27 @@ namespace DMSLite.Entities
 
         //not required due to companies
         [StringLength(255)]
-        [Display(Name = "First Name")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Resources))]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "Last Name")]
+        [Display(Name = "LastName", ResourceType = typeof(Resources.Resources))]
         public string LastName { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
         [EmailAddress]
         public string Email { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "Address")]
+        [Display(Name = "DonAddress", ResourceType = typeof(Resources.Resources))]
         public string Address { get; set; }
 
         private string _phoneNumber;
 
         [StringLength(255)]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Resources.Resources))]
         [Phone]
         public string PhoneNumber {
             get { return _phoneNumber; }
@@ -75,7 +76,7 @@ namespace DMSLite.Entities
         public DonorType Type { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "Receipt Frequency")]
+        [Display(Name = "ReceiptFrequency", ResourceType = typeof(Resources.Resources))]
         public string ReceiptFrequency { get; set; }
 
         [Required]

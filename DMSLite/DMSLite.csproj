@@ -48,6 +48,10 @@
       <HintPath>..\packages\ApiAiSDK.1.6.5\lib\net35\ApiAiSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -84,6 +88,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
@@ -216,6 +224,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Commands\Dispatcher.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DonationAccountController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
@@ -226,6 +235,7 @@
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="CSVMaps\DonationClassMap.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201611120126204_AppUsersMigration.Designer.cs">
       <DependentUpon>201611120126204_AppUsersMigration.cs</DependentUpon>
@@ -241,7 +251,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateHelper.cs" />
-    <Compile Include="Helpers\Log.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Migrations\201610071735228_a.cs" />
     <Compile Include="Migrations\201610071735228_a.Designer.cs">
@@ -295,6 +304,14 @@
     <Compile Include="Migrations\201703062154058_OrganizationAddressFields.Designer.cs">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.cs" />
+    <Compile Include="Migrations\201703161747320_BatchDonorAddress.Designer.cs">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703171943225_DonationGift.cs" />
+    <Compile Include="Migrations\201703171943225_DonationGift.Designer.cs">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -332,7 +349,6 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\Iteration5.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\homeJavascript.js" />
@@ -493,6 +509,8 @@
     <Content Include="Views\Shared\EditorTemplates\Batch.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Account.cshtml" />
     <Content Include="Views\Account\AddSuccess.cshtml" />
+    <Content Include="Views\Batch\_ToggleDisplay.cshtml" />
+    <Content Include="Views\CSV\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -511,6 +529,10 @@
     <ProjectReference Include="..\DMALite.Entities\DMSLite.Entities.csproj">
       <Project>{cc80aff3-7d09-4a0d-a889-68057d44d21d}</Project>
       <Name>DMSLite.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{ED5BBDA3-C26E-4092-8B09-4AC0D8407F63}</Project>
+      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -558,6 +580,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703062154058_OrganizationAddressFields.resx">
       <DependentUpon>201703062154058_OrganizationAddressFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161747320_BatchDonorAddress.resx">
+      <DependentUpon>201703161747320_BatchDonorAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703171943225_DonationGift.resx">
+      <DependentUpon>201703171943225_DonationGift.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

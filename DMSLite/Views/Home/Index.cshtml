@@ -2,15 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jquery-unobtrusive")
-@Scripts.Render("~/bundles/notify")
-
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
         <br />
         <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Welcome to DMS Lite!<br />You can always type help if you are feeling stuck!</div></div>
+        <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">Your unreceipted donations add up to @Html.Action("SumNonReceiptedDonations", "Donation") dollars.</div></div>
         <div class="bubbleLine"><div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div><div class="bubble leftBubble">What would you like to do?</div></div>
     </div>
 </div>

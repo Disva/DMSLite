@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
+using NLog;
+
 namespace DMSLite.Controllers
 {
     using Helpers;
     using Models;
     using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
-
+    
     [Authorize]
     public class BatchController : Controller
     {
@@ -20,8 +22,10 @@ namespace DMSLite.Controllers
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
         private enum COMPARE_TYPE { UNDER = -1, EQUAL, OVER };
         private enum BATCH_TYPE {OPEN, CLOSED };
-
+        private static bool openOnly = true;
         private static List<Batch> filteredBatches;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public BatchController()
         {
@@ -113,7 +117,7 @@ namespace DMSLite.Controllers
                 || (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()));
 
             if (!paramsExist)
-                return FetchAllBatches();
+                filteredBatches = FetchAllBatches();
 
             if (!String.IsNullOrEmpty(parameters["id"].ToString()))
             {
@@ -156,8 +160,16 @@ namespace DMSLite.Controllers
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
-            Finish:
+        Finish:
+            if (openOnly && parameters["type"].ToString().Equals(""))
+                filteredBatches = filteredBatches.Where(x => !(x.CloseDate.HasValue)).ToList();
             return filteredBatches;
+        }
+
+        public ActionResult ToggleOpenDisplay()
+        {
+            openOnly = !openOnly;
+            return PartialView("~/Views/Batch/_ToggleDisplay.cshtml", openOnly);
         }
 
         // extract method
@@ -410,7 +422,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
+                    logger.Info(JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }

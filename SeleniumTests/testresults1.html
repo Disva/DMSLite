@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+.failed {color: red; background-color: #ffcccc;}
+.passed {color: green; background-color: #ccffcc;}
+.done {color: #404040; background-color: #ccffcc;}
+.comment {color: #404040; background-color: #d0d0d0;}
+body, table { font-family: Verdana, Arial, sans-serif; font-size: 12pt; }
+table { border-collapse: collapse; border: 1px solid #ccc; }
+th, td { padding-left: 0.3em; padding-right: 0.3em; border: 1px solid #ccc; }
+#suiteSummaryTable thead { font-size: 14pt; font-weight: 800; }
+.test_case thead { font-size: 14pt; font-weight: 400; }
+</style>
+</head>
+<body>
+<table id="suiteSummaryTable" class="selenium">
+<thead><tr class="failed"><td>Test Suite: maintestsuite</td></tr></thead>
+<tbody>
+<tr><td>Test cases: 19 total / <span class="passed">18</span> passed / <span class="failed">1</span> failed</td></tr>
+<tr><td>Commands: 166 total / <span class="passed">165</span> passed / <span class="failed">1</span> failed / <span class="skipped">0</span> skipped</td></tr>
+</tbody></table><br>
+<table id="suiteTable" class="selenium">
+<thead><tr><td>Index of test cases</td></tr></thead>
+<tbody>
+<tr class="passed"><td><a href="#test0">logintest</a></td></tr>
+<tr class="passed"><td><a href="#test1">test_donors_showall</a></td></tr>
+<tr class="passed"><td><a href="#test2">test_donors_showbyname</a></td></tr>
+<tr class="passed"><td><a href="#test3">test_donors_showbyemail</a></td></tr>
+<tr class="passed"><td><a href="#test4">test_donors_adddonor</a></td></tr>
+<tr class="failed"><td><a href="#test5">test_donors_types</a></td></tr>
+<tr class="passed"><td><a href="#test6">test_batch_showall</a></td></tr>
+<tr class="passed"><td><a href="#test7">test_batch_showbyname</a></td></tr>
+<tr class="passed"><td><a href="#test8">test_batch_showbyid</a></td></tr>
+<tr class="passed"><td><a href="#test9">test_batchadd</a></td></tr>
+<tr class="passed"><td><a href="#test10">test_donations_add</a></td></tr>
+<tr class="passed"><td><a href="#test11">test_donations_showall</a></td></tr>
+<tr class="passed"><td><a href="#test12">test_donations_edit</a></td></tr>
+<tr class="passed"><td><a href="#test13">test_batch_viewdonations</a></td></tr>
+<tr class="passed"><td><a href="#test14">test_batch_adddonation</a></td></tr>
+<tr class="passed"><td><a href="#test15">test_donor_failmessage</a></td></tr>
+<tr class="passed"><td><a href="#test16">test_donor_editfailmessege</a></td></tr>
+<tr class="passed"><td><a href="#test17">test_batch_namefail</a></td></tr>
+<tr class="passed"><td><a href="#test18">test_donations_addfail</a></td></tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test0"></a><table class="test_case"><thead><tr><td colspan="4">Test case: logintest</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Email</td>
+	<td>w@w.com</td>
+	<td>Element id=Email not found</td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Password</td>
+	<td>P@ssword123</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAndWait</td>
+	<td>id=loginButton</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>link=w@w.com</td>
+	<td>w@w.com</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test1"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donors_showall</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all donors</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=div.cell</td>
+	<td>Donor ID</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test2"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donors_showbyname</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show me donor FindMe</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div/div[2]/div[2]</td>
+	<td>FindMe</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test3"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donors_showbyemail</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show me donor testfindbyemail@test.com</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[4]/div[2]</td>
+	<td>Looking for the donor with the email testfindbyemail@test.com</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div/div[2]/div[2]</td>
+	<td>FindGuy</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test4"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donors_adddonor</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add donor</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=FirstName</td>
+	<td>TestAddDonor</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=LastName</td>
+	<td>TestLast</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Email</td>
+	<td>testaddme@test.com</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Similar Donor Found</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=div.copy-to-chat &gt; div.bubbleLine &gt; div.bubble.leftBubble</td>
+	<td>Created the following donor:</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
+	<td>TestAddDonor</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test5"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donors_types</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add donor</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=FirstName</td>
+	<td>TestAddDonorType</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=LastName</td>
+	<td>TestTypeLast</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>select</td>
+	<td>id=Type_Type</td>
+	<td>label=Other</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Similar Donor Found</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=div.copy-to-chat &gt; div.bubbleLine &gt; div.bubble.leftBubble</td>
+	<td>Created the following donor:</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[2]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="failed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div[2]/div/div[2]/div[7]</td>
+	<td>Other</td>
+	<td>Actual value 'Individual' did not match 'Other'</td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test6"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_showall</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all batches</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=div.cell</td>
+	<td>Batch ID</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test7"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_showbyname</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show batch TestJohnBatch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div/div[2]/div[2]</td>
+	<td>TestJohnBatch</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test8"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_showbyid</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>view batch with id 2248</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td>Timed out after 30000ms</td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[5]/div/div[2]/div</td>
+	<td>2248</td>
+	<td>Element //div[@id='outputContainer']/div[5]/div/div[2]/div not found</td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test9"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batchadd</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add batch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[4]/div[2]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>TestAddBatch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>//form[@id='form0']/div/div/div[2]/div/span</td>
+	<td>An existing batch has this title.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//form[@id='form0']/div/div/div[2]/div/span</td>
+	<td>An existing batch has this title.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test10"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donations_add</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add donation</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Value</td>
+	<td>10</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=ObjectDescription</td>
+	<td>test items</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//form[@id='form0']/div/div/div[4]/div/span[2]/span/span/span[2]/b</td>
+	<td></td>
+	<td>Element //*[@id="form0"]/div[1]/div/div[3]/div/span[2]/span[1]/span/span[2] not found</td>
+</tr>
+<tr class="done">
+	<td>sendKeys</td>
+	<td>css=input.select2-search__field</td>
+	<td>3061</td>
+	<td>Element css=input.select2-search__field not found</td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//*[@id=&quot;outputContainer&quot;]/div[5]/span/span/span[2]/ul/li[1]</td>
+	<td></td>
+	<td>Element //*[@id="select2-DonationDonor-rw-results"]/li[1] not found</td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//form[@id='form0']/div/div/div[5]/div/span[2]/span/span/span[2]/b</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>sendKeys</td>
+	<td>css=input.select2-search__field</td>
+	<td>2256</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//*[@id=&quot;outputContainer&quot;]/div[5]/span/span/span[2]/ul/li[1]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//form[@id='form0']/div/div/div[6]/div/span[2]/span/span/span[2]/b</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>css=input.select2-search__field</td>
+	<td>497</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//*[@id=&quot;outputContainer&quot;]/div[5]/span/span/span[2]/ul/li[1]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+	<td>Timed out after 30000ms</td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Added New Donation</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//dd[4]</td>
+	<td>test items</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//dd[5]</td>
+	<td>10</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=button.btn.btn-default</td>
+	<td></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test11"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donations_showall</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all donations</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=div.cell</td>
+	<td>Donation ID</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test12"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donations_edit</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all donations</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>link=✏</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Value</td>
+	<td>20</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Donation Edited</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[6]/div/div/div[2]/dl/dd[5]</td>
+	<td>20</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=button.btn.btn-default</td>
+	<td></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test13"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_viewdonations</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all batches</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'')])[2]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[6]/div/div/div</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//div[@id='outputContainer']/div[6]/div/div[2]/div</td>
+	<td>2699</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test14"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_adddonation</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all batches</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>link=+</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertValue</td>
+	<td>//div[5]/div/select</td>
+	<td>2248</td>
+	<td>Actual value '' did not match '2248'</td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=ObjectDescription</td>
+	<td>test added from batch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>css=b</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>sendKeys</td>
+	<td>css=input.select2-search__field</td>
+	<td>3005</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>clickAt</td>
+	<td>//*[@id=&quot;outputContainer&quot;]/div[6]/span/span/span[2]/ul/li[1]</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>id=myModalLabel</td>
+	<td>Added New Donation</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//dd[4]</td>
+	<td>test added from batch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=button.btn.btn-default</td>
+	<td></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test15"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donor_failmessage</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add donor</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test16"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donor_editfailmessege</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>show all donors</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>css=div.divTableWrapper</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>link=✏</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=LastName</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Last Name field is required.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test17"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_batch_namefail</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add batch</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>//div[@id='outputContainer']/div[4]/div[2]</td>
+	<td></td>
+	<td>false</td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>sam</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=Title</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Title field is required.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Title field is required.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+<br><hr><br><a name="test18"></a><table class="test_case"><thead><tr><td colspan="4">Test case: test_donations_addfail</td></tr></thead><tbody><tr class="done">
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>type</td>
+	<td>id=mainInput</td>
+	<td>add donation</td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>id=submitBtn</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForElementPresent</td>
+	<td>id=myModalLabel</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr class="done">
+	<td>waitForText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Donor field is required.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>css=span.field-validation-error.text-danger</td>
+	<td>The Donor field is required.</td>
+	<td></td>
+</tr>
+<tr class="passed">
+	<td>assertText</td>
+	<td>//form[@id='form0']/div/div/div[6]/div/span</td>
+	<td>The Batch field is required.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+
+</body></html>

@@ -36,6 +36,67 @@ namespace DMSLite.Tests.Controllers
         }
 
         [TestMethod]
+        //Tests fetching the list of all batches
+        public void TestFetchOpenBatchesByDefault()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("title", "");
+            parameters.Add("type", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("id", "");
+            parameters.Add("amount", "");
+            parameters.Add("number-comparator", "");
+            BatchController bc = new BatchController(db);
+            List<Batch> dbBatches = db.Batches.Where(x => !x.CloseDate.HasValue).ToList();
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            int i = 0;
+            foreach (Batch b in dbBatches)
+            {
+                Assert.AreEqual(b.Id, testBatches.ElementAt(i).Id);
+                Assert.AreEqual(b.Title, testBatches.ElementAt(i).Title);
+                Assert.AreEqual(b.CreateDate, testBatches.ElementAt(i).CreateDate);
+                i++;
+            }
+        }
+
+        [TestMethod]
+        //Tests fetching the list of all batches
+        public void TestTogglingFetchBatchType()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("title", "");
+            parameters.Add("type", "");
+            parameters.Add("date", "");
+            parameters.Add("date-period", "");
+            parameters.Add("id", "");
+            parameters.Add("amount", "");
+            parameters.Add("number-comparator", "");
+            BatchController bc = new BatchController(db);
+            List<Batch> dbOpenBatches = db.Batches.Where(x => !x.CloseDate.HasValue).ToList();
+            List<Batch> testOpenBatches = bc.FindBatches(parameters);
+            int i = 0;
+            foreach (Batch b in dbOpenBatches)
+            {
+                Assert.AreEqual(b.Id, testOpenBatches.ElementAt(i).Id);
+                Assert.AreEqual(b.Title, testOpenBatches.ElementAt(i).Title);
+                Assert.AreEqual(b.CreateDate, testOpenBatches.ElementAt(i).CreateDate);
+                i++;
+            }
+            bc.ToggleOpenDisplay();
+            List<Batch> dbBatches = db.Batches.ToList();
+            List<Batch> testBatches = bc.FindBatches(parameters);
+            i = 0;
+            foreach (Batch b in dbBatches)
+            {
+                Assert.AreEqual(b.Id, testBatches.ElementAt(i).Id);
+                Assert.AreEqual(b.Title, testBatches.ElementAt(i).Title);
+                Assert.AreEqual(b.CreateDate, testBatches.ElementAt(i).CreateDate);
+                i++;
+            }
+        }
+
+        [TestMethod]
         //Tests fetching the list of all open batches
         public void TestFetchOpenBatches()
         {

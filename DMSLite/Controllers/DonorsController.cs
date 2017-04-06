@@ -15,6 +15,8 @@ using System.Linq.Expressions;
 using LinqKit;
 using Newtonsoft.Json;
 
+using NLog;
+
 namespace DMSLite
 {
     [Authorize]
@@ -23,6 +25,8 @@ namespace DMSLite
         private OrganizationDb db;
 
         private static List<Donor> filteredDonors;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public DonorsController()
         {
@@ -167,7 +171,8 @@ namespace DMSLite
             else if (matchingDonors.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donors were found");
             else if (matchingDonors.Count > 1)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+                //return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "more than one donor was found");
+                return FetchDonor(parameters);
             else
                 return PartialView("~/Views/Donors/_Modify.cshtml", matchingDonors.First());
         }
@@ -272,7 +277,7 @@ namespace DMSLite
                 else
                 {
                     db.Add(donor);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donor));
+                    logger.Info(JsonConvert.SerializeObject(donor));
                     return PartialView("~/Views/Donors/_AddSuccess.cshtml", donor);
                 }
             }

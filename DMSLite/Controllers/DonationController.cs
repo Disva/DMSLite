@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Globalization;
 using LinqKit;
 using Newtonsoft.Json;
+using NLog;
 
 namespace DMSLite.Controllers
 {
@@ -21,6 +22,7 @@ namespace DMSLite.Controllers
     {
         private OrganizationDb db;
         private static bool postedOnly = false;
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public DonationController()
         {
@@ -233,6 +235,16 @@ namespace DMSLite.Controllers
             filteredDonations = filteredDonations.Where(x => x.Value >= valueMin && x.Value <= valueMax).ToList();
         }
 
+        public double SumNonReceiptedDonations()
+        {
+            double value = 0;
+            List<Donation> donations = db.Donations.Where(x => x.Gift && x.DonationReceipt_Id == 0
+                && (x.DonationDonor.Type == DonorType.Individual || x.DonationDonor.Type == DonorType.Business) ).ToList();
+            foreach(var donation in donations)
+                value += donation.Value;
+            return value;
+        }
+
         #endregion
 
         #region Modify
@@ -399,7 +411,7 @@ namespace DMSLite.Controllers
         }
 
         // TODO: Anti-forgery
-        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null)
+        public ActionResult Add(Donation donation, int? donationDonor, int? donationBatch, int? donationAccount = null, bool isGift = false)
         {
             if (!donationDonor.HasValue || !donationBatch.HasValue)
             {
@@ -413,6 +425,7 @@ namespace DMSLite.Controllers
                 return PartialView("~/Views/Donation/_AddForm.cshtml", donation);
             }
 
+            donation.Gift = isGift;
             Donor actualDonor = db.Donors.First(x => x.Id == donationDonor);
             Batch actualBatch = db.Batches.First(x => x.Id == donationBatch);
             Account actualAccount = null;
@@ -436,7 +449,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(donation);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(donation));
+                    logger.Info(JsonConvert.SerializeObject(donation));
                     return PartialView("~/Views/Donation/_AddSuccess.cshtml", donation);
                 }
             }

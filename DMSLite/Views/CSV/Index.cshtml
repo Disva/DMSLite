@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "CSV Import and Export";
+}
+
+<h2>CSV Import and Export</h2>
+
+@Html.ActionLink("Export All Donors", "ExportAllDonors", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink("Export All Donations", "ExportAllDonations", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink("Export All Batches", "ExportAllBatches", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink("Export All Accounts", "ExportAllAccounts", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+
+</br>
+<div>
+    <p>To upload entries, export an entity first and delete all entries to create a blank template file.</p>
+</div>
+</br>
+@using (@Html.BeginForm("ImportDonors", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="donorupload">Import Donors</label>
+    <input type="file" id="donorupload" name="donorupload"/>
+    <input class="btn btn-default" type="submit" value="Submit"/>
+}
+
+</br>
+@using (@Html.BeginForm("ImportDonations"
+    , "CSV"
+    , FormMethod.Post
+    , new { enctype = "multipart/form-data" }))
+{
+    <label for="donationupload">Import Donations</label>
+    <input type="file" id="donationupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="Submit" />
+}
+</br>
+@using (@Html.BeginForm("ImportBatches"
+                , "CSV"
+                , FormMethod.Post
+                , new { enctype = "multipart/form-data" }))
+{
+    <label for="batchupload">Import Batches</label>
+    <input type="file" id="batchupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="Submit" />
+}
+</br>
+@using (@Html.BeginForm("ImportAccounts"
+                , "CSV"
+                , FormMethod.Post
+                , new { enctype = "multipart/form-data" }))
+{
+    <label for="accountupload">Import Accounts</label>
+    <input type="file" id="accountupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="Submit" />
+}
