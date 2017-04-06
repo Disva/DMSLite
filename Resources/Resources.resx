@@ -561,4 +561,25 @@
   <data name="UI_Index" xml:space="preserve">
     <value>DMS Lite</value>
   </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Donations" xml:space="preserve">
+    <value>Donations</value>
+  </data>
+  <data name="UI_ExportAll_X" xml:space="preserve">
+    <value>Export All {0}</value>
+  </data>
+  <data name="UI_ImportExportCSV" xml:space="preserve">
+    <value>Import/Export CSV</value>
+  </data>
+  <data name="UI_ImportExportCSV_2" xml:space="preserve">
+    <value>CSV Import and Export</value>
+  </data>
+  <data name="UI_Import_X" xml:space="preserve">
+    <value>Import {0}</value>
+  </data>
+  <data name="UI_ToUploadEntries" xml:space="preserve">
+    <value>To upload entries, export an entity first and delete all entries to create a blank template file.</value>
+  </data>
 </root>

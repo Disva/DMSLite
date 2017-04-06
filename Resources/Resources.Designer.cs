@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string Accounts {
+            get {
+                return ResourceManager.GetString("Accounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string AccountTitle {
@@ -228,6 +237,15 @@ namespace Resources {
         public static string DonationReceipt {
             get {
                 return ResourceManager.GetString("DonationReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donations.
+        /// </summary>
+        public static string Donations {
+            get {
+                return ResourceManager.GetString("Donations", resourceCulture);
             }
         }
         
@@ -916,6 +934,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export All {0}.
+        /// </summary>
+        public static string UI_ExportAll_X {
+            get {
+                return ResourceManager.GetString("UI_ExportAll_X", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feedback.
         /// </summary>
         public static string UI_Feedback {
@@ -984,6 +1011,33 @@ namespace Resources {
         public static string UI_Id {
             get {
                 return ResourceManager.GetString("UI_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import {0}.
+        /// </summary>
+        public static string UI_Import_X {
+            get {
+                return ResourceManager.GetString("UI_Import_X", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import/Export CSV.
+        /// </summary>
+        public static string UI_ImportExportCSV {
+            get {
+                return ResourceManager.GetString("UI_ImportExportCSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSV Import and Export.
+        /// </summary>
+        public static string UI_ImportExportCSV_2 {
+            get {
+                return ResourceManager.GetString("UI_ImportExportCSV_2", resourceCulture);
             }
         }
         
@@ -1353,6 +1407,15 @@ namespace Resources {
         public static string UI_TogglePostedDonations {
             get {
                 return ResourceManager.GetString("UI_TogglePostedDonations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To upload entries, export an entity first and delete all entries to create a blank template file..
+        /// </summary>
+        public static string UI_ToUploadEntries {
+            get {
+                return ResourceManager.GetString("UI_ToUploadEntries", resourceCulture);
             }
         }
         

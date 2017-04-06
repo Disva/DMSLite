@@ -34,7 +34,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">@Resources.Resources.UI_SelectOrg</label>
             <div class="col-md-10">
-                @Html.DropDownList(Resources.Resources.UI_Organizations, new SelectList(ViewBag.Organizations, Resources.Resources.UI_Id, Resources.Resources.UI_Name), new { @class = "form-control" })
+                @Html.DropDownList(Resources.Resources.UI_Organizations, new SelectList(ViewBag.Organizations, "Id", "Name"), new { @class = "form-control" })
             </div>
         </div>
     }
