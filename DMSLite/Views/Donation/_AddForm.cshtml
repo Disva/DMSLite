@@ -5,7 +5,7 @@
 <div id="@id">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add a New Donation</h4>
+        <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_AddANewDonation</h4>
     </div>
     @using (Ajax.BeginForm("Add", "Donation", new AjaxOptions()
     {
@@ -19,6 +19,12 @@
         <div class="modal-body">
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="checkbox" name="isGift" id="isGift" onchange="toggleCheck(this)" value=@Resources.Resources.UI_True checked />
+                        <label>@Resources.Resources.UI_ThisDonIsAGift</label>
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -37,21 +43,22 @@
                     @Html.LabelFor(model => model.DonationDonor, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationDonor, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-donor-select2" style="width:100%;" name="DonationDonor"></select>
+                        @Html.EditorFor(model => model.DonationDonor)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DonationBatch, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationBatch, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-batch-select2" style="width:100%;" name="DonationBatch"></select>
+                        @Html.EditorFor(model => model.DonationBatch)
+                        
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DonationAccount, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.DonationAccount, "", new { @class = "text-danger" })
-                        <select class="donors-selector format-account-select2" style="width:100%;" name="DonationAccount"></select>
+                        @Html.EditorFor(model => model.DonationAccount)
                     </div>
                 </div>
             </div>
@@ -59,8 +66,8 @@
         <div class="modal-footer">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10" id="createButton">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Add" class="btn btn-primary" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resources.UI_Close</button>
+                    <input type="submit" value=@Resources.Resources.UI_Add class="btn btn-primary" />
                 </div>
             </div>
         </div>

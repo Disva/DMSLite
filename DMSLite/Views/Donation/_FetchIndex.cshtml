@@ -3,10 +3,13 @@
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Donation ID
+                @Resources.Resources.UI_DonationID
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationDonor)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationDonor_Id)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.ObjectDescription)
@@ -16,6 +19,12 @@
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationBatch)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CreateDate)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CloseDate)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationAccount)
@@ -40,6 +49,9 @@
                     @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
                 </div>
                 <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationDonor_Id)
+                </div>
+                <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
                 </div>
                 <div class="cell">
@@ -49,12 +61,18 @@
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
                 </div>
                 <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CreateDate)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CloseDate)
+                </div>
+                <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationAccount.Title)
                 </div>
                 <div class="cell">
                     @if (item.DonationReceipt_Id != 0)
                     {
-                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                        @Html.ActionLink(Resources.Resources.UI_Receipt, "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
                     }
                 </div>
 		        @{ var buttonId = Guid.NewGuid().ToString(); }

@@ -1,10 +1,14 @@
 ﻿using System.IO;
 using System.Web.Mvc;
 
+using NLog;
+
 namespace DMSLite.Controllers
 {
     public class HelpController : Controller
     {
+        private static Logger logger = LogManager.GetLogger("serverlog");
+
         [Authorize]
         public ActionResult returnHelp(string msg)
         {
@@ -13,10 +17,10 @@ namespace DMSLite.Controllers
 
         public void Log()
         {
-            Helpers.Log.WriteLog(Helpers.Log.LogType.Bug, "User reported an error.");
+            logger.Error("User reported an error.");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SPS")]
         public FileResult LogDownload()
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Path.GetTempPath().ToString() + "DMSLitelog.txt");

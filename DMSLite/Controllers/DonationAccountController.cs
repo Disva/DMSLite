@@ -4,16 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using NLog;
 
 namespace DMSLite.Controllers
 {
-    using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
 
     [Authorize]
     public class DonationAccountController : Controller
     {
         private OrganizationDb db;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public DonationAccountController()
         {
@@ -114,7 +117,7 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(account);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(account));
+                    logger.Info(JsonConvert.SerializeObject(account));
                     return PartialView("~/Views/DonationAccount/_AddSuccess.cshtml", account);
                 }
             }

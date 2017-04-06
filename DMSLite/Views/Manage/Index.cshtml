@@ -1,41 +1,76 @@
 ﻿@model DMSLite.Models.IndexViewModel
-@{
-    ViewBag.Title = "Manage";
-}
 
-<h2>@ViewBag.Title.</h2>
+<div class="container body-content" id="pagebackground">
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <div>
+        <br />
+        <h4>@Resources.Resources.UI_AccountSettings</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>@Resources.Resources.UI_Password:</dt>
+            <dd>
+                [
+                @if (Model.HasPassword)
+            {
+                    @Html.ActionLink(Resources.Resources.UI_ChangeYourPassword, "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink(Resources.Resources.UI_Create, "SetPassword")
+                }
+                ]
+            </dd>
+            <dt>@Resources.Resources.UI_Language:</dt>
+            <dd>
+                [<a href="/en">@Resources.Resources.UI_English</a> / 
+                <a href="/fr">@Resources.Resources.UI_French</a> ]
+            </dd>
+        </dl>
+        @if (this.User.IsInRole("SPS"))
+        {
+            <h4>@Resources.Resources.UI_SPSAdministrativeTools</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@Resources.Resources.UI_DownloadLog:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink(Resources.Resources.UI_DownloadLog, "LogDownload", "Help")
+                    ]
+                </dd>
+                <dt>@Resources.Resources.UI_ManageOrganizations:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink(Resources.Resources.UI_ManageOrganizations, "Index", "Organizations")
+                    ]
+                </dd>
+                <dt>@Resources.Resources.UI_ManageUserRoles:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink(Resources.Resources.UI_ManageUserRoles, "Index", "Roles")
+                    ]
+                </dd>
+            </dl>
+        }
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-    </dl>
-@if (this.User.IsInRole("Admin"))
-{
-    <h4>Administrative Tools</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Download log:</dt>
-        <dd>
-            [
-            @Html.ActionLink("Download Log", "LogDownload", "Help")
-            ]
-        </dd>
-    </dl>
-}
-    
+        @if (this.User.IsInRole("Admin"))
+        {
+            <h4>@Resources.Resources.UI_OrganizationAdministrativeTools</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@Resources.Resources.UI_RegisterNewUser:</dt>
+                <dd>
+                    [
+                    @Html.ActionLink(Resources.Resources.UI_RegisterNewUser, "Register", "Account")
+                    ]
+                </dd>
+                <dt>@Resources.Resources.UI_ImportExportCSV</dt>
+                <dd>
+                    [
+                    @Html.ActionLink(Resources.Resources.UI_ImportExportCSV, "Index", "CSV")
+                    ]
+                </dd>
+            </dl>
+        }
+
+    </div>
 </div>

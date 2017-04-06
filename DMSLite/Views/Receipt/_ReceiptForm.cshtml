@@ -1,35 +1,53 @@
 ﻿@model DMSLite.Models.ReceiptFormModel
 
-@{ var id = Guid.NewGuid().ToString(); }
-
-<div id="@id">
+<div id="printReceiptForm">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Print Receipts</h4>
+        <h4 class="modal-title" id="myModalLabel">@Resources.Resources.UI_PrintReceipts</h4>
     </div>
-    @using (Ajax.BeginForm("ZipReceipts", "Receipt", new AjaxOptions()
+    @using (Ajax.BeginForm("ZipRequest", "Receipt", new AjaxOptions()
     {
         HttpMethod = "get",
         OnComplete = "checkFormatSelect2",
-        OnBegin = "showLoadingButton(\"" + id + "\")",
-        OnSuccess = "downloadZipFile(this); hideLoadingButton(\"" + id + "\")"
+        OnBegin = "showLoadingButton('printReceiptForm')",
+        OnSuccess = "downloadZipFile(this)"
     }
-    ,new{ @dataType = "application/zip" }))
+    , new{ @dataType = "application/zip" }))
     {
         @Html.AntiForgeryToken()
         <div class="modal-body">
             <div class="form-group row">
+                <input type="checkbox" name="allDonors" id="allDonors" onchange="toggleDonorSelect(this); checkReceiptButton()" value="false" />
+                <label>@Resources.Resources.UI_SelectAllDonors</label>
+            </div>
+            <div class="form-group row">
+                <input type="checkbox" name="allBatches" id="allBatches" onchange="toggleBatchSelect(this); checkReceiptButton()" value="false" />
+                <label>@Resources.Resources.UI_SelectAllBatches</label>
+            </div>
+            <div class="form-group row" id="donorBlock">
                 @Html.LabelFor(model => model.donors, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.donors, "", new { @class = "text-danger" })
-                    <select id="receiptDonors" onchange="checkReceiptButton()" class="donors-selector format-donor-select2" multiple="multiple" style="width:100%;" name="donors"></select>
+                    <select id="receiptDonors" onchange="checkReceiptButton()" class="format-select2" multiple="multiple" style="width:100%;" name="donors" data-select2-placeholder=@Resources.Resources.UI_SelectADonor>
+                        <option></option>
+                        @foreach (var donor in Model.donors)
+                        {
+                            <option value="@donor.Id">@donor.FirstName @donor.LastName (ID: @donor.Id)</option>
+                        }
+                    </select>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" id="batchBlock">
                 @Html.LabelFor(model => model.batches, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.ValidationMessageFor(model => model.batches, "", new { @class = "text-danger" })
-                    <select id="receiptBatches" onchange="checkReceiptButton()" class="donors-selector format-closed-batch-select2" multiple="multiple" style="width:100%;" name="batches"></select>
+                    <select id="receiptBatches" onchange="checkReceiptButton()" class="format-select2" multiple="multiple" style="width:100%;" name="batches" data-select2-placeholder=@Resources.Resources.UI_SelectABatch>
+                        <option></option>
+                        @foreach (var batch in Model.batches)
+                        {
+                            <option value="@batch.Id">@batch.Title (ID: @batch.Id)</option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
@@ -37,10 +55,10 @@
         <div class="modal-footer">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10" id="createButton">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resources.UI_Close</button>
                     <button type="submit" class="btn btn-primary loading-button" disabled="disabled" id="submitReceiptForm" >
                         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate loading-button-icon"></span>
-                        Make Receipts
+                        @Resources.Resources.UI_MakeReceipts
                     </button>
                 </div>
             </div>

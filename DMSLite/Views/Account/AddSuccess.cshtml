@@ -1,0 +1,19 @@
+﻿@model DMSLite.Models.ApplicationUser
+
+@{ var id = Guid.NewGuid().ToString(); }
+
+<h3>Created New User</h3>
+<div class="divTableWrapper">
+    <div class="divTable">
+        <div class="tableRow header green">
+            <div class="cell">
+                @Resources.Resources.Email
+            </div>
+        </div>
+        <div class="tableRow">
+            <div class="cell">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+        </div>
+    </div>
+</div>

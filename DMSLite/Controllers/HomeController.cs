@@ -5,27 +5,32 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using NLog;
+
 namespace DMSLite.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
         public Dispatcher dispatcher;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
+
         public HomeController()
         {
-            Helpers.Log.WriteLog(Helpers.Log.LogType.Task, "User connected to DMSLite");
             dispatcher = Dispatcher.getDispatcher();
         }
 
         public ActionResult Index()
         {
+            logger.Info("User connected to DMSLite.");
             return View();
         }
 
         public ActionResult SendInput(FormCollection fc)
         {
             string inputText = fc["mainInput"];
-            Helpers.Log.WriteLog(Helpers.Log.LogType.UserIn, inputText);
+            logger.Info("User: \"{0}\"", inputText);
 
             var responseModel = dispatcher.Dispatch(inputText);
 

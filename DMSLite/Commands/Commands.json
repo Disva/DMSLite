@@ -66,5 +66,13 @@
   "FilterBatchesBySum": {
     "Item1": "Batch",
     "Item2": "FilterBatchesBySum"
+  },
+  "TogglePostedDonations": {
+    "Item1": "Donation",
+    "Item2": "TogglePostedDisplay"
+  },
+  "ToggleOpenBatches": {
+    "Item1": "Batch",
+    "Item2": "ToggleOpenDisplay"
   }
 }

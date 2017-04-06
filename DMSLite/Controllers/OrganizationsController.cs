@@ -58,7 +58,7 @@ namespace DMSLite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Organization organization)
+        public ActionResult Create([Bind(Include = "Id,Name,DBA,Address,RegistrationNumer")] Organization organization)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace DMSLite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Organization organization)
+        public ActionResult Edit([Bind(Include = "Id,Name,DBA,Address,RegistrationNumer")] Organization organization)
         {
             if (ModelState.IsValid)
             {

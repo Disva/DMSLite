@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
+using NLog;
+
 namespace DMSLite.Controllers
 {
     using Helpers;
+    using Models;
     using Newtonsoft.Json;
     using DateRange = Tuple<DateTime, DateTime>;
-
+    
     [Authorize]
     public class BatchController : Controller
     {
@@ -19,8 +22,10 @@ namespace DMSLite.Controllers
         private enum SEARCH_TYPE { BEFORE = -1, ON, AFTER };
         private enum COMPARE_TYPE { UNDER = -1, EQUAL, OVER };
         private enum BATCH_TYPE {OPEN, CLOSED };
-
+        private static bool openOnly = true;
         private static List<Batch> filteredBatches;
+
+        private static Logger logger = LogManager.GetLogger("serverlog");
 
         public BatchController()
         {
@@ -42,7 +47,7 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
         }
 
         public ActionResult FetchClosedBatchesByDate(Dictionary<string, object> parameters)
@@ -59,7 +64,7 @@ namespace DMSLite.Controllers
             if (filteredBatches.Count == 0)
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-            return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+            return DisplayBatches(filteredBatches);
         }
 
         public ActionResult FilterBatchesBySum(Dictionary<string, object> parameters)
@@ -74,10 +79,27 @@ namespace DMSLite.Controllers
                 if (filteredBatches.Count == 0)
                     return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no batches were found");
 
-                return PartialView("~/Views/Batch/_FetchIndex.cshtml", filteredBatches);
+                return DisplayBatches(filteredBatches);
             }
             else
                 return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "not all parameters recognized");            
+        }
+
+        public ActionResult DisplayBatches(List<Batch> batches)
+        {
+            List<BatchViewModel> viewableBatches = new List<BatchViewModel>();
+            for(int i = 0; i < batches.Count; i++)
+            {
+                BatchViewModel tempModel = new BatchViewModel();
+                tempModel.batch = batches.ElementAt(i);
+                tempModel.count = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Count();
+                if (tempModel.count != 0)
+                    tempModel.sum = db.Donations.Where(x => x.DonationBatch_Id == tempModel.batch.Id).Sum(y => y.Value);
+                else
+                    tempModel.sum = 0;
+                viewableBatches.Add(tempModel);
+            }
+            return PartialView("~/Views/Batch/_FetchIndex.cshtml", viewableBatches);
         }
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
@@ -95,7 +117,7 @@ namespace DMSLite.Controllers
                 || (!String.IsNullOrEmpty(parameters["amount"].ToString()) && !String.IsNullOrEmpty(parameters["number-comparator"].ToString()));
 
             if (!paramsExist)
-                return FetchAllBatches();
+                filteredBatches = FetchAllBatches();
 
             if (!String.IsNullOrEmpty(parameters["id"].ToString()))
             {
@@ -138,8 +160,16 @@ namespace DMSLite.Controllers
                 if (filteredBatches.Count == 0) goto Finish;
             }
 
-            Finish:
+        Finish:
+            if (openOnly && parameters["type"].ToString().Equals(""))
+                filteredBatches = filteredBatches.Where(x => !(x.CloseDate.HasValue)).ToList();
             return filteredBatches;
+        }
+
+        public ActionResult ToggleOpenDisplay()
+        {
+            openOnly = !openOnly;
+            return PartialView("~/Views/Batch/_ToggleDisplay.cshtml", openOnly);
         }
 
         // extract method
@@ -331,9 +361,13 @@ namespace DMSLite.Controllers
         #region Modify
         public ActionResult CloseBatch(Dictionary<string, object> parameters)
         {
-            String title = parameters["title"].ToString();
-            Batch batchToClose = db.Batches.First(x => x.Title == title);
-            return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            int batchId = Int32.Parse(parameters["batchId"].ToString());
+            Batch batchToClose = db.Batches.FirstOrDefault(x => x.Id == batchId);
+            if (batchToClose != null)
+                return PartialView("~/Views/Batch/_CloseBatch.cshtml", batchToClose);
+            else
+                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + batchId);
+
         }
 
         public ActionResult CloseBatchFromList(int id)
@@ -388,37 +422,12 @@ namespace DMSLite.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Add(batch);
-                    Helpers.Log.WriteLog(Helpers.Log.LogType.ParamsSubmitted, JsonConvert.SerializeObject(batch));
+                    logger.Info(JsonConvert.SerializeObject(batch));
                     return PartialView("~/Views/Batch/_AddSuccess.cshtml", batch);
                 }
             }
             //an invalid submission shall return the form with some validation error messages.
             return PartialView("~/Views/Batch/_AddForm.cshtml", batch);
-        }
-
-        // Action to search for batches by name and obtain a json result
-        public ActionResult SearchBatches(string searchKey)
-        {
-            if (string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate == null));
-            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        // Action to search for batches by name and obtain a json result
-        // TODO: this is duplicate code and needs refactoring.
-        public ActionResult SearchClosedBatches(string searchKey)
-        {
-            if (string.IsNullOrEmpty(searchKey))
-            {
-                return new JsonResult { Data = new { results = new List<Batch>() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
-
-            var batches = db.Batches.Where(x => x.Title.ToLower().StartsWith(searchKey.ToLower()) && (x.CloseDate != null));
-            return new JsonResult { Data = new { results = batches.Select(x => new { title = x.Title, id = x.Id }) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         #endregion
 

@@ -1,0 +1,21 @@
+﻿@model bool
+
+@if (Model)
+{
+    <div class="bubbleLine">
+        <div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div>
+        <div class="bubble leftBubble">
+           @Resources.Resources.UI_TogglePostedDonations
+        </div>
+    </div>
+}
+else
+{
+    <div class="bubbleLine">
+        <div class="robotlogo"><i class="fa fa-android" aria-hidden="true"></i></div>
+        <div class="bubble leftBubble">
+            @Resources.Resources.UI_ToggleAllDonations
+        </div>
+    </div>
+}
+

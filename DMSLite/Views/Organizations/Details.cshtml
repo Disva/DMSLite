@@ -1,15 +1,22 @@
 ﻿@model DMSLite.Entities.Organization
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Resources.Resources.UI_Details;
 }
 
-<h2>Details</h2>
+<h2>@Resources.Resources.UI_Details</h2>
 
 <div>
-    <h4>Organization</h4>
+    <h4>@Resources.Resources.UI_Organization</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -18,9 +25,33 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.DBA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DBA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd class="fixLeftAlignDD">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationNumer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNumer)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resources.Resources.UI_Edit, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(Resources.Resources.UI_BackToList, "Index")
 </p>

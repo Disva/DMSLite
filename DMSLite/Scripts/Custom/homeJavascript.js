@@ -9,8 +9,16 @@ function scrollToBottom() {
         scrollTop: $("#outputOuter").prop("scrollHeight")
     }, 350);
 }
+
 // Remove loading styling
 function updateContainer() {
+
+    //Clear old text in the chat box
+    var maxNumOfElems = 100;
+    var numOfElems = $("#outputContainer > div").length;
+    if (numOfElems > maxNumOfElems) {
+        $('#outputContainer').find('.bubbleLine:lt(' + (numOfElems - maxNumOfElems) + ')').remove();
+    }
 
     scrollToBottom();
 
@@ -53,9 +61,19 @@ function startLoading() {
     $("#mainInput").prop("disabled", true);
     $("#submitBtn").prop("disabled", true);
 
+    //store the history
+    var inputVal= $("#mainInput").val();
+    if (historyStack.length == 0 || historyStack[historyStack.length - 1] !== inputVal) {
+        inputVal = inputVal.replace(/^\s+|\s+$/gm, '');
+        if (inputVal.length>0){
+            historyStack.push(inputVal);
+        }
+    }
+    prevHistoryStackVal = 0;
+
     // Clear the textbox
-    $("#mainInput").val("");
     $("#suggestion").val("");
+    $("#mainInput").val("");
 
     // Format the textbox
     $("#mainInput").toggleClass("loading-background");
@@ -128,128 +146,17 @@ function checkHideModal() {
 }
 
 function checkFormatSelect2() {
-    checkFormatSelect2Donor();
-    checkFormatSelect2Batch();
-    checkFormatSelect2Account();
-}
 
-function checkFormatSelect2Donor() {
-    var node = $("#outputContainer").find(".format-donor-select2");
-    if (node.length > 0) {
+    var selectboxes = $("#outputContainer").find(".format-select2");
 
-        $(node).select2({
-            ajax: {
-                url: "/Donors/SearchDonors/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select a donor" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-                if (state.firstName == null)
-                    return state.lastName + " (ID: " + state.id + ")"
-                return state.firstName + " " + state.lastName + " (ID: " + state.id + ")";
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.lastName + " (ID: " + state.id + ")" || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
+    for (var i = 0; i < selectboxes.length; i++)
+    {
+        $(selectboxes[i]).select2({
+            placeholder: $(selectboxes[i]).data("select2-placeholder"),
+            dropdownParent: $(selectboxes[i]).parents(".modal")
         });
 
-        $(node).removeClass("format-donor-select2");
-    }
-}
-
-function checkFormatSelect2Batch() {
-    var searchOpenBatches = true;
-    var node = $("#outputContainer").find(".format-batch-select2");
-    if (node.length == 0) {
-        node = $("#outputContainer").find(".format-closed-batch-select2");
-        searchOpenBatches = false;
-    }
-    if (node.length > 0) {
-
-        $(node).select2({
-            ajax: {
-                url: searchOpenBatches ? "/Batch/SearchBatches/" : "/Batch/SearchClosedBatches/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select a batch" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-
-                return state.title;
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.title || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
-        });
-
-        $(node).removeClass(searchOpenBatches ? "format-batch-select2" : "format-closed-batch-select2");
-    }
-}
-
-function checkFormatSelect2Account() {
-    var node = $("#outputContainer").find(".format-account-select2");
-    if (node.length > 0) {
-
-        $(node).select2({
-            ajax: {
-                url: "/DonationAccount/SearchAccounts/",
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
-                        searchKey: params.term
-                    };
-                },
-                cache: true
-            },
-            placeholder: { id: -1, text: "Select an account" },
-            templateResult: function (state) {
-                if (state.id === undefined) {
-                    return 'Searching...';
-                }
-
-                return state.title;
-            },
-            templateSelection: function (state) {
-                if (state.id === -1) {
-                    return state.text;
-                }
-                return state.title || state.text;
-            },
-            minimumInputLength: 1,
-            dropdownParent: $(node).parents(".modal")
-        });
-
-        $(node).removeClass("format-account-select2");
+        $(selectboxes[i]).removeClass(parent);
     }
 }
 
@@ -291,11 +198,41 @@ function checkReceiptButton() {
     var receiptButton = $("#submitReceiptForm");
     var donorSelect = $("#receiptDonors").next();
     var batchSelect = $("#receiptBatches").next();
-    if (donorSelect.find(".select2-selection__choice").length == 0 || batchSelect.find(".select2-selection__choice").length == 0)
+    var allBatches = $("#allBatches");
+    var allDonors = $("#allDonors");
+    if ((donorSelect.find(".select2-selection__choice").length == 0 && allDonors.val() == "false")
+     || (batchSelect.find(".select2-selection__choice").length == 0 && allBatches.val() == "false"))
         receiptButton.attr("disabled", true);
     else
         receiptButton.attr("disabled", false);
 }
+
+function toggleBatchSelect(input) {
+    var batchBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#batchBlock");
+    if (batchBlock.css("display") == "none")
+        batchBlock.css("display", "block");
+    else
+        batchBlock.css("display", "none");
+    toggleCheck(input);
+}
+
+function toggleDonorSelect(input) {
+    var donorBlock = $(document.getElementById(input.id)).closest(".modal-body").find("#donorBlock");
+    if (donorBlock.css("display") == "none")
+        donorBlock.css("display", "block");
+    else
+        donorBlock.css("display", "none");
+    toggleCheck(input);
+}
+
+function toggleCheck(input) {
+    var butt = $(document.getElementById(input.id));
+    if (butt.val() == "true")
+        butt.val("false");
+    else
+        butt.val("true");
+}
+
 $('#flagInvalidContainer').on('click', '*', function() {
     $("#flagInvalidContainer").notify(
   "Sorry for that! I will let my team of humans know for you!",

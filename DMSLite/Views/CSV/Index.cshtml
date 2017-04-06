@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = Resources.Resources.UI_ImportExportCSV_2;
+}
+
+<h2>@Resources.Resources.UI_ImportExportCSV_2</h2>
+
+@Html.ActionLink(String.Format(Resources.Resources.UI_ExportAll_X, Resources.Resources.Donors), "ExportAllDonors", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink(String.Format(Resources.Resources.UI_ExportAll_X, Resources.Resources.Donations), "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink(String.Format(Resources.Resources.UI_ExportAll_X, Resources.Resources.Batches), "ExportAllBatches", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+@Html.ActionLink(String.Format(Resources.Resources.UI_ExportAll_X, Resources.Resources.Accounts), "ExportAllAccounts", "CSV", null, new { @class = "btn btn-primary", @role = "button" })
+
+</br>
+<div>
+    <p>@Resources.Resources.UI_ToUploadEntries</p>
+</div>
+</br>
+@using (@Html.BeginForm("ImportDonors", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="donorupload">@String.Format(Resources.Resources.UI_Import_X, Resources.Resources.Donors)</label>
+    <input type="file" id="donorupload" name="donorupload"/>
+    <input class="btn btn-default" type="submit" value="@Resources.Resources.UI_Submit"/>
+}
+
+</br>
+@using (@Html.BeginForm("ImportDonations"
+    , "CSV"
+    , FormMethod.Post
+    , new { enctype = "multipart/form-data" }))
+{
+    <label for="donationupload">@String.Format(Resources.Resources.UI_Import_X, Resources.Resources.Donations)</label>
+    <input type="file" id="donationupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="@Resources.Resources.UI_Submit" />
+}
+</br>
+@using (@Html.BeginForm("ImportBatches"
+                , "CSV"
+                , FormMethod.Post
+                , new { enctype = "multipart/form-data" }))
+{
+    <label for="batchupload">@String.Format(Resources.Resources.UI_Import_X, Resources.Resources.Batches)</label>
+    <input type="file" id="batchupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="@Resources.Resources.UI_Submit" />
+}
+</br>
+@using (@Html.BeginForm("ImportAccounts"
+                , "CSV"
+                , FormMethod.Post
+                , new { enctype = "multipart/form-data" }))
+{
+    <label for="accountupload">@String.Format(Resources.Resources.UI_Import_X, Resources.Resources.Accounts)</label>
+    <input type="file" id="accountupload" name="donorupload" />
+    <input class="btn btn-default" type="submit" value="@Resources.Resources.UI_Submit" />
+}

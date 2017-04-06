@@ -3,10 +3,13 @@
     <div class="divTable">
         <div class="tableRow header green">
             <div class="cell">
-                Donation ID
+                @Resources.Resources.UI_DonationID
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationDonor)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationDonor_Id)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.ObjectDescription)
@@ -16,6 +19,12 @@
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationBatch)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CreateDate)
+            </div>
+            <div class="cell">
+                @Html.DisplayNameFor(model => model.DonationBatch.CloseDate)
             </div>
             <div class="cell">
                 @Html.DisplayNameFor(model => model.DonationAccount)
@@ -30,9 +39,16 @@
                 <!-- Left Empty for delete column -->
             </div>
         </div>
+        @{decimal total = 0M;}
         @foreach (var item in Model)
         {
-            <div class="tableRow">
+            string rowClass = "tableRow";
+            total += (decimal)(item.Value);
+            if (item.DonationBatch.CloseDate != null)
+            {
+                rowClass = "tableRow dark";
+            }
+            <div class="@rowClass">
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
@@ -40,13 +56,26 @@
                     @Html.DisplayFor(modelItem => item.DonationDonor.FirstName) @Html.DisplayFor(modelItem => item.DonationDonor.LastName)
                 </div>
                 <div class="cell">
+                    @Html.DisplayFor(modelItem => item.DonationDonor_Id)
+                </div>
+                <div class="cell">
                     @Html.DisplayFor(modelItem => item.ObjectDescription)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.Value)
+                    @if (!item.Gift)
+                    {
+                        <label>@Resources.Resources.UI_NotAGift</label>
+                    }
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationBatch.Title)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CreateDate)
+                </div>
+                <div class="cell">
+                    @Html.DisplayFor(model => item.DonationBatch.CloseDate)
                 </div>
                 <div class="cell">
                     @Html.DisplayFor(modelItem => item.DonationAccount.Title)
@@ -55,19 +84,19 @@
                 <div class="cell">
                     @if (item.DonationReceipt_Id != 0)
                     {
-                        @Html.ActionLink("Receipt", "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
+                        @Html.ActionLink(Resources.Resources.UI_Receipt, "FetchReceiptByDonation", "Receipt", item, new { target = "_blank" })
                     }
                 </div>
                 <div class="cell">
                 @if (item.DonationBatch.CloseDate == null)
                 {
                     @Ajax.ActionLink("✏", "ModifyFromDonation", "Donation", item, new AjaxOptions()
-                    {
-                        InsertionMode = InsertionMode.InsertAfter,
-                        UpdateTargetId = "outputContainer",
-                        OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
-                        OnBegin = "return bounceInput('" + buttonId + "')"
-                    }, new { @class = "glyphicon pencil" })
+               {
+                   InsertionMode = InsertionMode.InsertAfter,
+                   UpdateTargetId = "outputContainer",
+                   OnComplete = "enableButtonAndCheckSearch('" + buttonId + "')",
+                   OnBegin = "return bounceInput('" + buttonId + "')"
+               }, new { @class = "glyphicon pencil" })
                 }
                 else
                 {
@@ -78,12 +107,12 @@
                     @if (item.DonationBatch.CloseDate == null)
                     {
                         @Ajax.ActionLink("", "ShowDeleteFromDonation", "Donation", item, new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.InsertAfter,
-                            UpdateTargetId = "outputContainer",
-                            OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
-                            OnBegin = "return bounceInput('" + buttonId + "')"
-                        }, new { @class = "glyphicon remove" })
+                   {
+                       InsertionMode = InsertionMode.InsertAfter,
+                       UpdateTargetId = "outputContainer",
+                       OnComplete = "enableButtonAndCheckShowModal('" + buttonId + "')",
+                       OnBegin = "return bounceInput('" + buttonId + "')"
+                   }, new { @class = "glyphicon remove" })
                     }
                     else
                     {
@@ -92,5 +121,11 @@
                 </div>
             </div>
                     }
+        <div class="cell">
+            @Resources.Resources.UI_Total
+        </div>
+        <div class="cell">
+            @total.ToString("C")
+        </div>
     </div>
 </div>

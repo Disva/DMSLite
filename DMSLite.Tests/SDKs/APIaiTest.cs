@@ -237,6 +237,24 @@ namespace DMSLite.Tests.SDKs
         }
 
         [TestMethod]
+        public void APITestCloseBatch()
+        {
+
+            string batchId = "1";
+
+            string[] inputs =
+            {
+                "close batch {0}",
+                "post batches {0}",
+                "submit batches {0}"
+            };
+
+            var response = RandomTextInput(inputs, batchId);
+            Assert.AreEqual(response.Result.Action, "CloseBatch");
+            Assert.AreEqual(response.Result.Parameters["batchId"].ToString(), batchId);
+        }
+
+        [TestMethod]
         public void APITestFilterBatches()
         {
 

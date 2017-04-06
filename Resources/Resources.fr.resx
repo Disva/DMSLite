@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountTitle" xml:space="preserve">
+    <value>Titre</value>
+  </data>
+  <data name="Batch" xml:space="preserve">
+    <value>Lot</value>
+  </data>
+  <data name="Batches" xml:space="preserve">
+    <value>Lots</value>
+  </data>
+  <data name="Bot_Thinking" xml:space="preserve">
+    <value>Thinking...</value>
+  </data>
+  <data name="Bot_Welcome1" xml:space="preserve">
+    <value>Welcome to DMS Lite!</value>
+  </data>
+  <data name="Bot_Welcome2" xml:space="preserve">
+    <value>You can always type help if you are feeling stuck!</value>
+  </data>
+  <data name="Bot_Welcome3" xml:space="preserve">
+    <value>What would you like to do?</value>
+  </data>
+  <data name="CloseDate" xml:space="preserve">
+    <value>Date de Fermeture</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ConfirmPassError" xml:space="preserve">
+    <value>Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirmer le nouveau mot de passe</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Nombre de dons</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Date de Création</value>
+  </data>
+  <data name="DBA" xml:space="preserve">
+    <value>DBA</value>
+  </data>
+  <data name="DonAddress" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="DonationAccount" xml:space="preserve">
+    <value>Compte</value>
+  </data>
+  <data name="DonationBatch" xml:space="preserve">
+    <value>Lot</value>
+  </data>
+  <data name="DonationDonor" xml:space="preserve">
+    <value>Donneur</value>
+  </data>
+  <data name="DonationReceipt" xml:space="preserve">
+    <value>Reçu</value>
+  </data>
+  <data name="DonorID" xml:space="preserve">
+    <value>ID du Donneur</value>
+  </data>
+  <data name="Donors" xml:space="preserve">
+    <value>Donneurs</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Courriel</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="NewDonor" xml:space="preserve">
+    <value>Nouveau Donneur</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nouveau Mot de Passe</value>
+  </data>
+  <data name="ObjectDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Mot de Passe Actuel</value>
+  </data>
+  <data name="OrgAddress" xml:space="preserve">
+    <value>Adresse de l'Organisation</value>
+  </data>
+  <data name="OrgName" xml:space="preserve">
+    <value>Nom de l'Organisation</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de Passe</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Numéro de Téléphone</value>
+  </data>
+  <data name="ReceiptFrequency" xml:space="preserve">
+    <value>Fréquence des Reçus</value>
+  </data>
+  <data name="RegistrationNumer" xml:space="preserve">
+    <value>Numéro d'Enregistrement</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>Mémoriser mon Navigateur Web</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Mémoriser info</value>
+  </data>
+  <data name="SimilarDonors" xml:space="preserve">
+    <value>Donneurs Similaires</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Montant Total donné</value>
+  </data>
+  <data name="UI_Account" xml:space="preserve">
+    <value>Compte</value>
+  </data>
+  <data name="UI_Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="UI_AddANewDonation" xml:space="preserve">
+    <value>Ajouter un nouveau don</value>
+  </data>
+  <data name="UI_AddAnoBatch" xml:space="preserve">
+    <value>Ajouter un autre lot</value>
+  </data>
+  <data name="UI_AddAnoDonation" xml:space="preserve">
+    <value>Ajouter un autre don</value>
+  </data>
+  <data name="UI_AddBatch" xml:space="preserve">
+    <value>Ajouter un nouveau lot</value>
+  </data>
+  <data name="UI_AddBatchSuc" xml:space="preserve">
+    <value>Nouveau lot ajouté</value>
+  </data>
+  <data name="UI_AddDonationSucc" xml:space="preserve">
+    <value>Nouveau don ajouté</value>
+  </data>
+  <data name="UI_AddOne" xml:space="preserve">
+    <value>ajouté un?</value>
+  </data>
+  <data name="UI_AddPhoneNumber" xml:space="preserve">
+    <value>Ajouter un numéro de téléphone</value>
+  </data>
+  <data name="UI_AreYouSureDelete" xml:space="preserve">
+    <value>Supprimer cette option?</value>
+  </data>
+  <data name="UI_BackToList" xml:space="preserve">
+    <value>Retour à la liste</value>
+  </data>
+  <data name="UI_BatchID" xml:space="preserve">
+    <value>ID du lot</value>
+  </data>
+  <data name="UI_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>Changer le mot de passe</value>
+  </data>
+  <data name="UI_ChangePasswordForm" xml:space="preserve">
+    <value>Formulaire de Changement de Mot de Passe</value>
+  </data>
+  <data name="UI_ChangeYourAccountSettings" xml:space="preserve">
+    <value>Modifier les paramètres de votre compte</value>
+  </data>
+  <data name="UI_ChangeYourPassword" xml:space="preserve">
+    <value>Modifier votre mot de passe</value>
+  </data>
+  <data name="UI_CheckEmail" xml:space="preserve">
+    <value>Veuillez vérifier votre courriel pour réinitialiser votre mot de passe.</value>
+  </data>
+  <data name="UI_ClickLogin" xml:space="preserve">
+    <value>Cliquez ici pour vous connecter</value>
+  </data>
+  <data name="UI_Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="UI_CloseBatch" xml:space="preserve">
+    <value>Fermer un Lot</value>
+  </data>
+  <data name="UI_ClosedBatchConfirm" xml:space="preserve">
+    <value>Le lot {0} a été fermé</value>
+  </data>
+  <data name="UI_CloseThisBatch" xml:space="preserve">
+    <value>Fermer ce lot</value>
+  </data>
+  <data name="UI_ConfirmEmail" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
+  <data name="UI_ConfirmThanks" xml:space="preserve">
+    <value>Merci d'avoir confirmé votre courriel. Veuillez</value>
+  </data>
+  <data name="UI_CreateNewAccount" xml:space="preserve">
+    <value>Créer un Nouveau Compte</value>
+  </data>
+  <data name="UI_DonationEditSuc" xml:space="preserve">
+    <value>Votre Don a été modifié avec succès</value>
+  </data>
+  <data name="UI_DonationID" xml:space="preserve">
+    <value>ID du Don</value>
+  </data>
+  <data name="UI_DonationUpdateSuc" xml:space="preserve">
+    <value>Votre don a été modifié avec succès</value>
+  </data>
+  <data name="UI_DonWouldYouLikeTo" xml:space="preserve">
+    <value>n'a pas de dons. Voulez-vous</value>
+  </data>
+  <data name="UI_DownloadLog" xml:space="preserve">
+    <value>Télécharger registre</value>
+  </data>
+  <data name="UI_Edit" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="UI_EditDonation" xml:space="preserve">
+    <value>Modifier un don</value>
+  </data>
+  <data name="UI_EmailLink" xml:space="preserve">
+    <value>Email Link</value>
+  </data>
+  <data name="UI_EnterEmail" xml:space="preserve">
+    <value>Veuillez entrer votre courriel</value>
+  </data>
+  <data name="UI_EnterVerCode" xml:space="preserve">
+    <value>Veuillez entrer le code de vérification</value>
+  </data>
+  <data name="UI_ForgotPassword" xml:space="preserve">
+    <value>Mot de passe oublié?</value>
+  </data>
+  <data name="UI_ForgotPasswordConfirmation" xml:space="preserve">
+    <value>Confirmation du mot de passe oublié</value>
+  </data>
+  <data name="UI_HelpButton" xml:space="preserve">
+    <value>Quelque-chose de cassé?</value>
+  </data>
+  <data name="UI_HomeTitle" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="UI_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="UI_LogIn" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="UI_MakeReceipts" xml:space="preserve">
+    <value>Créer des Reçus</value>
+  </data>
+  <data name="UI_ManageOrganizations" xml:space="preserve">
+    <value>Gérer les organisations</value>
+  </data>
+  <data name="UI_ManageUserRoles" xml:space="preserve">
+    <value>Gérer les Roles des Utilisateurs</value>
+  </data>
+  <data name="UI_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="UI_NotAGift" xml:space="preserve">
+    <value>(pas un cadeau)</value>
+  </data>
+  <data name="UI_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="UI_OrganizationAdministrativeTools" xml:space="preserve">
+    <value>Outil administratif d'organization</value>
+  </data>
+  <data name="UI_Organizations" xml:space="preserve">
+    <value>Organizations</value>
+  </data>
+  <data name="UI_Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="UI_PhoneNumber" xml:space="preserve">
+    <value>Numéro de téléphone</value>
+  </data>
+  <data name="UI_PrintReceipts" xml:space="preserve">
+    <value>Imprimer un reçu</value>
+  </data>
+  <data name="UI_Receipt" xml:space="preserve">
+    <value>Reçu</value>
+  </data>
+  <data name="UI_Register" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="UI_RegisterNewUser" xml:space="preserve">
+    <value>Enregistrer un nouveau utilisateur</value>
+  </data>
+  <data name="UI_Reset" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="UI_ResetConfirm" xml:space="preserve">
+    <value>Votre mot de passe est réinitializé</value>
+  </data>
+  <data name="UI_ResetPassword" xml:space="preserve">
+    <value>Réinitialiser votre mot de passe</value>
+  </data>
+  <data name="UI_ResetPasswordConfirmation" xml:space="preserve">
+    <value>Réinitialiser votre confirmation de mot de passe</value>
+  </data>
+  <data name="UI_ResetYourPass" xml:space="preserve">
+    <value>Réinitialiser votre mot de passe</value>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="UI_Select2FAuthProvider" xml:space="preserve">
+    <value>Sélectionner une action de double authentification:</value>
+  </data>
+  <data name="UI_SelectOrg" xml:space="preserve">
+    <value>Choisissez une Organization</value>
+  </data>
+  <data name="UI_Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="UI_SPSAdministrativeTools" xml:space="preserve">
+    <value>Outils Administratif SPS</value>
+  </data>
+  <data name="UI_Submit" xml:space="preserve">
+    <value>Soumettre </value>
+  </data>
+  <data name="UI_TheBatch" xml:space="preserve">
+    <value>Le lot</value>
+  </data>
+  <data name="UI_ThisDonIsAGift" xml:space="preserve">
+    <value>Ce don est un cadeau</value>
+  </data>
+  <data name="UI_ToggleAllBatches" xml:space="preserve">
+    <value>Tous les Lots sont visible</value>
+  </data>
+  <data name="UI_ToggleAllDonations" xml:space="preserve">
+    <value>Tous les Dons sont visible</value>
+  </data>
+  <data name="UI_ToggleOpenBatches" xml:space="preserve">
+    <value>Juste les Lots overtes sont visible</value>
+  </data>
+  <data name="UI_TogglePostedDonations" xml:space="preserve">
+    <value>Juste les Dons affiché sont visible</value>
+  </data>
+  <data name="UI_True" xml:space="preserve">
+    <value>Vrai</value>
+  </data>
+  <data name="UI_Verify" xml:space="preserve">
+    <value>Vérifier</value>
+  </data>
+  <data name="UI_Create" xml:space="preserve">
+    <value>Créer</value>
+  </data>
+  <data name="UI_AddAccountSuc" xml:space="preserve">
+    <value>Nouveau compte ajouté</value>
+  </data>
+  <data name="UI_AddANewAccount" xml:space="preserve">
+    <value>Ajouter un nouveau compte</value>
+  </data>
+  <data name="UI_AddAnoAccount" xml:space="preserve">
+    <value>Ajouter un autre compte</value>
+  </data>
+  <data name="UI_SendVerCode" xml:space="preserve">
+    <value>Envoyer un code de vérification</value>
+  </data>
+  <data name="UI_CreateLocalLogin" xml:space="preserve">
+    <value>Create Local Login</value>
+  </data>
+  <data name="UI_CreatePassword" xml:space="preserve">
+    <value>Créer votre mot de passe</value>
+  </data>
+  <data name="UI_EnterVerificationCode" xml:space="preserve">
+    <value>Veuillez entrer le code de vérification</value>
+  </data>
+  <data name="UI_ManageYourExternalLogins" xml:space="preserve">
+    <value>Manage your external logins</value>
+  </data>
+  <data name="UI_NoLocalUserPass" xml:space="preserve">
+    <value>Vous n'avez pas de nom d'utilisateur / mot de passe local pour ce site. Ajoutez un compte local afin que vous puissiez vous connecter sans connexion externe.</value>
+  </data>
+  <data name="UI_SetPassword" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="UI_VerifyPhoneNumber" xml:space="preserve">
+    <value>Verifier Numéro de Téléphone</value>
+  </data>
+  <data name="UI_AccountSettings" xml:space="preserve">
+    <value>Modifier les paramètres de votre compte</value>
+  </data>
+  <data name="UI_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="UI_French" xml:space="preserve">
+    <value>Francais</value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="UI_Feedback" xml:space="preserve">
+    <value>Commentaires</value>
+  </data>
+  <data name="UI_LogOff" xml:space="preserve">
+    <value>Déconnecter</value>
+  </data>
+  <data name="UI_CreateNew" xml:space="preserve">
+    <value>Créer nouveau</value>
+  </data>
+  <data name="UI_Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="UI_Details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
+  <data name="UI_Index" xml:space="preserve">
+    <value>DMS Lite</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Comptes</value>
+  </data>
+  <data name="Donations" xml:space="preserve">
+    <value>Dons</value>
+  </data>
+  <data name="UI_ExportAll_X" xml:space="preserve">
+    <value>Exporter tous les {0}</value>
+  </data>
+  <data name="UI_ImportExportCSV" xml:space="preserve">
+    <value>Importer/Exporter CSV</value>
+  </data>
+  <data name="UI_ImportExportCSV_2" xml:space="preserve">
+    <value>Importer et Exporter CSV</value>
+  </data>
+  <data name="UI_Import_X" xml:space="preserve">
+    <value>Importer les {0}</value>
+  </data>
+  <data name="UI_ToUploadEntries" xml:space="preserve">
+    <value>Pour télécharger des entrées, exportez une entité en premier et supprimez toutes les entrées pour créer un fichier modèle vierge.</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+</root>
