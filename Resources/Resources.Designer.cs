@@ -1454,5 +1454,14 @@ namespace Resources {
                 return ResourceManager.GetString("UI_VerifyPhoneNumber", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
     }
 }

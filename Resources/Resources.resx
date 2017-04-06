@@ -582,4 +582,7 @@
   <data name="UI_ToUploadEntries" xml:space="preserve">
     <value>To upload entries, export an entity first and delete all entries to create a blank template file.</value>
   </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
 </root>

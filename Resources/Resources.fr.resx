@@ -546,4 +546,7 @@
   <data name="UI_ToUploadEntries" xml:space="preserve">
     <value>Pour télécharger des entrées, exportez une entité en premier et supprimez toutes les entrées pour créer un fichier modèle vierge.</value>
   </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
 </root>
