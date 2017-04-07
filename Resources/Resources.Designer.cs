@@ -1411,6 +1411,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string UI_Total {
+            get {
+                return ResourceManager.GetString("UI_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To upload entries, export an entity first and delete all entries to create a blank template file..
         /// </summary>
         public static string UI_ToUploadEntries {

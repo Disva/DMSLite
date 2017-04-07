@@ -549,4 +549,7 @@
   <data name="Value" xml:space="preserve">
     <value>Valeur</value>
   </data>
+  <data name="UI_Total" xml:space="preserve">
+    <value>Totale</value>
+  </data>
 </root>
