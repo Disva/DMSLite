@@ -258,7 +258,7 @@ namespace DMSLite.Tests.SDKs
         public void APITestFilterBatches()
         {
 
-            string april17th = "2017-04-17";
+            string april17th = "2018-04-17";
 
             string[] inputs =
             {
