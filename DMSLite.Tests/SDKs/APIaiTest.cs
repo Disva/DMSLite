@@ -270,7 +270,7 @@ namespace DMSLite.Tests.SDKs
 
             Assert.AreEqual(response.Result.Parameters["date"].ToString(), april17th, true);
 
-            Assert.AreEqual(response.Result.Parameters["datetype"].ToString(), "before", true);
+            Assert.AreEqual(response.Result.Parameters["date-comparator"].ToString(), "<", true);
 
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
         }
