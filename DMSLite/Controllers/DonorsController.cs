@@ -236,8 +236,8 @@ namespace DMSLite
             }
             if (parameters.ContainsKey("phone-number"))
                 newDonor.PhoneNumber = parameters["phone-number"].ToString();
-            if (parameters.ContainsKey("email"))
-                newDonor.Email = parameters["email"].ToString();
+            if (parameters.ContainsKey("email-address"))
+                newDonor.Email = parameters["email-address"].ToString();
             return PartialView("~/Views/Donors/_AddForm.cshtml", newDonor);
         }
 

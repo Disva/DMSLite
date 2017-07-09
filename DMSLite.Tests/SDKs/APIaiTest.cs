@@ -258,7 +258,7 @@ namespace DMSLite.Tests.SDKs
         public void APITestFilterBatches()
         {
 
-            string april17th = "2017-04-17";
+            string april17th = "2018-04-17";
 
             string[] inputs =
             {
@@ -270,7 +270,7 @@ namespace DMSLite.Tests.SDKs
 
             Assert.AreEqual(response.Result.Parameters["date"].ToString(), april17th, true);
 
-            Assert.AreEqual(response.Result.Parameters["datetype"].ToString(), "before", true);
+            Assert.AreEqual(response.Result.Parameters["date-comparator"].ToString(), "<", true);
 
             Assert.AreEqual(response.Result.Parameters["type"].ToString(), "closed", true);
         }

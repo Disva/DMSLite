@@ -83,11 +83,12 @@ $(function () {
         'viewing',
         'displaying',
         [
-            'open',
             'closed',
             'posted',
+            'open'
             [
-                'batches'
+                'batches',
+                'donations'
             ]
         ]
     ]
