@@ -2,6 +2,63 @@
     ViewBag.Title = Resources.Resources.UI_HomeTitle;
 }
 
+<div id="buttonBox" class="row">
+    <div class="col-md-2" id="newDonorBtn">
+        @Ajax.ActionLink("New Donor", "AddMenu", "Donors", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "enableButtonAndCheckShowModal('" + "newDonorBtn" + "')",
+       OnBegin = "return bounceInput('" + "newDonorBtn" + "')"
+   }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2" id="newDonationBtn">
+        @Ajax.ActionLink("New Donation", "AddMenu", "Donation", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "enableButtonAndCheckShowModal('" + "newDonationBtn" + "')",
+       OnBegin = "return bounceInput('" + "newDonationBtn" + "')"
+   }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2" id="newBatchBtn">
+        @Ajax.ActionLink("New Batch", "AddMenu", "Batch", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "enableButtonAndCheckShowModal('" + "newBatchBtn" + "')",
+       OnBegin = "return bounceInput('" + "newBatchBtn" + "')"
+   }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2" id="showDonorsbtn">
+        @Ajax.ActionLink("Show Donors", "ViewAllDonors", "Donors", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "updateContainer()",
+       OnBegin = "startLoading()"
+   }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2" id="showDonationsbtn">
+        @Ajax.ActionLink("Show Donations", "FetchDonations", "Donation", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "updateContainer()",
+       OnBegin = "startLoading()"
+   }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2" id="showBatchesbtn">
+        @Ajax.ActionLink("Show Batches", "FetchBatches", "Batch", null, new AjaxOptions()
+   {
+       InsertionMode = InsertionMode.InsertAfter,
+       UpdateTargetId = "outputContainer",
+       OnComplete = "updateContainer()",
+       OnBegin = "startLoading()"
+   }, new { @class = "btn btn-default" })
+    </div>
+</div>
+
 <div id="outputOuter" class="row content-box">
     <div class="col-md-12" id="outputContainer">
         <br />
