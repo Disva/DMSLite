@@ -103,9 +103,12 @@ namespace DMSLite.Controllers
         }
 
         public List<Batch> FindBatches(Dictionary<string, object> parameters)
-        {
+        {            
+            if(!parameters.Keys.Contains("title"))
+            {
+                return FetchAllBatches();
+            }
             filteredBatches = new List<Batch>();
-
             //the paramsExist variable is used to check if the list of batches must be created or filtered.
             //every call of FindBatches must include both a type and title i nthe params, even if empty
             bool paramsExist =

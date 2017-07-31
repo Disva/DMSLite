@@ -70,25 +70,29 @@ namespace DMSLite.Controllers
 
         public ActionResult FetchDonations(Dictionary<string, object> parameters)
         {
-            //error responses related to range
-            List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
-            if (valueRangeList.Any())
+            if(parameters.Keys.Contains("value-range"))
             {
-                if (valueRangeList.Count() != 2)
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range isn't completed");
-                if (float.Parse(valueRangeList[0]) > float.Parse(valueRangeList[1]))
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range is invalid");
+                //error responses related to range
+                List<String> valueRangeList = JsonConvert.DeserializeObject<List<String>>(parameters["value-range"].ToString());
+                if (valueRangeList.Any())
+                {
+                    if (valueRangeList.Count() != 2)
+                        return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range isn't completed");
+                    if (float.Parse(valueRangeList[0]) > float.Parse(valueRangeList[1]))
+                        return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "that range is invalid");
+                }
+
+                //post-fetch responses
+                List<Donation> filteredDonations = FindDonations(parameters);
+                if (filteredDonations == null)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
+
+                if (filteredDonations.Count == 0)
+                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
+                return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
             }
-
-            //post-fetch responses
-            List<Donation> filteredDonations = FindDonations(parameters);
-            if (filteredDonations == null)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no parameters were recognized");
-
-            if (filteredDonations.Count == 0)
-                return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "no donations were found");
-
-            return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", filteredDonations);
+            else
+                return PartialView("~/Views/Donation/_FetchIndexSolo.cshtml", new List<Donation>(db.Donations.Include(x => x.DonationDonor).Include(y => y.DonationBatch).Include(z => z.DonationAccount).ToList<Donation>()));
         }
 
         public List<Donation> FindDonations(Dictionary<string, object> parameters)
@@ -318,15 +322,18 @@ namespace DMSLite.Controllers
         #region Add
         public ActionResult AddMenu(Dictionary<string, object> parameters)
         {
-            if (!String.IsNullOrEmpty(parameters["batchId"].ToString()))
+            if(parameters.Keys.Contains("batchId"))
             {
-                int batchId = Int32.Parse(parameters["batchId"].ToString());
-                Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
-                if (batch == null)
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + parameters["batchId"].ToString());
-                else if (batch.CloseDate != null)
-                    return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "Batch " + batch.Id + " has already been posted. Can't add a new donation to it.");
-            }
+                if (!String.IsNullOrEmpty(parameters["batchId"].ToString()))
+                {
+                    int batchId = Int32.Parse(parameters["batchId"].ToString());
+                    Batch batch = db.Batches.FirstOrDefault(x => x.Id == batchId);
+                    if (batch == null)
+                        return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "There's no batch with id " + parameters["batchId"].ToString());
+                    else if (batch.CloseDate != null)
+                        return PartialView("~/Views/Shared/_ErrorMessage.cshtml", "Batch " + batch.Id + " has already been posted. Can't add a new donation to it.");
+                }
+            }            
             return PartialView("~/Views/Donation/_Add.cshtml", parameters);
         }
 
